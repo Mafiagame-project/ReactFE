@@ -13,16 +13,16 @@ function GameRoom(props){
     const send = () => {
         let test = text.current.value;
         let id_value = 'chamchi';
-        // socket.emit('msg', 'hello');
+        socket.emit('msg', test);
 
         // setWrite(getWrite => [...getWrite])
     }
 
     useEffect(()=>{
-        // socket.on('msg', (message) => {
-        //     console.log(message)
-        //     setWrite(list => [...list, message]);
-        // });
+        socket.on('msg', data => {
+            console.log(data)
+            setWrite(list => [...list, {data}]);
+        });
         
     },[socket])
     console.log(socket)
@@ -37,7 +37,7 @@ function GameRoom(props){
                     <Grid height='75%' bg='Lemonchiffon'>
                         { getWrite.map(e => {
                             return(
-                            <Chatdiv/>
+                            <Chatdiv e={e}/>
                             )
                         })}
                     </Grid>
