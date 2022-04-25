@@ -1,10 +1,18 @@
 import styled from "styled-components"
 import Button from '../element/Button';
+import { useHistory } from 'react-router-dom';
 
-function GameRoom(){
+
+
+function GameRoom(props){
+    const history = useHistory();
+
+    const entrance = (num) => {
+        history.push(`/gameroom/${num}`)
+    }
     return(
         <>
-        <Room>
+        <Room onClick={()=>{entrance(props.idx)}}>
         <Button width='30%' size='20px' padding='10px' bg='#ffb72b' margin='0 0% 0 35%'>입장</Button>
 
         </Room>

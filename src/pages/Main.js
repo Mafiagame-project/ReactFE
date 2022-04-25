@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Button from '../element/Button';
 
 function Main(){
+    
     return(
         <>
         <Header/>
@@ -30,9 +31,9 @@ function Main(){
                 <Button bg='#d2d2d2' padding='10px' size='15px'>방 만들기</Button>
             </Grid>
             <RoomBox>
-                {Array.from({length:9}, (e, i) => {
+                {Array.from({length:9}, (e, idx) => {
                     return(
-                        <Rooms/>
+                        <Rooms idx={idx+1} />
                     )
                 })}
             </RoomBox>
