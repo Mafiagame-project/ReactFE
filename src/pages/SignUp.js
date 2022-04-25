@@ -9,41 +9,23 @@ function SignUp() {
   const dispatch = useDispatch()
   const [signup, setSignup] = React.useState({})
 
-  //   const [submitted, setSubmitted] = React.useState(false)
-  //   const handleChange = (e) => {
-  //     const id = e.target.id
-  //     const value = e.target.value
-  //     console.log(value)
-  //     setSignup((values) => ({ ...values, [id]: value }))
-  //   }
+  const [submitted, setSubmitted] = React.useState(false)
+
+  const handleChange = (e) => {
+    const id = e.target.id
+    const value = e.target.value
+    console.log(value)
+    setSignup((values) => ({ ...values, [id]: value }))
+  }
   //유효성 검사 넣어야함
 
-  const [id, setId] = React.useState('')
-  const [pw, setPw] = React.useState('')
-  const [pwCheck, setPwCheck] = React.useState('')
-  const [nick, setNick] = React.useState('')
-
-  const handleChangeId = (e) => {
-    setId(e.target.value)
-  }
-  const handleChangeNick = (e) => {
-    setNick(e.target.value)
-  }
-
-  const handleChangePw = (e) => {
-    setPw(e.target.value)
-  }
-
-  const handleChangePwCheck = (e) => {
-    setPwCheck(e.target.value)
-  }
-
   const handleSignup = () => {
-    if (!id || !nick || !pw || !pwCheck) {
+    if (!signup.id || !signup.nick || !signup.pw || !signup.pwCheck) {
+      setSubmitted(true)
       alert('빈칸을 채워주세요!')
       return
     }
-    dispatch(userActions.signupDB(id, nick, pw, pwCheck))
+    dispatch(userActions.signupDB(signup))
   }
 
   return (
@@ -54,29 +36,33 @@ function SignUp() {
             Sign up
           </Text>
           <Input
+            id="id"
             label="ID"
-            value={id}
-            _onChange={handleChangeId}
+            value={signup.id}
+            _onChange={handleChange}
             placeholder="아이디를 입력해주세요"
           />
           <Input
+            id="nick"
             label="Nickname"
-            value={nick}
-            _onChange={handleChangeNick}
+            value={signup.nick}
+            _onChange={handleChange}
             placeholder="닉네임을 입력해주세요"
           />
           <Input
+            id="pw"
             label="Password"
-            value={pw}
+            value={signup.pw}
             type="password"
-            _onChange={handleChangePw}
+            _onChange={handleChange}
             placeholder="비밀번호를 입력해주세요"
           />
           <Input
+            id="pwCheck"
             label="Password"
-            value={pwCheck}
+            value={signup.pwCheck}
             type="password"
-            _onChange={handleChangePwCheck}
+            _onChange={handleChange}
             placeholder="비밀번호를 다시 입력해주세요"
           />
           <Button margin="20px" _onClick={handleSignup}>

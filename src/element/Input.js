@@ -2,7 +2,16 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Input = (props) => {
-  const { size, padding, margin, placeholder, label, _onChange, type } = props
+  const {
+    size,
+    padding,
+    margin,
+    placeholder,
+    label,
+    _onChange,
+    type,
+    id,
+  } = props
 
   const styles = {
     size: size,
@@ -19,6 +28,7 @@ const Input = (props) => {
       <Label>{label}</Label>
       <ElInput
         {...styles}
+        id={id}
         onChange={_onChange}
         type={type}
         placeholder={placeholder}
@@ -35,6 +45,7 @@ Input.defaultProps = {
   placeholder: '텍스트를 입력해주세요.',
   type: 'text',
   value: '',
+  id: '',
   _onChange: () => {},
 }
 

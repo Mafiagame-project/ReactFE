@@ -25,16 +25,14 @@ const initialState = {
 
 //Middle Wares
 
-const loginDB = (id, pw) => {
+const loginDB = (dic) => {
+  console.log(dic)
+  const { id: userId, pw: userPw } = dic
   return async function (dispatch, getState, { history }) {
     await axios
-      .post(
-        'http://3.36.75.6/user/login',
-        JSON.stringify({ userId: id, userPw: pw }),
-        {
-          headers: { 'Content-Type': `application/json` },
-        },
-      )
+      .post('http://3.36.75.6/user/login', JSON.stringify({ userId, userPw }), {
+        headers: { 'Content-Type': `application/json` },
+      })
       .then((res) => {
         console.log(res)
         if (res.data.token) {
@@ -53,16 +51,18 @@ const loginDB = (id, pw) => {
   }
 }
 
-const signupDB = (id, pw, pwCheck, nick) => {
+const signupDB = (dic) => {
+  console.log(dic)
+  const { id: userId, nick: userNick, pw: userPw, pwCheck: userPwCheck } = dic
   return async function (dispatch, getState, { history }) {
     await axios
       .post(
         'http://3.36.75.6/user/register',
         JSON.stringify({
-          userId: id,
-          userPw: pw,
-          userPwCheck: pwCheck,
-          userNick: nick,
+          userId,
+          userPw,
+          userPwCheck,
+          userNick,
         }),
         {
           headers: { 'Content-Type': `application/json` },

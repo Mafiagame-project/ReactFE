@@ -8,34 +8,23 @@ import { useDispatch } from 'react-redux'
 
 function Login() {
   const dispatch = useDispatch()
-  const [id, setId] = React.useState('')
-  const [pw, setPw] = React.useState('')
 
-  // 왜 갑자기 안되는지 모르겠으나,, 일단 빼놓기
-  //   const [logins, setLogins] = React.useState({})
-  //   const [submitted, setSubmitted] = React.useState(false)
+  const [logins, setLogins] = React.useState({})
+  const [submitted, setSubmitted] = React.useState(false)
 
-  //   const handleChange = (e) => {
-  //     const id = e.target.id
-  //     const value = e.target.value
-  //     console.log(value)
-  //     setLogins((values) => ({ ...values, [id]: value }))
-  //   }
-
-  const handleChangeId = (e) => {
-    setId(e.target.value)
-  }
-
-  const handleChangePw = (e) => {
-    setPw(e.target.value)
+  const handleChange = (e) => {
+    const id = e.target.id
+    const value = e.target.value
+    setLogins((values) => ({ ...values, [id]: value }))
   }
 
   const handleLogin = () => {
-    if (!id || !pw) {
+    if (!logins.id || !logins.pw) {
+      setSubmitted(true)
       alert('빈칸을 채워주세요!')
       return
     }
-    dispatch(userActions.loginDB(id, pw))
+    dispatch(userActions.loginDB(logins))
   }
   //kakao 나중에 따로 파일 빼기
   const REST_API_KEY = '6c9c16d27b420108ed23421696dfba3b'
@@ -50,16 +39,18 @@ function Login() {
             Login
           </Text>
           <Input
+            id="id"
             label="ID"
-            value={id}
-            _onChange={handleChangeId}
+            value={logins.id}
+            _onChange={handleChange}
             placeholder="아이디를 입력해주세요"
           />
           <Input
+            id="pw"
             label="Password"
-            value={pw}
+            value={logins.pw}
             type="password"
-            _onChange={handleChangePw}
+            _onChange={handleChange}
             placeholder="비밀번호를 입력해주세요"
           />
           <Button _onClick={handleLogin} margin="20px">
