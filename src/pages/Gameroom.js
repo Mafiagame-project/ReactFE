@@ -5,25 +5,26 @@ import Chatdiv from'../component/Chatdiv';
 import io from 'socket.io-client';
 import { useEffect, useRef, useState } from "react";
 
-function GameRoom(){
+function GameRoom(props){
     const socket = io.connect('http://3.39.193.90');
     const [getWrite, setWrite] = useState([]);
     const text = useRef();
     const send = () => {
         let test = text.current.value;
         let id_value = 'chamchi';
-        socket.emit('message', {message : test, id : id_value});
+        socket.emit('msg', 'hello');
 
-        setWrite(getWrite => [...getWrite])
+        // setWrite(getWrite => [...getWrite])
     }
 
     useEffect(()=>{
-        // socket.on('message', ({message, id}) => {
-        //     console.log(message, id)
-        //     setWrite(list => [...list, message]);
-        // });
+        socket.on('msg', (message) => {
+            console.log(message)
+            setWrite(list => [...list, message]);
+        });
         
     },[socket])
+    console.log(socket)
     console.log(getWrite)
 
     return(

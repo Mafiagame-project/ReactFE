@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Button from '../element/Button';
 
 function Main(){
-    
+    // const socket = io.connect('http://3.39.193.90');
     return(
         <>
         <Header/>
