@@ -17,7 +17,12 @@ const Input = (props) => {
   return (
     <React.Fragment>
       <Label>{label}</Label>
-      <ElInput {...styles} onChange={_onChange} />
+      <ElInput
+        {...styles}
+        onChange={_onChange}
+        type={type}
+        placeholder={placeholder}
+      />
     </React.Fragment>
   )
 }

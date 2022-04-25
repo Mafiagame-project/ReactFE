@@ -25,19 +25,25 @@ const initialState = {
 
 //Middle Wares
 
-const loginDB = (dic) => {
+const loginDB = (id, pw) => {
   return async function (dispatch, getState, { history }) {
-    const { id: userId, pw: userPw } = dic
     await axios
-      .post('http://3.36.75.6/user/login', JSON.stringify({ userId, userPw }), {
-        headers: { 'Content-Type': `application/json` },
-      })
+      .post(
+        'http://3.36.75.6/user/login',
+        JSON.stringify({ userId: id, userPw: pw }),
+        {
+          headers: { 'Content-Type': `application/json` },
+        },
+      )
       .then((res) => {
         console.log(res)
         if (res.data.token) {
           const accessToken = res.data.token
+          const userId = res.data.userId
+
           localStorage.setItem('token', accessToken)
-          dispatch(logIn(accessToken))
+          localStorage.setItem('userId', userId)
+          dispatch(logIn(accessToken, userId))
           history.replace('./')
         }
       })
@@ -47,13 +53,17 @@ const loginDB = (dic) => {
   }
 }
 
-const signupDB = (dic) => {
-  const { id: userId, pw: userPw, pw_check: userPwCheck, nick: userNick } = dic
+const signupDB = (id, pw, pwCheck, nick) => {
   return async function (dispatch, getState, { history }) {
     await axios
       .post(
         'http://3.36.75.6/user/register',
-        JSON.stringify({ userId, userPw, userPwCheck, userNick }),
+        JSON.stringify({
+          userId: id,
+          userPw: pw,
+          userPwCheck: pwCheck,
+          userNick: nick,
+        }),
         {
           headers: { 'Content-Type': `application/json` },
         },
@@ -75,7 +85,7 @@ const isLoginDB = () => {
     await axios({
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer${localStorage.getItem('token')}`,
+        // Authorization: `Bearer${localStorage.getItem('token')}`,
       },
       method: 'get',
       url: 'http://3.36.75.6/user/loginCheck',
@@ -100,9 +110,18 @@ const kakaoLogin = (code) => {
   return async function (dispatch, getState, { history }) {
     console.log(code)
     await axios
-      .get(`http://3.36.75.6/user/kakaoLogin?code=${code}`)
+      .get(`http://3.36.75.6/main?code=${code}`)
       .then((res) => {
         console.log(res.data)
+        const accessToken = res.data.token
+        const userId = res.data.userId
+        const userNick = res.data.userNick
+
+        localStorage.setItem('token', accessToken)
+        localStorage.setItem('userId', userId)
+        localStorage.setItem('userNick', userNick)
+        dispatch(logIn(accessToken, userId, userNick))
+        history.replace('/')
       })
       .catch((err) => {
         console.log('에러에러', err)
@@ -110,11 +129,20 @@ const kakaoLogin = (code) => {
   }
 }
 
+const logOutDB = (user) => {
+  return async function (dispatch, getState, { history }) {
+    localStorage.removeItem('token', 'userId')
+    dispatch(logOut(user))
+    alert('로그아웃 되었습니다')
+    history.replace('/login')
+  }
+}
+
 export default handleActions(
   {
     [LOG_IN]: (state, action) =>
       produce(state, (draft) => {
-        draft.user = action.payload.user
+        draft.userId = action.payload.userId
         draft.token = action.payload.token
         draft.is_login = true
       }),
@@ -125,6 +153,12 @@ export default handleActions(
         draft.user = action.payload.user
         draft.is_login = true
       }),
+    [LOG_OUT]: (state, action) =>
+      produce(state, (draft) => {
+        localStorage.clear()
+        draft.is_login = false
+        draft.user = null
+      }),
   },
   initialState,
 )
@@ -134,5 +168,6 @@ const actionCreators = {
   loginDB,
   signupDB,
   isLoginDB,
+  logOutDB,
 }
 export { actionCreators }

@@ -1,28 +1,49 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
-// import { useDispatch } from 'react-redux'
+import { history } from '../redux/configureStore'
+import { useDispatch } from 'react-redux'
 import { Input, Grid, Button, Text, Image } from '../element/index'
 import styled from 'styled-components'
-// import { actionCreators as userActions } from '../redux/modules/user'
+import { actionCreators as userActions } from '../redux/modules/user'
 
 function SignUp() {
-  //   const dispatch = useDispatch()
+  const dispatch = useDispatch()
   const [signup, setSignup] = React.useState({})
-  const [submitted, setSubmitted] = React.useState(false)
-  const history = useHistory()
 
-  const handleChange = (e) => {
-    const id = e.target.id
-    const value = e.target.value
-    console.log(value)
-    setSignup((values) => ({ ...values, [id]: value }))
+  //   const [submitted, setSubmitted] = React.useState(false)
+  //   const handleChange = (e) => {
+  //     const id = e.target.id
+  //     const value = e.target.value
+  //     console.log(value)
+  //     setSignup((values) => ({ ...values, [id]: value }))
+  //   }
+  //유효성 검사 넣어야함
+
+  const [id, setId] = React.useState('')
+  const [pw, setPw] = React.useState('')
+  const [pwCheck, setPwCheck] = React.useState('')
+  const [nick, setNick] = React.useState('')
+
+  const handleChangeId = (e) => {
+    setId(e.target.value)
   }
+  const handleChangeNick = (e) => {
+    setNick(e.target.value)
+  }
+
+  const handleChangePw = (e) => {
+    setPw(e.target.value)
+  }
+
+  const handleChangePwCheck = (e) => {
+    setPwCheck(e.target.value)
+  }
+
   const handleSignup = () => {
-    // if (!signup.id || !signup.nick || !signup.pw || !signup.pw_check) {
-    //   setSubmitted(true)
-    //   return
-    // }
-    // dispatch(userActions.signUpDB(signup))
+    if (!id || !nick || !pw || !pwCheck) {
+      alert('빈칸을 채워주세요!')
+      return
+    }
+    dispatch(userActions.signupDB(id, nick, pw, pwCheck))
   }
 
   return (
@@ -34,26 +55,28 @@ function SignUp() {
           </Text>
           <Input
             label="ID"
-            value={signup.id}
-            _onChange={handleChange}
+            value={id}
+            _onChange={handleChangeId}
             placeholder="아이디를 입력해주세요"
           />
           <Input
             label="Nickname"
-            value={signup.nick}
-            _onChange={handleChange}
+            value={nick}
+            _onChange={handleChangeNick}
             placeholder="닉네임을 입력해주세요"
           />
           <Input
             label="Password"
-            value={signup.pw}
-            _onChange={handleChange}
+            value={pw}
+            type="password"
+            _onChange={handleChangePw}
             placeholder="비밀번호를 입력해주세요"
           />
           <Input
             label="Password"
-            value={signup.pw_check}
-            _onChange={handleChange}
+            value={pwCheck}
+            type="password"
+            _onChange={handleChangePwCheck}
             placeholder="비밀번호를 다시 입력해주세요"
           />
           <Button margin="20px" _onClick={handleSignup}>
