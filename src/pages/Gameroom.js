@@ -2,26 +2,27 @@ import styled from "styled-components"
 import Grid from "../element/Grid";
 import Button from "../element/Button";
 import Chatdiv from'../component/Chatdiv';
-import io from 'socket.io-client';
+
 import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 
 function GameRoom(props){
-    const socket = io.connect('http://3.39.193.90');
+    const socket = useSelector(state => state.post.data);
     const [getWrite, setWrite] = useState([]);
     const text = useRef();
     const send = () => {
         let test = text.current.value;
         let id_value = 'chamchi';
-        socket.emit('msg', 'hello');
+        // socket.emit('msg', 'hello');
 
         // setWrite(getWrite => [...getWrite])
     }
 
     useEffect(()=>{
-        socket.on('msg', (message) => {
-            console.log(message)
-            setWrite(list => [...list, message]);
-        });
+        // socket.on('msg', (message) => {
+        //     console.log(message)
+        //     setWrite(list => [...list, message]);
+        // });
         
     },[socket])
     console.log(socket)

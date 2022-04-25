@@ -4,9 +4,9 @@ import Text from '../element/Text';
 import Rooms from '../component/Rooms';
 import styled from 'styled-components';
 import Button from '../element/Button';
+import io from 'socket.io-client';
 
 function Main(){
-    // const socket = io.connect('http://3.39.193.90');
     return(
         <>
         <Header/>

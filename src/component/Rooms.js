@@ -1,14 +1,19 @@
 import styled from "styled-components"
 import Button from '../element/Button';
-import { useHistory } from 'react-router-dom';
-
-
+import { useHistory } from 'react-router';
+import { useDispatch } from "react-redux";
+import {actionCreators as postActions} from '../redux/modules/post';
+import io from 'socket.io-client';
 
 function GameRoom(props){
+    const socket = io.connect('http://3.39.193.90');
+    const dispatch = useDispatch();
     const history = useHistory();
-
     const entrance = (num) => {
-        history.push(`/gameroom/${num}`)
+        dispatch(postActions.sendSocket(socket))
+        history.push({
+            pathname : `/gameroom/${num}`,
+        })
     }
     return(
         <>
