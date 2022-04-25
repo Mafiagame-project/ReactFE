@@ -16,11 +16,13 @@ const Grid = (props) => {
     flex_column,
     isFlex_start,
     isFlex_center,
+    height,
   } = props
 
   const styles = {
     is_flex: is_flex,
     width: width,
+    height: height,
     padding: padding,
     margin: margin,
     bg: bg,
@@ -59,7 +61,7 @@ Grid.defaultProps = {
 
 const GridBox = styled.div`
   width: ${(props) => props.width};
-  height: ${(props) => props.width};
+  height: ${(props) => props.height};
   box-sizing: border-box;
   ${(props) =>
     props.border ? `border: 2px solid #ffb72b; border-radius: 10px;` : ''}

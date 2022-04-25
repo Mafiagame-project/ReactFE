@@ -2,12 +2,14 @@ import React from "react";
 import styled from "styled-components";
 
 const Button = (props) => {
-  const { text, _onClick, children, margin, width, padding } = props;
+  const { text, _onClick, children, margin, width, padding, size, bg } = props;
 
   const styles = {
     margin: margin,
     width: width,
     padding: padding,
+    size : size,
+    bg : bg,
   };
 
   return (
@@ -24,6 +26,8 @@ Button.defaultProps = {
   margin: false,
   width: '',
   padding: false,
+  size:'14px',
+  bg:false,
 };
 
 const ElButton = styled.button`
@@ -39,6 +43,7 @@ const ElButton = styled.button`
   border-radius: 10px;
   ${(props) => (props.margin? `margin: ${props.margin};` : "")}
   transition: 0.2s;
+  
   
   &:hover {
     color: ${(props) => props.color};
