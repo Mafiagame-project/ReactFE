@@ -2,25 +2,35 @@ import Header from '../component/Header';
 import styled from 'styled-components';
 import {Grid, Text, Input, Button} from '../element/index';
 import io from 'socket.io-client';
-import { useDispatch } from "react-redux";
-import {actionCreators as postActions} from '../redux/modules/post';
+import { useDispatch, useSelector } from "react-redux";
+import post, {actionCreators as postActions} from '../redux/modules/post';
 import { useHistory } from 'react-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CreateModal from '../component/CreateModal';
 
 function Main(){
     const dispatch = useDispatch();
+    const RoomList = useSelector(state => state.post.rooms);
+    const currentId = localStorage.getItem('userId')
     const history = useHistory();
     const socket = io.connect('http://3.39.193.90');
     const [getModal, setModal] = useState(false);
+    const [roomList, setRoomList] = useState([]);
 
-    const entrance = (num) => {
-        history.push({
-            pathname : `/gameroom/${num}`,
-        })
-        dispatch(postActions.sendSocket(socket, num))
-        socket.emit('joinRoom', num)
+    const entrance = (socketId) => {
+        history.push(`/gameroom/${socketId}`)
+        dispatch(postActions.sendSocket(socket, socketId))
+        socket.emit('joinRoom', socketId)
     }
+    console.log(currentId)
+    useEffect(() => {
+        socket.emit('main', currentId)
+        socket.emit('roomList')
+        socket.on('roomList', rooms => {
+            dispatch(postActions.sendRoomList(rooms))
+        })
+    },[]);
+    console.log(RoomList)
     return(
         <>
         <Header/>
@@ -46,9 +56,9 @@ function Main(){
                 <Button _onClick={()=>{setModal(!getModal)}} bg='#d2d2d2' padding='10px' size='15px'>방 만들기</Button>
             </Grid>
             <RoomBox>
-                {Array.from({length:9}, (e, idx) => {
+                {RoomList.map((element) => {
                     return(
-                        <Room onClick={() => {entrance(idx)}}>
+                        <Room onClick={() => {entrance(element.socketId)}}>
                             <Button width='30%' size='20px' padding='10px' bg='#ffb72b' margin='0 0% 0 35%'>입장</Button>
                         </Room>
                     )
