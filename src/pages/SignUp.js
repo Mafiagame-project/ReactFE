@@ -4,23 +4,38 @@ import { useDispatch } from 'react-redux'
 import { Input, Grid, Button, Text, Image } from '../element/index'
 import styled from 'styled-components'
 import { actionCreators as userActions } from '../redux/modules/user'
+import EmailCheck, { idVal, nickVal, pwVal } from '../shared/EmailCheck'
 
 function SignUp() {
   const dispatch = useDispatch()
   const [signup, setSignup] = React.useState({})
-
+  const [formCheck, setFormCheck] = React.useState('')
   const [submitted, setSubmitted] = React.useState(false)
 
   const handleChange = (e) => {
     const id = e.target.id
     const value = e.target.value
-    console.log(value)
     setSignup((values) => ({ ...values, [id]: value }))
   }
   //유효성 검사 넣어야함
 
   const handleSignup = () => {
-    if (!signup.id || !signup.nick || !signup.pw || !signup.pwCheck) {
+    // if (!nickVal(signup.nick)) {
+    //   alert('닉네임은 2~15자 한글,영문,숫자만 가능합니다')
+    //   return
+    // }
+    // if (!pwVal(signup.pw)) {
+    //   setFormCheck('패스워드 4~15자 영문+숫자만 가능합니다')
+    //   return
+    // }
+
+    if (
+      !signup.id ||
+      !signup.email ||
+      !signup.nick ||
+      !signup.pw ||
+      !signup.pwCheck
+    ) {
       setSubmitted(true)
       alert('빈칸을 채워주세요!')
       return
@@ -43,19 +58,27 @@ function SignUp() {
             placeholder="아이디를 입력해주세요"
           />
           <Input
+            id="email"
+            label="Email"
+            value={signup.email}
+            _onChange={handleChange}
+            placeholder="이메일을 입력해주세요"
+          />
+          <Input
             id="nick"
             label="Nickname"
             value={signup.nick}
             _onChange={handleChange}
-            placeholder="닉네임을 입력해주세요"
+            placeholder="닉네임은 2~15자 한글,영문,숫자만 가능합니다"
           />
+
           <Input
             id="pw"
             label="Password"
             value={signup.pw}
             type="password"
             _onChange={handleChange}
-            placeholder="비밀번호를 입력해주세요"
+            placeholder="패스워드 4~15자 영문+숫자만 가능합니다"
           />
           <Input
             id="pwCheck"

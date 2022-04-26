@@ -64,7 +64,14 @@ function Login() {
             >
               회원가입
             </Text>
-            <Text>&nbsp;/&nbsp;</Text> <Text>비밀번호 찾기</Text>
+            <Text>&nbsp;/&nbsp;</Text>{' '}
+            <Text
+              _onClick={() => {
+                history.push('/findpw')
+              }}
+            >
+              비밀번호 찾기
+            </Text>
           </Grid>
         </Grid>
         <hr />

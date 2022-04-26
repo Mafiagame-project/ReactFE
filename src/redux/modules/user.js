@@ -53,13 +53,20 @@ const loginDB = (dic) => {
 
 const signupDB = (dic) => {
   console.log(dic)
-  const { id: userId, nick: userNick, pw: userPw, pwCheck: userPwCheck } = dic
+  const {
+    id: userId,
+    email: email,
+    nick: userNick,
+    pw: userPw,
+    pwCheck: userPwCheck,
+  } = dic
   return async function (dispatch, getState, { history }) {
     await axios
       .post(
         'http://3.36.75.6/user/register',
         JSON.stringify({
           userId,
+          email,
           userPw,
           userPwCheck,
           userNick,
@@ -101,6 +108,66 @@ const isLoginDB = () => {
       })
       .catch((err) => {
         console.log('errrr', err)
+      })
+  }
+}
+
+const findPwDB = (dic) => {
+  console.log(dic)
+  const { email: email, id: userId } = dic
+  return async function (dispatch, getState, { history }) {
+    await axios
+      .post(
+        'http://3.36.75.6/user/findPw',
+        JSON.stringify({
+          email,
+          userId,
+        }),
+        {
+          headers: { 'Content-Type': `application/json` },
+        },
+      )
+      .then((res) => {
+        console.log(res)
+        alert('메일로 새 비밀번호가 전송되었습니다!')
+      })
+      .catch((err) => {
+        console.log('err', err)
+      })
+  }
+}
+
+const changePwDB = (dic) => {
+  console.log(dic)
+  const {
+    email: email,
+    id: userId,
+    getpw: password,
+    newPw: newPw,
+    newPwCheck: newPwCheck,
+  } = dic
+  return async function (dispatch, getState, { history }) {
+    await axios
+      .post(
+        'http://3.36.75.6/user/changePw',
+        JSON.stringify({
+          email,
+          userId,
+          password,
+          newPw,
+          newPwCheck,
+        }),
+        {
+          headers: { 'Content-Type': `application/json` },
+        },
+      )
+      .then((res) => {
+        console.log(res)
+        alert('비밀번호가 변경되었습니다!')
+        history.push('/login')
+      })
+      .catch((err) => {
+        console.log('err', err)
       })
   }
 }
@@ -169,5 +236,7 @@ const actionCreators = {
   signupDB,
   isLoginDB,
   logOutDB,
+  findPwDB,
+  changePwDB,
 }
 export { actionCreators }

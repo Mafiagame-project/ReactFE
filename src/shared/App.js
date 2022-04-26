@@ -5,6 +5,7 @@ import { history } from '../redux/configureStore'
 import Login from '../pages/Login'
 import SignUp from '../pages/SignUp'
 import Main from '../pages/Main'
+import FindPw from '../pages/FindPw'
 import Gameroom from '../pages/Gameroom'
 import KakaoLogin from './KakaoLogin'
 import { useDispatch } from 'react-redux'
@@ -26,6 +27,7 @@ function App() {
         <Route exact path="/" component={Main} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={SignUp} />
+        <Route exact path="/findpw" component={FindPw} />
         <Route exact path="/gameroom" component={Gameroom} />
         <Route exact path="/main" component={KakaoLogin} />
       </ConnectedRouter>
