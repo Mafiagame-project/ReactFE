@@ -8,25 +8,23 @@ import { useSelector } from "react-redux";
 
 function GameRoom(props){
     const socket = useSelector(state => state.post.data);
+    const currentId = localStorage.getItem('userId')
+
     const [getWrite, setWrite] = useState([]);
     const text = useRef();
     const send = () => {
-        let test = text.current.value;
-        let id_value = 'chamchi';
-        socket.emit('msg', test);
-
+        let chatData = text.current.value;
+        socket.emit('msg', chatData, currentId);
         // setWrite(getWrite => [...getWrite])
     }
 
     useEffect(()=>{
         socket.on('msg', data => {
-            console.log(data)
+            console.log('돈다')
             setWrite(list => [...list, {data}]);
         });
-        
+       
     },[socket])
-    console.log(socket)
-    console.log(getWrite)
 
     return(
         <Grid is_flex width='100vw' height='100vh'>
@@ -35,9 +33,9 @@ function GameRoom(props){
                 <Chatbox>
                     <Grid width='100%' height='10%'></Grid>
                     <Grid height='75%' bg='Lemonchiffon'>
-                        { getWrite.map(e => {
+                        { getWrite.map((e) => {
                             return(
-                            <Chatdiv e={e}/>
+                            <Chatdiv currentId={currentId} e={e}/>
                             )
                         })}
                     </Grid>

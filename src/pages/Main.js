@@ -1,27 +1,30 @@
 import Header from '../component/Header';
-import Grid from '../element/Grid';
-import Text from '../element/Text';
 import styled from 'styled-components';
-import Button from '../element/Button';
+import {Grid, Text, Input, Button} from '../element/index';
 import io from 'socket.io-client';
 import { useDispatch } from "react-redux";
 import {actionCreators as postActions} from '../redux/modules/post';
 import { useHistory } from 'react-router';
+import { useState } from 'react';
+import CreateModal from '../component/CreateModal';
 
 function Main(){
     const dispatch = useDispatch();
     const history = useHistory();
     const socket = io.connect('http://3.39.193.90');
+    const [getModal, setModal] = useState(false);
 
     const entrance = (num) => {
         history.push({
             pathname : `/gameroom/${num}`,
         })
-        dispatch(postActions.sendSocket(socket))
+        dispatch(postActions.sendSocket(socket, num))
+        socket.emit('joinRoom', num)
     }
     return(
         <>
         <Header/>
+        { getModal == true ? <CreateModal socket={socket} getModal={getModal} setModal={setModal} /> : null }
         <Grid width='100vw' height='25vh' padding='50px'>
             <Grid is_flex padding='0px 20px 0px 20px'>
                 <Explain></Explain>
@@ -40,7 +43,7 @@ function Main(){
         <Grid width='100vw' height='60vh' padding='20px 100px 0 40px'>
             <Grid is_flex height='10%' padding='10px'>
                 <Text size='25px' bold>전체 방 목록</Text>
-                <Button bg='#d2d2d2' padding='10px' size='15px'>방 만들기</Button>
+                <Button _onClick={()=>{setModal(!getModal)}} bg='#d2d2d2' padding='10px' size='15px'>방 만들기</Button>
             </Grid>
             <RoomBox>
                 {Array.from({length:9}, (e, idx) => {
