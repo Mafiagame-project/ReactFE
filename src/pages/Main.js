@@ -1,11 +1,24 @@
 import Header from '../component/Header';
 import Grid from '../element/Grid';
 import Text from '../element/Text';
-import Rooms from '../component/Rooms';
 import styled from 'styled-components';
 import Button from '../element/Button';
+import io from 'socket.io-client';
+import { useDispatch } from "react-redux";
+import {actionCreators as postActions} from '../redux/modules/post';
+import { useHistory } from 'react-router';
 
 function Main(){
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const socket = io.connect('http://3.39.193.90');
+
+    const entrance = (num) => {
+        history.push({
+            pathname : `/gameroom/${num}`,
+        })
+        dispatch(postActions.sendSocket(socket))
+    }
     return(
         <>
         <Header/>
@@ -30,9 +43,11 @@ function Main(){
                 <Button bg='#d2d2d2' padding='10px' size='15px'>방 만들기</Button>
             </Grid>
             <RoomBox>
-                {Array.from({length:9}, (e, i) => {
+                {Array.from({length:9}, (e, idx) => {
                     return(
-                        <Rooms/>
+                        <Room onClick={() => {entrance(idx)}}>
+                            <Button width='30%' size='20px' padding='10px' bg='#ffb72b' margin='0 0% 0 35%'>입장</Button>
+                        </Room>
                     )
                 })}
             </RoomBox>
@@ -77,6 +92,18 @@ const ProfileImg = styled.div`
     height:75px;
     border-radius:50%;
     background:pink;
-    
+`
+const Room = styled.div`
+    width:300px;
+    min-width:300px;
+    height:100%;
+    background:#white;
+    box-shadow: 2px 2px 2px 2px #d2d2d2;
+    border-radius:20px;
+    margin-right : 20px;
+    @media screen and (max-width: 600px) {
+        min-height:200px;
+        margin-bottom:20px;
+    }
 `
 export default Main
