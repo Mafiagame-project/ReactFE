@@ -6,6 +6,7 @@ import { useBeforeunload } from "react-beforeunload";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import VideoChat from "../component/VideoChat";
 
 function GameRoom(props){
     const history = useHistory();
@@ -67,6 +68,7 @@ function GameRoom(props){
         <Grid is_flex width='100vw' height='100vh'>
             <Grid width='75vw' bg='pink'>
             <Noti>{getWho}</Noti>
+            <VideoChat socket={socket}/>
             </Grid>
             <Grid width='500px' padding='5% 10px 5% 10px'>
                 <Grid height='30px'>
@@ -98,6 +100,7 @@ const Chatbox = styled.div`
   border-radius: 5%;
   box-shadow: 1px 1px 1px 1px gray;
 `
+
 
 
 export default GameRoom
