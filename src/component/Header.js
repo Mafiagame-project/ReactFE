@@ -18,7 +18,7 @@ function Header() {
     <Grid is_flex width="100vw" height="6vh" bg="#eee">
       <Grid width="75vw"></Grid>
       <Rightside>
-        <Text width="100px" size="16px" bold margin="20px">
+        <Text _onClick={()=>{setFriend(!getFriend)}} width="100px" size="16px" bold margin="20px">
           친구목록
         </Text>
         <Text size="16px" bold margin="20px" _onClick={handleLogOut}>

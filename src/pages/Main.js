@@ -11,9 +11,10 @@ import CreateModal from '../component/CreateModal';
 function Main(){
     const dispatch = useDispatch();
     const RoomList = useSelector(state => state.post.rooms);
+    const socket = useSelector(state => state.post.data)
     const currentId = localStorage.getItem('userId')
     const history = useHistory();
-    const socket = io.connect('http://3.39.193.90');
+    // const socket = io.connect('http://3.39.193.90');
     const [getModal, setModal] = useState(false);
     const [roomList, setRoomList] = useState([]);
 
@@ -22,7 +23,7 @@ function Main(){
         dispatch(postActions.sendSocket(socket, socketId))
         socket.emit('joinRoom', socketId)
     }
-    console.log(currentId)
+    
     useEffect(() => {
         socket.emit('main', currentId)
         socket.emit('roomList')
@@ -30,7 +31,7 @@ function Main(){
             dispatch(postActions.sendRoomList(rooms))
         })
     },[]);
-    console.log(RoomList)
+    
     return(
         <>
         <Header/>

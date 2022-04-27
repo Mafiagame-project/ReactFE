@@ -24,19 +24,18 @@ function CreateModal(props){
     `
     
     const createRoom = () => {
-        const currentId = localStorage.getItem('userId')
         let roomTitle = title.current.value;
         let roomPeople = people.current.value;
         let roomPwd;
         if(getOpen == false){
             roomPwd = pwd.current.value;
-            socket.emit('createRoom', currentId, roomTitle, roomPeople, roomPwd)
+            socket.emit('createRoom',roomTitle, roomPeople, roomPwd)
             socket.emit('roomList');
             socket.on('roomList', rooms => {
                 dispatch(postActions.sendRoomList(rooms))
             })
         } else {
-            socket.emit('createRoom', currentId, roomTitle, roomPeople)
+            socket.emit('createRoom',roomTitle, roomPeople)
             socket.emit('roomList');
             socket.on('roomList', rooms => {
                 dispatch(postActions.sendRoomList(rooms))

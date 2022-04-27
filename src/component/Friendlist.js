@@ -1,11 +1,15 @@
 import styled from "styled-components"
+import {Grid, Text} from '../element/index';
 
 function Friendlist(props){
-    
+    const getFriend = props.getFriend;
+    const setFriend = props.setFriend;
     return(
         <Modalblack>
             <Modalwhite>
-
+              <Grid>
+                <Text _onClick={()=>{setFriend(!getFriend)}}>X</Text>
+              </Grid>
             </Modalwhite>
         </Modalblack>
     )

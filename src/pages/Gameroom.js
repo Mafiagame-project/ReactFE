@@ -14,7 +14,7 @@ function GameRoom(props){
     const text = useRef();
     const send = () => {
         let chatData = text.current.value;
-        socket.emit('msg', chatData, currentId);
+        socket.emit('msg', chatData);
         // setWrite(getWrite => [...getWrite])
     }
 
