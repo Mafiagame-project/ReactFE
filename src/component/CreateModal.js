@@ -1,8 +1,11 @@
 import { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import {Grid, Text, Input, Button} from '../element/index';
+import {actionCreators as postActions} from '../redux/modules/post';
 
 function CreateModal(props){
+    const dispatch = useDispatch();
     const getModal = props.getModal;
     const setModal = props.setModal;
     const socket = props.socket;
@@ -26,6 +29,17 @@ function CreateModal(props){
         let roomPwd;
         if(getOpen == false){
             roomPwd = pwd.current.value;
+            socket.emit('createRoom',roomTitle, roomPeople, roomPwd)
+            socket.emit('roomList');
+            socket.on('roomList', rooms => {
+                dispatch(postActions.sendRoomList(rooms))
+            })
+        } else {
+            socket.emit('createRoom',roomTitle, roomPeople)
+            socket.emit('roomList');
+            socket.on('roomList', rooms => {
+                dispatch(postActions.sendRoomList(rooms))
+            })
         }
         console.log(roomTitle, roomPeople, roomPwd, getOpen)
     }
@@ -35,8 +49,8 @@ function CreateModal(props){
                 <Grid height='10px'>
                     <Button width='50px' _onClick={()=>{setModal(!getModal)}}>X</Button>
                 </Grid>
-                <Grid height='150px' bg='#eee'>
-                    <Text>방 만들기</Text>
+                <Grid height='100px'>
+                    <Text bold size='25px'>방 만들기</Text>
                 </Grid>
                 <Grid is_flex width='40%' height='70px'>
                     <Text>방 제목</Text>
@@ -62,7 +76,7 @@ function CreateModal(props){
         </Modalblack>
     )
 }
-const Modalblack = styled.div`
+export const Modalblack = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
   height: 100%;
@@ -72,7 +86,7 @@ const Modalblack = styled.div`
   top: 0;
   z-index: 5;
 `;
-const Modalwhite = styled.div`
+export const Modalwhite = styled.div`
   display: inline-block;
   background: white;
   margin-top: 100px;

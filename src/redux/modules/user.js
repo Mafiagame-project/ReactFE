@@ -188,7 +188,7 @@ const kakaoLogin = (code) => {
         localStorage.setItem('userId', userId)
         localStorage.setItem('userNick', userNick)
         dispatch(logIn(accessToken, userId, userNick))
-        history.replace('/')
+        history.push('/')
       })
       .catch((err) => {
         console.log('에러에러', err)

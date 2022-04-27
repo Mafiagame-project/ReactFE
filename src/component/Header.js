@@ -3,17 +3,22 @@ import Grid from '../element/Grid'
 import Text from '../element/Text'
 import { useDispatch } from 'react-redux'
 import { actionCreators as userActions } from '../redux/modules/user'
+import Friendlist from '../component/Friendlist';
+import { useState } from 'react'
+
 
 function Header() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const [getFriend, setFriend] = useState(false);
   const handleLogOut = () => {
     dispatch(userActions.logOutDB())
   }
   return (
+    <>
     <Grid is_flex width="100vw" height="6vh" bg="#eee">
       <Grid width="75vw"></Grid>
       <Rightside>
-        <Text width="100px" size="16px" bold margin="20px">
+        <Text _onClick={()=>{setFriend(!getFriend)}} width="100px" size="16px" bold margin="20px">
           친구목록
         </Text>
         <Text size="16px" bold margin="20px" _onClick={handleLogOut}>
@@ -21,6 +26,8 @@ function Header() {
         </Text>
       </Rightside>
     </Grid>
+    { getFriend == true ? <Friendlist getFriend={getFriend} setFriend={setFriend}/> : null}
+      </>
   )
 }
 const Rightside = styled.div`

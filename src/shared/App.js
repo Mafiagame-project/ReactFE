@@ -1,15 +1,15 @@
 import React from 'react'
-import { ConnectedRouter } from 'connected-react-router'
-import { Route } from 'react-router-dom'
-import { history } from '../redux/configureStore'
-import Login from '../pages/Login'
-import SignUp from '../pages/SignUp'
-import Main from '../pages/Main'
+import { ConnectedRouter } from 'connected-react-router';
+import { Route } from 'react-router-dom';
+import { history } from '../redux/configureStore';
+import Login from '../pages/Login';
+import SignUp from '../pages/SignUp';
+import Main from '../pages/Main';
+import Gameroom from '../pages/Gameroom';
+import KakaoLogin from './KakaoLogin';
+import Loading from '../pages/Loading';
 import FindPw from '../pages/FindPw'
-import Gameroom from '../pages/Gameroom'
-import KakaoLogin from './KakaoLogin'
 import { useDispatch } from 'react-redux'
-import { actionCreators as userActions } from '../redux/modules/user'
 
 function App() {
   const dispatch = useDispatch()
@@ -24,7 +24,8 @@ function App() {
   return (
     <>
       <ConnectedRouter history={history}>
-        <Route exact path="/" component={Main} />
+        <Route exact path='/' component={Loading}/>
+        <Route exact path="/gamemain" component={Main} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/findpw" component={FindPw} />
