@@ -1,5 +1,5 @@
 import { useHistory } from 'react-router-dom';
-import {Grid, Text} from '../element/index';
+import {Grid, Text, Button} from '../element/index';
 import { useDispatch } from 'react-redux';
 import io from 'socket.io-client';
 import post, {actionCreators as postActions} from '../redux/modules/post';

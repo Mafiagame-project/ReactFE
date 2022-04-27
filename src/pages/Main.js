@@ -14,14 +14,29 @@ function Main(){
     const socket = useSelector(state => state.post.data)
     const currentId = localStorage.getItem('userId')
     const history = useHistory();
-    // const socket = io.connect('http://3.39.193.90');
     const [getModal, setModal] = useState(false);
-    const [roomList, setRoomList] = useState([]);
 
-    const entrance = (socketId) => {
-        history.push(`/gameroom/${socketId}`)
-        dispatch(postActions.sendSocket(socket, socketId))
-        socket.emit('joinRoom', socketId)
+    const entrance = (roomInfo) => {
+        if(roomInfo.currentPeople >= parseInt(roomInfo.roomPeople)){
+            alert('응 못들어가')
+            return;
+        } else {
+            if(roomInfo.password){
+                let pwdInput = prompt('비밀번호를 입력해주세요');
+                if(pwdInput == parseInt(roomInfo.password)){
+                    history.push(`/gameroom/${roomInfo.socketId}`)
+                    dispatch(postActions.sendSocket(socket, roomInfo.socketId))
+                    socket.emit('joinRoom', roomInfo.socketId)
+                } else {
+                    alert('비밀번호가 틀림 ㅋ')
+                    return
+                }
+            } else {
+                history.push(`/gameroom/${roomInfo.socketId}`)
+                dispatch(postActions.sendSocket(socket, roomInfo.socketId))
+                socket.emit('joinRoom', roomInfo.socketId)
+            }
+        }
     }
     
     useEffect(() => {
@@ -30,20 +45,8 @@ function Main(){
         socket.on('roomList', rooms => {
             dispatch(postActions.sendRoomList(rooms))
         })
-
-        let unlisten = history.listen((location) => {
-            if(history.action === 'PUSH'){
-                console.log('push')
-            }
-            if(history.action === 'POP'){
-                console.log('POP')
-            }
-        });
-        return () => {
-            unlisten();
-        }
     },[]);
-    
+    console.log(RoomList)
     return(
         <>
         <Header/>
@@ -71,7 +74,7 @@ function Main(){
             <RoomBox>
                 {RoomList.map((element) => {
                     return(
-                        <Room onClick={() => {entrance(element.socketId)}}>
+                        <Room onClick={() => {entrance(element)}}>
                             <Button width='30%' size='20px' padding='10px' bg='#ffb72b' margin='0 0% 0 35%'>입장</Button>
                         </Room>
                     )
