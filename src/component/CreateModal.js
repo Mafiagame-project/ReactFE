@@ -16,10 +16,17 @@ function CreateModal(props){
 
     const Btn1 = styled.button`
         width:100px;
-        background:${getOpen == true ? 'pink' : '#d2d2d2'}
+        border:none;
+        border-radius:20px;
+        height:30px;
+        background:${getOpen == true ? 'pink' : '#d2d2d2'};
+        margin-right:10px;
     `
     const Btn2 = styled.button`
         width:100px;
+        border:none;
+        border-radius:20px;
+        height:30px;
         background:${getOpen == false ? 'pink' : '#d2d2d2'}
     `
     
@@ -41,7 +48,6 @@ function CreateModal(props){
                 dispatch(postActions.sendRoomList(rooms))
             })
         }
-        console.log(roomTitle, roomPeople, roomPwd, getOpen)
     }
     return(
         <Modalblack>
@@ -60,12 +66,13 @@ function CreateModal(props){
                     <Text>인원 수</Text>
                     <input ref={people} style={{width:'80%'}}/>
                 </Grid>
-                <Grid is_flex width='50%' height='100px'>
+                <Grid isFlex_start width='50%' height='100px'>
                     <Btn1 onClick={()=>{setOpen(true)}}>공개</Btn1>
                     <Btn2 onClick={()=>{setOpen(false)}}>비공개</Btn2>
                     {
                         getOpen == false
-                        ? <input ref={pwd} style={{marginLeft:'100px'}} placeholder="방 비밀번호 입력"/>
+                        ? <input ref={pwd} style={{border:'1px solid #d2d2d2', borderRadius:'20px',
+                         background:'#eee', padding:'10px', marginLeft:'10%', height:'15px'}} placeholder="방 비밀번호 입력"/>
                         : null
                     }
                 </Grid>

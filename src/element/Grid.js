@@ -17,6 +17,7 @@ const Grid = (props) => {
     isFlex_start,
     isFlex_center,
     height,
+    overflow,
   } = props
 
   const styles = {
@@ -32,6 +33,7 @@ const Grid = (props) => {
     flex_column: flex_column,
     isFlex_start: isFlex_start,
     isFlex_center: isFlex_center,
+    overflow:overflow,
   }
   return (
     <React.Fragment>
@@ -62,6 +64,7 @@ Grid.defaultProps = {
 const GridBox = styled.div`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
+  overflow:${(props) => props.overflow};
   box-sizing: border-box;
   ${(props) =>
     props.border ? `border: 2px solid #ffb72b; border-radius: 10px;` : ''}
