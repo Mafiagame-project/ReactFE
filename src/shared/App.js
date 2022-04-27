@@ -29,7 +29,7 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/findpw" component={FindPw} />
-        <Route exact path="/gameroom" component={Gameroom} />
+        <Route exact path="/gameroom/:num" component={Gameroom} />
         <Route exact path="/main" component={KakaoLogin} />
       </ConnectedRouter>
     </>

@@ -2,11 +2,14 @@ import styled from "styled-components"
 import Grid from "../element/Grid";
 import Button from "../element/Button";
 import Chatdiv from'../component/Chatdiv';
+import { useBeforeunload } from "react-beforeunload";
 
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 function GameRoom(props){
+    const history = useHistory();
     const socket = useSelector(state => state.post.data);
     const currentId = localStorage.getItem('userId')
 
@@ -20,10 +23,17 @@ function GameRoom(props){
 
     useEffect(()=>{
         socket.on('msg', data => {
-            console.log('돈다')
             setWrite(list => [...list, {data}]);
         });
-       
+
+        let unlisten = history.listen((location) => {
+            if(history.action === 'POP'){
+                socket.emit('leaveRoom')
+            }
+        });
+        return () => {
+            unlisten();
+        }
     },[socket])
 
     return(

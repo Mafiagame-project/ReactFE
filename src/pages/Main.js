@@ -30,6 +30,18 @@ function Main(){
         socket.on('roomList', rooms => {
             dispatch(postActions.sendRoomList(rooms))
         })
+
+        let unlisten = history.listen((location) => {
+            if(history.action === 'PUSH'){
+                console.log('push')
+            }
+            if(history.action === 'POP'){
+                console.log('POP')
+            }
+        });
+        return () => {
+            unlisten();
+        }
     },[]);
     
     return(
