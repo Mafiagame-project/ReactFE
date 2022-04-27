@@ -10,8 +10,9 @@ import { useHistory } from "react-router-dom";
 function GameRoom(props){
     const history = useHistory();
     const socket = useSelector(state => state.post.data);
-    const currentId = localStorage.getItem('userId')
-
+    const currentId = localStorage.getItem('userId');
+    const [getNotice, setNotice] = useState(false);
+    const [getWho, setWho] = useState();
     const [getWrite, setWrite] = useState([]);
     const text = useRef();
     const send = () => {
@@ -22,14 +23,39 @@ function GameRoom(props){
         history.replace('/gamemain');
         socket.emit('leaveRoom')
     }
+    const whenExit = () => {
+        socket.on('leaveRoomMsg', whosout => {
+            setWho(whosout.msg)
+            setNotice(true);
+            setTimeout(()=>{ setNotice(false) }, 2000);
+        })
+    }
+
+    const Noti = styled.div`
+    width:200px;
+    height:50px;
+    padding:15px;
+    background:rgba(0,0,0,0.3);
+    z-index:5;
+    display:${getNotice == true ? 'block' : 'none'}
+`
     
     useEffect(()=>{
         socket.on('msg', data => {
             setWrite(list => [...list, {data}]);
         });
+        socket.on('joinRoomMsg', (whosenter) => {
+            setWho(whosenter.msg)
+            setNotice(true);
+            setTimeout(() => {setNotice(false)},2000)
+        })
+        whenExit();
+
+
         let unlisten = history.listen((location) => {
             if(history.action === 'POP'){
                 socket.emit('leaveRoom')
+                whenExit();
             }
         });
         return () => {
@@ -39,7 +65,9 @@ function GameRoom(props){
 
     return(
         <Grid is_flex width='100vw' height='100vh'>
-            <Grid width='75vw' bg='pink'></Grid>
+            <Grid width='75vw' bg='pink'>
+            <Noti>{getWho}</Noti>
+            </Grid>
             <Grid width='500px' padding='5% 10px 5% 10px'>
                 <Grid height='30px'>
                     <Button _onClick={()=>{exitRoom()}}>방 나가기</Button>
@@ -70,5 +98,6 @@ const Chatbox = styled.div`
     border-radius:5%;
     box-shadow:1px 1px 1px 1px gray;
 `
+
 
 export default GameRoom

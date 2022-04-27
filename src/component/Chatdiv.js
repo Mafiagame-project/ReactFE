@@ -1,11 +1,11 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components"
 
 function Chatdiv(props){
     const currentId = props.currentId;
     const element = props.e;
-    console.log(element.data);
-
+    
     const Chatid = styled.div`
     text-align:${element.data.id == currentId ? 'right' : 'left'};
     position:relative;

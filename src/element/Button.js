@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Button = (props) => {
-  const { text, _onClick, children, margin, width, padding, size, bg } = props;
+  const { text, _onClick, hoverColor, hoverbg, children, margin, width, padding, size, bg } = props;
 
   const styles = {
     margin: margin,
@@ -10,6 +10,8 @@ const Button = (props) => {
     padding: padding,
     size : size,
     bg : bg,
+    hoverColor : hoverColor,
+    hoverbg :hoverbg
   };
 
   return (
@@ -28,6 +30,7 @@ Button.defaultProps = {
   padding: false,
   size:'14px',
   bg:false,
+  hoverbg : false,
 };
 
 const ElButton = styled.button`
@@ -44,9 +47,9 @@ const ElButton = styled.button`
   ${(props) => (props.margin? `margin: ${props.margin};` : "")}
   transition: 0.2s;
   
-  
   &:hover {
-    color: ${(props) => props.color};
+    color: ${(props) => props.hoverColor};
+    ${(props) => (props.hoverbg ? `background-color: ${props.hoverbg};` : '')}
   }
 `;
 

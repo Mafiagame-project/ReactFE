@@ -51,7 +51,7 @@ function Main(){
         <>
         <Header/>
         { getModal == true ? <CreateModal socket={socket} getModal={getModal} setModal={setModal} /> : null }
-        <Grid width='100vw' height='25vh' padding='50px'>
+        <Grid width='100vw' height='25vh' padding='40px'>
             <Grid is_flex padding='0px 20px 0px 20px'>
                 <Explain></Explain>
                 <Myinfo>
@@ -66,10 +66,11 @@ function Main(){
                 </Myinfo>
             </Grid>
         </Grid>
-        <Grid width='100vw' height='60vh' padding='20px 100px 0 40px'>
+        <Grid width='100vw' height='60vh' padding='60px'>
+            <Grid border padding='30px'>
             <Grid is_flex height='10%' padding='10px'>
                 <Text size='25px' bold>전체 방 목록</Text>
-                <Button _onClick={()=>{setModal(!getModal)}} bg='#d2d2d2' padding='10px' size='15px'>방 만들기</Button>
+                <Button _onClick={()=>{setModal(!getModal)}} bg='#d2d2d2' padding='10px' hoverbg='skyblue' size='15px'>방 만들기</Button>
             </Grid>
             <RoomBox>
                 {RoomList.map((element) => {
@@ -80,6 +81,7 @@ function Main(){
                     )
                 })}
             </RoomBox>
+            </Grid>
         </Grid>
         </>
     )
@@ -128,6 +130,7 @@ const Room = styled.div`
     height:100%;
     background:#white;
     box-shadow: 2px 2px 2px 2px #d2d2d2;
+    border : 1px solid #d2d2d2;
     border-radius:20px;
     margin-right : 20px;
     @media screen and (max-width: 600px) {
