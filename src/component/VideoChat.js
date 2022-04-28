@@ -11,7 +11,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
 `
-
 const Row = styled.div` 
 display: flex; width: 150px; 
 height: 150px; border-radius: 70%; overflow: hidden; 
@@ -30,13 +29,14 @@ function VideoChat(props) {
   const userVideo = useRef();
   const partnerVideo = useRef();
   const socket = props.socket;
-  
+
+  const newPC = new RTCPeerConnection()
+  const peer = new Peer({})
   useEffect(() => {
     navigator.mediaDevices
     .getUserMedia({ video: true, audio: true })
     .then((stream) => {
       dispatch(postActions.videoSetting(stream));
-      setStream(stream)
       if (userVideo.current) {
         userVideo.current.srcObject = stream
       }

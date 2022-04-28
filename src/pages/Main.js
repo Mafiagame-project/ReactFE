@@ -35,6 +35,7 @@ function Main(){
                 history.push(`/gameroom/${roomInfo.socketId}`)
                 dispatch(postActions.sendSocket(socket, roomInfo.socketId))
                 socket.emit('joinRoom', roomInfo.socketId)
+                console.log(socket, roomInfo.socketId)
             }
         }
     }
