@@ -15,7 +15,6 @@ function Main(){
     const currentId = localStorage.getItem('userId')
     const history = useHistory();
     const [getModal, setModal] = useState(false);
-
     const entrance = (roomInfo) => {
         if(roomInfo.currentPeople >= parseInt(roomInfo.roomPeople)){
             alert('응 못들어가')
@@ -47,7 +46,6 @@ function Main(){
             dispatch(postActions.sendRoomList(rooms))
         })
     },[]);
-    console.log(RoomList)
     return(
         <>
         <Header/>

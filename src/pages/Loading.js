@@ -12,7 +12,7 @@ function Loading(){
     
     const entrance = () => {
         history.push('/gamemain');
-        const socket = io.connect('http://3.39.193.90');
+        const socket = io.connect('https://sparta-dongsun.shop');
         dispatch(postActions.sendSocket(socket))
     }
     

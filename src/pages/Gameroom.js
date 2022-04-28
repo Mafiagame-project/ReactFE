@@ -1,20 +1,22 @@
 import styled from "styled-components"
 import Chatdiv from'../component/Chatdiv';
 import {Grid, Button} from '../element/index'
-import { useBeforeunload } from "react-beforeunload";
-
+import Timer from "../component/Timer";
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import {actionCreators as postActions} from '../redux/modules/post';
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import VideoChat from "../component/VideoChat";
 
 function GameRoom(props){
+    const dispatch = useDispatch();
     const history = useHistory();
     const socket = useSelector(state => state.post.data);
+    const currentMember = useSelector(state => state.post.member);
     const currentId = localStorage.getItem('userId');
     const [getNotice, setNotice] = useState(false);
     const [getWho, setWho] = useState();
     const [getWrite, setWrite] = useState([]);
+    const [getTime, setTime] = useState(false);
     const text = useRef();
     const send = () => {
         let chatData = text.current.value;
@@ -22,7 +24,9 @@ function GameRoom(props){
     }
     const exitRoom = () => {
         history.replace('/gamemain');
-        socket.emit('leaveRoom')
+        socket.emit('leaveRoom');
+        dispatch(postActions.exceptExit(currentId))
+        
     }
     const whenExit = () => {
         socket.on('leaveRoomMsg', whosout => {
@@ -31,7 +35,7 @@ function GameRoom(props){
             setTimeout(()=>{ setNotice(false) }, 2000);
         })
     }
-
+    console.log(currentMember);
     const Noti = styled.div`
     width:200px;
     height:50px;
@@ -40,18 +44,18 @@ function GameRoom(props){
     z-index:5;
     display:${getNotice == true ? 'block' : 'none'}
 `
-    
     useEffect(()=>{
         socket.on('msg', data => {
             setWrite(list => [...list, {data}]);
         });
         socket.on('joinRoomMsg', (whosenter) => {
             setWho(whosenter.msg)
+            let someone = whosenter.msg
+            dispatch(postActions.currentMember(currentId))
             setNotice(true);
             setTimeout(() => {setNotice(false)},2000)
         })
         whenExit();
-
 
         let unlisten = history.listen((location) => {
             if(history.action === 'POP'){
@@ -68,9 +72,15 @@ function GameRoom(props){
         <Grid is_flex width='100vw' height='100vh'>
             <Grid width='75vw' bg='pink'>
             <Noti>{getWho}</Noti>
-            <VideoChat socket={socket}/>
             </Grid>
             <Grid width='500px' padding='5% 10px 5% 10px'>
+                {
+                    getTime == true
+                    ? <Timer></Timer>
+                    : null
+                }
+                <button onClick={()=>{setTime(true)}}>true</button>
+                <button onClick={()=>{setTime(false)}}>false</button>
                 <Grid height='30px'>
                     <Button _onClick={()=>{exitRoom()}}>방 나가기</Button>
                 </Grid>

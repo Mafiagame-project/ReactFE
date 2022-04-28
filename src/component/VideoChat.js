@@ -6,9 +6,9 @@ import {actionCreators as postActions} from '../redux/modules/post';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Container = styled.div`
-  height: 100vh;
-  width: 100%;
-  display: flex;
+height: 100vh;
+width: 100%;
+display: flex;
   flex-direction: column;
 `
 const Row = styled.div` 
@@ -30,8 +30,6 @@ function VideoChat(props) {
   const partnerVideo = useRef();
   const socket = props.socket;
 
-  const newPC = new RTCPeerConnection()
-  const peer = new Peer({})
   useEffect(() => {
     navigator.mediaDevices
     .getUserMedia({ video: true, audio: true })
@@ -40,6 +38,7 @@ function VideoChat(props) {
       if (userVideo.current) {
         userVideo.current.srcObject = stream
       }
+      
     })
 
   }, [navigator])
@@ -48,7 +47,6 @@ function VideoChat(props) {
   if (streamInfo) {
     UserVideo = <Video playsInline muted ref={userVideo} autoPlay />
   }
-
   return (
     <Container>
       <Row>
