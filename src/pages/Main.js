@@ -15,9 +15,8 @@ function Main(){
     const currentId = localStorage.getItem('userId')
     const history = useHistory();
     const [getModal, setModal] = useState(false);
-
     const entrance = (roomInfo) => {
-        if(roomInfo.currentPeople >= parseInt(roomInfo.roomPeople)){
+        if(roomInfo.currentPeople.length >= parseInt(roomInfo.roomPeople)){
             alert('응 못들어가')
             return;
         } else {
@@ -35,6 +34,7 @@ function Main(){
                 history.push(`/gameroom/${roomInfo.socketId}`)
                 dispatch(postActions.sendSocket(socket, roomInfo.socketId))
                 socket.emit('joinRoom', roomInfo.socketId)
+                console.log(socket, roomInfo.socketId)
             }
         }
     }
@@ -73,10 +73,13 @@ function Main(){
                 <Button _onClick={()=>{setModal(!getModal)}} bg='#d2d2d2' padding='10px' hoverbg='skyblue' size='15px'>방 만들기</Button>
             </Grid>
             <RoomBox>
-                {RoomList.map((element) => {
+                {RoomList.map((e) => {
                     return(
-                        <Room onClick={() => {entrance(element)}}>
-                            <Button width='30%' size='20px' padding='10px' bg='#ffb72b' margin='0 0% 0 35%'>입장</Button>
+                        <Room onClick={() => {entrance(e)}}>
+                            <Text size='20px' bold>{e.roomTitle}</Text>
+                            <Text size='20px' bold>방장 : {e.userId}</Text>
+                            <Text size='20px' bold>{e.currentPeople.length} / {e.roomPeople}</Text>
+                            <Button width='30%' size='20px' padding='10px' bg='#ffb72b'>입장</Button>
                         </Room>
                     )
                 })}
@@ -133,6 +136,7 @@ const Room = styled.div`
     border : 1px solid #d2d2d2;
     border-radius:20px;
     margin-right : 20px;
+    text-align:center;
     @media screen and (max-width: 600px) {
         min-height:200px;
         margin-bottom:20px;

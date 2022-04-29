@@ -1,10 +1,12 @@
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import {Grid, Text, Input, Button} from '../element/index';
 import {actionCreators as postActions} from '../redux/modules/post';
 
 function CreateModal(props){
+    const history = useHistory();
     const dispatch = useDispatch();
     const getModal = props.getModal;
     const setModal = props.setModal;
@@ -36,13 +38,24 @@ function CreateModal(props){
         let roomPwd;
         if(getOpen == false){
             roomPwd = pwd.current.value;
-            socket.emit('createRoom',roomTitle, roomPeople, roomPwd)
+            socket.emit('createRoom', ({roomTitle, roomPeople, roomPwd}))
+            socket.on('roomData', info => {
+                history.push(`/gameroom/${info.socketId}`)
+                socket.emit('joinRoom', info.socketId)
+                dispatch(postActions.currentRoom(info));
+            });
             socket.emit('roomList');
             socket.on('roomList', rooms => {
                 dispatch(postActions.sendRoomList(rooms))
             })
         } else {
-            socket.emit('createRoom',roomTitle, roomPeople)
+            socket.emit('createRoom', ({roomTitle, roomPeople}))
+            socket.on('roomData', info => {
+                history.push(`/gameroom/${info.socketId}`)
+                socket.emit('joinRoom', info.socketId);
+                console.log(info)
+                dispatch(postActions.currentRoom(info));
+            });
             socket.emit('roomList');
             socket.on('roomList', rooms => {
                 dispatch(postActions.sendRoomList(rooms))

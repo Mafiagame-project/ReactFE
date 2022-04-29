@@ -2,7 +2,7 @@ import { useHistory } from 'react-router-dom';
 import {Grid, Text, Button} from '../element/index';
 import { useDispatch } from 'react-redux';
 import io from 'socket.io-client';
-import post, {actionCreators as postActions} from '../redux/modules/post';
+import {actionCreators as postActions} from '../redux/modules/post';
 
 
 function Loading(){
@@ -12,7 +12,7 @@ function Loading(){
     
     const entrance = () => {
         history.push('/gamemain');
-        const socket = io.connect('http://3.39.193.90');
+        const socket = io.connect('https://sparta-dongsun.shop');
         dispatch(postActions.sendSocket(socket))
     }
     

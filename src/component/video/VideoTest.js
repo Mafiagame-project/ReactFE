@@ -6,9 +6,9 @@ import UserVideoComponent from './UserVideoComponent'
 const userNick = localStorage.getItem('userNick')
 console.log(userNick)
 
-// const OPENVIDU_SERVER_URL = 'https://sparta-dongsun.shop'
-const OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443'
-const OPENVIDU_SERVER_SECRET = 'MY_SECRET' //백이랑 맞추는 건가?
+const OPENVIDU_SERVER_URL = 'https://sparta-dongsun.shop'
+// const OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443'
+const OPENVIDU_SERVER_SECRET = 'MAFIYANG'
 //유저 아이디나 닉네임 받아올건지 여부
 
 class App extends React.Component {
@@ -46,18 +46,18 @@ class App extends React.Component {
   onbeforeunload(event) {
     this.leaveSession()
   }
-  //소켓 아이디 체크
-  //   handleChangeSessionId() {
-  //     this.setState({
-  //       mySessionId: 'socketId',
-  //     })
-  //   }
+  //   소켓 아이디 체크
+  handleChangeSessionId(e) {
+    this.setState({
+      mySessionId: e.target.value,
+    })
+  }
 
-  //   handleChangeUserName() {
-  //     this.setState({
-  //       myUserName: 'Participant' + Math.floor(Math.random() * 100),
-  //     })
-  //   }
+  handleChangeUserName() {
+    this.setState({
+      myUserName: 'Participant' + Math.floor(Math.random() * 100),
+    })
+  }
 
   handleMainVideoStream(stream) {
     if (this.state.mainStreamManager !== stream) {
@@ -249,7 +249,7 @@ class App extends React.Component {
 
     return (
       <div className="container">
-        {/* {this.state.session === undefined ? (
+        {this.state.session === undefined ? (
           <div id="join">
             <div id="join-dialog" className="jumbotron vertical-center">
               <h1> Join a video session </h1>
@@ -287,7 +287,7 @@ class App extends React.Component {
               </form>
             </div>
           </div>
-        ) : null} */}
+        ) : null}
 
         {this.state.session !== undefined ? (
           <div id="session">
