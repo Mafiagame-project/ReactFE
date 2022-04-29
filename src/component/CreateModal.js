@@ -42,6 +42,7 @@ function CreateModal(props){
             socket.on('roomData', info => {
                 history.push(`/gameroom/${info.socketId}`)
                 socket.emit('joinRoom', info.socketId)
+                dispatch(postActions.currentRoom(info));
             });
             socket.emit('roomList');
             socket.on('roomList', rooms => {
@@ -51,7 +52,9 @@ function CreateModal(props){
             socket.emit('createRoom', ({roomTitle, roomPeople}))
             socket.on('roomData', info => {
                 history.push(`/gameroom/${info.socketId}`)
-                socket.emit('joinRoom', info.socketId)
+                socket.emit('joinRoom', info.socketId);
+                console.log(info)
+                dispatch(postActions.currentRoom(info));
             });
             socket.emit('roomList');
             socket.on('roomList', rooms => {

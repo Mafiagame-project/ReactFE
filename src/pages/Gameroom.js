@@ -1,7 +1,6 @@
 import styled from "styled-components"
 import Chatdiv from'../component/Chatdiv';
 import {Grid, Button} from '../element/index'
-import Timer from "../component/Timer";
 import { useEffect, useRef, useState } from "react";
 import {actionCreators as postActions} from '../redux/modules/post';
 import { useDispatch, useSelector } from "react-redux";
@@ -12,12 +11,16 @@ function GameRoom(props){
     const history = useHistory();
     const socket = useSelector(state => state.post.data);
     const currentMember = useSelector(state => state.post.member);
+    const roomInfo = useSelector(state => state.post.room)
     const jobs = useSelector(state => state.post.jobs);
     const currentId = localStorage.getItem('userId');
     const [getNotice, setNotice] = useState(false);
     const [getWho, setWho] = useState();
     const [getWrite, setWrite] = useState([]);
-    const [getTime, setTime] = useState(false);
+    const [getNight, setNight] = useState(false);
+    const [minutes, setMinutes] = useState(0);
+    const [seconds, setSeconds] = useState(0);
+    
     const text = useRef();
     const send = () => {
         let chatData = text.current.value;
@@ -26,33 +29,62 @@ function GameRoom(props){
     const exitRoom = () => {
         history.replace('/gamemain');
         socket.emit('leaveRoom');
+        whenExit();
     }
     const whenExit = () => {
         socket.on('leaveRoomMsg', (whosout, curr) => {
             console.log(whosout, curr)
             setWho(whosout + '님이 퇴장하셨습니다');
-            dispatch(postActions.exceptExit(currentId))
+            dispatch(postActions.exceptExit(whosout))
             setNotice(true);
             setTimeout(()=>{ setNotice(false) }, 2000);
         })
     }
+
     const startGame = () => {
         socket.emit('startGame');
-        dispatch(postActions.gameStart(currentMember));
-        setTime(true)
+        dispatch(postActions.gameStart(currentMember, roomInfo.socketId));
+        if(getNight == false){
+            socket.emit('timer', 120);
+        } else {
+            socket.emit('timer', 60);
+        }
     }
-    console.log(jobs);
+    
+    
     const Noti = styled.div`
     width:200px; height:50px;
     padding:15px; background:rgba(0,0,0,0.3);
     z-index:5; display:${getNotice == true ? 'block' : 'none'}
 `
+    const active = (clicker, clicked, job) => {
+        console.log(clicker)
+        if(clicker == clicked){
+            alert('다른사람뽑아')
+            return
+        }
+        let selector = '';
+        for (let i = 0; i < job.length; i++) {
+            if (job[i].e.includes(clicker)) {
+                console.log(job[i].job)
+                selector = job[i].job
+            }
+        }
+        socket.emit('vote', ({selector, clicked }));
+    }
+    
     useEffect(()=>{
         socket.on('msg', data => {
             setWrite(list => [...list, {data}]);
         });
+        
+        socket.on('timer', (time) => {
+            console.log(time)
+            setMinutes(time.min);
+            setSeconds(time.sec);
+        })
+
         socket.on('joinRoomMsg', (whosenter, current) => {
-            console.log(whosenter, current)
             setWho(whosenter +'님이 입장하셨습니다')
             dispatch(postActions.currentMember(current))
             setNotice(true);
@@ -70,7 +102,7 @@ function GameRoom(props){
             unlisten();
         }
     },[socket])
-    console.log(currentMember);
+    
     return(
         <Grid is_flex width='100vw' height='100vh'>
             <Grid width='75vw' bg='pink' padding='30px'>
@@ -79,7 +111,11 @@ function GameRoom(props){
                         return (
                             <div style={{marginLeft: '50px', marginBottom: '50px', float: 'left',
                                 width: '200px', height: '200px', borderRadius: '50%', background: '#eee'}}>
-                                <button>투표하기</button>
+                                {
+                                    getNight == false
+                                    ? <button onClick={()=>{active(currentId, e, jobs)}}>투표하기</button>
+                                    : <button onClick={()=>{active(currentId, e, jobs)}}>선택하기</button>
+                                }
                             </div>
                         )    
                     })}
@@ -87,7 +123,7 @@ function GameRoom(props){
             </Grid>
             <Grid width='500px' padding='5% 10px 5% 10px'>
                 <Noti>{getWho}</Noti>
-                { getTime == true ? <Timer></Timer>: null }
+                <div className="timer">{minutes} : {seconds}</div>
                 <Button _onClick={()=>{startGame()}}>시작하기</Button>
                 <Grid height='30px'>
                     <Button _onClick={()=>{exitRoom()}}>방 나가기</Button>
