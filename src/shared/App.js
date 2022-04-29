@@ -9,7 +9,6 @@ import Gameroom from '../pages/Gameroom'
 import KakaoLogin from './KakaoLogin'
 import Loading from '../pages/Loading'
 import FindPw from '../pages/FindPw'
-import VideoChat from '../component/VideoChat'
 import { useDispatch } from 'react-redux'
 
 function App() {
@@ -31,7 +30,6 @@ function App() {
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/findpw" component={FindPw} />
         <Route exact path="/gameroom/:num" component={Gameroom} />
-        <Route exact path="/video" component={VideoChat} />
         <Route exact path="/main" component={KakaoLogin} />
       </ConnectedRouter>
     </>

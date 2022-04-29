@@ -12,6 +12,7 @@ function GameRoom(props){
     const history = useHistory();
     const socket = useSelector(state => state.post.data);
     const currentMember = useSelector(state => state.post.member);
+    const jobs = useSelector(state => state.post.jobs);
     const currentId = localStorage.getItem('userId');
     const [getNotice, setNotice] = useState(false);
     const [getWho, setWho] = useState();
@@ -25,33 +26,35 @@ function GameRoom(props){
     const exitRoom = () => {
         history.replace('/gamemain');
         socket.emit('leaveRoom');
-        dispatch(postActions.exceptExit(currentId))
-        
     }
     const whenExit = () => {
-        socket.on('leaveRoomMsg', whosout => {
-            setWho(whosout.msg)
+        socket.on('leaveRoomMsg', (whosout, curr) => {
+            console.log(whosout, curr)
+            setWho(whosout + '님이 퇴장하셨습니다');
+            dispatch(postActions.exceptExit(currentId))
             setNotice(true);
             setTimeout(()=>{ setNotice(false) }, 2000);
         })
     }
-    console.log(currentMember);
+    const startGame = () => {
+        socket.emit('startGame');
+        dispatch(postActions.gameStart(currentMember));
+        setTime(true)
+    }
+    console.log(jobs);
     const Noti = styled.div`
-    width:200px;
-    height:50px;
-    padding:15px;
-    background:rgba(0,0,0,0.3);
-    z-index:5;
-    display:${getNotice == true ? 'block' : 'none'}
+    width:200px; height:50px;
+    padding:15px; background:rgba(0,0,0,0.3);
+    z-index:5; display:${getNotice == true ? 'block' : 'none'}
 `
     useEffect(()=>{
         socket.on('msg', data => {
             setWrite(list => [...list, {data}]);
         });
-        socket.on('joinRoomMsg', (whosenter) => {
-            setWho(whosenter.msg)
-            let someone = whosenter.msg
-            dispatch(postActions.currentMember(currentId))
+        socket.on('joinRoomMsg', (whosenter, current) => {
+            console.log(whosenter, current)
+            setWho(whosenter +'님이 입장하셨습니다')
+            dispatch(postActions.currentMember(current))
             setNotice(true);
             setTimeout(() => {setNotice(false)},2000)
         })
@@ -67,20 +70,25 @@ function GameRoom(props){
             unlisten();
         }
     },[socket])
-
+    console.log(currentMember);
     return(
         <Grid is_flex width='100vw' height='100vh'>
-            <Grid width='75vw' bg='pink'>
-            <Noti>{getWho}</Noti>
+            <Grid width='75vw' bg='pink' padding='30px'>
+                <Grid width='90%' height='90%' bg='beige'>
+                    { currentMember.map((e, i) => {
+                        return (
+                            <div style={{marginLeft: '50px', marginBottom: '50px', float: 'left',
+                                width: '200px', height: '200px', borderRadius: '50%', background: '#eee'}}>
+                                <button>투표하기</button>
+                            </div>
+                        )    
+                    })}
+                </Grid>
             </Grid>
             <Grid width='500px' padding='5% 10px 5% 10px'>
-                {
-                    getTime == true
-                    ? <Timer></Timer>
-                    : null
-                }
-                <button onClick={()=>{setTime(true)}}>true</button>
-                <button onClick={()=>{setTime(false)}}>false</button>
+                <Noti>{getWho}</Noti>
+                { getTime == true ? <Timer></Timer>: null }
+                <Button _onClick={()=>{startGame()}}>시작하기</Button>
                 <Grid height='30px'>
                     <Button _onClick={()=>{exitRoom()}}>방 나가기</Button>
                 </Grid>
