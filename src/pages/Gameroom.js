@@ -36,7 +36,6 @@ function GameRoom(props) {
 
   const whenExit = () => { // 방에서 나가는 경우 발생되는 이벤트 모음
     socket.on('leaveRoomMsg', (whosout, curr) => {
-      console.log(whosout, curr)
       setWho(whosout + '님이 퇴장하셨습니다')
       dispatch(postActions.exceptExit(whosout))
       setNotice(true)
@@ -45,9 +44,10 @@ function GameRoom(props) {
       }, 2000)
     })
   }
-  console.log(jobs)
+  
   const startGame = () => { // 게임 시작하기 버튼을 누르면 발생
     socket.emit('startGame')
+    socket.emit('getJob', currentMember)
     
     if (getNight == false) {
       socket.emit('timer', 120)
@@ -67,7 +67,6 @@ function GameRoom(props) {
     display: ${getNotice == true ? 'block' : 'none'};
   `
   const active = (clicker, clicked, job) => { // 투표, 선택등 행동이벤트 발생시 호출
-    console.log(clicker, clicked)
     if (clicker == clicked) {
       alert('다른사람뽑아')
       return
@@ -75,7 +74,6 @@ function GameRoom(props) {
     let selector = ''
     for (let i = 0; i < job.length; i++) {
       if (job[i].e.includes(clicker)) {
-        console.log(job[i].job)
         selector = job[i].job
       }
     }
@@ -93,7 +91,7 @@ function GameRoom(props) {
       console.log('아침이 되었습니다')
     }
   } 
-
+  console.log(currentMember)
   useEffect(() => {
     socket.on('msg', (data) => { // 서버에서 오는 메세지 데이터를 받음
       setWrite((list) => [...list, { data }])
@@ -104,15 +102,18 @@ function GameRoom(props) {
       setSeconds(time.sec);
       dayAndNight(time.min, time.sec);
     })
-
+    
     socket.on('startGame', msg => {
-      console.log('받았다');
-      dispatch(postActions.gameStart(currentMember, roomInfo.socketId))
+      // dispatch(postActions.gameStart(currentMember, roomInfo.socketId))
+    })
+    socket.on('getJob', playerJob => {
+      console.log(playerJob);
     })
 
-    socket.on('joinRoomMsg', (whosenter, current) => { // 참가자가 방에 들어올때 호출
-      setWho(whosenter + '님이 입장하셨습니다')
-      dispatch(postActions.currentMember(current))
+    socket.on('joinRoomMsg', (incoming, idValue, currentAll) => { // 참가자가 방에 들어올때 호출
+      setWho(incoming + '님이 입장하셨습니다')
+      console.log(idValue)
+      dispatch(postActions.currentMember(idValue))
       setNotice(true)
       setTimeout(() => {
         setNotice(false)
@@ -170,7 +171,7 @@ function GameRoom(props) {
         </Grid>
         <Chatbox>
           <Grid bg='white' width="100%" height="5%" isFlex_center>
-            <Timer className="timer">{minutes} : {seconds}</Timer>
+            {/* <Timer className="timer">{minutes} : {seconds}</Timer> */}
           </Grid>
           <Grid
             overflow="scroll"

@@ -34,7 +34,7 @@ const gameStart = (userIds, roomNum) => {
             newArray.push({e})
         })
         newArray.splice(0,1);
-        console.log(newArray);
+        console.log(newArray, roomNum);
         await axios({
             method : 'post',
             url : `http://3.36.75.6/game/room/${roomNum}`,
