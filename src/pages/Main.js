@@ -16,54 +16,54 @@ function Main(){
     const history = useHistory();
     const [getModal, setModal] = useState(false);
     const entrance = (roomInfo) => {
-        if(roomInfo.currentPeople.length >= parseInt(roomInfo.roomPeople)){
-            alert('응 못들어가')
-            return;
+        console.log(roomInfo);
+        if (roomInfo.start == true) {
+            alert('게임이 시작되었습니다');
+            return
         } else {
-            if(roomInfo.password){
-                let pwdInput = prompt('비밀번호를 입력해주세요');
-                if(pwdInput == parseInt(roomInfo.password)){
+            if (roomInfo.currentPeople.length >= parseInt(roomInfo.roomPeople)) {
+                alert('응 못들어가')
+                return;
+            } else {
+                if (roomInfo.password) {
+                    let pwdInput = prompt('비밀번호를 입력해주세요');
+                    if (pwdInput == parseInt(roomInfo.password)) {
+                        history.push(`/gameroom/${roomInfo.socketId}`)
+                        dispatch(postActions.sendSocket(socket, roomInfo.socketId))
+                        socket.emit('joinRoom', roomInfo.socketId)
+                    } else {
+                        alert('비밀번호가 틀림 ㅋ')
+                        return
+                    }
+                } else {
                     history.push(`/gameroom/${roomInfo.socketId}`)
                     dispatch(postActions.sendSocket(socket, roomInfo.socketId))
                     socket.emit('joinRoom', roomInfo.socketId)
-                } else {
-                    alert('비밀번호가 틀림 ㅋ')
-                    return
+                    console.log(socket, roomInfo.socketId)
                 }
-            } else {
-                history.push(`/gameroom/${roomInfo.socketId}`)
-                dispatch(postActions.sendSocket(socket, roomInfo.socketId))
-                socket.emit('joinRoom', roomInfo.socketId)
-                console.log(socket, roomInfo.socketId)
             }
         }
     }
+   
     
     useEffect(() => {
         socket.emit('main', currentId)
         socket.emit('roomList')
         socket.on('roomList', rooms => {
+            console.log(rooms)
             dispatch(postActions.sendRoomList(rooms))
         })
-    },[]);
+    },[socket]);
     console.log(RoomList)
     return(
         <>
         <Header/>
         { getModal == true ? <CreateModal socket={socket} getModal={getModal} setModal={setModal} /> : null }
-        <Grid width='100vw' height='25vh' padding='40px'>
+        <Grid width='100vw' height='25vh' padding='30px'>
             <Grid is_flex padding='0px 20px 0px 20px'>
-                <Explain></Explain>
-                <Myinfo>
-                    <Text margin='-0%' size='20px' bold>나의 정보</Text>
-                    <Grid is_flex height='10vh'>
-                        <ProfileImg border width='75px' height='75px' bg='pink'></ProfileImg>
-                        <Grid padding='0 20px 0 20px'>
-                            <Text size='20px' bold>이범규</Text>
-                            <Text size='20px' bold>0승 25패</Text>
-                        </Grid>
-                    </Grid>
-                </Myinfo>
+                <Grid border padding='30px'>
+                    <Text>마피아 게임 룰</Text>
+                </Grid>
             </Grid>
         </Grid>
         <Grid width='100vw' height='60vh' padding='60px'>
@@ -90,43 +90,18 @@ function Main(){
     )
 }
 const RoomBox = styled.div`
-    width:100%;
-    height:60%;
-    padding:30px 50px 30px 10px;
-    overflow:scroll;
-    display:flex;
-    flex-direction : rows;
-    @media screen and (max-width: 600px) {
-        height:100%;
-        flex-direction : column;
-    }
-`
-const Explain = styled.div`
-    border:2px solid #ffb72b;
-    border-radius:10px;
-    width:80%;
+width:95%;
+height:60%;
+padding:30px 50px 30px 10px;
+overflow-x:scroll;
+display:flex;
+flex-direction : columns;
+@media screen and (max-width: 600px) {
     height:100%;
-    @media screen and (max-width: 900px) {
-        display:none;
-    }
+    flex-direction : column;
+}
 `
-const Myinfo = styled.div`
-    width:400px;
-    height:80%;
-    padding:20px;
-    margin-left:10px;
-    border:2px solid #ffb72b;
-    border-radius:10px;
-    @media screen and (max-width: 900px) {
-        width:100%;
-    }
-`
-const ProfileImg = styled.div`
-    min-width:75px;
-    height:75px;
-    border-radius:50%;
-    background:pink;
-`
+
 const Room = styled.div`
     width:300px;
     min-width:300px;

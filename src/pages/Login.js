@@ -36,7 +36,7 @@ function Login() {
   return (
     <>
       <Container>
-        <Grid flex_column>
+      <Grid flex_column>
           <Text size="20px" bold>
             Login
           </Text>

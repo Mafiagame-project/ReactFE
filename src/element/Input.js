@@ -51,7 +51,6 @@ Input.defaultProps = {
 
 const ElInput = styled.input`
   padding: 8px 8px;
-
   &:focus {
     outline: none;
   }

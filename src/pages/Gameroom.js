@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import { actionCreators as postActions } from '../redux/modules/post'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import Header from '../component/Header';
 
 function GameRoom(props) {
   const dispatch = useDispatch()
@@ -21,17 +22,19 @@ function GameRoom(props) {
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] = useState(0)
 
-  const text = useRef()
-  const send = () => {
-    let chatData = text.current.value
+  const chatting = useRef()
+  const send = () => { // 채팅을 보낼 때 호출되는 함수
+    let chatData = chatting.current.value
     socket.emit('msg', chatData)
   }
-  const exitRoom = () => {
+
+  const exitRoom = () => { // 방에서 나가기 버튼을 누를때 호출
     history.replace('/gamemain')
     socket.emit('leaveRoom')
-    whenExit()
+    whenExit();
   }
-  const whenExit = () => {
+
+  const whenExit = () => { // 방에서 나가는 경우 발생되는 이벤트 모음
     socket.on('leaveRoomMsg', (whosout, curr) => {
       console.log(whosout, curr)
       setWho(whosout + '님이 퇴장하셨습니다')
@@ -42,10 +45,10 @@ function GameRoom(props) {
       }, 2000)
     })
   }
-
-  const startGame = () => {
+  console.log(jobs)
+  const startGame = () => { // 게임 시작하기 버튼을 누르면 발생
     socket.emit('startGame')
-    dispatch(postActions.gameStart(currentMember, roomInfo.socketId))
+    
     if (getNight == false) {
       socket.emit('timer', 120)
     } else {
@@ -54,15 +57,17 @@ function GameRoom(props) {
   }
 
   const Noti = styled.div`
-    width: 200px;
-    height: 50px;
+    width: 400px;
+    height: 100%;
     padding: 15px;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.4);
+    font-Size:20px;
+    text-align:center;
     z-index: 5;
     display: ${getNotice == true ? 'block' : 'none'};
   `
-  const active = (clicker, clicked, job) => {
-    console.log(clicker)
+  const active = (clicker, clicked, job) => { // 투표, 선택등 행동이벤트 발생시 호출
+    console.log(clicker, clicked)
     if (clicker == clicked) {
       alert('다른사람뽑아')
       return
@@ -77,18 +82,35 @@ function GameRoom(props) {
     socket.emit('vote', { selector, clicked })
   }
 
+  const dayAndNight = (min, sec) => { // 낮과 밤을 구분할 때 호출되는 함수
+    if(min == 0 && sec == 0 && getNight == false){
+      setNight(true);
+      socket.emit('timer', 60)
+      console.log('밤이 되었습니다');
+    } else if(min == 0 && sec == 0 && getNight == true){
+      setNight(false);
+      socket.emit('timer', 120)
+      console.log('아침이 되었습니다')
+    }
+  } 
+
   useEffect(() => {
-    socket.on('msg', (data) => {
+    socket.on('msg', (data) => { // 서버에서 오는 메세지 데이터를 받음
       setWrite((list) => [...list, { data }])
     })
 
-    socket.on('timer', (time) => {
-      console.log(time)
-      setMinutes(time.min)
-      setSeconds(time.sec)
+    socket.on('timer', (time) => { // 서버에서 오는 타이머 카운트 받음
+      setMinutes(time.min);
+      setSeconds(time.sec);
+      dayAndNight(time.min, time.sec);
     })
 
-    socket.on('joinRoomMsg', (whosenter, current) => {
+    socket.on('startGame', msg => {
+      console.log('받았다');
+      dispatch(postActions.gameStart(currentMember, roomInfo.socketId))
+    })
+
+    socket.on('joinRoomMsg', (whosenter, current) => { // 참가자가 방에 들어올때 호출
       setWho(whosenter + '님이 입장하셨습니다')
       dispatch(postActions.currentMember(current))
       setNotice(true)
@@ -96,9 +118,9 @@ function GameRoom(props) {
         setNotice(false)
       }, 2000)
     })
-    whenExit()
+    whenExit();
 
-    let unlisten = history.listen((location) => {
+    let unlisten = history.listen((location) => { // 브라우저 뒤로가기 버튼(나가기) 누를때 호출
       if (history.action === 'POP') {
         socket.emit('leaveRoom')
         whenExit()
@@ -110,8 +132,10 @@ function GameRoom(props) {
   }, [socket])
 
   return (
-    <Grid is_flex width="100vw" height="100vh">
-      <Grid width="75vw" bg="pink" padding="30px">
+    <>
+    <Header/>
+    <Grid is_flex width="100vw" height="90vh">
+      <Grid width="75vw" bg="white" padding="30px">
         <Grid width="90%" height="90%" bg="beige">
           {currentMember.map((e, i) => {
             return (
@@ -127,19 +151,11 @@ function GameRoom(props) {
                 }}
               >
                 {getNight == false ? (
-                  <button
-                    onClick={() => {
-                      active(currentId, e, jobs)
-                    }}
-                  >
+                  <button onClick={() => {active(currentId, e, jobs)}}>
                     투표하기
                   </button>
                 ) : (
-                  <button
-                    onClick={() => {
-                      active(currentId, e, jobs)
-                    }}
-                  >
+                  <button onClick={() => { active(currentId, e, jobs)}}>
                     선택하기
                   </button>
                 )}
@@ -148,53 +164,39 @@ function GameRoom(props) {
           })}
         </Grid>
       </Grid>
-      <Grid width="500px" padding="5% 10px 5% 10px">
-        <Noti>{getWho}</Noti>
-        <div className="timer">
-          {minutes} : {seconds}
-        </div>
-        <Button
-          _onClick={() => {
-            startGame()
-          }}
-        >
-          시작하기
-        </Button>
-        <Grid height="30px">
-          <Button
-            _onClick={() => {
-              exitRoom()
-            }}
-          >
-            방 나가기
-          </Button>
+      <Grid width="500px"padding="2% 10px 2% 2px" margin='0 10px 0 0'>
+        <Grid height='70px'>
+          <Noti>{getWho}</Noti>
         </Grid>
         <Chatbox>
-          <Grid width="100%" height="10%"></Grid>
+          <Grid bg='white' width="100%" height="5%" isFlex_center>
+            <Timer className="timer">{minutes} : {seconds}</Timer>
+          </Grid>
           <Grid
             overflow="scroll"
             padding="10px 0 0 10px"
             height="75%"
-            bg="#ACF3FF"
+            bg="#d2d2d2"
           >
             {getWrite.map((e) => {
               return <Chatdiv currentId={currentId} e={e} />
             })}
           </Grid>
-          <Grid padding="5%" height="15%">
+          <Grid bg='white'padding='20px 0 0 0' height="15%">
             <input
-              ref={text}
+              ref={chatting}
               style={{
                 borderRadius: '10px',
                 padding: '10px',
                 border: 'none',
                 width: '75%',
-                fontSize: '21px',
+                fontSize: '16px',
+                background:'#d2d2d2',
               }}
             />
             <Button
               margin="0 0 0 5px"
-              width="15%"
+              width="17%"
               padding="10px"
               bg="#FFD5A6"
               _onClick={() => {
@@ -205,17 +207,30 @@ function GameRoom(props) {
             </Button>
           </Grid>
         </Chatbox>
+        <Grid isFlex_center width='100%' height='30px'>
+        <Button margin='20px' padding='10px 20px 10px 20px' size='35px' bg='orange'
+        _onClick={() => { startGame()}}>
+          시작하기
+        </Button>
+          <Button margin='20px' padding='10px 20px 10px 20px' size='35px' bg='orange'
+          _onClick={() => { exitRoom()}}>
+            방 나가기
+          </Button>
+        </Grid>
       </Grid>
     </Grid>
+    </>
   )
 }
+const Timer = styled.div`
+  font-Size:32px;
+  font-weight:bold;
+`
 
 const Chatbox = styled.div`
   width: 100%;
-  height: 80vh;
-  background: #eee;
+  height: 70vh;
   border-radius: 5%;
-  box-shadow: 1px 1px 1px 1px gray;
 `
 
 export default GameRoom
