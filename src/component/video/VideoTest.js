@@ -6,9 +6,10 @@ import UserVideoComponent from './UserVideoComponent'
 const userNick = localStorage.getItem('userNick')
 console.log(userNick)
 
-const OPENVIDU_SERVER_URL = 'https://sparta-dongsun.shop'
-// const OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443'
-const OPENVIDU_SERVER_SECRET = 'MAFIYANG'
+// const OPENVIDU_SERVER_URL = 'https://sparta-dongsun.shop:4443'
+const OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443'
+const OPENVIDU_SERVER_SECRET = 'MY_SECRET'
+// const OPENVIDU_SERVER_SECRET = 'MAFIYANG'
 //유저 아이디나 닉네임 받아올건지 여부
 
 class App extends React.Component {

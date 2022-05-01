@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.1",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^13.5.0",
@@ -21,7 +22,6 @@
     "redux-actions": "^2.6.5",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.4.1",
-    "simple-peer": "^9.11.1",
     "socket.io-client": "^4.4.1",
     "styled-components": "^5.3.5",
     "web-vitals": "^2.1.4"

@@ -1,10 +1,10 @@
 import React from 'react'
-import { history } from '../redux/configureStore'
+import { history } from '../../redux/configureStore'
 import { useDispatch } from 'react-redux'
-import { Input, Grid, Button, Text, Image } from '../element/index'
+import { Input, Grid, Button, Text, Image } from '../../element/index'
 import styled from 'styled-components'
-import { actionCreators as userActions } from '../redux/modules/user'
-import EmailCheck, { idVal, nickVal, pwVal } from '../shared/EmailCheck'
+import { actionCreators as userActions } from '../../redux/modules/user'
+import EmailCheck, { idVal, nickVal, pwVal } from '../../shared/EmailCheck'
 
 function SignUp() {
   const dispatch = useDispatch()

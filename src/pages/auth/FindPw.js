@@ -1,7 +1,7 @@
 import React from 'react'
-import { Input, Grid, Button, Text } from '../element/index'
+import { Input, Grid, Button, Text } from '../../element/index'
 import { useDispatch } from 'react-redux'
-import { actionCreators as userActions } from '../redux/modules/user'
+import { actionCreators as userActions } from '../../redux/modules/user'
 
 const FindPw = () => {
   const dispatch = useDispatch()

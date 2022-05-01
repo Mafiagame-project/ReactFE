@@ -1,11 +1,10 @@
 import React from 'react'
-import { history } from '../redux/configureStore'
-import { Input, Grid, Button, Text, Image } from '../element/index'
+import { history } from '../../redux/configureStore'
+import { Input, Grid, Button, Text, Image } from '../../element/index'
 import styled from 'styled-components'
-import kakao from '../shared/img/kakao_login.png'
-import { actionCreators as userActions } from '../redux/modules/user'
+import kakao from '../../assets/icons/kakao_login.png'
+import { actionCreators as userActions } from '../../redux/modules/user'
 import { useDispatch } from 'react-redux'
-
 
 function Login() {
   const dispatch = useDispatch()
@@ -26,7 +25,6 @@ function Login() {
       return
     }
     dispatch(userActions.loginDB(logins))
-    
   }
   //kakao 나중에 따로 파일 빼기
   const REST_API_KEY = '6c9c16d27b420108ed23421696dfba3b'
