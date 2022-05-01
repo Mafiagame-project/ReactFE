@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.26.1",
     "connected-react-router": "6.8.0",
+    "formik": "^2.2.9",
     "history": "4.10.1",
     "immer": "^9.0.12",
     "openvidu-browser": "^2.21.0",
@@ -24,7 +25,8 @@
     "redux-thunk": "^2.4.1",
     "socket.io-client": "^4.4.1",
     "styled-components": "^5.3.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",

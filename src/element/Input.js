@@ -11,6 +11,7 @@ const Input = (props) => {
     _onChange,
     type,
     id,
+    autoComplete,
   } = props
 
   const styles = {
@@ -32,6 +33,7 @@ const Input = (props) => {
         onChange={_onChange}
         type={type}
         placeholder={placeholder}
+        autoComplete={autoComplete}
       />
     </React.Fragment>
   )
@@ -46,6 +48,7 @@ Input.defaultProps = {
   type: 'text',
   value: '',
   id: '',
+  autoComplete: 'off',
   _onChange: () => {},
 }
 
