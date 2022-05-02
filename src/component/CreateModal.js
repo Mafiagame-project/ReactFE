@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import {Grid, Text, Input, Button} from '../element/index';
 import {actionCreators as postActions} from '../redux/modules/post';
+import {actionCreators as roomActions} from '../redux/modules/rooms';
 
 function CreateModal(props){
     const history = useHistory();
@@ -47,10 +48,11 @@ function CreateModal(props){
             socket.emit('joinRoom', info.socketId);
             console.log(info)
             dispatch(postActions.currentRoom(info));
+            dispatch(roomActions.findHost(info.userId));
         });
         socket.emit('roomList');
         socket.on('roomList', rooms => {
-            dispatch(postActions.sendRoomList(rooms))
+            dispatch(roomActions.sendRoomList(rooms))
         })
     }
     return(

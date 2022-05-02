@@ -3,19 +3,21 @@ import styled from 'styled-components';
 import {Grid, Text, Input, Button} from '../element/index';
 import io from 'socket.io-client';
 import { useDispatch, useSelector } from "react-redux";
-import post, {actionCreators as postActions} from '../redux/modules/post';
+import {actionCreators as postActions} from '../redux/modules/post';
+import {actionCreators as roomActions} from '../redux/modules/rooms';
 import { useHistory } from 'react-router';
 import { useEffect, useState } from 'react';
 import CreateModal from '../component/CreateModal';
 
 function Main(){
     const dispatch = useDispatch();
-    const RoomList = useSelector(state => state.post.rooms);
+    const RoomList = useSelector(state => state.room.rooms);
     const socket = useSelector(state => state.post.data)
     const currentId = localStorage.getItem('userId')
     const history = useHistory();
     const [getModal, setModal] = useState(false);
-    const entrance = (roomInfo) => {
+
+    const entrance = (roomInfo) => { // 방에 입장시 생기는 이벤트
         console.log(roomInfo);
         if (roomInfo.start == true) {
             alert('게임이 시작되었습니다');
@@ -28,31 +30,35 @@ function Main(){
                 if (roomInfo.password) {
                     let pwdInput = prompt('비밀번호를 입력해주세요');
                     if (pwdInput == parseInt(roomInfo.password)) {
-                        history.push(`/gameroom/${roomInfo.socketId}`)
-                        dispatch(postActions.sendSocket(socket, roomInfo.socketId))
-                        socket.emit('joinRoom', roomInfo.socketId)
+                        history.push(`/gameroom/${roomInfo.socketId}`);
+                        dispatch(postActions.sendSocket(socket, roomInfo.socketId));
+                        dispatch(roomActions.findHost(roomInfo.userId));
+                        dispatch(postActions.currentRoom(roomInfo));
+                        socket.emit('joinRoom', roomInfo.socketId);
                     } else {
                         alert('비밀번호가 틀림 ㅋ')
                         return
                     }
                 } else {
-                    history.push(`/gameroom/${roomInfo.socketId}`)
-                    dispatch(postActions.sendSocket(socket, roomInfo.socketId))
-                    socket.emit('joinRoom', roomInfo.socketId)
-                    console.log(socket, roomInfo.socketId)
+                    history.push(`/gameroom/${roomInfo.socketId}`);
+                    dispatch(postActions.sendSocket(socket, roomInfo.socketId));
+                    dispatch(roomActions.findHost(roomInfo.userId));
+                    dispatch(postActions.currentRoom(roomInfo));
+                    socket.emit('joinRoom', roomInfo.socketId);
+                    console.log(socket, roomInfo.socketId);
                 }
             }
         }
     }
-   
     
     useEffect(() => {
         socket.emit('main', currentId)
         socket.emit('roomList')
         socket.on('roomList', rooms => {
             console.log(rooms)
-            dispatch(postActions.sendRoomList(rooms))
-        })
+            dispatch(roomActions.sendRoomList(rooms))
+        });
+        
     },[socket]);
     console.log(RoomList)
     return(
