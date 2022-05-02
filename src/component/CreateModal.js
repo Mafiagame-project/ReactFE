@@ -44,8 +44,8 @@ function CreateModal(props){
             socket.emit('createRoom', ({ roomTitle, roomPeople }))
         }
         socket.on('roomData', info => {
-            history.push(`/gameroom/${info.socketId}`)
-            socket.emit('joinRoom', info.socketId);
+            history.push(`/gameroom/${info.roomId}`)
+            socket.emit('joinRoom', info.roomId);
             console.log(info)
             dispatch(postActions.currentRoom(info));
             dispatch(roomActions.findHost(info.userId));

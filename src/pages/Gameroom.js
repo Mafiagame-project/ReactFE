@@ -32,20 +32,20 @@ function GameRoom(props) {
     socket.emit('msg', chatData);
   }
 
-  const exitRoom = () => { // 방에서 나가기 버튼을 누를때 호출
-    history.replace('/gamemain')
+  const exitRoom =  () => { // 방에서 나가기 버튼을 누를때 호출
     socket.emit('leaveRoom')
+    history.replace('/gamemain')
     whenExit();
   }
 
-  const whenExit = () => { // 방에서 나가는 경우 발생되는 이벤트 모음
-    socket.on('leaveRoomMsg', (whosout, curr) => {
+  const whenExit =  () => { // 방에서 나가는 경우 발생되는 이벤트 모음
+    socket.on('leaveRoomMsg', (whosout, current) => {
       setWho(whosout + '님이 퇴장하셨습니다')
-      dispatch(roomActions.exceptExit(whosout))
+      dispatch(roomActions.exceptExit(current));
       setNotice(true)
       setTimeout(() => {
         setNotice(false)
-      }, 2000)
+      }, 2000);
     })
   }
   
@@ -59,19 +59,14 @@ function GameRoom(props) {
   const readyGame = () => {
 
   }
-
-  const active = (clicker, clicked, job) => { // 투표, 선택등 행동이벤트 발생시 호출
-    if (clicker == clicked) {
-      alert('다른사람뽑아')
+  console.log(getJob)
+  const active = (clicked, clicker) => { // 투표, 선택등 행동이벤트 발생시 호출
+    console.log(clicked, clicker)
+    if(currentId == clicker.player){
+      alert('다른사람을 뽑아주세요')
       return
-    }
-    let selector = ''
-    for (let i = 0; i < job.length; i++) {
-      if (job[i].e.includes(clicker)) {
-        selector = job[i].job
-      }
-    }
-    socket.emit('vote', { selector, clicked })
+    } 
+    // socket.emit('vote', { selector, clicked })
   }
 
   const dayAndNight = (min, sec) => { // 낮과 밤을 구분할 때 호출되는 함수
@@ -85,8 +80,7 @@ function GameRoom(props) {
       console.log('아침이 되었습니다')
     }
   } 
-  console.log(currentRoom);
-  console.log(getJob);
+  console.log(currentMember);
   useEffect(() => {
     socket.on('msg', (data) => { // 서버에서 오는 메세지 데이터를 받음
       setWrite((list) => [...list, { data }])
@@ -101,14 +95,17 @@ function GameRoom(props) {
     socket.on('startGame', msg => {
       // dispatch(postActions.gameStart(currentMember, roomInfo.socketId))
     })
-    socket.on('getJob', playerJob => {
-      console.log(playerJob);
-      setJob(playerJob)
+    socket.on('getJob', (player, playerJob) => {
+      console.log(player, playerJob);
+      setJob({player, playerJob})
       // alert(playerJob);
     })
 
     socket.on('joinRoomMsg', (incoming, idValue, currentAll) => { // 참가자가 방에 들어올때 호출
       setWho(incoming + '님이 입장하셨습니다')
+      console.log(idValue);
+      console.log(incoming);
+      console.log(currentAll);
       dispatch(roomActions.currentMember(idValue))
       setNotice(true)
       setTimeout(() => {
@@ -158,11 +155,11 @@ function GameRoom(props) {
                 }}
               >
                 {getNight == false ? (
-                  <button onClick={() => {active(currentId, e, getJob)}}>
+                  <button onClick={() => {active(e, getJob)}}>
                     투표하기
                   </button>
                 ) : (
-                  <button onClick={() => { active(currentId, e, getJob)}}>
+                  <button onClick={() => { active(e, getJob)}}>
                     선택하기
                   </button>
                 )}

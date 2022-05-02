@@ -18,7 +18,6 @@ function Main(){
     const [getModal, setModal] = useState(false);
 
     const entrance = (roomInfo) => { // 방에 입장시 생기는 이벤트
-        console.log(roomInfo);
         if (roomInfo.start == true) {
             alert('게임이 시작되었습니다');
             return
@@ -55,10 +54,8 @@ function Main(){
         socket.emit('main', currentId)
         socket.emit('roomList')
         socket.on('roomList', rooms => {
-            console.log(rooms)
             dispatch(roomActions.sendRoomList(rooms))
         });
-        
     },[socket]);
     console.log(RoomList)
     return(
