@@ -16,7 +16,8 @@ const initialState = {
     data : [],
     idx : [],
     jobs : [],
-    room : [],
+    member : [],
+    croom : [],
     night : [],
 }
 const gameStart = (userIds, roomNum) => {
@@ -70,8 +71,7 @@ export default handleActions(
             draft.jobs = action.payload.jobs
         }),
         [CR_ROOM] : (state, action) => produce(state, (draft) => {
-            console.log(state)
-            draft.room = action.payload.room
+            draft.croom = action.payload.room
         }),
         [TO_NIGHT] : (state, action) => produce(state, (draft) => {
             draft.night = action.payload.rull

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -32,6 +32,10 @@ function CreateModal(props){
         height:40px;
         background:${getOpen == false ? 'orange' : '#eee'}
     `
+    useEffect(()=>{
+
+
+    },[socket])
     
     const createRoom = () => {
         let roomTitle = title.current.value;
@@ -43,13 +47,12 @@ function CreateModal(props){
         } else { // 공개방일때
             socket.emit('createRoom', ({ roomTitle, roomPeople }))
         }
-        socket.on('roomData', info => {
-            history.push(`/gameroom/${info.roomId}`)
-            socket.emit('joinRoom', info.roomId);
-            console.log(info)
-            dispatch(postActions.currentRoom(info));
-            dispatch(roomActions.findHost(info.userId));
-        });
+        // socket.on('roomData', info => {
+        //     socket.emit('joinRoom', info.roomId);
+        //     dispatch(postActions.currentRoom(info));
+        //     dispatch(roomActions.findHost(info.userId));
+        //     history.push(`/gameroom/${info.roomId}`)
+        // });
         socket.emit('roomList');
         socket.on('roomList', rooms => {
             dispatch(roomActions.sendRoomList(rooms))

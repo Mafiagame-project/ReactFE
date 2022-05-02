@@ -12,10 +12,8 @@ function GameRoom(props) {
   const dispatch = useDispatch();
   const history = useHistory();
   const socket = useSelector((state) => state.post.data);
-  const currentRoom = useSelector(state => state.post.room)
   const currentMember = useSelector((state) => state.room.member);
   const roomHost = useSelector(state => state.room.host);
-  const jobs = useSelector((state) => state.post.jobs);
   const currentId = localStorage.getItem('userId');
   const [getNotice, setNotice] = useState(false);
   const [getWho, setWho] = useState();
@@ -37,11 +35,12 @@ function GameRoom(props) {
     history.replace('/gamemain')
     whenExit();
   }
-
+  
   const whenExit =  () => { // 방에서 나가는 경우 발생되는 이벤트 모음
     socket.on('leaveRoomMsg', (whosout, current) => {
       setWho(whosout + '님이 퇴장하셨습니다')
-      dispatch(roomActions.exceptExit(current));
+      console.log(whosout, current)
+      dispatch(roomActions.exceptExit(whosout));
       setNotice(true)
       setTimeout(() => {
         setNotice(false)
@@ -59,7 +58,6 @@ function GameRoom(props) {
   const readyGame = () => {
 
   }
-  console.log(getJob)
   const active = (clicked, clicker) => { // 투표, 선택등 행동이벤트 발생시 호출
     console.log(clicked, clicker)
     if(currentId == clicker.player){
@@ -68,7 +66,7 @@ function GameRoom(props) {
     } 
     // socket.emit('vote', { selector, clicked })
   }
-
+  console.log(currentMember);
   const dayAndNight = (min, sec) => { // 낮과 밤을 구분할 때 호출되는 함수
     if(min == 0 && sec == 0 && getNight == false){
       setNight(true);
@@ -80,7 +78,6 @@ function GameRoom(props) {
       console.log('아침이 되었습니다')
     }
   } 
-  console.log(currentMember);
   useEffect(() => {
     socket.on('msg', (data) => { // 서버에서 오는 메세지 데이터를 받음
       setWrite((list) => [...list, { data }])
@@ -104,8 +101,6 @@ function GameRoom(props) {
     socket.on('joinRoomMsg', (incoming, idValue, currentAll) => { // 참가자가 방에 들어올때 호출
       setWho(incoming + '님이 입장하셨습니다')
       console.log(idValue);
-      console.log(incoming);
-      console.log(currentAll);
       dispatch(roomActions.currentMember(idValue))
       setNotice(true)
       setTimeout(() => {
@@ -113,7 +108,6 @@ function GameRoom(props) {
       }, 2000)
     })
     whenExit();
-
     let unlisten = history.listen((location) => { // 브라우저 뒤로가기 버튼(나가기) 누를때 호출
       if (history.action === 'POP') {
         socket.emit('leaveRoom')

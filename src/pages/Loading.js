@@ -3,6 +3,7 @@ import {Grid, Text, Button} from '../element/index';
 import { useDispatch } from 'react-redux';
 import io from 'socket.io-client';
 import {actionCreators as postActions} from '../redux/modules/post';
+import {actionCreators as roomActions} from '../redux/modules/rooms';
 
 
 function Loading(){
@@ -13,7 +14,13 @@ function Loading(){
     const entrance = () => {
         history.push('/gamemain');
         const socket = io.connect('https://sparta-dongsun.shop');
-        dispatch(postActions.sendSocket(socket))
+        dispatch(postActions.sendSocket(socket));
+        // socket.on('roomData', info => {
+        //     socket.emit('joinRoom', info.roomId);
+        //     dispatch(postActions.currentRoom(info));
+        //     dispatch(roomActions.findHost(info.userId));
+        //     history.push(`/gameroom/${info.roomId}`)
+        // });
     }
     
     return(

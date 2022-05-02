@@ -29,22 +29,21 @@ function Main(){
                 if (roomInfo.password) {
                     let pwdInput = prompt('비밀번호를 입력해주세요');
                     if (pwdInput == parseInt(roomInfo.password)) {
-                        history.push(`/gameroom/${roomInfo.socketId}`);
-                        dispatch(postActions.sendSocket(socket, roomInfo.socketId));
+                        history.push(`/gameroom/${roomInfo.roomId}`);
+                        dispatch(postActions.sendSocket(socket, roomInfo.roomId));
                         dispatch(roomActions.findHost(roomInfo.userId));
                         dispatch(postActions.currentRoom(roomInfo));
-                        socket.emit('joinRoom', roomInfo.socketId);
+                        socket.emit('joinRoom', roomInfo.roomId);
                     } else {
                         alert('비밀번호가 틀림 ㅋ')
                         return
                     }
                 } else {
-                    history.push(`/gameroom/${roomInfo.socketId}`);
-                    dispatch(postActions.sendSocket(socket, roomInfo.socketId));
+                    history.push(`/gameroom/${roomInfo.roomId}`);
+                    dispatch(postActions.sendSocket(socket, roomInfo.roomId));
                     dispatch(roomActions.findHost(roomInfo.userId));
                     dispatch(postActions.currentRoom(roomInfo));
-                    socket.emit('joinRoom', roomInfo.socketId);
-                    console.log(socket, roomInfo.socketId);
+                    socket.emit('joinRoom', roomInfo.roomId);
                 }
             }
         }

@@ -26,7 +26,7 @@ export default handleActions(
             draft.member = action.payload.member
         }),
         [EXIT] : (state, action) => produce(state, (draft) => {
-            draft.member = action.payload.member;
+            draft.member = draft.member.filter(exit => exit !== action.payload.member);
         }),
         [HOST_IS] : (state, action) => produce(state, (draft) => {
             draft.host = action.payload.host;
