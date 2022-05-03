@@ -5,6 +5,7 @@ import { connectRouter } from 'connected-react-router'
 
 import User from './modules/user'
 import Post from './modules/post'
+import Rooms from './modules/rooms';
 
 export const history = createBrowserHistory()
 
@@ -12,6 +13,7 @@ export const history = createBrowserHistory()
 const rootReducer = combineReducers({
   user: User,
   post : Post,
+  room : Rooms,
   router: connectRouter(history),
 })
 

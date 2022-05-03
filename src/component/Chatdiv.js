@@ -10,22 +10,24 @@ function Chatdiv(props){
     text-align:${element.data.id == currentId ? 'right' : 'left'};
     position:relative;
     right:${element.data.id == currentId ? '2%' : '-2%'};
-    color:#d2d2d2;
+    color:black;
+    font-size:15px;
+    margin-bottom:5px;
     `
     const Chatword = styled.div`
         text-align:${element.data.id == currentId ? 'right' : 'left'};
         position:relative;
         background:white;
-        border-radius:20%;
+        border-radius:5%;
+        border:1px solid black;
         padding:10px;
         display:inline-block;
         right:${element.data.id == currentId ? '2%' : '-2%'};
-        box-shadow:1px 1px 1px 1px #eee;
     `
     const OneChat = styled.div`
         width:100%;
         height:50px;
-        margin-top:12px;
+        margin-top:18px;
         text-align:${element.data.id == currentId ? 'right' : 'left'}
 
     `
