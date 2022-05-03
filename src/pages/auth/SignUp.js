@@ -1,7 +1,7 @@
 import React from 'react'
 import { history } from '../../redux/configureStore'
 import { useDispatch } from 'react-redux'
-import { Input, Grid, Button, Text, Image } from '../../element/index'
+import { AuthInput, Grid, Button, Text, Image } from '../../element/index'
 import styled from 'styled-components'
 import { actionCreators as userActions } from '../../redux/modules/user'
 import { useFormik } from 'formik'
@@ -38,69 +38,75 @@ function SignUp() {
       <Container>
         <Grid flex_column>
           <Text size="20px" bold>
-            Sign up
+            회원가입
           </Text>
           <Form onSubmit={formik.handleSubmit}>
-            <Input
+            <AuthInput
               id="id"
-              label="ID"
               value={formik.values.id}
               autoComplete="off"
               _onChange={formik.handleChange}
-              placeholder="아이디를 입력해주세요"
+              placeholder="아이디"
             />
             <Text>{formik.touched.id ? formik.errors.id : ''}</Text>
-            <Input
+            <AuthInput
               id="email"
-              label="Email"
               autoComplete="off"
               value={formik.values.email}
               _onChange={formik.handleChange}
-              placeholder="이메일을 입력해주세요"
+              placeholder="이메일"
             />
             <Text>{formik.touched.email ? formik.errors.email : ''}</Text>
-            <Input
+            <AuthInput
               id="nick"
-              label="Nickname"
               autoComplete="off"
               value={formik.values.nick}
               _onChange={formik.handleChange}
-              placeholder="닉네임은 2~15자 한글,영문,숫자만 가능합니다"
+              placeholder="닉네임"
             />
             <Text>{formik.touched.nick ? formik.errors.nick : ''}</Text>
-            <Input
+            <AuthInput
               id="pw"
-              label="Password"
               value={formik.values.pw}
               autoComplete="off"
               type="password"
               _onChange={formik.handleChange}
-              placeholder="패스워드 4~15자 영문+숫자만 가능합니다"
+              placeholder="비밀번호"
             />
             <Text>{formik.touched.pw ? formik.errors.pw : ''}</Text>
-            <Input
+            <AuthInput
               id="pwCheck"
-              label="Password"
               value={formik.values.pwCheck}
               autoComplete="off"
               type="password"
               _onChange={formik.handleChange}
-              placeholder="비밀번호를 다시 입력해주세요"
+              placeholder="비밀번호 확인"
             />
             <Text>{formik.touched.pwCheck ? formik.errors.pwCheck : ''}</Text>
-            <button type="submit" value="회원가입" variant="contained">
-              회원가입
-            </button>
+            <Grid isFlex>
+              <Button
+                type="submit"
+                value="회원가입"
+                variant="contained"
+                purpleBtn
+                margin="6px"
+                width="150px"
+              >
+                회원가입
+              </Button>
+              <Button
+                blackBtn
+                width="150px"
+                margin="8px"
+                _onClick={() => {
+                  history.push('/login')
+                }}
+              >
+                {' '}
+                취소
+              </Button>
+            </Grid>
           </Form>
-          <Grid isFlex_center>
-            <Text
-              _onClick={() => {
-                history.push('/login')
-              }}
-            >
-              뒤로가기
-            </Text>
-          </Grid>
         </Grid>
       </Container>
     </>
@@ -109,6 +115,7 @@ function SignUp() {
 
 const Container = styled.div`
   margin: 100px auto;
+  width: 400px;
 `
 
 const Form = styled.form`

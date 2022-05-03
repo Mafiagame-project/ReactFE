@@ -1,6 +1,6 @@
 import React from 'react'
 import { history } from '../../redux/configureStore'
-import { Input, Grid, Button, Text, Image } from '../../element/index'
+import { AuthInput, Grid, Button, Text, Image } from '../../element/index'
 import { actionCreators as userActions } from '../../redux/modules/user'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
@@ -35,30 +35,25 @@ function Login() {
     <>
       <Container>
         <Grid flex_column>
-          <Text size="20px" bold>
-            Login
-          </Text>
-          <Input
+          <AuthInput
             id="id"
-            label="ID"
             value={logins.id}
             _onChange={handleChange}
             autocomplete="off"
-            placeholder="아이디를 입력해주세요"
+            placeholder="아이디"
           />
-          <Input
+          <AuthInput
             id="pw"
-            label="Password"
             value={logins.pw}
             type="password"
             _onChange={handleChange}
             autocomplete="off"
-            placeholder="비밀번호를 입력해주세요"
+            placeholder="비밀번호"
           />
-          <Button _onClick={handleLogin} margin="20px">
-            로그인하기
+          <Button _onClick={handleLogin} margin="8px" purpleBtn>
+            로그인 하기
           </Button>
-          <Grid isFlex_center>
+          <Grid isFlex_center margin="10px;">
             <Text
               _onClick={() => {
                 history.push('/signup')
@@ -76,12 +71,12 @@ function Login() {
             </Text>
           </Grid>
         </Grid>
-        <hr />
+
         <Grid flex_column>
           <Text size="20px" bold>
             sns 로그인
           </Text>
-          <Grid isFlex_center>
+          <Grid isFlex_center margin="20px">
             <a href={KAKAO_AUTH_URL}>
               <img src={kakao} />
             </a>
@@ -93,7 +88,7 @@ function Login() {
 }
 
 const Container = styled.div`
-  margin: 100px auto;
+  margin: 200px auto;
 `
 
 export default Login

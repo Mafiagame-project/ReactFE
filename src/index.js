@@ -5,6 +5,8 @@ import App from './shared/App'
 import reportWebVitals from './reportWebVitals'
 import store from './redux/configureStore'
 import { Provider } from 'react-redux'
+import { ThemeProvider } from 'styled-components'
+import Theme from './styles/theme'
 import registerServiceWorker from './registerServiceWorker'
 
 const container = document.getElementById('root')
@@ -12,7 +14,9 @@ const root = createRoot(container)
 
 root.render(
   <Provider store={store}>
-    <App />
+    <ThemeProvider theme={Theme}>
+      <App />
+    </ThemeProvider>
   </Provider>,
 )
 

@@ -20,14 +20,15 @@ function GameRoom(props) {
   const [getNight, setNight] = useState(false)
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] = useState(0)
-
+  console.log(currentMember)
   const text = useRef()
   const send = () => {
     let chatData = text.current.value
     socket.emit('msg', chatData)
   }
   const exitRoom = () => {
-    history.replace('/gamemain')
+    history.replace('/')
+    // window.location.href = './gamemain'
     socket.emit('leaveRoom')
     whenExit()
   }
@@ -96,7 +97,7 @@ function GameRoom(props) {
         setNotice(false)
       }, 2000)
     })
-    whenExit()
+    // whenExit()
 
     let unlisten = history.listen((location) => {
       if (history.action === 'POP') {

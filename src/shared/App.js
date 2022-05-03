@@ -6,6 +6,7 @@ import Login from '../pages/auth/Login'
 import SignUp from '../pages/auth/SignUp'
 import FindPw from '../pages/auth/FindPw'
 import Main from '../pages/Main'
+import Tutorial from '../pages/Tutorial'
 import Gameroom from '../pages/Gameroom'
 import KakaoLogin from './KakaoLogin'
 import Loading from '../pages/Loading'
@@ -28,6 +29,7 @@ function App() {
       <ConnectedRouter history={history}>
         <Route exact path="/" component={Loading} />
         <Route exact path="/gamemain" component={Main} />
+        <Route exact path="/tutorial" component={Tutorial} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/findpw" component={FindPw} />
