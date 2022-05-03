@@ -1,19 +1,10 @@
-<<<<<<< HEAD
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { Grid, Text, Input, Button } from '../element/index'
 import { actionCreators as postActions } from '../redux/modules/post'
-=======
-import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-import styled from "styled-components";
-import {Grid, Text, Input, Button} from '../element/index';
-import {actionCreators as postActions} from '../redux/modules/post';
-import {actionCreators as roomActions} from '../redux/modules/rooms';
->>>>>>> upstream/main
+import { actionCreators as roomActions } from '../redux/modules/rooms'
 
 function CreateModal(props) {
   const history = useHistory()
@@ -26,57 +17,45 @@ function CreateModal(props) {
   const people = useRef()
   const pwd = useRef()
 
-<<<<<<< HEAD
   const Btn1 = styled.button`
     width: 100px;
     border: none;
     border-radius: 20px;
-    height: 30px;
-    background: ${getOpen == true ? 'pink' : '#d2d2d2'};
+    height: 40px;
+    background: ${getOpen == true ? 'orange' : '#eee'};
     margin-right: 10px;
   `
   const Btn2 = styled.button`
     width: 100px;
     border: none;
     border-radius: 20px;
-    height: 30px;
-    background: ${getOpen == false ? 'pink' : '#d2d2d2'};
+    height: 40px;
+    background: ${getOpen == false ? 'orange' : '#eee'};
   `
+  useEffect(() => {}, [socket])
 
   const createRoom = () => {
     let roomTitle = title.current.value
     let roomPeople = people.current.value
     let roomPwd
     if (getOpen == false) {
+      // 비공개방일때
       roomPwd = pwd.current.value
       socket.emit('createRoom', { roomTitle, roomPeople, roomPwd })
-      socket.on('roomData', (info) => {
-        history.push(`/gameroom/${info.roomId}`)
-        socket.emit('joinRoom', info.roomId)
-        dispatch(postActions.currentRoom(info))
-      })
-      socket.emit('roomList')
-      socket.on('roomList', (rooms) => {
-        dispatch(postActions.sendRoomList(rooms))
-      })
     } else {
+      // 공개방일때
       socket.emit('createRoom', { roomTitle, roomPeople })
-      socket.on('roomData', (info) => {
-        history.push(`/gameroom/${info.roomId}`)
-        socket.emit('joinRoom', info.roomId)
-        console.log(info)
-        dispatch(postActions.currentRoom(info))
-      })
-      socket.emit('roomList')
-      socket.on('roomList', (rooms) => {
-        dispatch(postActions.sendRoomList(rooms))
-      })
     }
+    socket.emit('roomList')
+    socket.on('roomList', (rooms) => {
+      dispatch(roomActions.sendRoomList(rooms))
+    })
   }
   return (
     <Modalblack>
       <Modalwhite>
-        <Grid height="10px">
+        <Grid is_flex height="30px">
+          <div></div>
           <Button
             width="50px"
             _onClick={() => {
@@ -91,15 +70,37 @@ function CreateModal(props) {
             방 만들기
           </Text>
         </Grid>
-        <Grid is_flex width="40%" height="70px">
-          <Text>방 제목</Text>
-          <input ref={title} style={{ width: '80%' }} />
+        <Grid is_flex width="70%" height="70px" padding="50px">
+          <Text size="20px" bold>
+            방 제목
+          </Text>
+          <input
+            ref={title}
+            style={{
+              width: '70%',
+              fontSize: '18px',
+              borderRadius: '10px',
+              border: '1px solid #d2d2d2',
+              height: '40px',
+            }}
+          />
         </Grid>
-        <Grid is_flex width="40%" height="70px">
-          <Text>인원 수</Text>
-          <input ref={people} style={{ width: '80%' }} />
+        <Grid is_flex width="70%" height="70px" padding="50px">
+          <Text size="20px" bold>
+            인원 수
+          </Text>
+          <input
+            ref={people}
+            style={{
+              width: '70%',
+              fontSize: '18px',
+              borderRadius: '10px',
+              border: '1px solid #d2d2d2',
+              height: '40px',
+            }}
+          />
         </Grid>
-        <Grid isFlex_start width="50%" height="100px">
+        <Grid isFlex_start width="80%" height="100px" padding="50px">
           <Btn1
             onClick={() => {
               setOpen(true)
@@ -131,6 +132,9 @@ function CreateModal(props) {
         </Grid>
         <Grid>
           <Button
+            bg="orange"
+            size="20px"
+            padding="10px 20px 10px 20px"
             _onClick={() => {
               createRoom()
             }}
@@ -141,77 +145,6 @@ function CreateModal(props) {
       </Modalwhite>
     </Modalblack>
   )
-=======
-    const Btn1 = styled.button`
-        width:100px;
-        border:none;
-        border-radius:20px;
-        height:40px;
-        background:${getOpen == true ? 'orange' : '#eee'};
-        margin-right:10px;
-    `
-    const Btn2 = styled.button`
-        width:100px;
-        border:none;
-        border-radius:20px;
-        height:40px;
-        background:${getOpen == false ? 'orange' : '#eee'}
-    `
-    useEffect(()=>{
-
-
-    },[socket])
-    
-    const createRoom = () => {
-        let roomTitle = title.current.value;
-        let roomPeople = people.current.value;
-        let roomPwd;
-        if (getOpen == false) { // 비공개방일때
-            roomPwd = pwd.current.value;
-            socket.emit('createRoom', ({ roomTitle, roomPeople, roomPwd }))
-        } else { // 공개방일때
-            socket.emit('createRoom', ({ roomTitle, roomPeople }))
-        }
-        socket.emit('roomList');
-        socket.on('roomList', rooms => {
-            dispatch(roomActions.sendRoomList(rooms))
-        })
-    }
-    return(
-        <Modalblack>
-            <Modalwhite>
-                <Grid is_flex height='30px'>
-                    <div></div>
-                    <Button width='50px' _onClick={()=>{setModal(!getModal)}}>X</Button>
-                </Grid>
-                <Grid height='100px'>
-                    <Text bold size='25px'>방 만들기</Text>
-                </Grid>
-                <Grid is_flex width='70%' height='70px' padding='50px'>
-                    <Text size='20px' bold>방 제목</Text>
-                    <input ref={title} style={{width:'70%',fontSize:'18px', borderRadius:'10px', border:'1px solid #d2d2d2', height:'40px'}}/>
-                </Grid>
-                <Grid is_flex width='70%' height='70px' padding='50px'>
-                    <Text size='20px' bold>인원 수</Text>
-                    <input ref={people} style={{width:'70%',fontSize:'18px', borderRadius:'10px', border:'1px solid #d2d2d2', height:'40px'}}/>
-                </Grid>
-                <Grid isFlex_start width='80%' height='100px' padding='50px'>
-                    <Btn1 onClick={()=>{setOpen(true)}}>공개</Btn1>
-                    <Btn2 onClick={()=>{setOpen(false)}}>비공개</Btn2>
-                    {
-                        getOpen == false
-                        ? <input ref={pwd} style={{border:'1px solid #d2d2d2', borderRadius:'20px',
-                         background:'#eee', padding:'10px', marginLeft:'10%', height:'15px'}} placeholder="방 비밀번호 입력"/>
-                        : null
-                    }
-                </Grid>
-                <Grid>
-                    <Button bg='orange' size='20px' padding='10px 20px 10px 20px' _onClick={()=>{createRoom()}}>생성하기</Button>
-                </Grid>
-            </Modalwhite>
-        </Modalblack>
-    )
->>>>>>> upstream/main
 }
 export const Modalblack = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
