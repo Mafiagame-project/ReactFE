@@ -6,11 +6,13 @@ const SEND_SOCKET = 'SEND_SOCKET'
 const PLAYERS = 'PLAYERS'
 const CR_ROOM = 'CR_ROOM'
 const TO_NIGHT = 'TO_NIGHT'
+const NOTI = 'NOTI'
 
 const sendSocket = createAction(SEND_SOCKET, (socket, num) => ({ socket, num }))
 const players = createAction(PLAYERS, (jobs) => ({ jobs }))
 const currentRoom = createAction(CR_ROOM, (room) => ({ room }))
 const toNights = createAction(TO_NIGHT, (rull) => ({ rull }))
+const notification = createAction(NOTI, (noti) => ({noti}));
 
 const initialState = {
   data: [],
@@ -19,6 +21,7 @@ const initialState = {
   member: [],
   croom: [],
   night: [],
+  noti : [],
 }
 const gameStart = (userIds, roomNum) => {
   return async function (dispatch) {
@@ -75,6 +78,11 @@ export default handleActions(
       produce(state, (draft) => {
         draft.night = action.payload.rull
       }),
+    [NOTI]: (state, action) =>
+      produce(state, (draft) => {
+        draft.noti = action.payload.noti
+      }),
+      
   },
   initialState,
 )
@@ -86,6 +94,7 @@ const actionCreators = {
   currentRoom,
   toNight,
   toNights,
+  notification,
 }
 
 export { actionCreators }
