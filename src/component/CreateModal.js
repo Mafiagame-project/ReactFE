@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-import { useRef, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
-import styled from 'styled-components'
-import { Grid, Text, Input, Button } from '../element/index'
-import { actionCreators as postActions } from '../redux/modules/post'
-=======
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -13,7 +5,6 @@ import styled from "styled-components";
 import {Grid, Text, Input, Button} from '../element/index';
 import {actionCreators as postActions} from '../redux/modules/post';
 import {actionCreators as roomActions} from '../redux/modules/rooms';
->>>>>>> upstream/main
 
 function CreateModal(props) {
   const history = useHistory()
@@ -26,122 +17,6 @@ function CreateModal(props) {
   const people = useRef()
   const pwd = useRef()
 
-<<<<<<< HEAD
-  const Btn1 = styled.button`
-    width: 100px;
-    border: none;
-    border-radius: 20px;
-    height: 30px;
-    background: ${getOpen == true ? 'pink' : '#d2d2d2'};
-    margin-right: 10px;
-  `
-  const Btn2 = styled.button`
-    width: 100px;
-    border: none;
-    border-radius: 20px;
-    height: 30px;
-    background: ${getOpen == false ? 'pink' : '#d2d2d2'};
-  `
-
-  const createRoom = () => {
-    let roomTitle = title.current.value
-    let roomPeople = people.current.value
-    let roomPwd
-    if (getOpen == false) {
-      roomPwd = pwd.current.value
-      socket.emit('createRoom', { roomTitle, roomPeople, roomPwd })
-      socket.on('roomData', (info) => {
-        history.push(`/gameroom/${info.roomId}`)
-        socket.emit('joinRoom', info.roomId)
-        dispatch(postActions.currentRoom(info))
-      })
-      socket.emit('roomList')
-      socket.on('roomList', (rooms) => {
-        dispatch(postActions.sendRoomList(rooms))
-      })
-    } else {
-      socket.emit('createRoom', { roomTitle, roomPeople })
-      socket.on('roomData', (info) => {
-        history.push(`/gameroom/${info.roomId}`)
-        socket.emit('joinRoom', info.roomId)
-        console.log(info)
-        dispatch(postActions.currentRoom(info))
-      })
-      socket.emit('roomList')
-      socket.on('roomList', (rooms) => {
-        dispatch(postActions.sendRoomList(rooms))
-      })
-    }
-  }
-  return (
-    <Modalblack>
-      <Modalwhite>
-        <Grid height="10px">
-          <Button
-            width="50px"
-            _onClick={() => {
-              setModal(!getModal)
-            }}
-          >
-            X
-          </Button>
-        </Grid>
-        <Grid height="100px">
-          <Text bold size="25px">
-            방 만들기
-          </Text>
-        </Grid>
-        <Grid is_flex width="40%" height="70px">
-          <Text>방 제목</Text>
-          <input ref={title} style={{ width: '80%' }} />
-        </Grid>
-        <Grid is_flex width="40%" height="70px">
-          <Text>인원 수</Text>
-          <input ref={people} style={{ width: '80%' }} />
-        </Grid>
-        <Grid isFlex_start width="50%" height="100px">
-          <Btn1
-            onClick={() => {
-              setOpen(true)
-            }}
-          >
-            공개
-          </Btn1>
-          <Btn2
-            onClick={() => {
-              setOpen(false)
-            }}
-          >
-            비공개
-          </Btn2>
-          {getOpen == false ? (
-            <input
-              ref={pwd}
-              style={{
-                border: '1px solid #d2d2d2',
-                borderRadius: '20px',
-                background: '#eee',
-                padding: '10px',
-                marginLeft: '10%',
-                height: '15px',
-              }}
-              placeholder="방 비밀번호 입력"
-            />
-          ) : null}
-        </Grid>
-        <Grid>
-          <Button
-            _onClick={() => {
-              createRoom()
-            }}
-          >
-            생성하기
-          </Button>
-        </Grid>
-      </Modalwhite>
-    </Modalblack>
-  )
-=======
     const Btn1 = styled.button`
         width:100px;
         border:none;
@@ -211,7 +86,6 @@ function CreateModal(props) {
             </Modalwhite>
         </Modalblack>
     )
->>>>>>> upstream/main
 }
 export const Modalblack = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
