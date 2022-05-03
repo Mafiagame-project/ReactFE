@@ -56,10 +56,10 @@ AuthInput.defaultProps = {
 const ElInput = styled.input`
   margin: 4px;
   padding: 8px;
-  ${(props) => (props.width ? `width: ${props.width};` : `width: 300px`)};
+  ${(props) => (props.width ? `width: ${props.width};` : `width: 333px`)};
   ${(props) =>
     props.bg ? `background-color: ${props.bg};` : `background-color: #F6F6F6`};
-  height: 35px;
+  height: 48px;
   font-size: 20px;
   color: #333;
   border: 1px solid #c4c4c4;

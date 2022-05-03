@@ -46,6 +46,7 @@ const loginDB = (dic) => {
         }
       })
       .catch((err) => {
+        window.alert('아이디나 비밀번호를 확인해주세요!')
         console.log('errrrrr', err)
       })
   }
