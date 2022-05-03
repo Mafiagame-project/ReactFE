@@ -15,12 +15,12 @@ function Loading(){
         history.push('/gamemain');
         const socket = io.connect('https://sparta-dongsun.shop');
         dispatch(postActions.sendSocket(socket));
-        // socket.on('roomData', info => {
-        //     socket.emit('joinRoom', info.roomId);
-        //     dispatch(postActions.currentRoom(info));
-        //     dispatch(roomActions.findHost(info.userId));
-        //     history.push(`/gameroom/${info.roomId}`)
-        // });
+        socket.on('roomData', info => {
+            socket.emit('joinRoom', info.roomId);
+            dispatch(postActions.currentRoom(info));
+            dispatch(roomActions.findHost(info.userId));
+            history.push(`/gameroom/${info.roomId}`)
+        });
     }
     
     return(
