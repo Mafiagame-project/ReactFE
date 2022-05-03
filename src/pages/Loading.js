@@ -15,7 +15,8 @@ function Loading(){
         history.push('/gamemain');
         const socket = io.connect('https://sparta-dongsun.shop');
         dispatch(postActions.sendSocket(socket));
-        socket.on('roomData', info => {
+
+        socket.on('roomData', info => { // createModal 이벤트 발생시 실행
             socket.emit('joinRoom', info.roomId);
             dispatch(postActions.currentRoom(info));
             dispatch(roomActions.findHost(info.userId));
