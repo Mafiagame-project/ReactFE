@@ -22,6 +22,11 @@ function Loading(){
             dispatch(roomActions.findHost(info.userId));
             history.push(`/gameroom/${info.roomId}`)
         });
+
+        socket.on('dayVoteResult', notification => {
+            console.log(notification);
+            dispatch(postActions.notification(notification))
+          });
     }
     
     return(

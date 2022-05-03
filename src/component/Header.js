@@ -5,7 +5,8 @@ import { useDispatch } from 'react-redux'
 import { actionCreators as userActions } from '../redux/modules/user'
 import Friendlist from '../component/Friendlist'
 import { useState } from 'react'
-import dao from '../assets/image/Dao.png'
+import dao from '../assets/image/Dao.png';
+
 function Header() {
   const dispatch = useDispatch()
   const currentId = localStorage.getItem('userId')
