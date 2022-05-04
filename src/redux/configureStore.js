@@ -22,8 +22,8 @@ const middlewares = [thunk.withExtraArgument({ history })]
 // // 개발 환경일때, redux-logger 사용할 수 있게하기
 const env = process.env.NODE_ENV
 if (env === 'development') {
-  const { logger } = require('redux-logger')
-  middlewares.push(logger)
+  // const { logger } = require('redux-logger')
+  // middlewares.push(logger)
 }
 
 const composeEnhancers =
