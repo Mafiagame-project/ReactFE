@@ -24,7 +24,7 @@ function Main() {
       return
     } else {
       if (roomInfo.currentPeople.length >= parseInt(roomInfo.roomPeople)) {
-        alert('응 못들어가')
+        alert('정원이 꽉찼습니다')
         return
       } else {
         if (roomInfo.password) {

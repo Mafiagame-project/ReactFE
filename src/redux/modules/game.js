@@ -4,16 +4,25 @@ import { produce } from 'immer';
 const SEND_SOCKET = 'SEND_SOCKET';
 const NOTI = 'NOTI';
 const JOB = 'JOB';
+const KILLED = 'KILLED';
+const SURVIVED = 'SURVIVED';
+const IS_NIGHT = 'IS_NIGHT';
 
 
 const sendSocket = createAction(SEND_SOCKET, (socket) => ({ socket }))
 const noticeInfo = createAction(NOTI, (noti) => ({noti}));
-const playerJob = createAction(JOB, (job) => ({job}))
+const playerJob = createAction(JOB, (job) => ({job}));
+const playerWhoKilled = createAction(KILLED, (player) => ({player}));
+const playerWhoSurvived = createAction(SURVIVED, (player) => ({player}));
+const dayAndNight = createAction(IS_NIGHT, (boolean) => ({boolean}))
 
 const initialState = {
     socket: null,
     noti : null,
     job : null,
+    killed : [],
+    survived : null,
+    night : null,
   }
 
 export default handleActions(
@@ -30,6 +39,18 @@ export default handleActions(
             produce(state, (draft) => {
                 draft.job = action.payload.job
             }),
+        [KILLED]: (state, action) =>
+            produce(state, (draft) => {
+                draft.killed = [...draft.killed, action.payload.player]
+            }),
+        [SURVIVED]: (state, action) =>
+            produce(state, (draft) => {
+                draft.survived = action.payload.player;
+            }),
+        [SURVIVED]: (state, action) =>
+            produce(state, (draft) => {
+                draft.night = action.payload.boolean;
+            }),
     },
     initialState,
   )
@@ -38,6 +59,9 @@ export default handleActions(
     sendSocket,
     noticeInfo,
     playerJob,
+    playerWhoKilled,
+    playerWhoSurvived,
+    dayAndNight,
   }
   
   export { actionCreators }

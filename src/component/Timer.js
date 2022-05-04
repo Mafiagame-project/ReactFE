@@ -47,8 +47,7 @@ function Timer(props) {
   return (
     <>
       <div>
-        {minutes}
-        {seconds}
+        {minutes} : {seconds}
       </div>
     </>
   )

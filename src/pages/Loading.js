@@ -44,13 +44,18 @@ function Loading() {
     })
 
     socket.on('isNight', (value) => {
-      console.log(value, 'true면 밤입니다')
+      console.log(value + 'true면 밤입니다')
+      dispatch(gameActions.dayAndNight(value))
     })
-    socket.on('nightVoteResult', (value) => {
-      console.log(value)
-    })
+
     socket.on('dayVoteResult', (value) => {
       console.log(value)
+      dispatch(gameActions.playerWhoKilled(value.id))
+    })
+
+    socket.on('nightVoteResult', (value) => {
+      console.log(value)
+      dispatch(gameActions.playerWhoKilled(value.died[0]))
     })
   }
 

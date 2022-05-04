@@ -20,6 +20,7 @@ function GameRoom(props) {
   const memberId = useSelector((state) => state.member.memberId)
   const roomInfo = useSelector((state) => state.room.current)
   const playerJob = useSelector((state) => state.game.job)
+  const killed = useSelector((state) => state.game.killed);
   const currentId = localStorage.getItem('userId')
 
   const [getNotice, setNotice] = useState(false)
@@ -53,15 +54,24 @@ function GameRoom(props) {
 
   const readyGame = () => {}
   const active = (clickedId, clicker) => {
-    // 투표, 선택등 행동이벤트 발생시 호출
     let clickerJob = clicker.playerJob
     let clickerId = clicker.player
     if (currentId == clickedId) {
       alert('다른사람을 뽑아주세요')
       return
     }
-    // 클릭한사람의 직업, 클릭한 사람의 아이디, 클릭된자의 아이디, 낮밤
-    socket.emit('vote', { clickerJob, clickerId, clickedId })
+    if (killed.length > 0) {
+      killed.forEach(id => {
+        if (clicker.player == id) {
+          alert('죽었습니다')
+          return
+        } else {
+          socket.emit('vote', { clickerJob, clickerId, clickedId })
+        }
+      });
+    } else {
+      socket.emit('vote', { clickerJob, clickerId, clickedId })
+    }
   }
 
   useEffect(() => {
@@ -69,7 +79,6 @@ function GameRoom(props) {
       // 서버에서 오는 메세지 데이터를 받음
       setWrite((list) => [...list, { data }])
     })
-
     let unlisten = history.listen((location) => {
       // 브라우저 뒤로가기 버튼(나가기) 누를때 호출
       if (history.action === 'POP') {
@@ -130,6 +139,7 @@ function GameRoom(props) {
                 {memberId.map((e) => {
                   return (
                     <Inner>
+                      <h3>{e}</h3>
                       <button
                         onClick={() => {
                           active(e, playerJob)
