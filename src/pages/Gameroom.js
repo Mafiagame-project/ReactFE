@@ -88,7 +88,7 @@ function GameRoom(props) {
       }
     })
     return () => {
-      dispatch(gameActions.playerWhoKilled());
+      dispatch(gameActions.playerWhoKilled(null));
       unlisten()
     }
   }, [socket])

@@ -44,13 +44,13 @@ export default handleActions(
             }),
         [KILLED]: (state, action) =>
             produce(state, (draft) => {
-                draft.killed = [...draft.killed, action.payload.player];
+                draft.killed = action.payload.player;
             }),
         [SURVIVED]: (state, action) =>
             produce(state, (draft) => {
                 draft.survived = action.payload.player;
             }),
-        [SURVIVED]: (state, action) =>
+        [IS_NIGHT]: (state, action) =>
             produce(state, (draft) => {
                 draft.night = action.payload.boolean;
             }),
