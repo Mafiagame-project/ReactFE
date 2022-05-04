@@ -60,7 +60,7 @@ function GameRoom(props) {
       alert('다른사람을 뽑아주세요')
       return
     }
-    if (killed.length > 0) {
+    if (killed) {
       killed.forEach((id) => {
         if (clicker.player == id) {
           alert('죽었습니다')
