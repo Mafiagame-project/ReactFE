@@ -7,7 +7,6 @@ const KakaoLogin = (props) => {
 
   //코드 전송
   let code = new URL(window.location.href).searchParams.get('code')
-  console.log(code)
 
   React.useEffect(() => {
     dispatch(userActions.kakaoLogin(code))

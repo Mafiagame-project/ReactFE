@@ -6,22 +6,25 @@ import { actionCreators as postActions } from '../redux/modules/post'
 import { actionCreators as roomActions } from '../redux/modules/rooms'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import Header from '../component/Header';
-import Time from '../component/Timer';
+import Header from '../component/Header'
+import Time from '../component/Timer'
 
 function GameRoom(props) {
-  const dispatch = useDispatch();
-  const history = useHistory();
+  const dispatch = useDispatch()
+  const history = useHistory()
   const socket = useSelector((state) => state.post.data)
   const currentMember = useSelector((state) => state.room.member)
-  const notification = useSelector(state => state.post.noti);
-  const memberId = useSelector(state => state.room.memberId)
+  const notification = useSelector((state) => state.post.noti)
+  const memberId = useSelector((state) => state.room.memberId)
   const roomHost = useSelector((state) => state.room.host)
+  const getNight = useSelector((state) => state.room.day)
+  console.log(getNight)
   const currentId = localStorage.getItem('userId')
+
   const [getNotice, setNotice] = useState(false)
-  const [getWho, setWho] = useState();
-  const [getWrite, setWrite] = useState([]);
-  const [getNight, setNight] = useState(false);
+  const [getWho, setWho] = useState()
+  const [getWrite, setWrite] = useState([])
+  // const [getNight, setNight] = useState('')
   const [getJob, setJob] = useState()
   const [getStart, setStart] = useState(false)
   const chatting = useRef()
@@ -57,10 +60,10 @@ function GameRoom(props) {
     // 게임 시작하기 버튼을 누르면 발생
     socket.emit('startGame')
     socket.emit('getJob', currentMember)
-    socket.emit('timer', 120)
+    socket.emit('timer', 30)
     setStart(true)
   }
-  console.log(notification, getNight);
+  console.log(notification, getNight)
   const readyGame = () => {}
   const active = (clickedId, clicker, day) => {
     // 투표, 선택등 행동이벤트 발생시 호출
@@ -73,7 +76,7 @@ function GameRoom(props) {
     // 클릭한사람의 직업, 클릭한 사람의 아이디, 클릭된자의 아이디, 낮밤
     socket.emit('vote', { clickerJob, clickerId, clickedId, day })
   }
-  
+
   useEffect(() => {
     socket.on('msg', (data) => {
       // 서버에서 오는 메세지 데이터를 받음
@@ -89,13 +92,12 @@ function GameRoom(props) {
       // alert(playerJob);
     })
 
-
     socket.on('joinRoomMsg', (incoming, idValue, currentAll) => {
       // 참가자가 방에 들어올때 호출
       setWho(incoming + '님이 입장하셨습니다')
-      console.log(currentAll);
-      dispatch(roomActions.currentMember(idValue));
-      dispatch(roomActions.currentId(currentAll));
+      console.log(currentAll)
+      dispatch(roomActions.currentMember(idValue))
+      dispatch(roomActions.currentId(currentAll))
       setNotice(true)
       setTimeout(() => {
         setNotice(false)
@@ -167,16 +169,15 @@ function GameRoom(props) {
         </Grid>
         <Grid width="500px" padding="2% 10px 2% 2px" margin="0 10px 0 0">
           <Grid height="70px">
-            {
-              notification
-              ? <Noti>{notification.id}</Noti>
-              : <Noti>{getWho}</Noti>
-            }
+            {notification ? (
+              <Noti>{notification.id}</Noti>
+            ) : (
+              <Noti>{getWho}</Noti>
+            )}
           </Grid>
           <Chatbox>
             <Grid bg="white" width="100%" height="5%" isFlex_center>
-              
-              <Time getNight={getNight} setNight={setNight} />
+              <Time />
             </Grid>
             <Grid
               overflow="scroll"

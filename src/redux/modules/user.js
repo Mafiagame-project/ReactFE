@@ -26,7 +26,6 @@ const initialState = {
 //Middle Wares
 
 const loginDB = (dic) => {
-  console.log(dic)
   const { id: userId, pw: userPw } = dic
   return async function (dispatch, getState, { history }) {
     await axios
@@ -53,7 +52,6 @@ const loginDB = (dic) => {
 }
 
 const signupDB = (dic) => {
-  console.log(dic)
   const {
     id: userId,
     email: email,
@@ -114,7 +112,6 @@ const isLoginDB = () => {
 }
 
 const findPwDB = (dic) => {
-  console.log(dic)
   const { email: email, id: userId } = dic
   return async function (dispatch, getState, { history }) {
     await axios
@@ -139,7 +136,6 @@ const findPwDB = (dic) => {
 }
 
 const changePwDB = (dic) => {
-  console.log(dic)
   const {
     email: email,
     id: userId,
@@ -176,7 +172,6 @@ const changePwDB = (dic) => {
 //kakao login
 const kakaoLogin = (code) => {
   return async function (dispatch, getState, { history }) {
-    console.log(code)
     await axios
       .get(`http://3.36.75.6/main?code=${code}`)
       .then((res) => {
