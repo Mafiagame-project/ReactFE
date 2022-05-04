@@ -22,7 +22,7 @@ const initialState = {
     socket: null,
     noti : null,
     job : null,
-    killed : [],
+    killed : null,
     survived : null,
     night : null,
     copSelect : null,

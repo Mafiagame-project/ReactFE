@@ -73,7 +73,7 @@ function GameRoom(props) {
       socket.emit('vote', { clickerJob, clickerId, clickedId })
     }
   }
-
+  console.log(killed)
   useEffect(() => {
     socket.on('msg', (data) => {
       // 서버에서 오는 메세지 데이터를 받음
