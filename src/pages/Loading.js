@@ -57,6 +57,11 @@ function Loading() {
       console.log(value)
       dispatch(gameActions.playerWhoKilled(value.died[0]))
     })
+
+    socket.on('police', (selected) => {
+      console.log(selected)
+      dispatch(gameActions.copSelected(selected))
+    })
   }
 
   return (
