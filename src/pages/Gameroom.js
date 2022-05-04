@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import {Planet} from 'react-planet';
+import styled from 'styled-components'
+import { Planet } from 'react-planet'
 import Chatdiv from '../component/Chatdiv'
 import { Grid, Button } from '../element/index'
 import { useEffect, useRef, useState } from 'react'
@@ -12,20 +12,20 @@ import Header from '../component/Header'
 import Time from '../component/Timer'
 
 function GameRoom(props) {
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const socket = useSelector((state) => state.game.socket);
-  const memberSocket = useSelector((state) => state.member.socketId);
-  const notification = useSelector(state => state.game.noti);
-  const memberId = useSelector(state => state.member.memberId);
-  const roomInfo = useSelector(state => state.room.current);
-  const playerJob = useSelector(state => state.game.job);
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const socket = useSelector((state) => state.game.socket)
+  const memberSocket = useSelector((state) => state.member.socketId)
+  const notification = useSelector((state) => state.game.noti)
+  const memberId = useSelector((state) => state.member.memberId)
+  const roomInfo = useSelector((state) => state.room.current)
+  const playerJob = useSelector((state) => state.game.job)
   const currentId = localStorage.getItem('userId')
 
   const [getNotice, setNotice] = useState(false)
-  const [getWho, setWho] = useState();
-  const [getWrite, setWrite] = useState([]);
-  const [getNight, setNight] = useState();
+  const [getWho, setWho] = useState()
+  const [getWrite, setWrite] = useState([])
+  const [getNight, setNight] = useState()
   const [getJob, setJob] = useState()
   const [getStart, setStart] = useState(false)
   const chatting = useRef()
@@ -43,26 +43,14 @@ function GameRoom(props) {
     // whenExit()
   }
 
-  const whenExit = () => {
-    // 방에서 나가는 경우 발생되는 이벤트 모음
-    // socket.on('leaveRoomMsg', (whosout, whosId) => {
-    //   setWho(whosId + '님이 퇴장하셨습니다')
-    //   console.log(whosId)
-    //   dispatch(roomActions.exceptExit(whosout))
-    //   dispatch(roomActions.exitId(whosId))
-    //   setNotice(true)
-    //   setTimeout(() => {
-    //     setNotice(false)
-    //   }, 2000)
-    // })
-  }
+  const whenExit = () => {}
 
   const startGame = () => {
     // 게임 시작하기 버튼을 누르면 발생
     socket.emit('startGame')
     setStart(true)
   }
-  
+
   const readyGame = () => {}
   const active = (clickedId, clicker) => {
     // 투표, 선택등 행동이벤트 발생시 호출
@@ -81,27 +69,7 @@ function GameRoom(props) {
       // 서버에서 오는 메세지 데이터를 받음
       setWrite((list) => [...list, { data }])
     })
-    
-    // socket.on('getJob', (player, playerJob) => {
-    //   console.log(player, playerJob)
-    //   setJob({ player, playerJob })
-    // })
-    // socket.on('startGame', () => {
 
-    // })
-
-    // socket.on('joinRoomMsg', (incoming, idValue, currentAll) => {
-    //   // 참가자가 방에 들어올때 호출
-    //   setWho(incoming + '님이 입장하셨습니다')
-    //   console.log(currentAll)
-    //   dispatch(roomActions.currentMember(idValue))
-    //   dispatch(roomActions.currentId(currentAll))
-    //   setNotice(true)
-    //   setTimeout(() => {
-    //     setNotice(false)
-    //   }, 2000)
-    // })
-    // whenExit()
     let unlisten = history.listen((location) => {
       // 브라우저 뒤로가기 버튼(나가기) 누를때 호출
       if (history.action === 'POP') {
@@ -129,20 +97,20 @@ function GameRoom(props) {
       <Header />
       <Grid is_flex width="100vw" height="90vh">
         <Grid width="75vw" bg="white" padding="30px">
-          <Grid width="90%" height="100%" >
+          <Grid width="90%" height="100%">
             <Container>
               <Planet
-              orbitStyle={(defaultStyle) => ({
-                ...defaultStyle,
-                borderWidth: 0.1,
-                borderStyle: 'dashed',
-                borderColor: '#6f03fc',
-              })}
-              orbitRadius={400}
+                orbitStyle={(defaultStyle) => ({
+                  ...defaultStyle,
+                  borderWidth: 0.1,
+                  borderStyle: 'dashed',
+                  borderColor: '#6f03fc',
+                })}
+                orbitRadius={400}
                 centerContent={
                   <div
                     style={{
-                      height:100,
+                      height: 100,
                       width: 100,
                       borderRadius: '50%',
                     }}
@@ -150,17 +118,19 @@ function GameRoom(props) {
                 }
                 open
               >
-                {
-                  memberSocket.map(e => {
-                    return (
-                      <Inner>
-                        <button onClick={()=>{active(e, playerJob)}}>
-                          선택하기
-                        </button>
-                      </Inner>
-                    )
-                  })
-                }
+                {memberSocket.map((e) => {
+                  return (
+                    <Inner>
+                      <button
+                        onClick={() => {
+                          active(e, playerJob)
+                        }}
+                      >
+                        선택하기
+                      </button>
+                    </Inner>
+                  )
+                })}
               </Planet>
             </Container>
           </Grid>
@@ -272,11 +242,11 @@ function GameRoom(props) {
   )
 }
 const Container = styled.div`
-width:400px;
-height:400px;
-position:absolute;
-top:45%;
-left:30%;
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  top: 45%;
+  left: 30%;
 `
 
 const Timer = styled.div`
@@ -284,10 +254,10 @@ const Timer = styled.div`
   font-weight: bold;
 `
 const Inner = styled.div`
-height: 180px;
-width: 180px;
-border-radius: 50%;
-background: #9257ad;
+  height: 180px;
+  width: 180px;
+  border-radius: 50%;
+  background: #9257ad;
 `
 
 const Chatbox = styled.div`

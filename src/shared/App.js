@@ -10,7 +10,7 @@ import Tutorial from '../pages/Tutorial'
 import Gameroom from '../pages/Gameroom'
 import KakaoLogin from './KakaoLogin'
 import Loading from '../pages/Loading'
-import Functions from '../shared/Functions';
+import Functions from './functions'
 import VideoTest from '../component/video/VideoTest'
 import { useDispatch } from 'react-redux'
 
