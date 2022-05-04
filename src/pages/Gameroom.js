@@ -20,7 +20,7 @@ function GameRoom(props) {
   const memberId = useSelector((state) => state.member.memberId)
   const roomInfo = useSelector((state) => state.room.current)
   const playerJob = useSelector((state) => state.game.job)
-  const killed = useSelector((state) => state.game.killed);
+  const killed = useSelector((state) => state.game.killed)
   const currentId = localStorage.getItem('userId')
 
   const [getNotice, setNotice] = useState(false)
@@ -61,14 +61,14 @@ function GameRoom(props) {
       return
     }
     if (killed.length > 0) {
-      killed.forEach(id => {
+      killed.forEach((id) => {
         if (clicker.player == id) {
           alert('죽었습니다')
           return
         } else {
           socket.emit('vote', { clickerJob, clickerId, clickedId })
         }
-      });
+      })
     } else {
       socket.emit('vote', { clickerJob, clickerId, clickedId })
     }
@@ -173,7 +173,7 @@ function GameRoom(props) {
               bg="#d2d2d2"
             >
               {getWrite.map((e) => {
-                return <Chatdiv currentId={currentId} e={e} ref={chatRef} />
+                return <Chatdiv currentId={currentId} e={e} />
               })}
             </Grid>
             <Grid bg="white" padding="20px 0 0 0" height="15%">
