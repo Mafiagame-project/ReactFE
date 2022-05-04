@@ -49,6 +49,7 @@ function CreateModal(props) {
     socket.emit('roomList')
     socket.on('roomList', (rooms) => {
       dispatch(roomActions.sendRoomList(rooms))
+      dispatch(roomActions.findHost(rooms.userId))
     })
   }
   return (

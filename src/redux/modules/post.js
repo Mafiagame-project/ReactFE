@@ -6,13 +6,21 @@ const SEND_SOCKET = 'SEND_SOCKET'
 const PLAYERS = 'PLAYERS'
 const CR_ROOM = 'CR_ROOM'
 const TO_NIGHT = 'TO_NIGHT'
-const NOTI = 'NOTI'
+const NOTI = 'NOTI';
+const IS_NIGHT = 'IS_NIGHT';
+const MINUTE = 'MINUTE';
+const SET_DAY = 'SET_DAY'
+const SET_NIGHT = 'SET_NIGHT'
 
 const sendSocket = createAction(SEND_SOCKET, (socket, num) => ({ socket, num }))
 const players = createAction(PLAYERS, (jobs) => ({ jobs }))
 const currentRoom = createAction(CR_ROOM, (room) => ({ room }))
 const toNights = createAction(TO_NIGHT, (rull) => ({ rull }))
 const notification = createAction(NOTI, (noti) => ({noti}));
+const isNight = createAction(IS_NIGHT, (isNight) => ({isNight}));
+const sendTime = createAction(MINUTE, (time) => ({time}));
+const setDay = createAction(SET_DAY);
+const setNight = createAction(SET_NIGHT);
 
 const initialState = {
   data: [],
@@ -22,6 +30,8 @@ const initialState = {
   croom: [],
   night: [],
   noti : [],
+  isNight : false,
+  second : [],
 }
 const gameStart = (userIds, roomNum) => {
   return async function (dispatch) {
@@ -82,6 +92,29 @@ export default handleActions(
       produce(state, (draft) => {
         draft.noti = action.payload.noti
       }),
+    [MINUTE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.second = action.payload.time
+      }),
+    [SET_DAY]: (state, action) =>
+      produce(state, (draft) => {
+        console.log('setDay', state.isNight);
+        draft.isNight = false;
+      }),
+    [SET_NIGHT]: (state, action) =>
+      produce(state, (draft) => {
+        console.log('setNight', state.isNight);
+        draft.isNight = true;
+      }),
+    [IS_NIGHT]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(state)
+        if(action.payload.isNight == true){
+          draft.isNight = false;
+        } else {
+          draft.isNight = true;
+        }
+      }),
       
   },
   initialState,
@@ -95,6 +128,11 @@ const actionCreators = {
   toNight,
   toNights,
   notification,
+  isNight,
+  sendTime,
+  setDay,
+  setNight,
+  
 }
 
 export { actionCreators }

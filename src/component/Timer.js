@@ -1,54 +1,51 @@
 import { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { actionCreators as roomAction } from '../redux/modules/rooms'
+import { actionCreators as postActions } from '../redux/modules/post'
+import { useDispatch, useSelector } from 'react-redux'
 
 function Timer(props) {
-  // const setNight = props.setNight
-  // const getNight = props.getNight
+  const dispatch = useDispatch()
+  const [check, setCheck] = useState()
+  const setNight = props.setNight
+  const getNight = props.getNight
   const socket = useSelector((state) => state.post.data)
+  const is_night = useSelector((state) => state.post.isNight)
+  const time = useSelector((state) => state.post.second)
+  const roomHost = useSelector((state) => state.room.host)
+  const currentId = localStorage.getItem('userId')
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] = useState(0)
-  const [getNight, setNight] = useState(false)
-
-  const dispatch = useDispatch()
 
   const dayAndNight = () => {
-    console.log(getNight)
+    console.log(is_night) // 계속 false
     // 낮과 밤을 구분할 때 호출되는 함수
-    if (getNight === false) {
-      setNight(!getNight)
-      console.log(getNight)
-      socket.emit('timer', 30)
+    if (is_night == false) {
+      // 밤이 아니다
+      if (roomHost == currentId) {
+        socket.emit('timer', 5)
+      }
       console.log('밤이 되었습니다')
-      socket.emit('nightVoteResult')
-    } else {
-      setNight(!getNight)
-      console.log(getNight)
-      socket.emit('timer', 30)
-      console.log('아침이 되었습니다')
       socket.emit('dayVoteResult')
+    } else {
+      if (roomHost === currentId) {
+        socket.emit('timer', 5)
+      }
+      console.log('아침이 되었습니다')
+      socket.emit('nightVoteResult')
     }
   }
+  console.log('socket.on')
+  socket.on('timer', (time) => {
+    dispatch(postActions.sendTime(time.sec))
+    // setMinutes(time.min)
+    // setSeconds(time.sec)
+    if (time.sec == 0) {
+      dayAndNight()
+    }
+  })
 
-  useEffect(() => {
-    console.log(getNight)
-    console.log('으악')
-    socket.on('timer', (time) => {
-      // 서버에서 오는 타이머 카운트 받음
-      setMinutes(time.min)
-      setSeconds(time.sec)
-      if (time.min == 0 && time.sec == 0) {
-        dayAndNight()
-        return dispatch(roomAction.changeDay(getNight))
-      }
-    })
-  }, [socket])
   return (
     <>
-      <div>
-        {minutes} : {seconds}
-        <button onClick={dayAndNight} />
-      </div>
+      <div> {time}</div>
     </>
   )
 }
