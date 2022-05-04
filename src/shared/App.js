@@ -10,7 +10,7 @@ import Tutorial from '../pages/Tutorial'
 import Gameroom from '../pages/Gameroom'
 import KakaoLogin from './KakaoLogin'
 import Loading from '../pages/Loading'
-
+import Functions from '../shared/Functions';
 import VideoTest from '../component/video/VideoTest'
 import { useDispatch } from 'react-redux'
 
@@ -36,6 +36,7 @@ function App() {
         <Route exact path="/gameroom/:num" component={Gameroom} />
         <Route exact path="/main" component={KakaoLogin} />
         <Route exact path="/video" component={VideoTest} />
+        <Route exact path="/functions" component={Functions} />
       </ConnectedRouter>
     </>
   )

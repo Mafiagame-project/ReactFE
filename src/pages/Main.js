@@ -1,18 +1,18 @@
 import Header from '../component/Header'
 import styled from 'styled-components'
 import { Grid, Text, Input, Button } from '../element/index'
-import io from 'socket.io-client'
 import { useDispatch, useSelector } from 'react-redux'
-import { actionCreators as postActions } from '../redux/modules/post'
-import { actionCreators as roomActions } from '../redux/modules/rooms'
+import { actionCreators as gameActions } from '../redux/modules/game'
+import { actionCreators as roomActions } from '../redux/modules/room'
+import { actionCreators as memberActions } from '../redux/modules/member'
 import { useHistory } from 'react-router'
 import { useEffect, useState } from 'react'
 import CreateModal from '../component/CreateModal'
 
 function Main() {
   const dispatch = useDispatch()
-  const RoomList = useSelector((state) => state.room.rooms)
-  const socket = useSelector((state) => state.post.data)
+  const RoomList = useSelector((state) => state.room.rooms);
+  const socket = useSelector((state) => state.game.socket);
   const currentId = localStorage.getItem('userId')
   const history = useHistory()
   const [getModal, setModal] = useState(false)
@@ -31,20 +31,18 @@ function Main() {
           let pwdInput = prompt('비밀번호를 입력해주세요')
           if (pwdInput == parseInt(roomInfo.password)) {
             history.push(`/gameroom/${roomInfo.roomId}`)
-            dispatch(postActions.sendSocket(socket, roomInfo.roomId))
-            dispatch(roomActions.findHost(roomInfo.userId))
-            dispatch(postActions.currentRoom(roomInfo))
-            socket.emit('joinRoom', roomInfo.roomId)
+            dispatch(gameActions.sendSocket(socket));
+            dispatch(roomActions.currentRoom(roomInfo));
+            socket.emit('joinRoom', roomInfo.roomId);
           } else {
             alert('비밀번호가 틀림 ㅋ')
             return
           }
         } else {
           history.push(`/gameroom/${roomInfo.roomId}`)
-          dispatch(postActions.sendSocket(socket, roomInfo.roomId))
-          dispatch(roomActions.findHost(roomInfo.userId))
-          dispatch(postActions.currentRoom(roomInfo))
-          socket.emit('joinRoom', roomInfo.roomId)
+          dispatch(gameActions.sendSocket(socket));
+          dispatch(roomActions.currentRoom(roomInfo));
+          socket.emit('joinRoom', roomInfo.roomId);
         }
       }
     }
@@ -57,7 +55,6 @@ function Main() {
       dispatch(roomActions.sendRoomList(rooms))
     })
   }, [socket])
-  console.log(RoomList)
   return (
     <>
       <Header />
