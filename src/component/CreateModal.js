@@ -3,19 +3,18 @@ import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { Grid, Text, Input, Button } from '../element/index'
-import { actionCreators as postActions } from '../redux/modules/post'
-import { actionCreators as roomActions } from '../redux/modules/rooms'
+import { actionCreators as roomActions } from '../redux/modules/room'
 
 function CreateModal(props) {
-  const history = useHistory()
-  const dispatch = useDispatch()
-  const getModal = props.getModal
-  const setModal = props.setModal
-  const socket = props.socket
-  const [getOpen, setOpen] = useState()
-  const title = useRef()
-  const people = useRef()
-  const pwd = useRef()
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const getModal = props.getModal;
+  const setModal = props.setModal;
+  const socket = props.socket;
+  const [getOpen, setOpen] = useState();
+  const title = useRef();
+  const people = useRef();
+  const pwd = useRef();
 
   const Btn1 = styled.button`
     width: 100px;
@@ -49,7 +48,6 @@ function CreateModal(props) {
     socket.emit('roomList')
     socket.on('roomList', (rooms) => {
       dispatch(roomActions.sendRoomList(rooms))
-      dispatch(roomActions.findHost(rooms.userId))
     })
   }
   return (

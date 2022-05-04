@@ -1,23 +1,25 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
+import {Planet} from 'react-planet';
 import Chatdiv from '../component/Chatdiv'
 import { Grid, Button } from '../element/index'
 import { useEffect, useRef, useState } from 'react'
-import { actionCreators as postActions } from '../redux/modules/post'
-import { actionCreators as roomActions } from '../redux/modules/rooms'
+import { actionCreators as gameActions } from '../redux/modules/game'
+import { actionCreators as roomActions } from '../redux/modules/room'
+import { actionCreators as memberActions } from '../redux/modules/member'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import Header from '../component/Header'
 import Time from '../component/Timer'
 
 function GameRoom(props) {
-  const dispatch = useDispatch()
-  const history = useHistory()
-  const socket = useSelector((state) => state.post.data)
-  const currentMember = useSelector((state) => state.room.member)
-  const is_night = useSelector((state) => state.post.isNight);
-  const notification = useSelector(state => state.post.noti);
-  const memberId = useSelector(state => state.room.memberId);
-  const roomHost = useSelector((state) => state.room.host);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const socket = useSelector((state) => state.game.socket);
+  const memberSocket = useSelector((state) => state.member.socketId);
+  const notification = useSelector(state => state.game.noti);
+  const memberId = useSelector(state => state.member.memberId);
+  const roomInfo = useSelector(state => state.room.current);
+  const playerJob = useSelector(state => state.game.job);
   const currentId = localStorage.getItem('userId')
 
   const [getNotice, setNotice] = useState(false)
@@ -38,35 +40,31 @@ function GameRoom(props) {
     // 방에서 나가기 버튼을 누를때 호출
     socket.emit('leaveRoom')
     history.replace('/gamemain')
-    whenExit()
+    // whenExit()
   }
 
   const whenExit = () => {
     // 방에서 나가는 경우 발생되는 이벤트 모음
-    socket.on('leaveRoomMsg', (whosout, whosId) => {
-      setWho(whosId + '님이 퇴장하셨습니다')
-      console.log(whosId)
-      dispatch(roomActions.exceptExit(whosout))
-      dispatch(roomActions.exitId(whosId))
-      setNotice(true)
-      setTimeout(() => {
-        setNotice(false)
-      }, 2000)
-    })
+    // socket.on('leaveRoomMsg', (whosout, whosId) => {
+    //   setWho(whosId + '님이 퇴장하셨습니다')
+    //   console.log(whosId)
+    //   dispatch(roomActions.exceptExit(whosout))
+    //   dispatch(roomActions.exitId(whosId))
+    //   setNotice(true)
+    //   setTimeout(() => {
+    //     setNotice(false)
+    //   }, 2000)
+    // })
   }
 
   const startGame = () => {
     // 게임 시작하기 버튼을 누르면 발생
     socket.emit('startGame')
-    socket.emit('getJob', currentMember)
-    socket.emit('timer', 5)
-    dispatch(postActions.setDay())
-    console.log(is_night);
     setStart(true)
   }
-  console.log(is_night);
+  
   const readyGame = () => {}
-  const active = (clickedId, clicker, day) => {
+  const active = (clickedId, clicker) => {
     // 투표, 선택등 행동이벤트 발생시 호출
     let clickerJob = clicker.playerJob
     let clickerId = clicker.player
@@ -75,7 +73,7 @@ function GameRoom(props) {
       return
     }
     // 클릭한사람의 직업, 클릭한 사람의 아이디, 클릭된자의 아이디, 낮밤
-    socket.emit('vote', { clickerJob, clickerId, clickedId, day })
+    socket.emit('vote', { clickerJob, clickerId, clickedId })
   }
 
   useEffect(() => {
@@ -84,27 +82,26 @@ function GameRoom(props) {
       setWrite((list) => [...list, { data }])
     })
     
-    socket.on('getJob', (player, playerJob) => {
-      console.log(player, playerJob)
-      setJob({ player, playerJob })
-      // alert(playerJob);
-    })
+    // socket.on('getJob', (player, playerJob) => {
+    //   console.log(player, playerJob)
+    //   setJob({ player, playerJob })
+    // })
     // socket.on('startGame', () => {
 
     // })
 
-    socket.on('joinRoomMsg', (incoming, idValue, currentAll) => {
-      // 참가자가 방에 들어올때 호출
-      setWho(incoming + '님이 입장하셨습니다')
-      console.log(currentAll)
-      dispatch(roomActions.currentMember(idValue))
-      dispatch(roomActions.currentId(currentAll))
-      setNotice(true)
-      setTimeout(() => {
-        setNotice(false)
-      }, 2000)
-    })
-    whenExit()
+    // socket.on('joinRoomMsg', (incoming, idValue, currentAll) => {
+    //   // 참가자가 방에 들어올때 호출
+    //   setWho(incoming + '님이 입장하셨습니다')
+    //   console.log(currentAll)
+    //   dispatch(roomActions.currentMember(idValue))
+    //   dispatch(roomActions.currentId(currentAll))
+    //   setNotice(true)
+    //   setTimeout(() => {
+    //     setNotice(false)
+    //   }, 2000)
+    // })
+    // whenExit()
     let unlisten = history.listen((location) => {
       // 브라우저 뒤로가기 버튼(나가기) 누를때 호출
       if (history.action === 'POP') {
@@ -132,40 +129,40 @@ function GameRoom(props) {
       <Header />
       <Grid is_flex width="100vw" height="90vh">
         <Grid width="75vw" bg="white" padding="30px">
-          <Grid width="90%" height="90%" bg="beige">
-            {memberId.map((e, i) => {
-              return (
-                <div
-                  style={{
-                    marginLeft: '50px',
-                    marginBottom: '50px',
-                    float: 'left',
-                    width: '200px',
-                    height: '200px',
-                    borderRadius: '50%',
-                    background: '#eee',
-                  }}
-                >
-                  {getNight == false ? (
-                    <button
-                      onClick={() => {
-                        active(e, getJob, !is_night)
-                      }}
-                    >
-                      투표하기
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => {
-                        active(e, getJob, !is_night)
-                      }}
-                    >
-                      선택하기
-                    </button>
-                  )}
-                </div>
-              )
-            })}
+          <Grid width="90%" height="100%" >
+            <Container>
+              <Planet
+              orbitStyle={(defaultStyle) => ({
+                ...defaultStyle,
+                borderWidth: 0.1,
+                borderStyle: 'dashed',
+                borderColor: '#6f03fc',
+              })}
+              orbitRadius={400}
+                centerContent={
+                  <div
+                    style={{
+                      height:100,
+                      width: 100,
+                      borderRadius: '50%',
+                    }}
+                  />
+                }
+                open
+              >
+                {
+                  memberSocket.map(e => {
+                    return (
+                      <Inner>
+                        <button onClick={()=>{active(e, playerJob)}}>
+                          선택하기
+                        </button>
+                      </Inner>
+                    )
+                  })
+                }
+              </Planet>
+            </Container>
           </Grid>
         </Grid>
         <Grid width="500px" padding="2% 10px 2% 2px" margin="0 10px 0 0">
@@ -217,7 +214,7 @@ function GameRoom(props) {
           </Chatbox>
           {getStart == false ? (
             <Grid isFlex_center width="100%" height="30px">
-              {roomHost == currentId ? (
+              {roomInfo?.userId == currentId ? (
                 <Button
                   margin="20px"
                   padding="10px 20px 10px 20px"
@@ -274,9 +271,23 @@ function GameRoom(props) {
     </>
   )
 }
+const Container = styled.div`
+width:400px;
+height:400px;
+position:absolute;
+top:45%;
+left:30%;
+`
+
 const Timer = styled.div`
   font-size: 32px;
   font-weight: bold;
+`
+const Inner = styled.div`
+height: 180px;
+width: 180px;
+border-radius: 50%;
+background: #9257ad;
 `
 
 const Chatbox = styled.div`
