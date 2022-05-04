@@ -50,12 +50,12 @@ function Loading() {
 
     socket.on('dayVoteResult', (value) => {
       console.log(value)
-      dispatch(gameActions.playerWhoKilled(value.id))
+      dispatch(gameActions.playerWhoKilled(value.diedPeopleArr))
     })
 
-    socket.on('nightVoteResult', (diedPeopleArr) => {
-      console.log(diedPeopleArr)
-      dispatch(gameActions.playerWhoKilled(diedPeopleArr))
+    socket.on('nightVoteResult', (value) => {
+      console.log(value)
+      dispatch(gameActions.playerWhoKilled(value.diedPeopleArr))
     })
 
     socket.on('police', (selected) => {

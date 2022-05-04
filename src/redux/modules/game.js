@@ -21,7 +21,7 @@ const initialState = {
   socket: null,
   noti: null,
   job: null,
-  killed: null,
+  killed: [],
   survived: null,
   night: null,
   copSelect: null,
@@ -49,7 +49,7 @@ export default handleActions(
       produce(state, (draft) => {
         draft.survived = action.payload.player
       }),
-    [SURVIVED]: (state, action) =>
+    [IS_NIGHT]: (state, action) =>
       produce(state, (draft) => {
         draft.night = action.payload.boolean
       }),
@@ -60,7 +60,6 @@ export default handleActions(
   },
   initialState,
 )
-
 const actionCreators = {
   sendSocket,
   noticeInfo,
