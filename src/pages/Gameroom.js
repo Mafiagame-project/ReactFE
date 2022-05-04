@@ -14,14 +14,15 @@ function GameRoom(props) {
   const history = useHistory();
   const socket = useSelector((state) => state.post.data)
   const currentMember = useSelector((state) => state.room.member)
+  const is_night = useSelector((state) => state.post.isNight);
   const notification = useSelector(state => state.post.noti);
-  const memberId = useSelector(state => state.room.memberId)
-  const roomHost = useSelector((state) => state.room.host)
+  const memberId = useSelector(state => state.room.memberId);
+  const roomHost = useSelector((state) => state.room.host);
   const currentId = localStorage.getItem('userId')
   const [getNotice, setNotice] = useState(false)
   const [getWho, setWho] = useState();
   const [getWrite, setWrite] = useState([]);
-  const [getNight, setNight] = useState(false);
+  const [getNight, setNight] = useState();
   const [getJob, setJob] = useState()
   const [getStart, setStart] = useState(false)
   const chatting = useRef()
@@ -57,10 +58,12 @@ function GameRoom(props) {
     // 게임 시작하기 버튼을 누르면 발생
     socket.emit('startGame')
     socket.emit('getJob', currentMember)
-    socket.emit('timer', 120)
+    socket.emit('timer', 5)
+    dispatch(postActions.setDay())
+    console.log(is_night);
     setStart(true)
   }
-  console.log(notification, getNight);
+  console.log(is_night);
   const readyGame = () => {}
   const active = (clickedId, clicker, day) => {
     // 투표, 선택등 행동이벤트 발생시 호출
@@ -79,16 +82,15 @@ function GameRoom(props) {
       // 서버에서 오는 메세지 데이터를 받음
       setWrite((list) => [...list, { data }])
     })
-
-    socket.on('startGame', (msg) => {
-      // dispatch(postActions.gameStart(currentMember, roomInfo.socketId))
-    })
+    
     socket.on('getJob', (player, playerJob) => {
       console.log(player, playerJob)
       setJob({ player, playerJob })
       // alert(playerJob);
     })
+    // socket.on('startGame', () => {
 
+    // })
 
     socket.on('joinRoomMsg', (incoming, idValue, currentAll) => {
       // 참가자가 방에 들어올때 호출
@@ -146,7 +148,7 @@ function GameRoom(props) {
                   {getNight == false ? (
                     <button
                       onClick={() => {
-                        active(e, getJob, !getNight)
+                        active(e, getJob, !is_night)
                       }}
                     >
                       투표하기
@@ -154,7 +156,7 @@ function GameRoom(props) {
                   ) : (
                     <button
                       onClick={() => {
-                        active(e, getJob, !getNight)
+                        active(e, getJob, !is_night)
                       }}
                     >
                       선택하기

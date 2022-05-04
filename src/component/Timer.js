@@ -1,47 +1,51 @@
-import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
+import { useEffect, useState } from "react";
+import { actionCreators as postActions } from '../redux/modules/post'
+import { useDispatch, useSelector } from "react-redux";
 
 function Timer(props){
-  
+    const dispatch = useDispatch();
+    const [check, setCheck] = useState();
     const setNight = props.setNight;
     const getNight = props.getNight;
     const socket = useSelector((state) => state.post.data);
+    const is_night = useSelector((state) => state.post.isNight);
+    const time = useSelector(state => state.post.second);
+    const roomHost = useSelector((state) => state.room.host);
+    const currentId = localStorage.getItem('userId');
     const [minutes, setMinutes] = useState(0)
     const [seconds, setSeconds] = useState(0);
-
-    useEffect(()=>{
-      socket.on('timer', (time) => {
-          // 서버에서 오는 타이머 카운트 받음
-          setMinutes(time.min)
-          setSeconds(time.sec)
-          if(time.min == 0 && time.sec == 0){
-            dayAndNight(getNight)
-          }
-        })
-  },[socket])
-  
-    const dayAndNight = (day) => {
-      console.log(day);
-        // 낮과 밤을 구분할 때 호출되는 함수
-        if (day == false) {
-          setNight(true)
-          socket.emit('timer', 60)
-          console.log('밤이 되었습니다')
-          socket.emit('nightVoteResult');
-        } else {
-          console.log(day);
-          setNight(false)
-          socket.emit('timer', 120)
-          console.log('아침이 되었습니다');
-          socket.emit('dayVoteResult');
-        }
-      }
-
     
+    const dayAndNight = () => {
+        console.log(is_night) // 계속 false
+        // 낮과 밤을 구분할 때 호출되는 함수
+          if (is_night == false) { // 밤이 아니다
+            if(roomHost == currentId){
+              socket.emit('timer', 5)
+            }
+            console.log('밤이 되었습니다');
+            socket.emit('dayVoteResult');
+          } else {
+            if(roomHost === currentId){
+              socket.emit('timer', 5)
+            }
+            console.log('아침이 되었습니다');
+            socket.emit('nightVoteResult');
+          }
+        }
+        console.log('socket.on')
+      socket.on('timer', (time) => {
+        dispatch(postActions.sendTime(time.sec))
+        // setMinutes(time.min)
+        // setSeconds(time.sec)
+        if(time.sec == 0){
+          dayAndNight();
+        }
+        
+      });
 
     return(
         <>
-        <div>{minutes} : {seconds}</div>
+        <div> {time}</div>
         </>
     )
 }

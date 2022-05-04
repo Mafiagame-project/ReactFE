@@ -1,16 +1,21 @@
 import { useHistory } from 'react-router-dom';
 import {Grid, Text, Button} from '../element/index';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import io from 'socket.io-client';
 import {actionCreators as postActions} from '../redux/modules/post';
 import {actionCreators as roomActions} from '../redux/modules/rooms';
+import { useEffect } from 'react';
 
 
 function Loading(){
+    const roomHost = useSelector((state) => state.room.host);
+    const currentId = localStorage.getItem('userId');
+    const is_night = useSelector(state => state.post.isNight);
     const dispatch = useDispatch();
     const history = useHistory();
-    const token = localStorage.getItem('token')
-    
+    const token = localStorage.getItem('token');
+
+
     const entrance = () => {
         history.push('/gamemain');
         const socket = io.connect('https://sparta-dongsun.shop');
@@ -25,7 +30,14 @@ function Loading(){
 
         socket.on('dayVoteResult', notification => {
             console.log(notification);
+            console.log(is_night)
             dispatch(postActions.notification(notification))
+            dispatch(postActions.setNight());
+          });
+        
+          socket.on('nightVoteResult', () => {
+            console.log(is_night)
+            dispatch(postActions.setDay())
           });
     }
     
