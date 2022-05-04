@@ -69,6 +69,7 @@ export default handleActions(
     playerWhoKilled,
     playerWhoSurvived,
     dayAndNight,
+    copSelected,
   }
   
   export { actionCreators }
