@@ -22,7 +22,7 @@ const initialState = {
     socket: null,
     noti : null,
     job : null,
-    killed : null,
+    killed : [],
     survived : null,
     night : null,
     copSelect : null,
@@ -44,7 +44,7 @@ export default handleActions(
             }),
         [KILLED]: (state, action) =>
             produce(state, (draft) => {
-                draft.killed = action.payload.player;
+                draft.killed = [...draft.killed, action.payload.player];
             }),
         [SURVIVED]: (state, action) =>
             produce(state, (draft) => {

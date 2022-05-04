@@ -3,7 +3,7 @@ import { Planet } from 'react-planet'
 import Chatdiv from '../component/Chatdiv'
 import { Grid, Button } from '../element/index'
 import { useEffect, useRef, useState } from 'react'
-import { actionCreators as gameActions } from '../redux/modules/game'
+import game, { actionCreators as gameActions } from '../redux/modules/game'
 import { actionCreators as roomActions } from '../redux/modules/room'
 import { actionCreators as memberActions } from '../redux/modules/member'
 import { useDispatch, useSelector } from 'react-redux'
@@ -60,7 +60,8 @@ function GameRoom(props) {
       alert('다른사람을 뽑아주세요')
       return
     }
-    if (killed.length > 0) {
+    if (killed) {
+      console.log(killed)
       killed.forEach(id => {
         if (clicker.player == id) {
           alert('죽었습니다')
@@ -73,7 +74,7 @@ function GameRoom(props) {
       socket.emit('vote', { clickerJob, clickerId, clickedId })
     }
   }
-  console.log(killed)
+  
   useEffect(() => {
     socket.on('msg', (data) => {
       // 서버에서 오는 메세지 데이터를 받음
@@ -87,6 +88,7 @@ function GameRoom(props) {
       }
     })
     return () => {
+      dispatch(gameActions.playerWhoKilled());
       unlisten()
     }
   }, [socket])
