@@ -37,8 +37,8 @@ function Timer(props) {
 
   socket.on('timer', (time) => {
     // dispatch(postActions.sendTime(time.sec))
-    // setMinutes(time.min)
-    // setSeconds(time.sec)
+    setMinutes(time.min)
+    setSeconds(time.sec)
     // if(time.sec == 0){
     //   dayAndNight();
     // }
@@ -46,7 +46,7 @@ function Timer(props) {
 
   return (
     <>
-      <div></div>
+      <div>{minutes} : {seconds}</div>
     </>
   )
 }
