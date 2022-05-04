@@ -44,7 +44,7 @@ export default handleActions(
             }),
         [KILLED]: (state, action) =>
             produce(state, (draft) => {
-                draft.killed = [...draft.killed, action.payload.player]
+                draft.killed = action.payload.player;
             }),
         [SURVIVED]: (state, action) =>
             produce(state, (draft) => {
