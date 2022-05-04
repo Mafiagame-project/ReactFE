@@ -5,6 +5,8 @@ import { produce } from 'immer'
 //Axios
 import axios from 'axios'
 
+const BASE_URL = 'https://nhseung.shop'
+
 //Action
 const LOG_IN = 'LOG_IN'
 const LOG_OUT = 'LOG_OUT'
@@ -29,7 +31,7 @@ const loginDB = (dic) => {
   const { id: userId, pw: userPw } = dic
   return async function (dispatch, getState, { history }) {
     await axios
-      .post('http://3.36.75.6/user/login', JSON.stringify({ userId, userPw }), {
+      .post(`${BASE_URL}/user/login`, JSON.stringify({ userId, userPw }), {
         headers: { 'Content-Type': `application/json` },
       })
       .then((res) => {
@@ -62,7 +64,7 @@ const signupDB = (dic) => {
   return async function (dispatch, getState, { history }) {
     await axios
       .post(
-        'http://3.36.75.6/user/register',
+        `${BASE_URL}/user/register`,
         JSON.stringify({
           userId,
           email,
@@ -94,7 +96,7 @@ const isLoginDB = () => {
         // Authorization: `Bearer${localStorage.getItem('token')}`,
       },
       method: 'get',
-      url: 'http://3.36.75.6/user/loginCheck',
+      url: `${BASE_URL}/user/loginCheck`,
     })
       .then((res) => {
         console.log(res)
@@ -116,7 +118,7 @@ const findPwDB = (dic) => {
   return async function (dispatch, getState, { history }) {
     await axios
       .post(
-        'http://3.36.75.6/user/findPw',
+        `${BASE_URL}/user/findPw`,
         JSON.stringify({
           email,
           userId,
@@ -146,7 +148,7 @@ const changePwDB = (dic) => {
   return async function (dispatch, getState, { history }) {
     await axios
       .post(
-        'http://3.36.75.6/user/changePw',
+        `${BASE_URL}/user/changePw`,
         JSON.stringify({
           email,
           userId,
@@ -173,7 +175,7 @@ const changePwDB = (dic) => {
 const kakaoLogin = (code) => {
   return async function (dispatch, getState, { history }) {
     await axios
-      .get(`http://3.36.75.6/main?code=${code}`)
+      .get(`https://nhseung.shop/main?code=${code}`)
       .then((res) => {
         console.log(res.data)
         const accessToken = res.data.token

@@ -82,6 +82,15 @@ function GameRoom(props) {
     }
   }, [socket])
 
+  // 채팅창 아래로 스크롤
+  // const chatRef = useRef(null)
+
+  // const scrollToBottom = () => {
+  //   chatRef.current.scrollIntoView({ behavior: 'smooth' })
+  // }
+
+  // useEffect(scrollToBottom, [getWrite])
+
   const Noti = styled.div`
     width: 400px;
     height: 100%;
@@ -118,7 +127,7 @@ function GameRoom(props) {
                 }
                 open
               >
-                {memberSocket.map((e) => {
+                {memberId.map((e) => {
                   return (
                     <Inner>
                       <button
@@ -154,7 +163,7 @@ function GameRoom(props) {
               bg="#d2d2d2"
             >
               {getWrite.map((e) => {
-                return <Chatdiv currentId={currentId} e={e} />
+                return <Chatdiv currentId={currentId} e={e} ref={chatRef} />
               })}
             </Grid>
             <Grid bg="white" padding="20px 0 0 0" height="15%">
