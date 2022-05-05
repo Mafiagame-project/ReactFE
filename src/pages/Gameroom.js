@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../redux/configureStore'
 import Header from '../component/Header'
 import ChatBox from '../component/ChatBox'
-import VideoContainer from '../component/VideoContainer'
+import VideoContainer from '../component/video/VideoContainer'
 
 function GameRoom(props) {
   const dispatch = useDispatch()
@@ -15,6 +15,8 @@ function GameRoom(props) {
   const notification = useSelector((state) => state.game.noti)
   const roomInfo = useSelector((state) => state.room.current)
   const currentId = localStorage.getItem('userId')
+
+  console.log(roomInfo, '룸인포여')
 
   const [getNotice, setNotice] = useState(false)
   const [getWho, setWho] = useState()
@@ -69,8 +71,10 @@ function GameRoom(props) {
       <Container>
         <Grid is_flex>
           <LeftBox>
-            {/* <VideoContainer /> */}
-            <Grid>
+            <PlayerBox>
+              <VideoContainer socket={socket} />
+            </PlayerBox>
+            <Btns>
               {getStart == false ? (
                 <Grid>
                   {roomInfo?.userId == currentId ? (
@@ -115,7 +119,7 @@ function GameRoom(props) {
                   </Button>
                 </Grid>
               )}
-            </Grid>
+            </Btns>
           </LeftBox>
 
           <RightBox>
@@ -136,6 +140,8 @@ function GameRoom(props) {
 
 const Container = styled.div``
 
+const PlayerBox = styled.div``
+
 const LeftBox = styled.div`
   text-align: center;
   flex-direction: column;
@@ -143,6 +149,8 @@ const LeftBox = styled.div`
 `
 const Btns = styled.div`
   z-index: 9999;
+  position: fixed;
+  bottom: 0;
 `
 const RightBox = styled.div`
   margin: 40px;

@@ -11,19 +11,11 @@ import Gameroom from '../pages/Gameroom'
 import KakaoLogin from './KakaoLogin'
 import Loading from '../pages/Loading'
 import Functions from './functions'
-import VideoTest from '../component/video/VideoTest'
+import PeerVideo from '../component/video/PeerVideo'
 import { useDispatch } from 'react-redux'
 
 function App() {
   const dispatch = useDispatch()
-  //지금 500 error
-  // const is_token = localStorage.getItem('token') ? true : false
-
-  // React.useEffect(() => {
-  //   if (is_token) {
-  //     dispatch(userActions.isLoginDB())
-  //   }
-  // }, [])
   return (
     <>
       <ConnectedRouter history={history}>
@@ -35,8 +27,8 @@ function App() {
         <Route exact path="/findpw" component={FindPw} />
         <Route exact path="/gameroom/:num" component={Gameroom} />
         <Route exact path="/main" component={KakaoLogin} />
-        <Route exact path="/video" component={VideoTest} />
         <Route exact path="/functions" component={Functions} />
+        <Route exact path="/video" component={PeerVideo} />
       </ConnectedRouter>
     </>
   )
