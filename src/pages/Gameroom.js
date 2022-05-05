@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Grid, Button } from '../element/index'
+import { Grid, Button, Text } from '../element/index'
 import { useEffect, useState } from 'react'
 import { actionCreators as gameActions } from '../redux/modules/game'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,7 +12,11 @@ function GameRoom(props) {
   const dispatch = useDispatch()
   const socket = useSelector((state) => state.game.socket)
   const memberSocket = useSelector((state) => state.member.socketId)
-  const notification = useSelector((state) => state.game.noti)
+  const enterOutNoti = useSelector((state) => state.game.enterOutNoti)
+  const voteResult = useSelector(state => state.game.resultNoti)
+  const endGameNoti = useSelector(state => state.game.endGameNoti)
+  const survivedNoti = useSelector(state => state.game.survived)
+  const currentTime = useSelector(state => state.game.night)
   const roomInfo = useSelector((state) => state.room.current)
   const currentId = localStorage.getItem('userId')
 
@@ -21,20 +25,32 @@ function GameRoom(props) {
   const [getNight, setNight] = useState()
   const [getJob, setJob] = useState()
   const [getStart, setStart] = useState(false)
-
   const exitRoom = () => {
     // 방에서 나가기 버튼을 누를때 호출
     socket.emit('leaveRoom')
     history.replace('/gamemain')
+    dispatch(gameActions.noticeResult(null))
+    dispatch(gameActions.playerWhoSurvived(null))
+    dispatch(gameActions.dayAndNight(null))
     // whenExit()
   }
-
+  
   const whenExit = () => {}
 
   const startGame = () => {
-    // 게임 시작하기 버튼을 누르면 발생
-    socket.emit('startGame')
-    setStart(true)
+    if(memberSocket.length < 4){
+      alert('게임시작을 위해서 최소 4명이상이 필요합니다')
+    } else {
+      socket.emit('startGame')
+      setStart(true)
+    }
+  }
+  console.log(voteResult);
+  const enterNoti = () => {
+    setNotice(true)
+    setTimeout(()=>{
+      setNotice(false)
+    },3000)
   }
 
   const readyGame = () => {}
@@ -44,32 +60,64 @@ function GameRoom(props) {
       // 브라우저 뒤로가기 버튼(나가기) 누를때 호출
       if (history.action === 'POP') {
         socket.emit('leaveRoom')
-        whenExit()
+        dispatch(gameActions.noticeResult(null))
+        dispatch(gameActions.playerWhoSurvived(null))
+        dispatch(gameActions.dayAndNight(null))
       }
     })
+    if(voteResult?.length > 0){
+      enterNoti();
+    }
     return () => {
       dispatch(gameActions.playerWhoKilled(null))
       unlisten()
     }
-  }, [socket])
+  }, [socket, voteResult])
 
   const Noti = styled.div`
-    width: 400px;
-    height: 100%;
-    padding: 15px;
-    background: rgba(0, 0, 0, 0.4);
-    font-size: 20px;
+    width: 100%;
+    height: 500px;
+    margin-top:200px;
+    padding: 50px;
+    background: rgba(0, 0, 0, 0.8);
     text-align: center;
+    position:absolute;
     z-index: 5;
     display: ${getNotice == true ? 'block' : 'none'};
   `
+  const Container = styled.div`
+  width:100%;
+  height:90vh;
+  background:${currentTime == '밤' ? 'black' : 'white' };
+`
   return (
     <>
       <Header />
       <Container>
         <Grid is_flex>
+          {
+            endGameNoti
+            ?<Noti>
+              <Text size='32px' bold color='white'>{voteResult} 님이 죽었습니다</Text>
+              <Text size='32px' bold color='white'>{endGameNoti}</Text>
+            </Noti>
+            : <Noti>
+              {
+                survivedNoti
+                ?<>
+                 <Text size='32px' bold color='white'>{currentTime}이 되었습니다</Text>
+                 <Text size='32px' bold color='white'>{voteResult} 님이 죽었습니다</Text>
+                 <Text size='32px' bold color='white'>{survivedNoti} 님이 공격을 당했지만 의사에 의해 살았습니다</Text>
+                 </>
+                :<>
+                <Text size='32px' bold color='white'>{currentTime}이 되었습니다</Text>
+                <Text size='32px' bold color='white'>{voteResult} 님이 죽었습니다</Text>
+                </>
+              }
+            </Noti>
+          }
           <LeftBox>
-            <VideoContainer />
+            <VideoContainer style={videoContainer} socket={socket} />
             <Grid>
               {getStart == false ? (
                 <Grid>
@@ -120,21 +168,21 @@ function GameRoom(props) {
 
           <RightBox>
             <Grid>
-              {notification ? (
-                <Noti>{notification.id}</Noti>
-              ) : (
-                <Noti>{getWho}</Noti>
-              )}
+              
+              <div>왜안뜨냐</div>
             </Grid>
             <ChatBox socket={socket} />
+            <button onClick={()=>{startGame()}}>시작눈러라</button>
           </RightBox>
         </Grid>
       </Container>
     </>
   )
 }
+const videoContainer = styled.div`
+`
 
-const Container = styled.div``
+
 
 const LeftBox = styled.div`
   text-align: center;
