@@ -5,7 +5,7 @@ import { produce } from 'immer'
 //Axios
 import axios from 'axios'
 
-const BASE_URL = 'https://nhseung.shop'
+const BASE_URL = 'https://sparta-dongsun.shop'
 
 //Action
 const LOG_IN = 'LOG_IN'

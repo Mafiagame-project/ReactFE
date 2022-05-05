@@ -26,21 +26,23 @@ function Loading() {
     })
 
     socket.on('leaveRoomMsg', (whosout, whosId) => {
-      console.log(whosId)
+      //whosId
       dispatch(memberActions.exitSocketId(whosout))
       dispatch(memberActions.exitUserId(whosId))
+      dispatch(gameActions.noticeEnterOut(whosId))
     })
 
     socket.on('joinRoomMsg', (incoming, idValue, currentAll) => {
       // 참가자가 방에 들어올때 호출
-      console.log(currentAll)
       dispatch(memberActions.currentSocketId(idValue))
       dispatch(memberActions.currentUserId(currentAll))
+      dispatch(gameActions.noticeEnterOut(incoming))
     })
 
     socket.on('getJob', (player, playerJob) => {
       console.log(player, playerJob)
       dispatch(gameActions.playerJob({ player, playerJob }))
+      dispatch(gameActions.noticeJob(playerJob))
     })
 
     socket.on('isNight', (value) => {
@@ -51,16 +53,25 @@ function Loading() {
     socket.on('dayVoteResult', (value) => {
       console.log(value)
       dispatch(gameActions.playerWhoKilled(value.diedPeopleArr))
+      dispatch(gameActions.noticeResult(value.id))
     })
 
     socket.on('nightVoteResult', (value) => {
       console.log(value)
       dispatch(gameActions.playerWhoKilled(value.diedPeopleArr))
+      dispatch(gameActions.noticeResult(value.died[0]))
+      dispatch(gameActions.playerWhoSurvived(value.saved[0]))
+    })
+
+    socket.on('endGame', data => {
+      console.log(data)
+      dispatch(gameActions.noticeEndGame(data?.msg))
     })
 
     socket.on('police', (selected) => {
       console.log(selected)
       dispatch(gameActions.copSelected(selected))
+      dispatch(gameActions.noticeCop(selected))
     })
   }
 
