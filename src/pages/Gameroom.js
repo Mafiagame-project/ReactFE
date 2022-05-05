@@ -16,6 +16,7 @@ function GameRoom(props) {
   const voteResult = useSelector(state => state.game.resultNoti)
   const endGameNoti = useSelector(state => state.game.endGameNoti)
   const survivedNoti = useSelector(state => state.game.survived)
+  const currentTime = useSelector(state => state.game.night)
   const roomInfo = useSelector((state) => state.room.current)
   const currentId = localStorage.getItem('userId')
 
@@ -30,6 +31,7 @@ function GameRoom(props) {
     history.replace('/gamemain')
     dispatch(gameActions.noticeResult(null))
     dispatch(gameActions.playerWhoSurvived(null))
+    dispatch(gameActions.dayAndNight(null))
     // whenExit()
   }
   
@@ -60,6 +62,7 @@ function GameRoom(props) {
         socket.emit('leaveRoom')
         dispatch(gameActions.noticeResult(null))
         dispatch(gameActions.playerWhoSurvived(null))
+        dispatch(gameActions.dayAndNight(null))
       }
     })
     if(voteResult?.length > 0){
@@ -82,6 +85,11 @@ function GameRoom(props) {
     z-index: 5;
     display: ${getNotice == true ? 'block' : 'none'};
   `
+  const Container = styled.div`
+  width:100%;
+  height:90vh;
+  background:${currentTime == '밤' ? 'black' : 'white' };
+`
   return (
     <>
       <Header />
@@ -97,10 +105,14 @@ function GameRoom(props) {
               {
                 survivedNoti
                 ?<>
+                 <Text size='32px' bold color='white'>{currentTime}이 되었습니다</Text>
                  <Text size='32px' bold color='white'>{voteResult} 님이 죽었습니다</Text>
                  <Text size='32px' bold color='white'>{survivedNoti} 님이 공격을 당했지만 의사에 의해 살았습니다</Text>
                  </>
-                :<Text size='32px' bold color='white'>{voteResult} 님이 죽었습니다</Text>
+                :<>
+                <Text size='32px' bold color='white'>{currentTime}이 되었습니다</Text>
+                <Text size='32px' bold color='white'>{voteResult} 님이 죽었습니다</Text>
+                </>
               }
             </Noti>
           }
@@ -170,7 +182,7 @@ function GameRoom(props) {
 const videoContainer = styled.div`
 `
 
-const Container = styled.div``
+
 
 const LeftBox = styled.div`
   text-align: center;
