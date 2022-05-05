@@ -17,6 +17,8 @@ const Button = (props) => {
     type,
     purpleBtn,
     blackBtn,
+    chatBtn,
+    smallBtn,
   } = props
 
   const styles = {
@@ -30,6 +32,8 @@ const Button = (props) => {
     height: height,
     purpleBtn: purpleBtn,
     blackBtn: blackBtn,
+    chatBtn: chatBtn,
+    smallBtn: smallBtn,
   }
 
   return (
@@ -55,29 +59,41 @@ Button.defaultProps = {
   hoverbg: false,
   purpleBtn: false,
   blackBtn: false,
+  chatBtn: false,
+  smallBtn: false,
 }
 
-const ElButton = styled.button`  
+const ElButton = styled.button`
+  box-sizing: border-box;  
+  border: none;
+  transition: 0.2s;
   font-size: ${(props) => props.size};
+  color: ${(props) => props.color};
+  font-family: ${(props) => props.font};
+  font-weight: ${(props) => (props.bold ? '600' : '400')};
+  ${(props) => (props.width ? `width: ${props.width};` : `width: 316px`)};
+  ${(props) => (props.height ? `height: ${props.height};` : `height: 51px`)};
+  ${(props) => (props.padding ? `padding: ${props.padding};` : '')};
+  ${(props) => (props.margin ? `margin: ${props.margin};` : '')}
   ${(props) => (props.bg ? `background-color: ${props.bg};` : '')}
   color: ${(props) => props.color};
   ${(props) =>
     props.purpleBtn
       ? `background-color:#B92AFC; color: #fff; font-size: 20px; `
       : ''}
-${(props) =>
-  props.blackBtn ? `background-color:#333; color: #fff; font-size: 20px; ` : ''}
-  color: ${(props) => props.color};
-  ${(props) => (props.width ? `width: ${props.width};` : `width: 316px`)};
-  ${(props) => (props.height ? `height: ${props.height};` : `height: 51px`)};
-  ${(props) => (props.padding ? `padding: ${props.padding};` : '')};
-  font-family: ${(props) => props.font};
+  ${(props) =>
+    props.blackBtn
+      ? `background-color:#333; color: #fff; font-size: 20px; `
+      : ''}
 
-  font-weight: ${(props) => (props.bold ? '600' : '400')};
-  box-sizing: border-box;
-  border: none;
-  ${(props) => (props.margin ? `margin: ${props.margin};` : '')}
-  transition: 0.2s;
+  ${(props) =>
+    props.chatBtn
+      ? `background-color:#000; color: #fff; font-size: 20px; width: 127px; height: 60px; border-radius:5px; `
+      : ''}
+      ${(props) =>
+        props.smallBtn
+          ? `color: #fff; font-size: 20px; width: 165px; height: 60px; margin: 5px;`
+          : ''}
   
   &:hover {
     color: ${(props) => props.hoverColor};
