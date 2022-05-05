@@ -69,7 +69,7 @@ function GameRoom(props) {
       <Container>
         <Grid is_flex>
           <LeftBox>
-            {/* <VideoContainer /> */}
+            <VideoContainer />
             <Grid>
               {getStart == false ? (
                 <Grid>
