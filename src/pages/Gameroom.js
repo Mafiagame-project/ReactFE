@@ -8,6 +8,7 @@ import Header from '../component/Header'
 import ChatBox from '../component/ChatBox'
 import VideoContainer from '../component/VideoContainer'
 import Peer from 'peerjs'
+import Noti from '../component/modal/NotiModal'
 
 function GameRoom(props) {
   const dispatch = useDispatch()
@@ -22,9 +23,7 @@ function GameRoom(props) {
   const currentId = localStorage.getItem('userId')
 
   const [getNotice, setNotice] = useState(false)
-  const [getWho, setWho] = useState()
-  const [getNight, setNight] = useState()
-  const [getJob, setJob] = useState()
+  const [getReady, setReady] = useState(false);
   const [getStart, setStart] = useState(false)
   const exitRoom = () => {
     // 방에서 나가기 버튼을 누를때 호출
@@ -33,10 +32,8 @@ function GameRoom(props) {
     dispatch(gameActions.noticeResult(null))
     dispatch(gameActions.playerWhoSurvived(null))
     dispatch(gameActions.dayAndNight(null))
-    // whenExit()
+    dispatch(gameActions.noticeEndGame(null))
   }
-
-  const whenExit = () => {}
 
   const startGame = () => {
     if (memberSocket.length < 4) {
@@ -46,6 +43,7 @@ function GameRoom(props) {
       setStart(true)
     }
   }
+
   const enterNoti = () => {
     setNotice(true)
     setTimeout(() => {
@@ -53,7 +51,14 @@ function GameRoom(props) {
     }, 3000)
   }
 
-  const readyGame = () => {}
+  const readyGame = () => {
+    if(getReady == false){
+      socket.emit('ready', true)
+    } else {
+      socket.emit('ready', false)
+    }
+    setReady(!getReady)
+  }
 
   useEffect(() => {
     let unlisten = history.listen((location) => {
@@ -63,6 +68,7 @@ function GameRoom(props) {
         dispatch(gameActions.noticeResult(null))
         dispatch(gameActions.playerWhoSurvived(null))
         dispatch(gameActions.dayAndNight(null))
+        dispatch(gameActions.noticeEndGame(null))
       }
     })
     if (voteResult?.length > 0) {
@@ -73,21 +79,29 @@ function GameRoom(props) {
       unlisten()
     }
   }, [socket, voteResult])
-
-  const Noti = styled.div`
-    width: 100%;
-    height: 500px;
-    margin-top: 200px;
-    padding: 50px;
-    background: rgba(0, 0, 0, 0.8);
-    text-align: center;
-    position: absolute;
-    z-index: 5;
-    display: ${getNotice == true ? 'block' : 'none'};
+  console.log(getReady)
+  const Modalblack = styled.div`
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  text-align: center;
+  left: 0;
+  top: 0;
+  z-index: 5;
   `
+  const ReadyBtn = styled.button`
+  width:250px;
+  height:60px;
+  background:${getReady == true ? 'gray' : '#eee'};
+  border:none;
+  font-size:20px;
+  z-index:5;
+`
+  
   const Container = styled.div`
     width: 100%;
-    height: 90vh;
+    height: 80vh;
     background: ${currentTime == '밤' ? 'black' : 'white'};
   `
   return (
@@ -95,74 +109,61 @@ function GameRoom(props) {
       <Header />
       <Container>
         <Grid is_flex>
-          {endGameNoti ? (
-            <Noti>
-              <Text size="32px" bold color="white">
-                {voteResult} 님이 죽었습니다
-              </Text>
-              <Text size="32px" bold color="white">
-                {endGameNoti}
-              </Text>
-            </Noti>
-          ) : (
-            <Noti>
-              {survivedNoti ? (
-                <>
-                  <Text size="32px" bold color="white">
-                    {currentTime}이 되었습니다
-                  </Text>
-                  <Text size="32px" bold color="white">
-                    {voteResult} 님이 죽었습니다
-                  </Text>
-                  <Text size="32px" bold color="white">
-                    {survivedNoti} 님이 공격을 당했지만 의사에 의해 살았습니다
-                  </Text>
-                </>
-              ) : (
-                <>
-                  <Text size="32px" bold color="white">
-                    {currentTime}이 되었습니다
-                  </Text>
-                  <Text size="32px" bold color="white">
-                    {voteResult} 님이 죽었습니다
-                  </Text>
-                </>
-              )}
-            </Noti>
-          )}
+          {
+            getNotice == true
+            ? <Modalblack>
+                <Noti></Noti>
+            </Modalblack>
+            : null
+          }
           <LeftBox>
-            <VideoContainer style={videoContainer} socket={socket} />
-            <Grid>
+            <Grid margin='20% 0 0 0' isFlex_center height='30%'>
+              <VideoContainer style={videoContainer} socket={socket} />
+            </Grid>
+            
+          </LeftBox>
+
+          <RightBox>
+            <ChatBox socket={socket} />
+            <Button
+                    smallBtn
+                    _onClick={() => {
+                      exitRoom()
+                    }} >방 나가기</Button>
+          </RightBox>
+        </Grid>
+          <Grid height='10vh'>
+          <Grid isFlex_center>
               {getStart == false ? (
-                <Grid>
+                <Grid isFlex_center>
                   {roomInfo?.userId == currentId ? (
                     <Button
                       bg="#C4C4C4"
                       smallBtn
                       _onClick={() => {
                         startGame()
-                      }}
-                    >
-                      시작하기
-                    </Button>
+                      }} >시작하기</Button>
                   ) : (
-                    <Button
-                      smallBtn
-                      _onClick={() => {
-                        readyGame()
-                      }}
-                    >
-                      준비하기
-                    </Button>
+                    <>
+                      {
+                        getReady == false
+                        ?<Button
+                        smallBtn
+                        onClick={() => {
+                          readyGame()
+                        }} >준비하기</Button>
+                        :<Button
+                        bg='gray'
+                        smallBtn
+                        onClick={() => {
+                          readyGame()
+                        }} >준비완료</Button>
+                        
+                      }
+                    </>
+                    
                   )}
-                  <Button
-                    smallBtn
-                    _onClick={() => {
-                      exitRoom()
-                    }}
-                  >
-                    방 나가기
-                  </Button>
+                  
                 </Grid>
               ) : (
                 <Grid>
@@ -173,39 +174,27 @@ function GameRoom(props) {
                       exitRoom()
                     }}
                   >
-                    방 나가기
+                    투표하기
                   </Button>
                 </Grid>
               )}
             </Grid>
-          </LeftBox>
-
-          <RightBox>
-            <Grid>
-              <div>왜안뜨냐</div>
-            </Grid>
-            <ChatBox socket={socket} />
-            <button
-              onClick={() => {
-                startGame()
-              }}
-            >
-              시작눈러라
-            </button>
-          </RightBox>
-        </Grid>
+          </Grid>
       </Container>
     </>
   )
 }
-const videoContainer = styled.div``
+const videoContainer = styled.div`
+`
 
 const PlayerBox = styled.div``
 
 const LeftBox = styled.div`
   text-align: center;
-  flex-direction: column;
-  margin: auto 0;
+  margin: 0 auto;
+  width:100%;
+  height:80vh;
+
 `
 const Btns = styled.div`
   z-index: 9999;
@@ -215,5 +204,6 @@ const Btns = styled.div`
 const RightBox = styled.div`
   margin: 40px;
 `
+
 
 export default GameRoom

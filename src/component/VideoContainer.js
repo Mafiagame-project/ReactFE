@@ -51,62 +51,62 @@ const VideoContainer = (props) => {
   // const myVideo = useRef();
   const peers = {}
 
-  useEffect(() => {
-    try {
-      navigator.mediaDevices
-        .getUserMedia({
-          video: true,
-          audio: false,
-        })
-        .then((stream) => {
-          let streamId = stream.id
-          addVideoStream(myVideo, stream)
+  // useEffect(() => {
+  //   try {
+  //     navigator.mediaDevices
+  //       .getUserMedia({
+  //         video: true,
+  //         audio: false,
+  //       })
+  //       .then((stream) => {
+  //         let streamId = stream.id
+  //         addVideoStream(myVideo, stream)
 
-          myPeer.on('call', (call) => {
-            call.answer(stream)
-            const video = document.createElement('video')
-            call.on('stream', (userVideoStream) => {
-              addVideoStream(video, userVideoStream)
-            })
-          })
-          socket.on('user-connected', (userId) => {
-            connectToNewUser(userId, stream)
-          })
-        })
-        .catch((error) => {})
-    } catch (e) {
-      socket.on('user-connected', (userId) => {
-        // connectToNewUser(userId, stream);
-      })
-      console.log(e)
-    }
-    socket.on('user-disconnected', (userId) => {
-      if (peers[userId]) peers[userId].close()
-    })
+  //         myPeer.on('call', (call) => {
+  //           call.answer(stream)
+  //           const video = myVideo.current
+  //           call.on('stream', (userVideoStream) => {
+  //             addVideoStream(video, userVideoStream)
+  //           })
+  //         })
+  //         socket.on('user-connected', (userId) => {
+  //           connectToNewUser(userId, stream)
+  //         })
+  //       })
+  //       .catch((error) => {})
+  //   } catch (e) {
+  //     socket.on('user-connected', (userId) => {
+  //       // connectToNewUser(userId, stream);
+  //     })
+  //     console.log(e)
+  //   }
+  //   socket.on('user-disconnected', (userId) => {
+  //     if (peers[userId]) peers[userId].close()
+  //   })
 
-    function connectToNewUser(userId, stream) {
-      console.log(userId, stream)
-      const call = myPeer.call(userId, stream)
-      console.log(call)
-      const video = document.createElement('video')
-      call.on('stream', (userVideoStream) => {
-        addVideoStream(video, userVideoStream)
-      })
-      call.on('close', () => {
-        video.remove()
-      })
+  //   function connectToNewUser(userId, stream) {
+  //     console.log(userId, stream)
+  //     const call = myPeer.call(userId, stream)
+  //     console.log(call)
+  //     const video = document.createElement('video')
+  //     call.on('stream', (userVideoStream) => {
+  //       addVideoStream(video, userVideoStream)
+  //     })
+  //     call.on('close', () => {
+  //       video.remove()
+  //     })
 
-      peers[userId] = call
-    }
-    function addVideoStream(video, stream) {
-      video.srcObject = stream
-      video.addEventListener('loadedmetadata', () => {
-        video.play()
-      })
-      videoGrid.current.prepend(video)
-    }
-  }, [])
-
+  //     peers[userId] = call
+  //   }
+  //   function addVideoStream(video, stream) {
+  //     video.srcObject = stream
+  //     video.addEventListener('loadedmetadata', () => {
+  //       video.play()
+  //     })
+  //     videoGrid.current.prepend(video)
+  //   }
+  // }, [])
+  
   return (
     <Container>
       <Planet
@@ -133,22 +133,20 @@ const VideoContainer = (props) => {
           return (
             <Grid center>
               <div
-                ref={videoGrid}
+                
                 style={{
                   width: '200px',
                   height: '200px',
                   borderRadius: '50%',
                   background: '#eee',
                 }}
-                className="video-grid"
-              >
-                <button
-                  onClick={() => {
+                className="video-grid">
+                  <button onClick={() => {
                     active(e, playerJob, is_night)
                   }}
-                >
-                  선택하기
-                </button>
+                  >
+                    선택하기
+                  </button>
               </div>
               <NameTag>{e}</NameTag>
             </Grid>
@@ -160,7 +158,6 @@ const VideoContainer = (props) => {
 }
 
 const Container = styled.div`
-  margin: 500px;
 `
 const Inner = styled.div`
   height: 150px;

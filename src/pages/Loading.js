@@ -28,6 +28,7 @@ function Loading() {
       history.push(`/gameroom/${info.roomId}`)
     })
 
+
     socket.on('leaveRoomMsg', (whosout, whosId) => {
       //whosId
       dispatch(memberActions.exitSocketId(whosout))
@@ -82,6 +83,10 @@ function Loading() {
       dispatch(gameActions.copSelected(selected))
       dispatch(gameActions.noticeCop(selected))
     })
+
+    socket.on('reporter', data => { //1번 기자가 고른사람의 직업, 2번 기자가 고른사람의 아이디 3번 기자가 고른사람이 누굴 찍었는지
+      console.log(data)
+    }) 
     
     
   }
