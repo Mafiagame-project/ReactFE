@@ -45,11 +45,12 @@ const VideoContainer = (props) => {
       policeCnt++
     }
   }
-  // 여기서부터 peer
+  // --------- 여기서부터 peer -------------
   const videoGrid = useRef()
   const myVideo = document.createElement('video')
   // const myVideo = useRef();
   const peers = {}
+  let getStream = null
 
   useEffect(() => {
     try {
@@ -59,51 +60,69 @@ const VideoContainer = (props) => {
           audio: false,
         })
         .then((stream) => {
+          let getStream = stream
           let streamId = stream.id
-          addVideoStream(myVideo, stream)
 
+          addVideoStream(myVideo, stream)
+          console.log('마이 스트림 받았쥬', stream)
+
+          //못받아오는 부분
           myPeer.on('call', (call) => {
+            console.log('콜 받아오는 중...', call)
             call.answer(stream)
+            console.log('콜 수락ㅎㅎ', stream)
             const video = document.createElement('video')
             call.on('stream', (userVideoStream) => {
+              console.log('상대방 스트림', userVideoStream)
               addVideoStream(video, userVideoStream)
+              console.log('상대방 스트림 추가되었다')
             })
           })
+
+          //여기서 부터 시작됨?
           socket.on('user-connected', (userId) => {
+            console.log('새로운 커넥션 되었니?')
             connectToNewUser(userId, stream)
           })
         })
         .catch((error) => {})
     } catch (e) {
       socket.on('user-connected', (userId) => {
-        // connectToNewUser(userId, stream);
+        connectToNewUser(userId, getStream)
       })
-      console.log(e)
+      console.log(e, 'errr에러')
     }
+
     socket.on('user-disconnected', (userId) => {
+      console.log('잘가요', userId)
       if (peers[userId]) peers[userId].close()
     })
 
     function connectToNewUser(userId, stream) {
       console.log(userId, stream)
       const call = myPeer.call(userId, stream)
-      console.log(call)
+      console.log('콜 요청 보내는 중...', call)
       const video = document.createElement('video')
       call.on('stream', (userVideoStream) => {
         addVideoStream(video, userVideoStream)
+        console.log('콜 받고 스트림받음', stream)
       })
       call.on('close', () => {
+        console.log('굿바이')
         video.remove()
       })
 
       peers[userId] = call
     }
+
     function addVideoStream(video, stream) {
       video.srcObject = stream
+      console.log('비디오 추가 준비', video)
       video.addEventListener('loadedmetadata', () => {
         video.play()
       })
-      videoGrid.current.prepend(video)
+      // videoGrid.current.prepend(video)
+      // console.log(videoGrid)
     }
   }, [])
 

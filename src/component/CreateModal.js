@@ -5,34 +5,18 @@ import styled from 'styled-components'
 import { Grid, Text, Input, Button } from '../element/index'
 import { actionCreators as roomActions } from '../redux/modules/room'
 import { actionCreators as gameActions } from '../redux/modules/game'
-import Peer from 'peerjs';
+import Peer from 'peerjs'
 
 function CreateModal(props) {
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const getModal = props.getModal;
-  const setModal = props.setModal;
-  const socket = props.socket;
-  const [getOpen, setOpen] = useState();
-  const title = useRef();
-  const people = useRef();
-  const pwd = useRef();
-
-  const Btn1 = styled.button`
-    width: 100px;
-    border: none;
-    border-radius: 20px;
-    height: 40px;
-    background: ${getOpen == true ? 'orange' : '#eee'};
-    margin-right: 10px;
-  `
-  const Btn2 = styled.button`
-    width: 100px;
-    border: none;
-    border-radius: 20px;
-    height: 40px;
-    background: ${getOpen == false ? 'orange' : '#eee'};
-  `
+  const history = useHistory()
+  const dispatch = useDispatch()
+  const getModal = props.getModal
+  const setModal = props.setModal
+  const socket = props.socket
+  const [getOpen, setOpen] = useState()
+  const title = useRef()
+  const people = useRef()
+  const pwd = useRef()
   useEffect(() => {}, [socket])
 
   const createRoom = () => {
@@ -168,4 +152,19 @@ export const Modalwhite = styled.div`
   border-radius: 20px;
   box-shadow: 2px 2px 2px 2px #d2d2d2;
 `
+const Btn1 = styled.button`
+  width: 100px;
+  border: none;
+  border-radius: 20px;
+  height: 40px;
+
+  margin-right: 10px;
+`
+const Btn2 = styled.button`
+  width: 100px;
+  border: none;
+  border-radius: 20px;
+  height: 40px;
+`
+// background: ${getOpen == true ? 'orange' : '#eee'};
 export default CreateModal

@@ -49,8 +49,9 @@ function Main() {
           dispatch(gameActions.sendSocket(socket))
           dispatch(roomActions.currentRoom(roomInfo))
           dispatch(gameActions.sendPeerId(myPeer))
+          //피어가 생성되면 자동으로 호출 된다
           myPeer.on('open', (id) => {
-            console.log(id)
+            console.log('peer-open', id)
             socket.emit('joinRoom', roomInfo.roomId, id)
           })
         }

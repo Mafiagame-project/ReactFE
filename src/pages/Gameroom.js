@@ -74,28 +74,12 @@ function GameRoom(props) {
     }
   }, [socket, voteResult])
 
-  const Noti = styled.div`
-    width: 100%;
-    height: 500px;
-    margin-top: 200px;
-    padding: 50px;
-    background: rgba(0, 0, 0, 0.8);
-    text-align: center;
-    position: absolute;
-    z-index: 5;
-    display: ${getNotice == true ? 'block' : 'none'};
-  `
-  const Container = styled.div`
-    width: 100%;
-    height: 90vh;
-    background: ${currentTime == '밤' ? 'black' : 'white'};
-  `
   return (
     <>
       <Header />
       <Container>
         <Grid is_flex>
-          {endGameNoti ? (
+          {/* {endGameNoti ? (
             <Noti>
               <Text size="32px" bold color="white">
                 {voteResult} 님이 죽었습니다
@@ -129,7 +113,7 @@ function GameRoom(props) {
                 </>
               )}
             </Noti>
-          )}
+          )} */}
           <LeftBox>
             <VideoContainer style={videoContainer} socket={socket} />
             <Grid>
@@ -181,9 +165,6 @@ function GameRoom(props) {
           </LeftBox>
 
           <RightBox>
-            <Grid>
-              <div>왜안뜨냐</div>
-            </Grid>
             <ChatBox socket={socket} />
             <button
               onClick={() => {
@@ -215,5 +196,20 @@ const Btns = styled.div`
 const RightBox = styled.div`
   margin: 40px;
 `
-
+const Noti = styled.div`
+  width: 100%;
+  height: 500px;
+  margin-top: 200px;
+  padding: 50px;
+  background: rgba(0, 0, 0, 0.8);
+  text-align: center;
+  position: absolute;
+  z-index: 5;
+`
+const Container = styled.div`
+  width: 100%;
+  height: 90vh;
+`
+// background: ${currentTime == '밤' ? 'black' : 'white'};
+//  display: ${getNotice == true ? 'block' : 'none'};
 export default GameRoom
