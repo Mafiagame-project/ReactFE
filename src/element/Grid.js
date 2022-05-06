@@ -67,7 +67,7 @@ const GridBox = styled.div`
   overflow:${(props) => props.overflow};
   box-sizing: border-box;
   ${(props) =>
-    props.border ? `border: 2px solid #ffb72b; border-radius: 10px;` : ''}
+    props.border ? `border: 2px solid black; border-radius: 10px;` : ''}
   ${(props) => (props.padding ? `padding: ${props.padding};` : '')}
     ${(props) => (props.margin ? `margin: ${props.margin};` : '')}
     ${(props) => (props.bg ? `background-color: ${props.bg};` : '')}

@@ -42,7 +42,7 @@ const VideoContainer = (props) => {
     }
     if (clickerJob == 'police' && time == true && policeCnt == 0) {
       alert(`${clickedId}의 직업은 ${copSelect}입니다`)
-      policeCnt++
+      policeCnt++ // 아직 경찰이 어떻게 알림 받아서 사용할 지는 안정해짐.
     }
   }
   // 여기서부터 peer

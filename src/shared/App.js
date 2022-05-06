@@ -12,6 +12,7 @@ import KakaoLogin from './KakaoLogin'
 import Loading from '../pages/Loading'
 import Functions from './functions'
 import PeerVideo from '../component/video/PeerVideo'
+import Introduce from '../pages/Introduce'
 import { useDispatch } from 'react-redux'
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route exact path="/gameroom/:num" component={Gameroom} />
         <Route exact path="/main" component={KakaoLogin} />
         <Route exact path="/functions" component={Functions} />
+        <Route exact path="/introduce" component={Introduce} />
         <Route exact path="/video" component={PeerVideo} />
       </ConnectedRouter>
     </>

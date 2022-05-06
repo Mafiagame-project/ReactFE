@@ -73,18 +73,20 @@ function Loading() {
       dispatch(gameActions.playerWhoSurvived(value.saved[0]))
     })
 
-    socket.on('endGame', data => {
+    socket.on('endGame', data => { // 게임이 끝났을 때 노티
       console.log(data)
       dispatch(gameActions.noticeEndGame(data?.msg))
     })
 
-    socket.on('police', (selected) => {
+    socket.on('police', (selected) => { // 경찰이 밤에 선택했을때 전달받는 소켓
       console.log(selected)
       dispatch(gameActions.copSelected(selected))
       dispatch(gameActions.noticeCop(selected))
     })
 
-    socket.on('reporter', data => { //1번 기자가 고른사람의 직업, 2번 기자가 고른사람의 아이디 3번 기자가 고른사람이 누굴 찍었는지
+    socket.on('reporter', data => { 
+      //데이터가 Json 타입임 1번 기자가 고른사람의 직업, 2번 기자가 고른사람의 아이디 3번 기자가 고른사람이 누굴 찍었는지
+      // 3번은 회의 후 지양할 것, 정체만 알면 될것같은데 누굴 찍었는지는 좀...
       console.log(data)
     }) 
     

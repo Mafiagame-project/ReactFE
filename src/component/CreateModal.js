@@ -6,6 +6,7 @@ import { Grid, Text, Input, Button } from '../element/index'
 import { actionCreators as roomActions } from '../redux/modules/room'
 import { actionCreators as gameActions } from '../redux/modules/game'
 import Peer from 'peerjs';
+import { Slider } from '@mui/material'
 
 function CreateModal(props) {
   const history = useHistory();
@@ -14,16 +15,17 @@ function CreateModal(props) {
   const setModal = props.setModal;
   const socket = props.socket;
   const [getOpen, setOpen] = useState();
+  const [getPeople, setPeople] = useState();
   const title = useRef();
   const people = useRef();
   const pwd = useRef();
-
   const Btn1 = styled.button`
     width: 100px;
     border: none;
     border-radius: 20px;
     height: 40px;
-    background: ${getOpen == true ? 'orange' : '#eee'};
+    background: ${getOpen == true ? 'black' : '#eee'};
+    color:${getOpen == true ? 'white' : 'black'};
     margin-right: 10px;
   `
   const Btn2 = styled.button`
@@ -31,13 +33,13 @@ function CreateModal(props) {
     border: none;
     border-radius: 20px;
     height: 40px;
-    background: ${getOpen == false ? 'orange' : '#eee'};
+    background: ${getOpen == false ? 'black' : '#eee'};
+    color:${getOpen == false ? 'white' : 'black'};
   `
   useEffect(() => {}, [socket])
-
   const createRoom = () => {
     let roomTitle = title.current.value
-    let roomPeople = people.current.value
+    let roomPeople = getPeople;
     let roomPwd
     if (getOpen == false) {
       // 비공개방일때
@@ -87,19 +89,21 @@ function CreateModal(props) {
           />
         </Grid>
         <Grid is_flex width="70%" height="70px" padding="50px">
-          <Text size="20px" bold>
-            인원 수
-          </Text>
-          <input
-            ref={people}
-            style={{
-              width: '70%',
-              fontSize: '18px',
-              borderRadius: '10px',
-              border: '1px solid #d2d2d2',
-              height: '40px',
-            }}
-          />
+          <Grid width='150px' height='70px'>
+            <Text size="20px" bold>
+              인원 수
+            </Text>
+          </Grid>
+          <Grid margin='0 50px 0 50px' height='30px'>
+          <Slider aria-label="time-indicator"
+            defaultValue={5}
+            max={10}
+            min={4}
+            step={1}
+            valueLabelDisplay="on"
+            size='big'
+            onChange={(e)=>{setPeople(e.target.value)}} />
+            </Grid>
         </Grid>
         <Grid isFlex_start width="80%" height="100px" padding="50px">
           <Btn1
@@ -133,14 +137,14 @@ function CreateModal(props) {
         </Grid>
         <Grid>
           <Button
-            bg="orange"
+            bg="black"
             size="20px"
-            padding="10px 20px 10px 20px"
+            padding="px 20px 0px 20px"
             _onClick={() => {
               createRoom()
             }}
           >
-            생성하기
+            <Text size='15px' color='white' bold>생성하기</Text>
           </Button>
         </Grid>
       </Modalwhite>
@@ -161,7 +165,7 @@ export const Modalwhite = styled.div`
   display: inline-block;
   background: white;
   margin-top: 100px;
-  width: 50%;
+  width: 40%;
   height: 600px;
   padding: 40px;
   box-sizing: border-box;

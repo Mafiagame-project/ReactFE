@@ -57,7 +57,7 @@ function Main() {
       }
     }
   }
-
+  console.log(RoomList)
   useEffect(() => {
     socket.emit('main', currentId)
     socket.emit('roomList')
@@ -72,12 +72,12 @@ function Main() {
         <CreateModal socket={socket} getModal={getModal} setModal={setModal} />
       ) : null}
       <Container>
-        <Grid bg="#eee" padding="30px" margin="20px 0 ">
+        <Grid height='300px' bg="#eee" padding="30px" margin="20px 0 " _onClick={()=>{history.push('/introduce')}}>
           <Text>마피아 게임 룰</Text>
         </Grid>
 
         <Grid>
-          <Grid border padding="30px">
+          <Grid padding="30px">
             <Grid is_flex height="10%" padding="10px">
               <Text size="25px" bold>
                 전체 방 목록
@@ -90,19 +90,23 @@ function Main() {
                     onClick={() => {
                       entrance(e)
                     }}
-                  >
-                    <Text size="20px" bold>
-                      {e.roomTitle}
-                    </Text>
-                    <Text size="20px" bold>
-                      방장 : {e.userId}
-                    </Text>
-                    <Text size="20px" bold>
-                      {e.currentPeople.length} / {e.roomPeople}
-                    </Text>
-                    <Button width="30%" size="20px" padding="10px" bg="#ffb72b">
-                      입장
-                    </Button>
+                  ><Grid center height='15%'>
+                      <Text color='white'>MAFIYANG</Text>
+                    </Grid> 
+                  <Grid padding='20px 60px 20px 60px' center bg='white' height='100%'>
+                      <Text size="30px" bold>
+                        {e.roomTitle}
+                      </Text>
+                      <Text size="15px" bold>
+                        방장 : {e.userId}
+                      </Text>
+                      <Grid border isFlex_center height='40px' bg='black'>
+                        <Text color='white' size="20px" bold>
+                          {e.currentPeople.length} / {e.roomPeople}
+                        </Text>
+                      </Grid>
+                      
+                    </Grid>
                   </Room>
                 )
               })}
@@ -159,11 +163,12 @@ const RoomBox = styled.div`
 const Room = styled.div`
   width: 300px;
   min-width: 300px;
-  height: 100%;
-  padding: 10px;
-  background-color: #eee;
-  border-radius: 20px;
+  height: 386px;
+  background-color: black;
+  border:1px solid black;
+  border-radius: 50px 50px 0px 0px;
   margin-right: 20px;
+  box-shadow: 3px 3px 1px 1px gray;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -171,6 +176,9 @@ const Room = styled.div`
   @media screen and (max-width: 600px) {
     min-height: 200px;
     margin-bottom: 20px;
+  }
+  &:hover{  
+    border:5px solid black;
   }
 `
 export default Main

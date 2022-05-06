@@ -125,7 +125,7 @@ function GameRoom(props) {
 
           <RightBox>
             <ChatBox socket={socket} />
-            <Button
+            <Button bg='black'
                     smallBtn
                     _onClick={() => {
                       exitRoom()
@@ -147,17 +147,17 @@ function GameRoom(props) {
                     <>
                       {
                         getReady == false
-                        ?<Button
+                        ?<ReadyBtn
                         smallBtn
                         onClick={() => {
                           readyGame()
-                        }} >준비하기</Button>
-                        :<Button
+                        }} >준비하기</ReadyBtn>
+                        :<ReadyBtn
                         bg='gray'
                         smallBtn
                         onClick={() => {
                           readyGame()
-                        }} >준비완료</Button>
+                        }} >준비완료</ReadyBtn>
                         
                       }
                     </>
