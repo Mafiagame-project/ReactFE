@@ -6,11 +6,14 @@ import { actionCreators as gameActions } from '../redux/modules/game'
 import { actionCreators as roomActions } from '../redux/modules/room'
 import { actionCreators as memberActions } from '../redux/modules/member'
 import { useEffect } from 'react'
+import Peer from 'peerjs';
 
 function Loading() {
   const dispatch = useDispatch()
   const history = useHistory()
   const token = localStorage.getItem('token')
+  const myPeer = new Peer();
+
 
   const entrance = () => {
     history.push('/gamemain')
@@ -19,9 +22,9 @@ function Loading() {
 
     socket.on('roomData', (info) => {
       // createModal 이벤트 발생시 실행
-      socket.emit('joinRoom', info.roomId)
-      console.log('info')
+      socket.emit('joinRoom', info.roomId, myPeer.id)
       dispatch(roomActions.currentRoom(info))
+      dispatch(gameActions.sendPeerId(myPeer))
       history.push(`/gameroom/${info.roomId}`)
     })
 
@@ -79,6 +82,8 @@ function Loading() {
       dispatch(gameActions.copSelected(selected))
       dispatch(gameActions.noticeCop(selected))
     })
+    
+    
   }
 
   return (

@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { Grid, Text, Input, Button } from '../element/index'
 import { actionCreators as roomActions } from '../redux/modules/room'
+import { actionCreators as gameActions } from '../redux/modules/game'
+import Peer from 'peerjs';
 
 function CreateModal(props) {
   const history = useHistory();

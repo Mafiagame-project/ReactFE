@@ -5,7 +5,8 @@ import { useDispatch } from 'react-redux'
 import { history } from '../redux/configureStore'
 import { actionCreators as userActions } from '../redux/modules/user'
 import Friendlist from '../component/Friendlist'
-import FriendsListModal from '../component/modal/FriendsListModal'
+import FriendsListModal from './modal/FriendsListModal'
+import ModalPortal from './modal/ModalPortal'
 import dao from '../assets/image/Dao.png'
 
 function Header() {
@@ -42,10 +43,6 @@ function Header() {
             >
               친구목록
             </Text>
-            {/* <FriendsListModal
-              open={isOpen}
-              onClose={() => setIsOpen(false)}
-            ></FriendsListModal> */}
             <Text color="#fff" _onClick={handleLogOut}>
               로그아웃
             </Text>
@@ -55,6 +52,13 @@ function Header() {
       {/* {getFriend == true ? (
         <Friendlist getFriend={getFriend} setFriend={setFriend} />
       ) : null} */}
+
+      {/* 친구 목록 모달 부분입니다 */}
+      <ModalPortal>
+        {isOpen && (
+          <FriendsListModal onClose={() => setIsOpen(false)}></FriendsListModal>
+        )}
+      </ModalPortal>
     </>
   )
 }

@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Planet } from 'react-planet'
 import { Grid, Text } from '../element/index'
 import styled from 'styled-components'
 import Peer from 'peerjs'
+import '../shared/video.css'
 
 const VideoContainer = (props) => {
   const socket = props.socket
   const memberId = useSelector((state) => state.member.memberId)
+  const myPeer = useSelector((state) => state.game.peerId)
   const playerJob = useSelector((state) => state.game.job)
   const killed = useSelector((state) => state.game.killed)
   const copSelect = useSelector((state) => state.game.copSelect)
@@ -43,111 +45,48 @@ const VideoContainer = (props) => {
       policeCnt++
     }
   }
-
-  // <--------- 여기서부터 peer ---------->
-
-  // const videoGrid = document.querySelector('.video-grid')
-  // const myVideo = document.createElement('video')
-  let myStream = null
-  let myPeerId = ''
-  let allStream = React.useRef()
+  // 여기서부터 peer
+  const videoGrid = useRef()
+  const myVideo = document.createElement('video')
+  // const myVideo = useRef();
   const peers = {}
-  const [cameraOn, setCameraOn] = React.useState(true)
-  const [display, setDisplay] = React.useState(false)
-  const videoContainer = React.useRef()
-  const videoGrid = React.useRef()
-  const myVideo = React.useRef()
-  function addVideoStream(video, stream) {
-    video.srcObject = stream
-    video.addEventListener('loadedmetadata', () => {
-      video.play()
-    })
-    videoGrid.append(video)
-  }
 
-  //카메라 onoff
-  const handleCamera = () => {
-    setCameraOn((prev) => !prev)
-    if (cameraOn) {
-      let video = allStream.current.getTracks()
-      video[0].enabled = false
-      let src = document.querySelector('.video_non_src')
-      src.style.display = 'block'
-    } else {
-      let video = allStream.current.getTracks()
-      video[0].enabled = true
-      let src = document.querySelector('.video_non_src')
-      src.style.display = 'none'
+  useEffect(() => {
+    try {
+      navigator.mediaDevices
+        .getUserMedia({
+          video: true,
+          audio: false,
+        })
+        .then((stream) => {
+          let streamId = stream.id
+          addVideoStream(myVideo, stream)
+
+          myPeer.on('call', (call) => {
+            call.answer(stream)
+            const video = document.createElement('video')
+            call.on('stream', (userVideoStream) => {
+              addVideoStream(video, userVideoStream)
+            })
+          })
+          socket.on('user-connected', (userId) => {
+            connectToNewUser(userId, stream)
+          })
+        })
+        .catch((error) => {})
+    } catch (e) {
+      socket.on('user-connected', (userId) => {
+        // connectToNewUser(userId, stream);
+      })
+      console.log(e)
     }
-  }
-
-  React.useEffect(() => {
-    const peer = new Peer()
-    //유저의 브라우저로부터 미디어 가져오기
-    navigator.mediaDevices
-      .getUserMedia({
-        video: true,
-        audio: false,
-      })
-      .then((stream) => {
-        console.log(stream)
-        myStream = stream
-        let streamId = stream.id
-        // midia Device를 받아오는데 성공하면 stream을 넘겨받을 수 있음
-        //addVideoStream은 받아온 스트림을 나의 브라우저에 추가 시킴
-        addVideoStream(myVideo.current, stream)
-        videoGrid.current.prepend(myVideo.current)
-        allStream.current = stream
-        console.log('open전')
-
-        if (peer._id == null) {
-          peer.on('open', (peerId) => {
-            console.log(peerId)
-            myPeerId = peerId
-            socket.emit('join-room', peerId)
-          })
-        } else {
-          socket.emit('join-room', peer._id)
-        }
-
-        console.log('call 전')
-        peer.on('call', (call) => {
-          console.log(call, '찍혀라찍혀라찍혀라')
-          call.answer(stream)
-          const video = document.createElement('video')
-
-          call.on('stream', (userVideoStream) => {
-            console.log(userVideoStream)
-            addVideoStream(video, userVideoStream)
-          })
-        })
-        socket.on('user-connected', (userId) => {
-          connectToNewUser(userId, stream)
-        })
-
-        socket.on('user-disconnected', (userId) => {
-          console.log(userId)
-          if (peers[userId]) peers[userId].close()
-        })
-
-        // user-connected 이벤트가 발생하면 새롭게 접속한 유저에게 call 요청 보내기,
-        // call 요청은 각각의 peer가 가지고 있는 userId를 통해 할 수 있는데  userId를 서버로부터 받아온 후 call 보내는 것
-        // peer.on('open', (peerId) => {
-        //   console.log(peerId)
-        //   myPeerId = peerId
-        //   socket.emit('PeerId', peerId)
-        // })
-
-        //여기서 멈춤???
-        // 그 후 누군가 나에게 요청을 보내면 event on 해줌
-        // call.answer는 나에게 응답을 준 다른 peer의 요청을 수락하는 코드?
-        // 나의 stream => 다른 동료에게 보내준다. answer가 발생하면 'stream'이라는 이벤트를 통해서 다른 유저의 stream 받아오기
-        // call.on('stream')에서는 다른 유저의 stream의 나의 브라우저에 추가시키는 콜백 함수 실행
-      })
+    socket.on('user-disconnected', (userId) => {
+      if (peers[userId]) peers[userId].close()
+    })
 
     function connectToNewUser(userId, stream) {
       console.log(userId, stream)
-      const call = peer.call(userId, stream)
+      const call = myPeer.call(userId, stream)
       console.log(call)
       const video = document.createElement('video')
       call.on('stream', (userVideoStream) => {
@@ -159,9 +98,14 @@ const VideoContainer = (props) => {
 
       peers[userId] = call
     }
+    function addVideoStream(video, stream) {
+      video.srcObject = stream
+      video.addEventListener('loadedmetadata', () => {
+        video.play()
+      })
+      videoGrid.current.prepend(video)
+    }
   }, [])
-
-  //둘다 못 받아옴
 
   return (
     <Container>
@@ -191,13 +135,13 @@ const VideoContainer = (props) => {
               <div
                 ref={videoGrid}
                 style={{
-                  width: '150px',
-                  height: '150px',
-                  // backgroundImage:
-                  //   'url(https://ssl.nexon.com/s2/game/kart/v2/event/2019/0110_clubtoon/cha1.png)',
+                  width: '200px',
+                  height: '200px',
+                  borderRadius: '50%',
+                  background: '#eee',
                 }}
+                className="video-grid"
               >
-                {/* <video ref={myVideo} autoPlay></video> */}
                 <button
                   onClick={() => {
                     active(e, playerJob, is_night)
