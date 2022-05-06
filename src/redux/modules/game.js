@@ -2,6 +2,7 @@ import { createAction, handleActions } from 'redux-actions'
 import { produce } from 'immer'
 
 const SEND_SOCKET = 'SEND_SOCKET'
+const SEND_PEERID = 'SEND_PEERID'
 const ROOM_NOTI = 'ROOM_NOTI'
 const JOB_NOTI = 'JOB_NOTI'
 const RESULT_NOTI = 'RESULT_NOTI'
@@ -14,6 +15,7 @@ const IS_NIGHT = 'IS_NIGHT'
 const COP_SELECTED = 'COP_SELECTED'
 
 const sendSocket = createAction(SEND_SOCKET, (socket) => ({ socket }))
+const sendPeerId = createAction(SEND_PEERID, (peer) => ({ peer }))
 const noticeEnterOut = createAction(ROOM_NOTI, (noti) => ({ noti }))
 const noticeJob = createAction(JOB_NOTI, (noti) => ({ noti }))
 const noticeResult = createAction(RESULT_NOTI, (noti) => ({ noti }))
@@ -27,6 +29,7 @@ const copSelected = createAction(COP_SELECTED, (selected) => ({ selected }))
 
 const initialState = {
   socket: null,
+  peerId : null,
   enterOutNoti: null,
   jobNoti: null,
   resultNoti: null,
@@ -44,6 +47,10 @@ export default handleActions(
     [SEND_SOCKET]: (state, action) =>
       produce(state, (draft) => {
         draft.socket = action.payload.socket
+      }),
+    [SEND_PEERID]: (state, action) =>
+      produce(state, (draft) => {
+        draft.peerId = action.payload.peer
       }),
     [ROOM_NOTI]: (state, action) =>
       produce(state, (draft) => {
@@ -90,6 +97,7 @@ export default handleActions(
 )
 const actionCreators = {
   sendSocket,
+  sendPeerId,
   noticeEnterOut,
   playerJob,
   playerWhoKilled,

@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../redux/configureStore'
 import Header from '../component/Header'
 import ChatBox from '../component/ChatBox'
-import VideoContainer from '../component/video/VideoContainer'
+import VideoContainer from '../component/VideoContainer'
+import Peer from 'peerjs'
 
 function GameRoom(props) {
   const dispatch = useDispatch()
@@ -19,8 +20,6 @@ function GameRoom(props) {
   const currentTime = useSelector((state) => state.game.night)
   const roomInfo = useSelector((state) => state.room.current)
   const currentId = localStorage.getItem('userId')
-
-  console.log(roomInfo, '룸인포여')
 
   const [getNotice, setNotice] = useState(false)
   const [getWho, setWho] = useState()
@@ -36,6 +35,7 @@ function GameRoom(props) {
     dispatch(gameActions.dayAndNight(null))
     // whenExit()
   }
+  
 
   const whenExit = () => {}
 
@@ -47,7 +47,6 @@ function GameRoom(props) {
       setStart(true)
     }
   }
-  console.log(voteResult)
   const enterNoti = () => {
     setNotice(true)
     setTimeout(() => {

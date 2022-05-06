@@ -8,6 +8,7 @@ import { actionCreators as memberActions } from '../redux/modules/member'
 import { useHistory } from 'react-router'
 import { useEffect, useState } from 'react'
 import CreateModal from '../component/CreateModal'
+import Peer from 'peerjs';
 
 function Main() {
   const dispatch = useDispatch()
@@ -16,6 +17,7 @@ function Main() {
   const currentId = localStorage.getItem('userId')
   const history = useHistory()
   const [getModal, setModal] = useState(false)
+  const myPeer = new Peer();
 
   const entrance = (roomInfo) => {
     // 방에 입장시 생기는 이벤트
@@ -33,7 +35,11 @@ function Main() {
             history.push(`/gameroom/${roomInfo.roomId}`)
             dispatch(gameActions.sendSocket(socket))
             dispatch(roomActions.currentRoom(roomInfo))
-            socket.emit('joinRoom', roomInfo.roomId)
+            dispatch(gameActions.sendPeerId(myPeer))
+            myPeer.on('open', (id) => {
+              console.log(id)
+              socket.emit('joinRoom', roomInfo.roomId, id)
+            });
           } else {
             alert('비밀번호가 틀림 ㅋ')
             return
@@ -42,7 +48,11 @@ function Main() {
           history.push(`/gameroom/${roomInfo.roomId}`)
           dispatch(gameActions.sendSocket(socket))
           dispatch(roomActions.currentRoom(roomInfo))
-          socket.emit('joinRoom', roomInfo.roomId)
+          dispatch(gameActions.sendPeerId(myPeer))
+          myPeer.on('open', (id) => {
+            console.log(id)
+            socket.emit('joinRoom', roomInfo.roomId, id)
+          });
         }
       }
     }

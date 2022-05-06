@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Planet } from 'react-planet'
 import { Grid, Text } from '../element/index'
 import styled from 'styled-components'
 import Peer from 'peerjs';
+import '../shared/video.css';
 
 
 const VideoContainer = (props) => {
   const socket = props.socket;
   const memberId = useSelector((state) => state.member.memberId)
+  const myPeer = useSelector((state) => state.game.peerId)
   const playerJob = useSelector((state) => state.game.job)
   const killed = useSelector((state) => state.game.killed)
   const copSelect = useSelector(state => state.game.copSelect)
@@ -46,62 +48,67 @@ const VideoContainer = (props) => {
     }
   }
   // 여기서부터 peer
-  const videoGrid = document.querySelector('.video-grid');
-  const myPeer = new Peer();
+  const videoGrid = useRef();
   const myVideo = document.createElement('video');
+  // const myVideo = useRef();
   const peers = {};
-
-  navigator.mediaDevices
-    .getUserMedia({
-      video: true,
-      audio: false,
-    }).then(stream => {
-      addVideoStream(myVideo, stream);
-      myPeer.on('call', (call) => {
+ 
+  useEffect(()=>{
+    try{
+      navigator.mediaDevices
+        .getUserMedia({
+          video: true,
+          audio: false,
+        }).then(stream => {
+          let streamId = stream.id;
+          addVideoStream(myVideo, stream);
+    
+          myPeer.on('call', (call) => {
+            call.answer(stream);
+            const video = document.createElement('video');
+            call.on('stream', (userVideoStream) => {
+              addVideoStream(video, userVideoStream);
+            });
+          });
+          socket.on('user-connected', (userId) => {
+            connectToNewUser(userId, stream);
+          });
+        }) 
+        .catch(error => {
+        })
+      } catch (e){
+        socket.on('user-connected', (userId) => {
+          // connectToNewUser(userId, stream);
+        });
+        console.log(e)
+      }
+      socket.on('user-disconnected', (userId) => {
+        if (peers[userId]) peers[userId].close();
+      });
+        
+  
+      function connectToNewUser(userId, stream) {
+        console.log(userId, stream)
+        const call = myPeer.call(userId, stream);
         console.log(call)
-        call.answer(stream);
         const video = document.createElement('video');
         call.on('stream', (userVideoStream) => {
-          console.log(userVideoStream)
           addVideoStream(video, userVideoStream);
         });
-      });
-      socket.on('user-connected', (userId) => {
-        connectToNewUser(userId, stream);
-      });
-    })
-    console.log('d')
-    socket.on('user-disconnected', (userId) => {
-      console.log(userId)
-      if (peers[userId]) peers[userId].close();
-    });
-    
-    // myPeer.on('open', (id) => {
-    //   console.log(id)
-    //   socket.emit('joinRoom', roomInfo?.roomId, id);
-    // });
-  
-    function connectToNewUser(userId, stream) {
-      console.log(userId, stream)
-      const call = myPeer.call(userId, stream);
-      console.log(call)
-      const video = document.createElement('video');
-      call.on('stream', (userVideoStream) => {
-        addVideoStream(video, userVideoStream);
-      });
-      call.on('close', () => {
-        video.remove();
-      });
-    
-      peers[userId] = call;
-    }
-    function addVideoStream(video, stream) {
-      video.srcObject = stream;
-      video.addEventListener('loadedmetadata', () => {
-        video.play();
-      });
-      videoGrid.append(video);
-    }
+        call.on('close', () => {
+          video.remove();
+        });
+      
+        peers[userId] = call;
+      }
+      function addVideoStream(video, stream) {
+        video.srcObject = stream;
+        video.addEventListener('loadedmetadata', () => {
+          video.play();
+        });
+        videoGrid.current.prepend(video);
+      }
+  },[])
 
   return (
     <Container>
@@ -128,7 +135,7 @@ const VideoContainer = (props) => {
         {memberId.map((e) => {
           return (
             <Grid center>
-              <div style={{width:'150px', height:'150px', backgroundImage:'url(https://ssl.nexon.com/s2/game/kart/v2/event/2019/0110_clubtoon/cha1.png)'}} className='video-grid'>
+              <div ref={videoGrid} style={{width:'200px', height:'200px', borderRadius:'50%', background:'#eee' }} className='video-grid'>
                 <button
                   onClick={() => {
                     active(e, playerJob, is_night)
