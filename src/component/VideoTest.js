@@ -57,13 +57,6 @@ const VideoContainer = (props) => {
   const videoContainer = React.useRef()
   const videoGrid = React.useRef()
   const myVideo = React.useRef()
-  function addVideoStream(video, stream) {
-    video.srcObject = stream
-    video.addEventListener('loadedmetadata', () => {
-      video.play()
-    })
-    videoGrid.append(video)
-  }
 
   //카메라 onoff
   const handleCamera = () => {
@@ -99,6 +92,19 @@ const VideoContainer = (props) => {
         videoGrid.current.prepend(myVideo.current)
         allStream.current = stream
         console.log('open전')
+        // user-connected 이벤트가 발생하면 새롭게 접속한 유저에게 call 요청 보내기,
+        // call 요청은 각각의 peer가 가지고 있는 userId를 통해 할 수 있는데  userId를 서버로부터 받아온 후 call 보내는 것
+        // peer.on('open', (peerId) => {
+        //   console.log(peerId)
+        //   myPeerId = peerId
+        //   socket.emit('PeerId', peerId)
+        // })
+
+        //여기서 멈춤???
+        // 그 후 누군가 나에게 요청을 보내면 event on 해줌
+        // call.answer는 나에게 응답을 준 다른 peer의 요청을 수락하는 코드?
+        // 나의 stream => 다른 동료에게 보내준다. answer가 발생하면 'stream'이라는 이벤트를 통해서 다른 유저의 stream 받아오기
+        // call.on('stream')에서는 다른 유저의 stream의 나의 브라우저에 추가시키는 콜백 함수 실행
 
         if (peer._id == null) {
           peer.on('open', (peerId) => {
@@ -124,27 +130,12 @@ const VideoContainer = (props) => {
         socket.on('user-connected', (userId) => {
           connectToNewUser(userId, stream)
         })
-
-        socket.on('user-disconnected', (userId) => {
-          console.log(userId)
-          if (peers[userId]) peers[userId].close()
-        })
-
-        // user-connected 이벤트가 발생하면 새롭게 접속한 유저에게 call 요청 보내기,
-        // call 요청은 각각의 peer가 가지고 있는 userId를 통해 할 수 있는데  userId를 서버로부터 받아온 후 call 보내는 것
-        // peer.on('open', (peerId) => {
-        //   console.log(peerId)
-        //   myPeerId = peerId
-        //   socket.emit('PeerId', peerId)
-        // })
-
-        //여기서 멈춤???
-        // 그 후 누군가 나에게 요청을 보내면 event on 해줌
-        // call.answer는 나에게 응답을 준 다른 peer의 요청을 수락하는 코드?
-        // 나의 stream => 다른 동료에게 보내준다. answer가 발생하면 'stream'이라는 이벤트를 통해서 다른 유저의 stream 받아오기
-        // call.on('stream')에서는 다른 유저의 stream의 나의 브라우저에 추가시키는 콜백 함수 실행
       })
 
+    socket.on('user-disconnected', (userId) => {
+      console.log(userId)
+      if (peers[userId]) peers[userId].close()
+    })
     function connectToNewUser(userId, stream) {
       console.log(userId, stream)
       const call = peer.call(userId, stream)
@@ -163,6 +154,13 @@ const VideoContainer = (props) => {
 
   //둘다 못 받아옴
 
+  function addVideoStream(video, stream) {
+    video.srcObject = stream
+    video.addEventListener('loadedmetadata', () => {
+      video.play()
+    })
+    videoGrid.append(video)
+  }
   return (
     <Container>
       <Planet

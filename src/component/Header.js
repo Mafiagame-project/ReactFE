@@ -5,20 +5,22 @@ import { useDispatch } from 'react-redux'
 import { history } from '../redux/configureStore'
 import { actionCreators as userActions } from '../redux/modules/user'
 import Friendlist from '../component/Friendlist'
+import FriendsListModal from '../component/modal/FriendsListModal'
 import dao from '../assets/image/Dao.png'
 
 function Header() {
   const dispatch = useDispatch()
   const currentId = localStorage.getItem('userId')
   const [getFriend, setFriend] = React.useState(false)
+  const [isOpen, setIsOpen] = React.useState(false)
   const handleLogOut = () => {
     dispatch(userActions.logOutDB())
   }
   return (
     <>
-      <Grid is_flex bg="#B92AFC" padding="0 30px">
+      <Grid is_flex bg="#000" padding="0 30px" hegith="100px">
         <Grid _onClick={() => history.push('/')}>
-          <h1>로고</h1>
+          <Text color="#fff">로고</Text>
         </Grid>
         <Rightside>
           <Grid is_flex>
@@ -26,54 +28,31 @@ function Header() {
               <img style={{ width: '70px', height: '50px' }} src={dao} />
             </ProfileImg>
             <Grid margin="0 20px">
-              <Text>{currentId}</Text>
-              <Text>0승 25패</Text>
+              <Text color="#fff">{currentId}</Text>
+              <Text color="#fff">0승 25패</Text>
             </Grid>
           </Grid>
           <Grid is_flex>
-            <Text>사운드</Text>
+            <Text color="#fff">사운드</Text>
             <Text
+              color="#fff"
               _onClick={() => {
-                setFriend(!getFriend)
+                setIsOpen(true)
               }}
             >
               친구목록
             </Text>
-            <Text _onClick={handleLogOut}>로그아웃</Text>
+            {/* <FriendsListModal
+              open={isOpen}
+              onClose={() => setIsOpen(false)}
+            ></FriendsListModal> */}
+            <Text color="#fff" _onClick={handleLogOut}>
+              로그아웃
+            </Text>
           </Grid>
         </Rightside>
       </Grid>
-      {getFriend == true ? (
-        <Friendlist getFriend={getFriend} setFriend={setFriend} />
-      ) : null}
-
-      {/* <Grid is_flex width="100vw" height="7vh" bg="#d2d2d2">
-        <Grid width="65vw"></Grid>
-        <Rightside>
-          <ProfileImg>
-            <img style={{ width: '70px', height: '50px' }} src={dao} />
-          </ProfileImg>
-          <Grid margin="10px" width="30%">
-            <Text>{currentId}</Text>
-            <Text>0승 25패</Text>
-          </Grid>
-          <Text
-            _onClick={() => {
-              setFriend(!getFriend)
-            }}
-            width="100px"
-            size="16px"
-            bold
-            margin="20px"
-          >
-            친구목록
-          </Text>
-          <Text size="16px" bold margin="20px" _onClick={handleLogOut}>
-            로그아웃
-          </Text>
-        </Rightside>
-      </Grid>
-      {getFriend == true ? (
+      {/* {getFriend == true ? (
         <Friendlist getFriend={getFriend} setFriend={setFriend} />
       ) : null} */}
     </>

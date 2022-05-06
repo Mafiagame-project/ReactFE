@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../redux/configureStore'
 import Header from '../component/Header'
 import ChatBox from '../component/ChatBox'
-import VideoContainer from '../component/video/VideoContainer'
+import VideoContainer from '../component/VideoContainer'
 
 function GameRoom(props) {
   const dispatch = useDispatch()

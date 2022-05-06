@@ -43,6 +43,7 @@ function Main() {
           dispatch(gameActions.sendSocket(socket))
           dispatch(roomActions.currentRoom(roomInfo))
           socket.emit('joinRoom', roomInfo.roomId)
+          console.log(roomInfo.roomId)
         }
       }
     }
