@@ -1,4 +1,5 @@
 import React from 'react'
+import './App.css'
 import { ConnectedRouter } from 'connected-react-router'
 import { Route } from 'react-router-dom'
 import { history } from '../redux/configureStore'
@@ -11,7 +12,8 @@ import Gameroom from '../pages/Gameroom'
 import KakaoLogin from './KakaoLogin'
 import Loading from '../pages/Loading'
 import Functions from './functions'
-import PeerVideo from '../component/video/PeerVideo'
+import Introduce from '../pages/Introduce'
+import EditUser from '../pages/auth/EditUser'
 import { useDispatch } from 'react-redux'
 
 function App() {
@@ -25,10 +27,11 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/findpw" component={FindPw} />
-        <Route exact path="/gameroom/:num" component={Gameroom} />
+        <Route exact path="/gameroom/:roomId" component={Gameroom} />
         <Route exact path="/main" component={KakaoLogin} />
         <Route exact path="/functions" component={Functions} />
-        <Route exact path="/video" component={PeerVideo} />
+        <Route exact path="/introduce" component={Introduce} />
+        <Route exact path="/edituser" component={EditUser} />
       </ConnectedRouter>
     </>
   )

@@ -48,7 +48,9 @@ function SignUp() {
               _onChange={formik.handleChange}
               placeholder="아이디"
             />
-            <Text>{formik.touched.id ? formik.errors.id : ''}</Text>
+            <Text margin="0px 3px" color="red">
+              {formik.touched.id ? formik.errors.id : ''}
+            </Text>
             <AuthInput
               id="email"
               autoComplete="off"
@@ -56,7 +58,9 @@ function SignUp() {
               _onChange={formik.handleChange}
               placeholder="이메일"
             />
-            <Text>{formik.touched.email ? formik.errors.email : ''}</Text>
+            <Text margin="0px 3px" color="red">
+              {formik.touched.email ? formik.errors.email : ''}
+            </Text>
             <AuthInput
               id="nick"
               autoComplete="off"
@@ -64,7 +68,9 @@ function SignUp() {
               _onChange={formik.handleChange}
               placeholder="닉네임"
             />
-            <Text>{formik.touched.nick ? formik.errors.nick : ''}</Text>
+            <Text margin="0px 3px" color="red">
+              {formik.touched.nick ? formik.errors.nick : ''}
+            </Text>
             <AuthInput
               id="pw"
               value={formik.values.pw}
@@ -73,7 +79,9 @@ function SignUp() {
               _onChange={formik.handleChange}
               placeholder="비밀번호"
             />
-            <Text>{formik.touched.pw ? formik.errors.pw : ''}</Text>
+            <Text margin="0px 3px" color="red">
+              {formik.touched.pw ? formik.errors.pw : ''}
+            </Text>
             <AuthInput
               id="pwCheck"
               value={formik.values.pwCheck}
@@ -82,7 +90,9 @@ function SignUp() {
               _onChange={formik.handleChange}
               placeholder="비밀번호 확인"
             />
-            <Text>{formik.touched.pwCheck ? formik.errors.pwCheck : ''}</Text>
+            <Text margin="0px 3px" color="red">
+              {formik.touched.pwCheck ? formik.errors.pwCheck : ''}
+            </Text>
             <Grid isFlex>
               <Button
                 type="submit"

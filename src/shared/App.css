@@ -1,10 +1,14 @@
+@font-face {
+  font-family: 'neodgm';
+  src: url('../assets/font/neodgm.ttf');
+}
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body * {
+  font-family: 'neodgm';
 }
 
 @media (prefers-reduced-motion: no-preference) {

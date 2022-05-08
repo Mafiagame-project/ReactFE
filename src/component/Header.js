@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Grid, Text } from '../element/index'
+import { Grid, Text, Image } from '../element/index'
 import { useDispatch } from 'react-redux'
 import { history } from '../redux/configureStore'
 import { actionCreators as userActions } from '../redux/modules/user'
@@ -9,7 +9,7 @@ import FriendsListModal from './modal/FriendsListModal'
 import ModalPortal from './modal/ModalPortal'
 import dao from '../assets/image/Dao.png'
 
-function Header() {
+function Header(props) {
   const dispatch = useDispatch()
   const currentId = localStorage.getItem('userId')
   const [getFriend, setFriend] = React.useState(false)
@@ -19,18 +19,31 @@ function Header() {
   }
   return (
     <>
-      <Grid is_flex bg="#000" padding="0 30px" hegith="100px">
+      <Grid is_flex bg="#000" padding="0 9vw 0 7.5vw" height="10vh">
         <Grid _onClick={() => history.push('/')}>
-          <Text color="#fff">로고</Text>
+          <Text size="20px" color="#fff">
+            MAFIYANG
+          </Text>
         </Grid>
         <Rightside>
-          <Grid is_flex>
-            <ProfileImg>
-              <img style={{ width: '70px', height: '50px' }} src={dao} />
-            </ProfileImg>
-            <Grid margin="0 20px">
-              <Text color="#fff">{currentId}</Text>
-              <Text color="#fff">0승 25패</Text>
+          <Grid flex_column>
+            <Grid isFlex_start>
+              <Image size="50" />
+              <Grid margin="0 10px">
+                <Text margin="0px" color="#fff">
+                  {currentId}
+                </Text>
+                <Text margin="0px" color="#fff">
+                  0승 25패
+                </Text>
+                <Text
+                  margin="0px"
+                  color="#aaa"
+                  _onClick={() => history.push('/edituser')}
+                >
+                  수정하기
+                </Text>
+              </Grid>
             </Grid>
           </Grid>
           <Grid is_flex>
@@ -49,10 +62,6 @@ function Header() {
           </Grid>
         </Rightside>
       </Grid>
-      {/* {getFriend == true ? (
-        <Friendlist getFriend={getFriend} setFriend={setFriend} />
-      ) : null} */}
-
       {/* 친구 목록 모달 부분입니다 */}
       <ModalPortal>
         {isOpen && (
@@ -62,11 +71,7 @@ function Header() {
     </>
   )
 }
-const ProfileImg = styled.div`
-  min-width: 50px;
-  height: 50px;
-  border-radius: 50%;
-`
+
 const Rightside = styled.div`
   width: 35vw;
   height: 100%;

@@ -59,23 +59,22 @@ const VideoContainer = (props) => {
   const myVideo = React.useRef()
 
   //카메라 onoff
-  const handleCamera = () => {
-    setCameraOn((prev) => !prev)
-    if (cameraOn) {
-      let video = allStream.current.getTracks()
-      video[0].enabled = false
-      let src = document.querySelector('.video_non_src')
-      src.style.display = 'block'
-    } else {
-      let video = allStream.current.getTracks()
-      video[0].enabled = true
-      let src = document.querySelector('.video_non_src')
-      src.style.display = 'none'
-    }
-  }
+  // const handleCamera = () => {
+  //   setCameraOn((prev) => !prev)
+  //   if (cameraOn) {
+  //     let video = allStream.current.getTracks()
+  //     video[0].enabled = false
+  //     let src = document.querySelector('.video_non_src')
+  //     src.style.display = 'block'
+  //   } else {
+  //     let video = allStream.current.getTracks()
+  //     video[0].enabled = true
+  //     let src = document.querySelector('.video_non_src')
+  //     src.style.display = 'none'
+  //   }
+  // }
 
   React.useEffect(() => {
-    const peer = new Peer()
     //유저의 브라우저로부터 미디어 가져오기
     navigator.mediaDevices
       .getUserMedia({
@@ -403,3 +402,67 @@ const NameTag = styled.div`
 `
 
 export default VideoContainer
+
+const videoGrid = React.useRef()
+// const myVideo = React.useRef()
+const myVideo = document.createElement('video')
+// myVideo.muted = true;
+const peers = {}
+
+React.useEffect(() => {
+  //새로운 피어가 연결되면 호출
+  socket.on('user-connected', (userId) => {
+    connectToNewUser(userId, stream) //서버 코드 확인 해야함
+  })
+  //새로운 피어와 연결 성공하면 호출
+  socket.on('connection', (data) => {
+    console.log('호출 성공!')
+  })
+  myPeer.on('call', (call) => {
+    console.log('call...중')
+    navigator.mediaDevices
+      .getUserMedia({
+        video: true,
+        audio: false,
+      })
+      .then((stream) => {
+        call.answer(stream)
+
+        let video = document.createElement('video')
+        videoFrid.append(video)
+
+        call.on('stream', (remoteStream) => {
+          addVideoStream(video, remoteStream)
+        })
+      })
+      .catch((err) => {
+        console.log(err, '에러에러')
+      })
+  })
+
+  socket.on('user-disconnected', (userId) => {
+    if (peers[userId]) peers[userId].close()
+  })
+
+  function connectToNewUser(userId, stream) {
+    console.log(userId, stream)
+    const call = myPeer.call(userId, stream)
+    console.log(call)
+    const video = document.createElement('video')
+    call.on('stream', (userVideoStream) => {
+      addVideoStream(video, userVideoStream)
+    })
+    call.on('close', () => {
+      video.remove()
+    })
+
+    peers[userId] = call
+  }
+  function addVideoStream(video, stream) {
+    video.srcObject = stream
+    video.addEventListener('loadedmetadata', () => {
+      video.play()
+    })
+    videoGrid.prepend(video)
+  }
+}, [])

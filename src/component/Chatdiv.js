@@ -20,7 +20,7 @@ function Chatdiv({ getWrite, currentId, e }) {
   const Chatword = styled.div`
     text-align: ${e.data.id === currentId ? 'right' : 'left'};
     position: relative;
-    background: white;
+    background: ${e.data.id === currentId ? '#FFE27A' : 'white'};
     border-radius: 5%;
     border: 1px solid black;
     padding: 10px;

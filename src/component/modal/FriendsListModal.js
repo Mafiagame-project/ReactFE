@@ -1,9 +1,27 @@
 import React from 'react'
 import ModalPortal from './ModalPortal'
-import { Grid, Text, Button, Input } from '../../element/index'
+import { useDispatch } from 'react-redux'
+import { actionCreators as userActions } from '../../redux/modules/user'
+import { Grid, Text, Button, Input, Image } from '../../element/index'
 import styled from 'styled-components'
 
 const FriendlistModal = ({ onClose }) => {
+  const dispatch = useDispatch()
+  const [addFriend, setAddFriend] = React.useState('')
+  const userId = localStorage.getItem('userId')
+
+  React.useEffect(() => {
+    dispatch(userActions.getFriendDB())
+  }, [])
+
+  const addFriendBtn = {
+    if(userId = addFriend) {
+      window.alert('나는 좋은 친구이지만...')
+      setAddFriend('')
+      return
+    },
+    // dispatch(userActions.addFriendDB(friendUserId))
+  }
   return (
     <>
       <ModalPortal>
@@ -14,15 +32,44 @@ const FriendlistModal = ({ onClose }) => {
           }}
         >
           <Content onClick={(e) => e.stopPropagation()}>
-            <Text>친구 리스트</Text>
-            <Input placeholder="아이디/이메일을 입력하세요" width="100%" />
-            <Button _onClick={() => onClose()}>X</Button>
+            <Grid bg="#fff" padding="20px">
+              <Text margin="0px" _onClick={() => onClose()}>
+                X
+              </Text>
+              <Input
+                placeholder="아이디/이메일을 입력하세요"
+                type="text"
+                _onChange={addFriend}
+                _onKeyDown={addFriendBtn}
+              />
+            </Grid>
+            <FriendList>
+              <Image size="40" />
+              <Grid>
+                <Text>이름</Text>
+                <Text>99승 99패</Text>
+              </Grid>
+            </FriendList>
           </Content>
         </Background>
       </ModalPortal>
     </>
   )
 }
+
+const FriendList = styled.div`
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  margin: 10px 20px;
+`
+const Img = styled.div`
+  width: 50px;
+  height: 50px;
+  border-radius: 70%;
+  background-color: #aaa;
+  float: left;
+`
 
 const Background = styled.div`
   position: fixed;
@@ -33,23 +80,22 @@ const Background = styled.div`
   height: 100%;
   width: 100%;
   z-index: 1000;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.8);
 `
 
 const Content = styled.div`
   position: fixed;
-
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   align-items: center;
   justify-content: center;
   z-index: 999;
-  padding: 20px;
+
   height: 610px;
   max-width: 410px;
   width: 100%;
-  background-color: #fff;
+  background-color: #eee;
   position: relative;
   overflow: scroll;
 `

@@ -8,19 +8,20 @@ const Input = (props) => {
     margin,
     placeholder,
     label,
-    _onChange,
     type,
     id,
+    width,
+    height,
+    _onChange,
+    _onKeyDown,
   } = props
 
   const styles = {
     size: size,
     margin: margin,
     padding: padding,
-    placeholder: placeholder,
-    label: label,
-    _onChange,
-    type,
+    height: height,
+    width: width,
   }
 
   return (
@@ -32,6 +33,11 @@ const Input = (props) => {
         onChange={_onChange}
         type={type}
         placeholder={placeholder}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            _onKeyDown()
+          }
+        }}
       />
     </React.Fragment>
   )
@@ -42,17 +48,31 @@ export default Input
 Input.defaultProps = {
   multiLine: false,
   label: false,
+  width: '100%',
   placeholder: '텍스트를 입력해주세요.',
   type: 'text',
   value: '',
   id: '',
   _onChange: () => {},
+  _onKeyDown: () => {},
+  margin: '',
+  padding: '',
+  height: '',
 }
 
 const ElInput = styled.input`
-  padding: 8px 8px;
+  ${(props) => (props.width ? `width: ${props.width};` : '')};
+  padding: ${(props) => props.padding};
+  height: ${(props) => props.height};
+  margin: ${(props) => props.margin};
+  font-size: 20px;
+  color: #333;
+  border: 1px solid #c4c4c4;
   &:focus {
     outline: none;
+  }
+  &::-webkit-input-placeholder {
+    color: #c4c4c4;
   }
 `
 

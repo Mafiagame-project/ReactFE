@@ -12,12 +12,13 @@ const LOG_IN = 'LOG_IN'
 const LOG_OUT = 'LOG_OUT'
 const SIGN_UP = 'SIGN_UP'
 const SET_USER = 'SET_USER'
-
+const GET_FRIEND = 'GET_FRIEND'
 //Action Creators
 const logIn = createAction(LOG_IN, (token, user) => ({ token, user }))
 const signUp = createAction(SIGN_UP, (user) => ({ user }))
 const logOut = createAction(LOG_OUT, (user) => ({ user }))
 const setUser = createAction(SET_USER, (user) => ({ user }))
+const getFriend = createAction(GET_FRIEND, (friend) => ({ friend }))
 
 //initialState
 const initialState = {
@@ -175,7 +176,7 @@ const changePwDB = (dic) => {
 const kakaoLogin = (code) => {
   return async function (dispatch, getState, { history }) {
     await axios
-      .get(`https://nhseung.shop/main?code=${code}`)
+      .get(`${BASE_URL}/main?code=${code}`)
       .then((res) => {
         console.log(res.data)
         const accessToken = res.data.token
@@ -200,6 +201,20 @@ const logOutDB = (user) => {
     dispatch(logOut(user))
     alert('로그아웃 되었습니다')
     history.replace('/login')
+  }
+}
+
+const getFriendDB = () => {
+  return async function (dispatch, getState, { history }) {
+    await axios
+      .post(`${BASE_URL}/user/friendList`)
+      .then((res) => {
+        console.log(res)
+        dispatch(getFriend())
+      })
+      .catch((err) => {
+        console.log('err', err)
+      })
   }
 }
 
@@ -236,5 +251,6 @@ const actionCreators = {
   logOutDB,
   findPwDB,
   changePwDB,
+  getFriendDB,
 }
 export { actionCreators }
