@@ -102,7 +102,7 @@ function GameRoom(props) {
   height: 90vh;
   transition-property: background;
   transition-timing-function: ease;
-  background:${currentTime == '밤' ? 'white' : '#333333'}
+  background:${currentTime == '밤' ? '#333333' : 'white'}
 `
 
   return (

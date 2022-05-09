@@ -11,6 +11,10 @@ function NotiModal() {
 
     console.log(reportNoti)
     console.log(currentTime)
+    console.log(survivedNoti)
+    console.log(voteResult)
+    console.log(endGameNoti)
+
     return (
         <>
         {
