@@ -2,7 +2,7 @@ import { useHistory } from 'react-router-dom'
 import { Grid, Text, Button } from '../element/index'
 import { useDispatch, useSelector } from 'react-redux'
 import io from 'socket.io-client'
-import { actionCreators as gameActions } from '../redux/modules/game'
+import game, { actionCreators as gameActions } from '../redux/modules/game'
 import { actionCreators as roomActions } from '../redux/modules/room'
 import { actionCreators as memberActions } from '../redux/modules/member'
 import { useEffect } from 'react'
@@ -43,8 +43,9 @@ function Loading() {
 
     socket.on('getJob', (player, playerJob) => {
       console.log(player, playerJob)
-      dispatch(gameActions.playerJob({ player, playerJob }))
       dispatch(gameActions.noticeJob(playerJob))
+      dispatch(gameActions.playerJob({ player, playerJob }))
+      dispatch(gameActions.startCard(true))
     })
 
     socket.on('isNight', (value) => {
@@ -62,6 +63,11 @@ function Loading() {
       console.log(value)
       dispatch(gameActions.playerWhoKilled(value.diedPeopleArr))
       dispatch(gameActions.noticeResult(value.id))
+    })
+
+    socket.on('ready', value => {
+      console.log(value)
+      dispatch(gameActions.readyCheck(value))
     })
 
     socket.on('nightVoteResult', (value) => {

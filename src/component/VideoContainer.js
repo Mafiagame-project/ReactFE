@@ -64,6 +64,7 @@ const VideoContainer = (props) => {
   // const myPeer = new Peer()
 
   useEffect(() => {
+  try{
     navigator.mediaDevices
       .getUserMedia({
         video: true,
@@ -79,6 +80,8 @@ const VideoContainer = (props) => {
       .catch((error) => {
         console.log('통신err', error)
       })
+    } catch {
+  }
     socket.on('user-disconnected', (userId) => {
       console.log('잘가요', userId)
       if (peers[userId]) peers[userId].close()

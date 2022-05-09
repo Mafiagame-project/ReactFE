@@ -13,6 +13,8 @@ const KILLED = 'KILLED'
 const SURVIVED = 'SURVIVED'
 const IS_NIGHT = 'IS_NIGHT'
 const COP_SELECTED = 'COP_SELECTED'
+const ALL_READY = 'ALL_READY'
+const START_CARD = 'START_CARD'
 
 const sendSocket = createAction(SEND_SOCKET, (socket) => ({ socket }))
 const sendPeerId = createAction(SEND_PEERID, (peer) => ({ peer }))
@@ -26,6 +28,8 @@ const playerWhoKilled = createAction(KILLED, (player) => ({ player }))
 const playerWhoSurvived = createAction(SURVIVED, (player) => ({ player }))
 const dayAndNight = createAction(IS_NIGHT, (boolean) => ({ boolean }))
 const copSelected = createAction(COP_SELECTED, (selected) => ({ selected }))
+const readyCheck = createAction(ALL_READY, (ready) => ({ready}))
+const startCard = createAction(START_CARD, (card) => ({card}))
 
 const initialState = {
   socket: null,
@@ -40,6 +44,8 @@ const initialState = {
   survived: null,
   night: null,
   copSelect: null,
+  ready: null,
+  card : null,
 }
 
 export default handleActions(
@@ -92,6 +98,18 @@ export default handleActions(
       produce(state, (draft) => {
         draft.copSelect = action.payload.selected
       }),
+    [START_CARD]: (state, action) =>
+      produce(state, (draft) => {
+        if(action.payload.card == true){
+          draft.card = true
+        } else {
+          draft.card = false
+        }
+      }),
+    [ALL_READY]: (state, action) =>
+      produce(state, (draft) => {
+        draft.ready = action.payload.ready
+      }),
   },
   initialState,
 )
@@ -108,6 +126,8 @@ const actionCreators = {
   noticeResult,
   noticeCop,
   noticeEndGame,
+  startCard,
+  readyCheck
 }
 
 export { actionCreators }

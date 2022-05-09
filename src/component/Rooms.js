@@ -14,11 +14,8 @@ const Rooms = (props) => {
   const currentId = localStorage.getItem('userId')
   const myPeer = new Peer()
 
-  console.log(RoomList)
-
   const entrance = (roomInfo) => {
     let roomId = roomInfo.roomId
-    console.log(roomInfo)
     // 방에 입장시 생기는 이벤트
     if (roomInfo.start == true) {
       alert('게임이 시작되었습니다')
@@ -35,11 +32,7 @@ const Rooms = (props) => {
             dispatch(gameActions.sendSocket(socket))
             dispatch(roomActions.currentRoom(roomInfo))
             dispatch(gameActions.sendPeerId(myPeer))
-            myPeer.on('open', (id) => {
-              console.log('peer-open', id)
-              socket.emit('joinRoom', roomId, id)
-              return null
-            })
+              socket.emit('joinRoom', roomId, myPeer.id)
           } else {
             alert('비밀번호가 틀림 ㅋ')
             return null
@@ -49,11 +42,7 @@ const Rooms = (props) => {
           dispatch(gameActions.sendSocket(socket))
           dispatch(roomActions.currentRoom(roomInfo))
           dispatch(gameActions.sendPeerId(myPeer))
-          myPeer.on('open', (id) => {
-            console.log('peer-open', id)
-            socket.emit('joinRoom', roomId, id)
-          })
-          return null
+            socket.emit('joinRoom', roomId, myPeer.id)
         }
       }
     }
