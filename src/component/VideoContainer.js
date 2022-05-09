@@ -49,21 +49,18 @@ const VideoContainer = (props) => {
   // --------- 여기서부터 peer -------------
 
   // const myVideo = document.createElement('video')
-  let myVideo = useRef()
+
   let myStream = null
   let myPeerId = ''
-  let streamId = null
   const peers = {}
-  const videoGrid = useRef()
-  const videoContainer = useRef()
-  // const getStream = useRef()
-  // const allStream = useRef()
+  const myVideo = useRef(null)
+  const videoGrid = useRef(null)
+  const videoContent = useRef('')
   const { roomId } = useParams()
   console.log(roomId)
 
-  // const myPeer = new Peer()
-
   useEffect(() => {
+    //내 비디오 받기
     navigator.mediaDevices
       .getUserMedia({
         video: true,
@@ -72,11 +69,50 @@ const VideoContainer = (props) => {
       .then((stream) => {
         myStream = stream
         console.log(myVideo.current, stream)
-        addVideoStream(myVideo.current, myStream)
+        addVideoStream(myVideo.current, stream)
         videoGrid.current.prepend(myVideo.current)
         console.log('마이 스트림 받았음', stream)
+
+        socket.on('user-connected', (userId) => {
+          console.log(userId)
+          const call = myPeer.call(userId, stream)
+          console.log(call)
+          console.log('새로운 유저와 연결중..', userId)
+          const videoBox = document.createElement('div')
+          const newVideo = document.createElement('video')
+          videoBox.prepend(newVideo)
+          // videoContent.current.prepend(videoBox)
+          console.log('div생성완료', videoBox)
+
+          call.on('stream', (newStream) => {
+            console.log(newStream)
+            addVideoStream(newVideo, newStream)
+            videoBox.prepend(newVideo)
+            console.log('div에 스트림저장', newStream)
+          })
+        })
+
+        //피어에게 call 요청
+        myPeer.on('call', (call) => {
+          console.log(call, '콜 거는 중...')
+          call.answer(stream)
+          console.log('콜 받았삼')
+          const videoBox = document.createElement('div')
+          videoBox.classList.add('video_box')
+          const peerVideo = document.createElement('video')
+          videoBox.prepend(peerVideo)
+          // videoContent.current.prepend(videoBox)
+          //
+          call.on('stream', (newStream) => {
+            console.log('상대방 스트림 요청중', newStream)
+            addVideoStream(peerVideo, newStream)
+            videoBox.prepend(peerVideo)
+            console.log('상대방 스트림 추가 완료')
+          })
+        })
       })
       .catch((error) => {
+        window.alert('다시 접속해주세요!')
         console.log('통신err', error)
       })
     socket.on('user-disconnected', (userId) => {
@@ -85,14 +121,21 @@ const VideoContainer = (props) => {
     })
   }, [])
 
-  function addVideoStream(video, stream) {
-    video.srcObject = stream
-    console.log('비디오 추가 준비', video)
-    video.addEventListener('loadedmetadata', () => {
-      video.play() //이벤트리스너 추가되었는지 확인
-    })
-    // videoGrid.current.prepend(video)
-  }
+  // function connectToNewUser(userId, stream) {
+  //   console.log(userId, stream)
+  //   const video = document.createElement('video')
+  // const call = peer.call(userId, stream)
+  // console.log(call)
+
+  // call.on('stream', (userVideoStream) => {
+  //   addVideoStream(video, userVideoStream)
+  // })
+  // call.on('close', () => {
+  //   video.remove()
+  // })
+
+  // peers[userId] = call
+  // }
   return (
     <Container>
       <Planet
@@ -118,30 +161,34 @@ const VideoContainer = (props) => {
         {memberId.map((e, i) => {
           return (
             <Grid key={i} center>
-              <div id="video-grid" ref={videoContainer}>
-                <div
-                  style={{
-                    width: '200px',
-                    height: '200px',
-                    borderRadius: '50%',
-                    background: '#eee',
-                  }}
-                  className="video_box"
-                  ref={videoGrid}
-                >
-                  <video style={{ objectFit: 'cover' }} ref={myVideo}></video>
-                  <div>
-                    <button
-                      onClick={() => {
-                        active(e, playerJob, is_night)
-                      }}
-                    >
-                      선택하기
-                    </button>
-                    <NameTag>{e}</NameTag>
-                  </div>
+              {/* <div id="video-grid" ref={videoContent}> */}
+              <div
+                style={{
+                  width: '200px',
+                  height: '200px',
+                  borderRadius: '50%',
+                  background: '#eee',
+                }}
+                className="video_box"
+                ref={videoGrid}
+              >
+                <video
+                  ref={myVideo}
+                  style={{ objectFit: 'cover' }}
+                  autoPlay
+                ></video>
+                <div>
+                  <button
+                    onClick={() => {
+                      active(e, playerJob, is_night)
+                    }}
+                  >
+                    선택하기
+                  </button>
+                  <NameTag>{e}</NameTag>
                 </div>
               </div>
+              {/* </div> */}
             </Grid>
           )
         })}
@@ -164,5 +211,13 @@ const NameTag = styled.div`
   padding: 3px;
   margin: 10px;
 `
+
+function addVideoStream(video, stream) {
+  video.srcObject = stream
+  console.log('비디오 추가 준비', video)
+  video.addEventListener('loadedmetadata', () => {
+    video.play() //이벤트리스너 추가되었는지 확인
+  })
+}
 
 export default VideoContainer

@@ -1,6 +1,6 @@
 import React from 'react'
 import ModalPortal from './ModalPortal'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { actionCreators as userActions } from '../../redux/modules/user'
 import { Grid, Text, Button, Input, Image } from '../../element/index'
 import styled from 'styled-components'
@@ -10,6 +10,8 @@ const FriendlistModal = ({ onClose }) => {
   const [addFriend, setAddFriend] = React.useState('')
   const [openBtn, setOpenBtn] = React.useState(false)
   const userId = localStorage.getItem('userId')
+  const friendList = useSelector((state) => state?.user?.friendList)
+  console.log(friendList)
 
   React.useEffect(() => {
     dispatch(userActions.getFriendDB())
@@ -18,14 +20,12 @@ const FriendlistModal = ({ onClose }) => {
   const showBtn = () => {
     setOpenBtn(!openBtn)
   }
+  const onChangeFriend = (e) => {
+    setAddFriend(e.target.value)
+  }
 
-  const addFriendBtn = {
-    if(userId = addFriend) {
-      window.alert('나는 좋은 친구이지만...')
-      setAddFriend('')
-      return
-    },
-    // dispatch(userActions.addFriendDB(friendUserId))
+  const addFriendBtn = () => {
+    dispatch(userActions.addFriendDB(addFriend))
   }
   return (
     <>
@@ -44,27 +44,38 @@ const FriendlistModal = ({ onClose }) => {
               <Input
                 placeholder="아이디/이메일을 입력하세요"
                 type="text"
-                // _onChange={addFriend}
+                value={addFriend}
+                _onChange={onChangeFriend}
                 _onKeyDown={addFriendBtn}
               />
+              {/* <Button _onClick={addFriendBtn}>추가</Button> */}
             </Grid>
-            <FriendList onClick={showBtn}>
-              <Grid is_flex margin="20px">
-                <Image size="80" />
-                <Grid>
-                  <Text margin="0px 10px">이름</Text>
-                  <Text margin="0px 10px">99승 99패</Text>
-                </Grid>
-              </Grid>
-              {openBtn ? (
-                <>
-                  <Grid isFlex_end width="40%">
-                    <StarBtn>별표</StarBtn>
-                    <DeleteBtn>삭제</DeleteBtn>
-                  </Grid>
-                </>
-              ) : null}
-            </FriendList>
+            <Grid>
+              {friendList !== null ? (
+                friendList.map((e, i) => {
+                  return (
+                    <FriendList onClick={showBtn} key={i}>
+                      <Grid is_flex margin="20px">
+                        <Image size="80" />
+                        <Grid>
+                          <Text margin="0px 20px">{e.userId}</Text>
+                        </Grid>
+                      </Grid>
+                      {openBtn ? (
+                        <Grid isFlex_end width="40%">
+                          <StarBtn>별표</StarBtn>
+                          <DeleteBtn>삭제</DeleteBtn>
+                        </Grid>
+                      ) : null}
+                    </FriendList>
+                  )
+                })
+              ) : (
+                <Text margin="20px" size="20px">
+                  텅텅 🥺...아직 친구가 없어요!
+                </Text>
+              )}
+            </Grid>
           </Content>
         </Background>
       </ModalPortal>

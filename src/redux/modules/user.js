@@ -4,6 +4,7 @@ import { produce } from 'immer'
 
 //Axios
 import axios from 'axios'
+import { WindowOutlined } from '@mui/icons-material'
 
 const BASE_URL = 'https://sparta-dongsun.shop'
 
@@ -13,17 +14,20 @@ const LOG_OUT = 'LOG_OUT'
 const SIGN_UP = 'SIGN_UP'
 const SET_USER = 'SET_USER'
 const GET_FRIEND = 'GET_FRIEND'
+const ADD_FRIEND = 'ADD_FRIEND'
 //Action Creators
 const logIn = createAction(LOG_IN, (token, user) => ({ token, user }))
 const signUp = createAction(SIGN_UP, (user) => ({ user }))
 const logOut = createAction(LOG_OUT, (user) => ({ user }))
 const setUser = createAction(SET_USER, (user) => ({ user }))
-const getFriend = createAction(GET_FRIEND, (friend) => ({ friend }))
+const getFriend = createAction(GET_FRIEND, (list) => ({ list }))
+const addFriend = createAction(ADD_FRIEND, (list) => ({ list }))
 
 //initialState
 const initialState = {
   user: null,
   is_login: false,
+  friendList: null,
 }
 
 //Middle Wares
@@ -203,7 +207,7 @@ const logOutDB = (user) => {
     history.replace('/login')
   }
 }
-const addFriednDB = (friendUserId) => {
+const addFriendDB = (friendUserId) => {
   console.log(friendUserId)
   return async function (dispatch, getState, { history }) {
     await axios
@@ -213,11 +217,21 @@ const addFriednDB = (friendUserId) => {
           friendUserId,
         }),
         {
-          headers: { 'Content-Type': `application/json` },
+          headers: {
+            'Content-Type': `application/json`,
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
         },
       )
       .then((res) => {
         console.log(res)
+        if (res.data.msg == '친구추가 완료') {
+          dispatch(addFriend({ userId: friendUserId }))
+          window.alert('친구 등록 완료!')
+        } else {
+          window.alert('친구가 없습니다!')
+          return
+        }
       })
       .catch((err) => {
         console.log('err', err)
@@ -227,11 +241,18 @@ const addFriednDB = (friendUserId) => {
 
 const getFriendDB = () => {
   return async function (dispatch, getState, { history }) {
-    await axios
-      .post(`${BASE_URL}/user/friendList`)
+    await axios({
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      method: 'post',
+      url: `${BASE_URL}/user/friendList`,
+    })
       .then((res) => {
-        console.log(res)
-        dispatch(getFriend())
+        let list = res.data.friendList
+        console.log(list)
+        dispatch(getFriend(list))
       })
       .catch((err) => {
         console.log('err', err)
@@ -260,6 +281,14 @@ export default handleActions(
         draft.is_login = false
         draft.user = null
       }),
+    [GET_FRIEND]: (state, action) =>
+      produce(state, (draft) => {
+        draft.friendList = action.payload.list
+      }),
+    [ADD_FRIEND]: (state, action) =>
+      produce(state, (draft) => {
+        draft.friendList.unshift(action.payload.list)
+      }),
   },
   initialState,
 )
@@ -273,6 +302,6 @@ const actionCreators = {
   findPwDB,
   changePwDB,
   getFriendDB,
-  addFriednDB,
+  addFriendDB,
 }
 export { actionCreators }
