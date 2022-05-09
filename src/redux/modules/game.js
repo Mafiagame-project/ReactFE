@@ -7,6 +7,7 @@ const ROOM_NOTI = 'ROOM_NOTI'
 const JOB_NOTI = 'JOB_NOTI'
 const RESULT_NOTI = 'RESULT_NOTI'
 const COP_NOTI = 'COP_NOTI'
+const REP_NOTI = 'REP_NOTI'
 const ENDGAME_NOTI = 'ENDGAME_NOTI'
 const JOB = 'JOB'
 const KILLED = 'KILLED'
@@ -22,6 +23,7 @@ const noticeEnterOut = createAction(ROOM_NOTI, (noti) => ({ noti }))
 const noticeJob = createAction(JOB_NOTI, (noti) => ({ noti }))
 const noticeResult = createAction(RESULT_NOTI, (noti) => ({ noti }))
 const noticeCop = createAction(COP_NOTI, (noti) => ({ noti }))
+const noticeRep = createAction(REP_NOTI, (noti) => ({ noti }))
 const noticeEndGame = createAction(ENDGAME_NOTI, (noti) => ({ noti }))
 const playerJob = createAction(JOB, (job) => ({ job }))
 const playerWhoKilled = createAction(KILLED, (player) => ({ player }))
@@ -38,6 +40,7 @@ const initialState = {
   jobNoti: null,
   resultNoti: null,
   copNoti: null,
+  repNoti: null,
   endGameNoti: null,
   job: null,
   killed: [],
@@ -73,6 +76,10 @@ export default handleActions(
     [COP_NOTI]: (state, action) =>
       produce(state, (draft) => {
         draft.copNoti = action.payload.noti
+      }),
+    [REP_NOTI]: (state, action) =>
+      produce(state, (draft) => {
+        draft.repNoti = action.payload.noti
       }),
     [ENDGAME_NOTI]: (state, action) =>
       produce(state, (draft) => {
@@ -127,7 +134,8 @@ const actionCreators = {
   noticeCop,
   noticeEndGame,
   startCard,
-  readyCheck
+  readyCheck,
+  noticeRep
 }
 
 export { actionCreators }

@@ -17,7 +17,7 @@ const VideoContainer = (props) => {
   const is_night = useSelector((state) => state.game.night)
   const roomInfo = useSelector((state) => state.room.current)
   const currentId = localStorage.getItem('userId')
-
+  console.log(killed)
   const active = (clickedId, clicker, time) => {
     let clickerJob = clicker.playerJob
     let clickerId = clicker.player
@@ -96,6 +96,7 @@ const VideoContainer = (props) => {
     })
     // videoGrid.current.prepend(video)
   }
+  
   return (
     <Container>
       <Planet
@@ -119,6 +120,7 @@ const VideoContainer = (props) => {
         open
       >
         {memberId.map((e, i) => {
+          
           return (
             <Grid key={i} center>
               <div id="video-grid" ref={videoContainer}>
@@ -127,7 +129,7 @@ const VideoContainer = (props) => {
                     width: '200px',
                     height: '200px',
                     borderRadius: '50%',
-                    background: '#eee',
+                    background:'#eee',
                   }}
                   className="video_box"
                   ref={videoGrid}

@@ -25,7 +25,6 @@ function GameRoom(props) {
   const roomInfo = useSelector((state) => state.room.current)
   const startCard = useSelector(state => state.game.card);
   const players = useSelector(state => state.game.jobNoti)
-  const users = useSelector(state => state.game.job)
   const currentId = localStorage.getItem('userId')
 
   const [isOpen, setIsOpen] = useState(false)
@@ -33,7 +32,6 @@ function GameRoom(props) {
   const [getReady, setReady] = useState(false)
   const [getStart, setStart] = useState(false)
 
-  console.log(readyCheck) //안뜸
   const exitRoom = () => {
     // 방에서 나가기 버튼을 누를때 호출
     socket.emit('leaveRoom')
@@ -43,6 +41,7 @@ function GameRoom(props) {
     dispatch(gameActions.dayAndNight(null))
     dispatch(gameActions.noticeEndGame(null))
     dispatch(gameActions.readyCheck(null))
+    dispatch(gameActions.noticeJob(null))
   }
 
   const startGame = () => {
@@ -51,31 +50,14 @@ function GameRoom(props) {
     } else {
       socket.emit('startGame')
       setStart(true)
-      setIsOpen(true)
-      setTimeout(()=>{
-        setIsOpen(false)
-        dispatch(gameActions.startCard(false))
-      },3000)
     }
   }
-
   const enterNoti = () => {
     setNotice(true)
     setTimeout(() => {
       setNotice(false)
-    }, 3000)
+    }, 5000)
   }
-  console.log(startCard)
-  // const jobCard = () => {
-  //   console.log(startCard)
-  //   if(startCard == true){
-  //     setIsOpen(true)
-  //     setTimeout(()=>{
-  //       setIsOpen(false)
-  //       dispatch(gameActions.startCard(false))
-  //     },3000)
-  //   }
-  // }
 
   const readyGame = () => {
     if (getReady == false) {
@@ -100,11 +82,28 @@ function GameRoom(props) {
     if (voteResult?.length > 0) {
       enterNoti()
     }
+    if(startCard == true){
+      setIsOpen(true)
+      setTimeout(()=>{
+        setIsOpen(false)
+        dispatch(gameActions.startCard(false))
+      },5000)
+    }
     return () => {
       dispatch(gameActions.playerWhoKilled(null))
       unlisten()
     }
-  }, [socket, voteResult])
+  }, [socket, voteResult, startCard])
+
+  const LeftBox = styled.div`
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+  height: 90vh;
+  transition-property: background;
+  transition-timing-function: ease;
+  background:${currentTime == '밤' ? 'white' : '#333333'}
+`
 
   return (
     <>
@@ -113,7 +112,7 @@ function GameRoom(props) {
         <Grid is_flex>
           {
             isOpen == true 
-            ? <Modalblack><JobModal players={players} users={users}/></Modalblack>
+            ? <Modalblack><JobModal players={players}/></Modalblack>
             : null
           }
           {getNotice == true ? (
@@ -122,25 +121,11 @@ function GameRoom(props) {
             </Modalblack>
           ) : null}
           <LeftBox>
-            <Grid margin="20% 0 0 0" isFlex_center height="30%">
+            <Grid margin="17% 0 0 0" isFlex_center height="30%">
               <VideoContainer style={videoContainer} socket={socket} />
             </Grid>
-          </LeftBox>
-
-          <RightBox>
-            <ChatBox socket={socket} />
-            <Button
-              bg="black"
-              smallBtn
-              _onClick={() => {
-                exitRoom()
-              }}
-            >
-              방 나가기
-            </Button>
-          </RightBox>
-        </Grid>
-        <Grid height="10vh">
+            <Grid height='30%'/>
+            <Grid height="10vh">
           <Grid isFlex_center>
             {getStart == false ? (
               <Grid isFlex_center>
@@ -194,6 +179,22 @@ function GameRoom(props) {
             )}
           </Grid>
         </Grid>
+          </LeftBox>
+
+          <RightBox>
+            <ChatBox socket={socket} />
+            <Button
+              bg="black"
+              smallBtn
+              _onClick={() => {
+                exitRoom()
+              }}
+            >
+              방 나가기
+            </Button>
+          </RightBox>
+        </Grid>
+        
       </Container>
     </>
   )
@@ -202,12 +203,7 @@ const videoContainer = styled.div``
 
 const PlayerBox = styled.div``
 
-const LeftBox = styled.div`
-  text-align: center;
-  margin: 0 auto;
-  width: 100%;
-  height: 80vh;
-`
+
 const Btns = styled.div`
   z-index: 9999;
   position: fixed;

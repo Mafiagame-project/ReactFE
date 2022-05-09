@@ -20,12 +20,12 @@ const JobModal = (props) => {
   return (
     <>
         <Noti>
-          <Text> 당신의 직업은...</Text>
+          <Text bold size='20px'> 당신의 직업은...</Text>
             <Grid>
-              <Text>{getJob}</Text>
+              <Text bold size='24px'>{getJob}</Text>
             </Grid>
             <Grid>
-              <Text>{getDesc}</Text>
+              <Text bold size='20px'>{getDesc}</Text>
             </Grid>
         </Noti>
     </>

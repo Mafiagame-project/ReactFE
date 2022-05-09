@@ -93,7 +93,8 @@ function Loading() {
     socket.on('reporter', (data) => {
       //데이터가 Json 타입임 1번 기자가 고른사람의 직업, 2번 기자가 고른사람의 아이디 3번 기자가 고른사람이 누굴 찍었는지
       // 3번은 회의 후 지양할 것, 정체만 알면 될것같은데 누굴 찍었는지는 좀...
-      console.log(data)
+      console.log(data) // clickerJob, clickerId
+      dispatch(gameActions.noticeRep(data))
     })
   }
 
