@@ -60,63 +60,61 @@ const VideoContainer = (props) => {
   console.log(roomId)
 
   useEffect(() => {
-  try{
-    navigator.mediaDevices
-      .getUserMedia({
-        video: true,
-        audio: false,
-      })
-      .then((stream) => {
-        myStream = stream
-        console.log(myVideo.current, stream)
-        addVideoStream(myVideo.current, stream)
-        videoGrid.current.prepend(myVideo.current)
-        console.log('마이 스트림 받았음', stream)
-
-        socket.on('user-connected', (userId) => {
-          console.log(userId)
-          const call = myPeer.call(userId, stream)
-          console.log(call)
-          console.log('새로운 유저와 연결중..', userId)
-          const videoBox = document.createElement('div')
-          const newVideo = document.createElement('video')
-          videoBox.prepend(newVideo)
-          // videoContent.current.prepend(videoBox)
-          console.log('div생성완료', videoBox)
-
-          call.on('stream', (newStream) => {
-            console.log(newStream)
-            addVideoStream(newVideo, newStream)
-            videoBox.prepend(newVideo)
-            console.log('div에 스트림저장', newStream)
-          })
+    try {
+      navigator.mediaDevices
+        .getUserMedia({
+          video: true,
+          audio: false,
         })
+        .then((stream) => {
+          myStream = stream
+          console.log(myVideo.current, stream)
+          addVideoStream(myVideo.current, stream)
+          videoGrid.current.prepend(myVideo.current)
+          console.log('마이 스트림 받았음', stream)
 
-        //피어에게 call 요청
-        myPeer.on('call', (call) => {
-          console.log(call, '콜 거는 중...')
-          call.answer(stream)
-          console.log('콜 받았삼')
-          const videoBox = document.createElement('div')
-          videoBox.classList.add('video_box')
-          const peerVideo = document.createElement('video')
-          videoBox.prepend(peerVideo)
-          // videoContent.current.prepend(videoBox)
-          //
-          call.on('stream', (newStream) => {
-            console.log('상대방 스트림 요청중', newStream)
-            addVideoStream(peerVideo, newStream)
-            videoBox.prepend(peerVideo)
-            console.log('상대방 스트림 추가 완료')
-          })
+          // socket.on('user-connected', (userId) => {
+          //   console.log(userId)
+          //   const call = myPeer.call(userId, stream)
+          //   console.log(call)
+          //   console.log('새로운 유저와 연결중..', userId)
+          //   const videoBox = document.createElement('div')
+          //   const newVideo = document.createElement('video')
+          //   videoBox.prepend(newVideo)
+          //   // videoContent.current.prepend(videoBox)
+          //   console.log('div생성완료', videoBox)
+
+          //   call.on('stream', (newStream) => {
+          //     console.log(newStream)
+          //     addVideoStream(newVideo, newStream)
+          //     videoBox.prepend(newVideo)
+          //     console.log('div에 스트림저장', newStream)
+          //   })
+          // })
+
+          // //피어에게 call 요청
+          // myPeer.on('call', (call) => {
+          //   console.log(call, '콜 거는 중...')
+          //   call.answer(stream)
+          //   console.log('콜 받았삼')
+          //   const videoBox = document.createElement('div')
+          //   videoBox.classList.add('video_box')
+          //   const peerVideo = document.createElement('video')
+          //   videoBox.prepend(peerVideo)
+          //   // videoContent.current.prepend(videoBox)
+          //   //
+          //   call.on('stream', (newStream) => {
+          //     console.log('상대방 스트림 요청중', newStream)
+          //     addVideoStream(peerVideo, newStream)
+          //     videoBox.prepend(peerVideo)
+          //     console.log('상대방 스트림 추가 완료')
+          // })
+          // })
         })
-      })
-      .catch((error) => {
-        window.alert('다시 접속해주세요!')
-        console.log('통신err', error)
-      })
-    } catch {
-  }
+        .catch((error) => {
+          console.log('통신err', error)
+        })
+    } catch {}
     socket.on('user-disconnected', (userId) => {
       console.log('잘가요', userId)
       if (peers[userId]) peers[userId].close()
@@ -131,7 +129,7 @@ const VideoContainer = (props) => {
     })
     // videoGrid.current.prepend(video)
   }
-  
+
   return (
     <Container>
       <Planet
@@ -155,7 +153,6 @@ const VideoContainer = (props) => {
         open
       >
         {memberId.map((e, i) => {
-          
           return (
             <Grid key={i} center>
               {/* <div id="video-grid" ref={videoContent}> */}
