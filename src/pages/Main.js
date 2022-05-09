@@ -1,14 +1,12 @@
 import React from 'react'
 import { history } from '../redux/configureStore'
 import { useSelector } from 'react-redux'
-import styled from 'styled-components'
 import { Grid, Text, Button } from '../element/index'
 import Header from '../component/Header'
 import Rooms from '../component/Rooms'
 import ModalPortal from '../component/modal/ModalPortal'
 import CreateRoomModal from '../component/modal/CreateRoomModal'
-// import CreateModal from '../component/CreateModal'
-//이름 헷갈려서 수정했습니닷
+import styled from 'styled-components'
 
 function Main(props) {
   const socket = useSelector((state) => state.game.socket)

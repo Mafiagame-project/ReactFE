@@ -1,51 +1,63 @@
-import Header from "../component/Header"
-import {Grid, Text, Button} from '../element/index'  
-import styled from "styled-components"
-import data from '../shared/introduce';
+import React from 'react'
+import Header from '../component/Header'
+import { Grid, Text, Button } from '../element/index'
+import styled from 'styled-components'
+import data from '../shared/introduce'
 
-function Introduce(){
-    return(
-        <>
-        <Header/>
-        <Grid padding='50px' center width='100vw' height='90vh'>
-            <Grid height='5%'>
-                <Text bold size='32px'>역할 튜토리얼</Text>
-            </Grid>
-            <Grid height='5%'>
-                <Text bold size='16px'>역할을 선택해주세요</Text>
-            </Grid>
-            <Grid is_flex height='40%'>
-            {
-                data.map(e => {
-                    return(
-                        <Card>
-                            <Grid center height='15%'>
-                                <Text color='white'>MAFIYANG</Text>
-                            </Grid>
-                            <Grid padding='20px 60px 20px 60px' center bg='white' height='100%'></Grid>
-                        </Card>
-                    )
-                })
-            }
-            </Grid>
-            <Grid margin='20px 0 0 0' padding='30px' height='40%'>
-                <Grid border>
-
+function Introduce() {
+  const [isOpen, setIsOpen] = React.useState(false)
+  const toggleBtn = () => {
+    setIsOpen(!isOpen)
+  }
+  return (
+    <>
+      <Header />
+      <Grid center padding="50px" width="91vw" height="90vh">
+        <Text size="40px">역할 튜토리얼</Text>
+        <Text bold size="16px" margin="0 0 30px 0">
+          역할을 선택해주세요
+        </Text>
+        <Grid is_flex>
+          {data.map((e) => {
+            return (
+              <Card>
+                <Grid center height="10%">
+                  <Text color="white">MAFIYANG</Text>
                 </Grid>
-            </Grid>
+                <Grid
+                  padding="20px 60px 20px 60px"
+                  center
+                  bg="white"
+                  height="100%"
+                  _onlick={toggleBtn}
+                >
+                  <Img src={e.img} />
+                  <Grid bg="#000">
+                    <Text color="#fff">{e.title}</Text>
+                  </Grid>
+                </Grid>
+              </Card>
+            )
+          })}
         </Grid>
-        </>
-    )
+        {/* <Grid margin="20px 0 0 0" padding="30px" height="40%"></Grid> */}
+      </Grid>
+    </>
+  )
 }
+
+const Img = styled.img`
+  width: 100px;
+`
 const Card = styled.div`
+  box-sizing: border-box;
   width: 300px;
   min-width: 300px;
   height: 386px;
   background-color: black;
-  border:1px solid black;
-  border-radius: 50px 50px 0px 0px;
+  border: 1.5px solid black;
+  border-radius: 30px 30px 0px 0px;
   margin-right: 20px;
-  box-shadow: 3px 3px 1px 1px gray;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -54,8 +66,8 @@ const Card = styled.div`
     min-height: 200px;
     margin-bottom: 20px;
   }
-  &:hover{  
-    border:5px solid black;
+  &:hover {
+    border: 5px solid black;
   }
 `
 export default Introduce

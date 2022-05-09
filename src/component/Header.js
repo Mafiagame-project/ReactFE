@@ -6,7 +6,9 @@ import { history } from '../redux/configureStore'
 import { actionCreators as userActions } from '../redux/modules/user'
 import FriendsListModal from './modal/FriendsListModal'
 import ModalPortal from './modal/ModalPortal'
-import dao from '../assets/image/Dao.png'
+import friendIcon from '../assets/icons/white/친구(백).png'
+import soundIcon from '../assets/icons/white/소리(백).png'
+import LogoutIcon from '../assets/icons/white/로그아웃(백).png'
 
 function Header(props) {
   const dispatch = useDispatch()
@@ -18,7 +20,7 @@ function Header(props) {
   }
   return (
     <>
-      <Grid is_flex bg="#000" padding="0 9vw 0 7.5vw" height="10vh">
+      <Container>
         <Grid _onClick={() => history.push('/')}>
           <Text size="30px" color="#fff">
             MAFIYANG
@@ -28,7 +30,7 @@ function Header(props) {
           <Grid flex_column>
             <Grid isFlex_start>
               <Image size="50" />
-              <Grid margin="0 22px">
+              <Grid margin="0 22px" className="headerText">
                 <Text margin="0px" color="#fff">
                   {currentId}
                 </Text>
@@ -46,21 +48,33 @@ function Header(props) {
             </Grid>
           </Grid>
           <Grid is_flex>
-            <Text color="#fff">사운드</Text>
-            <Text
-              color="#fff"
+            <Grid center margin="0 10px">
+              <Icons src={soundIcon} />
+              <Text margin="0" color="#fff" size="12px" color="#fff">
+                sound
+              </Text>
+            </Grid>
+            <Grid
+              center
+              margin="0 10px"
               _onClick={() => {
                 setIsOpen(true)
               }}
             >
-              친구목록
-            </Text>
-            <Text color="#fff" _onClick={handleLogOut}>
-              로그아웃
-            </Text>
+              <Icons src={friendIcon} />
+              <Text margin="0" color="#fff" size="12px">
+                Friends
+              </Text>
+            </Grid>
+            <Grid center margin="0 10px" _onClick={handleLogOut}>
+              <Icons src={LogoutIcon} />
+              <Text margin="0" color="#fff" size="12px">
+                LogOut
+              </Text>
+            </Grid>
           </Grid>
         </Rightside>
-      </Grid>
+      </Container>
       {/* 친구 목록 모달 부분입니다 */}
       <ModalPortal>
         {isOpen && (
@@ -70,6 +84,29 @@ function Header(props) {
     </>
   )
 }
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #000;
+  padding: 0 8vw;
+  height: 10vh;
+
+  @media ${({ theme }) => theme.device.mobile} {
+    padding: 0 3vw;
+  }
+
+  @media ${({ theme }) => theme.device.tablet} {
+    padding: 0 5.5vw;
+  }
+  @media @media ${({ theme }) => theme.device.pc} { {
+    padding: 0 6vw;
+  }
+`
+
+const Icons = styled.img`
+  width: 30px;
+`
 
 const Rightside = styled.div`
   width: 35vw;

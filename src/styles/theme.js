@@ -12,8 +12,24 @@ const color = {
   darkGray: '#c4c4c4',
 }
 
+//미디어쿼리 모듈화 참고: https://wonit.tistory.com/367
+const deviceSizes = {
+  mobile: 390,
+  tablet: 798,
+  pc: 1080,
+}
+
+const device = {
+  mobile: `screen and (max-width: ${deviceSizes.mobile - 1}px)`,
+
+  tablet: `screen and (max-width: ${deviceSizes.tablet - 1}px)`,
+
+  pc: `screen and (max-width: ${deviceSizes.pc - 1}px)`,
+}
+
 const theme = {
   color,
+  device,
 }
 
 export default theme

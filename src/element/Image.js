@@ -1,16 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-import dao from '../assets/image/Dao.png'
+import sheep from '../assets/image/character/양_시민.png'
 
 const Image = (props) => {
   const { shape, src, size, margin } = props
 
   const styles = {
     shape,
-    src:
-      src === ''
-        ? 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Sheep%2C_Stodmarsh_6.jpg/911px-Sheep%2C_Stodmarsh_6.jpg'
-        : src,
+    src: src === '' ? sheep : src,
     size,
     margin,
   }
@@ -24,8 +21,7 @@ const Image = (props) => {
 
 Image.defaultProps = {
   shape: 'circle',
-  src:
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Sheep%2C_Stodmarsh_6.jpg/911px-Sheep%2C_Stodmarsh_6.jpg',
+  src: sheep,
   size: 100,
   margin: '',
 }
