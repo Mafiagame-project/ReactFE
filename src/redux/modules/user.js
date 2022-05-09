@@ -203,6 +203,27 @@ const logOutDB = (user) => {
     history.replace('/login')
   }
 }
+const addFriednDB = (friendUserId) => {
+  console.log(friendUserId)
+  return async function (dispatch, getState, { history }) {
+    await axios
+      .post(
+        `${BASE_URL}/user/friendAdd`,
+        JSON.stringify({
+          friendUserId,
+        }),
+        {
+          headers: { 'Content-Type': `application/json` },
+        },
+      )
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log('err', err)
+      })
+  }
+}
 
 const getFriendDB = () => {
   return async function (dispatch, getState, { history }) {
@@ -252,5 +273,6 @@ const actionCreators = {
   findPwDB,
   changePwDB,
   getFriendDB,
+  addFriednDB,
 }
 export { actionCreators }
