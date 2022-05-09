@@ -17,7 +17,7 @@ const VideoContainer = (props) => {
   const is_night = useSelector((state) => state.game.night)
   const roomInfo = useSelector((state) => state.room.current)
   const currentId = localStorage.getItem('userId')
-
+  console.log(killed)
   const active = (clickedId, clicker, time) => {
     let clickerJob = clicker.playerJob
     let clickerId = clicker.player
@@ -60,7 +60,7 @@ const VideoContainer = (props) => {
   console.log(roomId)
 
   useEffect(() => {
-    //내 비디오 받기
+  try{
     navigator.mediaDevices
       .getUserMedia({
         video: true,
@@ -115,27 +115,23 @@ const VideoContainer = (props) => {
         window.alert('다시 접속해주세요!')
         console.log('통신err', error)
       })
+    } catch {
+  }
     socket.on('user-disconnected', (userId) => {
       console.log('잘가요', userId)
       if (peers[userId]) peers[userId].close()
     })
   }, [])
 
-  // function connectToNewUser(userId, stream) {
-  //   console.log(userId, stream)
-  //   const video = document.createElement('video')
-  // const call = peer.call(userId, stream)
-  // console.log(call)
-
-  // call.on('stream', (userVideoStream) => {
-  //   addVideoStream(video, userVideoStream)
-  // })
-  // call.on('close', () => {
-  //   video.remove()
-  // })
-
-  // peers[userId] = call
-  // }
+  function addVideoStream(video, stream) {
+    video.srcObject = stream
+    console.log('비디오 추가 준비', video)
+    video.addEventListener('loadedmetadata', () => {
+      video.play() //이벤트리스너 추가되었는지 확인
+    })
+    // videoGrid.current.prepend(video)
+  }
+  
   return (
     <Container>
       <Planet
@@ -159,6 +155,7 @@ const VideoContainer = (props) => {
         open
       >
         {memberId.map((e, i) => {
+          
           return (
             <Grid key={i} center>
               {/* <div id="video-grid" ref={videoContent}> */}

@@ -2,7 +2,7 @@ import { useHistory } from 'react-router-dom'
 import { Grid, Text, Button } from '../element/index'
 import { useDispatch, useSelector } from 'react-redux'
 import io from 'socket.io-client'
-import { actionCreators as gameActions } from '../redux/modules/game'
+import game, { actionCreators as gameActions } from '../redux/modules/game'
 import { actionCreators as roomActions } from '../redux/modules/room'
 import { actionCreators as memberActions } from '../redux/modules/member'
 import { useEffect } from 'react'
@@ -43,8 +43,9 @@ function Loading() {
 
     socket.on('getJob', (player, playerJob) => {
       console.log(player, playerJob)
-      dispatch(gameActions.playerJob({ player, playerJob }))
       dispatch(gameActions.noticeJob(playerJob))
+      dispatch(gameActions.playerJob({ player, playerJob }))
+      dispatch(gameActions.startCard(true))
     })
 
     socket.on('isNight', (value) => {
@@ -62,6 +63,11 @@ function Loading() {
       console.log(value)
       dispatch(gameActions.playerWhoKilled(value.diedPeopleArr))
       dispatch(gameActions.noticeResult(value.id))
+    })
+
+    socket.on('ready', value => {
+      console.log(value)
+      dispatch(gameActions.readyCheck(value))
     })
 
     socket.on('nightVoteResult', (value) => {
@@ -87,7 +93,8 @@ function Loading() {
     socket.on('reporter', (data) => {
       //데이터가 Json 타입임 1번 기자가 고른사람의 직업, 2번 기자가 고른사람의 아이디 3번 기자가 고른사람이 누굴 찍었는지
       // 3번은 회의 후 지양할 것, 정체만 알면 될것같은데 누굴 찍었는지는 좀...
-      console.log(data)
+      console.log(data) // clickerJob, clickerId
+      dispatch(gameActions.noticeRep(data))
     })
   }
 
