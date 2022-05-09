@@ -10,7 +10,7 @@ import '../shared/video.css'
 const VideoContainer = (props) => {
   const socket = props.socket
   const memberId = useSelector((state) => state.member.memberId)
-  // const myPeer = useSelector((state) => state.game.peerId)
+  const myPeer = useSelector((state) => state.game.peerId)
   const playerJob = useSelector((state) => state.game.job)
   const killed = useSelector((state) => state.game.killed)
   const copSelect = useSelector((state) => state.game.copSelect)
@@ -49,7 +49,7 @@ const VideoContainer = (props) => {
   // --------- 여기서부터 peer -------------
 
   // const myVideo = document.createElement('video')
-  const myVideo = useRef()
+  let myVideo = useRef()
   let myStream = null
   let myPeerId = ''
   let streamId = null
@@ -60,15 +60,10 @@ const VideoContainer = (props) => {
   // const allStream = useRef()
   const { roomId } = useParams()
   console.log(roomId)
-  const myPeer = new Peer({
-    config: { iceServers: [{ url: 'stun:stun.l.google.com:19302' }] },
-  })
-  useEffect(() => {
-    myPeer.on('open', (peerId) => {
-      console.log('peer-open', peerId, roomId)
-      socket.emit('joinRoom', roomId, peerId)
-    })
 
+  // const myPeer = new Peer()
+
+  useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({
         video: true,
@@ -76,74 +71,28 @@ const VideoContainer = (props) => {
       })
       .then((stream) => {
         myStream = stream
-        // getStream.current = stream
-        let streamId = stream.id
         console.log(myVideo.current, stream)
-        addVideoStream(myVideo.current, stream)
+        addVideoStream(myVideo.current, myStream)
         videoGrid.current.prepend(myVideo.current)
-
-        // allStream.current = stream
-        console.log('마이 스트림 받았쥬', stream)
-
-        myPeer.on('call', (call) => {
-          console.log('콜 받아오는 중...', call)
-          call.answer(stream)
-          const videoBox = document.createElement('div')
-          videoBox.classList.add('video_box')
-          const peerVideo = document.createElement('video')
-          videoBox.prepend(peerVideo)
-          videoContainer.current.prepend(videoBox)
-          console.log('콜 수락ㅎㅎ', stream)
-
-          // const video = document.createElement('video')
-          call.on('stream', (userVideoStream) => {
-            console.log('상대방 스트림', userVideoStream)
-            addVideoStream(peerVideo, userVideoStream)
-            videoBox.prepend(peerVideo)
-            console.log('상대방 스트림 추가되었다')
-          })
-        })
-
-        //여기서 부터 시작됨?
-        socket.on('user-connected', (userId) => {
-          console.log('새로운 커넥션 되었니?', userId)
-          connectToNewUser(userId, stream)
-        })
+        console.log('마이 스트림 받았음', stream)
       })
-      .catch((error) => {})
+      .catch((error) => {
+        console.log('통신err', error)
+      })
     socket.on('user-disconnected', (userId) => {
       console.log('잘가요', userId)
       if (peers[userId]) peers[userId].close()
     })
-
-    function connectToNewUser(userId, stream) {
-      console.log('새유저에게연결', userId, stream)
-      const call = myPeer.call(userId, stream)
-      const video = document.createElement('video')
-      console.log('콜 요청 보내는 중...', call)
-
-      //왜 안돼
-      call.on('stream', (userVideoStream) => {
-        addVideoStream(video, userVideoStream)
-        console.log('콜 받고 스트림받음', userVideoStream)
-      })
-      call.on('close', () => {
-        video.remove()
-      })
-      peers[userId] = call
-    }
-
-    function addVideoStream(video, stream) {
-      video.srcObject = stream
-      console.log('비디오 추가 준비', video)
-      video.addEventListener('loadedmetadata', () => {
-        video.play() //이벤트리스너 추가되었는지 확인
-      })
-      // videoGrid.current.prepend(video)
-      console.log(videoGrid)
-    }
   }, [])
 
+  function addVideoStream(video, stream) {
+    video.srcObject = stream
+    console.log('비디오 추가 준비', video)
+    video.addEventListener('loadedmetadata', () => {
+      video.play() //이벤트리스너 추가되었는지 확인
+    })
+    // videoGrid.current.prepend(video)
+  }
   return (
     <Container>
       <Planet
@@ -166,9 +115,9 @@ const VideoContainer = (props) => {
         }
         open
       >
-        {memberId.map((e) => {
+        {memberId.map((e, i) => {
           return (
-            <Grid center>
+            <Grid key={i} center>
               <div id="video-grid" ref={videoContainer}>
                 <div
                   style={{

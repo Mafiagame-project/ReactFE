@@ -27,12 +27,8 @@ function GameRoom(props) {
   const [getReady, setReady] = useState(false)
   const [getStart, setStart] = useState(false)
 
-  const { roomId } = useParams
-
-  // const params = useParams()
-  // const roomId = params.num
-  console.log(roomId)
-
+  console.log(memberSocket) //안뜸
+  console.log(roomInfo) //뜨는데 current부분이 한발짝 느림
   const exitRoom = () => {
     // 방에서 나가기 버튼을 누를때 호출
     socket.emit('leaveRoom')
@@ -101,11 +97,7 @@ function GameRoom(props) {
           ) : null}
           <LeftBox>
             <Grid margin="20% 0 0 0" isFlex_center height="30%">
-              <VideoContainer
-                style={videoContainer}
-                socket={socket}
-                roomId={roomId}
-              />
+              <VideoContainer style={videoContainer} socket={socket} />
             </Grid>
           </LeftBox>
 

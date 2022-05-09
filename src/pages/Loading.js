@@ -6,14 +6,13 @@ import { actionCreators as gameActions } from '../redux/modules/game'
 import { actionCreators as roomActions } from '../redux/modules/room'
 import { actionCreators as memberActions } from '../redux/modules/member'
 import { useEffect } from 'react'
-import Peer from 'peerjs';
+import Peer from 'peerjs'
 
 function Loading() {
   const dispatch = useDispatch()
   const history = useHistory()
   const token = localStorage.getItem('token')
-  const myPeer = new Peer();
-
+  const myPeer = new Peer()
 
   const entrance = () => {
     history.push('/gamemain')
@@ -27,7 +26,6 @@ function Loading() {
       dispatch(gameActions.sendPeerId(myPeer))
       history.push(`/gameroom/${info.roomId}`)
     })
-
 
     socket.on('leaveRoomMsg', (whosout, whosId) => {
       //whosId
@@ -50,11 +48,11 @@ function Loading() {
     })
 
     socket.on('isNight', (value) => {
-      let time ;
-      if(value == true){
+      let time
+      if (value == true) {
         time = '밤'
         dispatch(gameActions.dayAndNight(time))
-      } else { 
+      } else {
         time = '낮'
         dispatch(gameActions.dayAndNight(time))
       }
@@ -73,24 +71,24 @@ function Loading() {
       dispatch(gameActions.playerWhoSurvived(value.saved[0]))
     })
 
-    socket.on('endGame', data => { // 게임이 끝났을 때 노티
+    socket.on('endGame', (data) => {
+      // 게임이 끝났을 때 노티
       console.log(data)
       dispatch(gameActions.noticeEndGame(data?.msg))
     })
 
-    socket.on('police', (selected) => { // 경찰이 밤에 선택했을때 전달받는 소켓
+    socket.on('police', (selected) => {
+      // 경찰이 밤에 선택했을때 전달받는 소켓
       console.log(selected)
       dispatch(gameActions.copSelected(selected))
       dispatch(gameActions.noticeCop(selected))
     })
 
-    socket.on('reporter', data => { 
+    socket.on('reporter', (data) => {
       //데이터가 Json 타입임 1번 기자가 고른사람의 직업, 2번 기자가 고른사람의 아이디 3번 기자가 고른사람이 누굴 찍었는지
       // 3번은 회의 후 지양할 것, 정체만 알면 될것같은데 누굴 찍었는지는 좀...
       console.log(data)
-    }) 
-    
-    
+    })
   }
 
   return (

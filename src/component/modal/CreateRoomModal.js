@@ -22,6 +22,7 @@ const CreateRoomModal = ({ onClose, socket }) => {
     let roomTitle = title.current.value
     let roomPeople = getPeople
     let roomPwd
+
     if (getOpen == false) {
       // 비공개방일때
       roomPwd = pwd.current.value

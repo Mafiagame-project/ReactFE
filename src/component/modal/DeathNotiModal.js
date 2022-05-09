@@ -1,8 +1,8 @@
 import React from 'react'
 import ModalPortal from './ModalPortal'
 import styled from 'styled-components'
-
-const DeathNotiModal = () => {
+//killed
+const DeathNotiModal = ({ onClose }) => {
   return (
     <ModalPortal>
       <Background

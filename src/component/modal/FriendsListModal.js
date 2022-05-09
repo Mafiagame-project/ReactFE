@@ -8,11 +8,16 @@ import styled from 'styled-components'
 const FriendlistModal = ({ onClose }) => {
   const dispatch = useDispatch()
   const [addFriend, setAddFriend] = React.useState('')
+  const [openBtn, setOpenBtn] = React.useState(false)
   const userId = localStorage.getItem('userId')
 
   React.useEffect(() => {
     dispatch(userActions.getFriendDB())
   }, [])
+
+  const showBtn = () => {
+    setOpenBtn(!openBtn)
+  }
 
   const addFriendBtn = {
     if(userId = addFriend) {
@@ -39,16 +44,26 @@ const FriendlistModal = ({ onClose }) => {
               <Input
                 placeholder="아이디/이메일을 입력하세요"
                 type="text"
-                _onChange={addFriend}
+                // _onChange={addFriend}
                 _onKeyDown={addFriendBtn}
               />
             </Grid>
-            <FriendList>
-              <Image size="40" />
-              <Grid>
-                <Text>이름</Text>
-                <Text>99승 99패</Text>
+            <FriendList onClick={showBtn}>
+              <Grid is_flex margin="20px">
+                <Image size="80" />
+                <Grid>
+                  <Text margin="0px 10px">이름</Text>
+                  <Text margin="0px 10px">99승 99패</Text>
+                </Grid>
               </Grid>
+              {openBtn ? (
+                <>
+                  <Grid isFlex_end width="40%">
+                    <StarBtn>별표</StarBtn>
+                    <DeleteBtn>삭제</DeleteBtn>
+                  </Grid>
+                </>
+              ) : null}
             </FriendList>
           </Content>
         </Background>
@@ -63,14 +78,22 @@ const FriendList = styled.div`
   align-items: center;
   margin: 10px 20px;
 `
-const Img = styled.div`
-  width: 50px;
-  height: 50px;
-  border-radius: 70%;
-  background-color: #aaa;
-  float: left;
+const StarBtn = styled.div`
+  text-align: center;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  background-color: #000;
 `
-
+const DeleteBtn = styled.div`
+  text-align: center;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  background-color: #aaa;
+`
 const Background = styled.div`
   position: fixed;
   top: 0;

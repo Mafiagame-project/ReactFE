@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import dao from '../assets/image/Dao.png'
 
 const Image = (props) => {
   const { shape, src, size, margin } = props

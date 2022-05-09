@@ -5,12 +5,14 @@ import { history } from '../redux/configureStore'
 import { useDispatch, useSelector } from 'react-redux'
 import { Grid, Text, Button } from '../element/index'
 import styled from 'styled-components'
+import Peer from 'peerjs'
 
 const Rooms = (props) => {
   const dispatch = useDispatch()
   const RoomList = useSelector((state) => state.room.rooms)
   const socket = useSelector((state) => state.game.socket)
   const currentId = localStorage.getItem('userId')
+  const myPeer = new Peer()
 
   console.log(RoomList)
 
@@ -32,25 +34,26 @@ const Rooms = (props) => {
             history.push(`/gameroom/${roomId}`)
             dispatch(gameActions.sendSocket(socket))
             dispatch(roomActions.currentRoom(roomInfo))
-            // dispatch(gameActions.sendPeerId(myPeer))
-
-            // myPeer.on('open', (id) => {
-            //   console.log('peer-open', id)
-            //   socket.emit('joinRoom', roomId, id)
-            // })
+            dispatch(gameActions.sendPeerId(myPeer))
+            myPeer.on('open', (id) => {
+              console.log('peer-open', id)
+              socket.emit('joinRoom', roomId, id)
+              return null
+            })
           } else {
             alert('비밀번호가 틀림 ㅋ')
-            return
+            return null
           }
         } else {
           history.push(`/gameroom/${roomId}`)
           dispatch(gameActions.sendSocket(socket))
           dispatch(roomActions.currentRoom(roomInfo))
-          // dispatch(gameActions.sendPeerId(myPeer))
-          // myPeer.on('open', (id) => {
-          //   console.log('peer-open', id)
-          //   socket.emit('joinRoom', roomId, id)
-          // })
+          dispatch(gameActions.sendPeerId(myPeer))
+          myPeer.on('open', (id) => {
+            console.log('peer-open', id)
+            socket.emit('joinRoom', roomId, id)
+          })
+          return null
         }
       }
     }
@@ -63,10 +66,12 @@ const Rooms = (props) => {
       socket.off('roomList') // 소켓 꺼놨슴요
     }
   }, [])
+  React.useEffect(() => {
+    socket.emit('roomList')
+  }, [socket])
 
   React.useEffect(() => {
     socket.emit('main', currentId)
-    socket.emit('roomList')
   }, [socket])
 
   return (

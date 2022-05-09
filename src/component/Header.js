@@ -21,7 +21,7 @@ function Header(props) {
     <>
       <Grid is_flex bg="#000" padding="0 9vw 0 7.5vw" height="10vh">
         <Grid _onClick={() => history.push('/')}>
-          <Text size="20px" color="#fff">
+          <Text size="30px" color="#fff">
             MAFIYANG
           </Text>
         </Grid>
@@ -29,7 +29,7 @@ function Header(props) {
           <Grid flex_column>
             <Grid isFlex_start>
               <Image size="50" />
-              <Grid margin="0 10px">
+              <Grid margin="0 22px">
                 <Text margin="0px" color="#fff">
                   {currentId}
                 </Text>
