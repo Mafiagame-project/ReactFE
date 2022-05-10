@@ -3,12 +3,15 @@ import Chatdiv from './Chatdiv'
 import Timer from '../component/Timer'
 import { Grid, Text, Button } from '../element/index'
 import styled from 'styled-components'
+import { useSelector } from 'react-redux'
 
 const ChatBox = ({ socket }) => {
   const chatting = React.useRef()
   const chatRef = React.useRef(null)
   const [getWrite, setWrite] = React.useState([])
   const currentId = localStorage.getItem('userId')
+  const currentTime = useSelector(state => state.game.night)
+  const job = useSelector(state => state.game.job)
 
   const send = () => {
     // 채팅을 보낼 때 호출되는 함수
@@ -43,14 +46,23 @@ const ChatBox = ({ socket }) => {
         </Grid>
         <Grid isFlex_center padding="10px 0 0 0" height="15%">
           <ChatInput ref={chatting} placeholder="채팅 내용을 입력해주세요." />
-          <Button
-            chatBtn
-            _onClick={() => {
-              send()
-            }}
-          >
-            보내기
-          </Button>
+          {
+            currentTime == '밤' && job !== 'mafia'
+              ? <Button
+                chatBtn
+                _onClick={() => {}}>
+                보내기
+              </Button>
+              : <Button
+                chatBtn
+                _onClick={() => {
+                  send()
+                }}
+              >
+                보내기
+              </Button>
+          }
+          
         </Grid>
       </Grid>
     </>

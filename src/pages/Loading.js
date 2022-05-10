@@ -27,11 +27,13 @@ function Loading() {
       history.push(`/gameroom/${info.roomId}`)
     })
 
-    socket.on('leaveRoomMsg', (whosout, whosId) => {
+    socket.on('leaveRoomMsg', (whosout, whosId, host) => {
       //whosId
+      console.log(host)
       dispatch(memberActions.exitSocketId(whosout))
       dispatch(memberActions.exitUserId(whosId))
       dispatch(gameActions.noticeEnterOut(whosId))
+      dispatch(roomActions.changeHost(host))
     })
 
     socket.on('joinRoomMsg', (incoming, idValue, currentAll) => {
@@ -70,10 +72,10 @@ function Loading() {
       dispatch(gameActions.readyCheck(value))
     })
 
-    // socket.on('readyPeople', currentReady => {
-    //   console.log(currentReady)
-    //   dispatch(roomActions.roomReady(currentReady))
-    // })
+    socket.on('readyPeople', currentReady => {
+      console.log(currentReady)
+      dispatch(roomActions.roomReady(currentReady))
+    })
 
     socket.on('nightVoteResult', (value) => {
       console.log(value)

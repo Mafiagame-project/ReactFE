@@ -209,7 +209,6 @@ const VideoContainer = (props) => {
                   >
                     선택하기
                   </button>
-                  <ReadyTag e={e}/>
                   <NameTag>{e}</NameTag>
                 </div>
               </div>

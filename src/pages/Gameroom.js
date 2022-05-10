@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { Grid, Button, Text } from '../element/index'
 import { useEffect, useState } from 'react'
 import { actionCreators as gameActions } from '../redux/modules/game'
+import { actionCreators as roomActions } from '../redux/modules/room'
 import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../redux/configureStore'
 import { useParams } from 'react-router-dom'
@@ -11,6 +12,7 @@ import VideoContainer from '../component/VideoContainer'
 import Peer from 'peerjs'
 import Noti from '../component/modal/NotiModal'
 import JobModal from '../component/modal/JobModal'
+// import ReadyBtn from '../component/ReadyBtn'
 
 function GameRoom(props) {
   const dispatch = useDispatch()
@@ -18,9 +20,10 @@ function GameRoom(props) {
   const memberSocket = useSelector((state) => state.member.socketId)
   const enterOutNoti = useSelector((state) => state.game.enterOutNoti)
   const voteResult = useSelector((state) => state.game.resultNoti)
-  const readyCheck = useSelector((state) => state.game.ready)
+  const currentReady = useSelector((state) => state.room.ready)
   const endGameNoti = useSelector((state) => state.game.endGameNoti)
   const survivedNoti = useSelector((state) => state.game.survived)
+  const host = useSelector(state => state.room.host);
   const currentTime = useSelector((state) => state.game.night)
   const roomInfo = useSelector((state) => state.room.current)
   const startCard = useSelector(state => state.game.card)
@@ -43,12 +46,11 @@ function GameRoom(props) {
     dispatch(gameActions.readyCheck(null))
     dispatch(gameActions.noticeJob(null))
   }
-
   const startGame = () => {
     if (memberSocket.length < 4) {
       alert('게임시작을 위해서 최소 4명이상이 필요합니다')
     } else {
-      if(memberSocket){
+      if(memberSocket.length-1 == currentReady.length){
         socket.emit('startGame')
         setStart(true)
       } else {
@@ -133,7 +135,7 @@ function GameRoom(props) {
           <Grid isFlex_center>
             {getStart == false ? (
               <Grid isFlex_center>
-                {roomInfo?.userId == currentId ? (
+                {roomInfo?.userId == currentId || host == currentId? (
                   <Button
                     bg="#C4C4C4"
                     smallBtn

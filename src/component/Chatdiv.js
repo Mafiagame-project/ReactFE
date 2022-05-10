@@ -29,14 +29,7 @@ function Chatdiv({ getWrite, currentId, e }) {
     display: inline-block;
     right: ${e.data.id === currentId ? '2%' : '-2%'};
   `
-  const PoliceChat = styled.div`
-    text-align:center;
-    position:relative;
-    border-radius: 5%;
-    border: 1px solid black;
-    padding: 10px;
-    display: inline-block;
-  `
+ 
   const OneChat = styled.div`
     width: 100%;
     height: 50px;
@@ -49,7 +42,6 @@ function Chatdiv({ getWrite, currentId, e }) {
         {e.data.id !== currentId ? <Chatid>{e.data.id}</Chatid> : null}
         <Chatword>{e.data.msg}</Chatword>
         <div ref={chatRef} />
-        <PoliceChat>{copNoti}</PoliceChat>
       </OneChat>
     </>
   )

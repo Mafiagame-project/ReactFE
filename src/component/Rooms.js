@@ -62,7 +62,7 @@ const Rooms = (props) => {
   React.useEffect(() => {
     socket.emit('main', currentId)
   }, [socket])
-
+  console.log(RoomList)
   return (
     <>
       <Grid>
