@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { Planet } from 'react-planet'
 import { Grid, Text } from '../element/index'
 import styled from 'styled-components'
+import ReadyTag from './ReadyTag'
 import Peer from 'peerjs'
 import '../shared/video.css'
 
@@ -16,8 +17,11 @@ const VideoContainer = (props) => {
   const copSelect = useSelector((state) => state.game.copSelect)
   const is_night = useSelector((state) => state.game.night)
   const roomInfo = useSelector((state) => state.room.current)
+  const currentTime = useSelector((state) => state.game.night)
+  const endGameNoti = useSelector(state => state.game.endGameNoti)
   const currentId = localStorage.getItem('userId')
-  console.log(killed)
+  const [getTime, setTime] = useState(false);
+
   const active = (clickedId, clicker, time) => {
     let clickerJob = clicker.playerJob
     let clickerId = clicker.player
@@ -46,6 +50,13 @@ const VideoContainer = (props) => {
       policeCnt++ // 아직 경찰이 어떻게 알림 받아서 사용할 지는 안정해짐.
     }
   }
+
+  const timeNoti = () => {
+    setTime(true)
+    setTimeout(() => {
+      setTime(false)
+    }, 5000)
+  }
   // --------- 여기서부터 peer -------------
 
   // const myVideo = document.createElement('video')
@@ -57,9 +68,19 @@ const VideoContainer = (props) => {
   const videoGrid = useRef(null)
   const videoContent = useRef('')
   const { roomId } = useParams()
-  console.log(roomId)
+  // console.log(roomId)
+  const ReadyCheck = styled.div`
+  width:30px;
+  height:30px;
+  
+`
 
   useEffect(() => {
+    if(!endGameNoti){
+      if(currentTime){
+        timeNoti()
+      }
+    }
     try {
       navigator.mediaDevices
         .getUserMedia({
@@ -68,10 +89,10 @@ const VideoContainer = (props) => {
         })
         .then((stream) => {
           myStream = stream
-          console.log(myVideo.current, stream)
+          // console.log(myVideo.current, stream)
           addVideoStream(myVideo.current, stream)
           videoGrid.current.prepend(myVideo.current)
-          console.log('마이 스트림 받았음', stream)
+          // console.log('마이 스트림 받았음', stream)
 
           // socket.on('user-connected', (userId) => {
           //   console.log(userId)
@@ -112,18 +133,18 @@ const VideoContainer = (props) => {
           // })
         })
         .catch((error) => {
-          console.log('통신err', error)
+          // console.log('통신err', error)
         })
     } catch {}
     socket.on('user-disconnected', (userId) => {
-      console.log('잘가요', userId)
+      // console.log('잘가요', userId)
       if (peers[userId]) peers[userId].close()
     })
   }, [])
 
   function addVideoStream(video, stream) {
     video.srcObject = stream
-    console.log('비디오 추가 준비', video)
+    // console.log('비디오 추가 준비', video)
     video.addEventListener('loadedmetadata', () => {
       video.play() //이벤트리스너 추가되었는지 확인
     })
@@ -133,6 +154,7 @@ const VideoContainer = (props) => {
   return (
     <Container>
       <Planet
+      
         orbitStyle={(defaultStyle) => ({
           ...defaultStyle,
           borderWidth: 0.1,
@@ -142,16 +164,24 @@ const VideoContainer = (props) => {
         tension={100}
         orbitRadius={300}
         centerContent={
-          <div
-            style={{
-              height: 100,
-              width: 100,
-              borderRadius: '50%',
-            }}
-          />
+          getTime == true
+            ? <div
+              style={{
+                height: 150,
+                width: 250,
+                borderRadius: '5%',
+                background: '#eee',
+                paddingTop: 20,
+                position:'absolute',
+                right:-120,
+                top:-110,
+              }}
+            ><Text bold size='26px'>{currentTime}이 되었습니다</Text></div>
+          : null
         }
         open
       >
+        
         {memberId.map((e, i) => {
           return (
             <Grid key={i} center>
@@ -179,6 +209,7 @@ const VideoContainer = (props) => {
                   >
                     선택하기
                   </button>
+                  <ReadyTag e={e}/>
                   <NameTag>{e}</NameTag>
                 </div>
               </div>
@@ -199,6 +230,7 @@ const Inner = styled.div`
   background: #aaa;
   object-fit: cover;
 `
+
 
 const NameTag = styled.div`
   background-color: #eee;

@@ -23,7 +23,7 @@ function GameRoom(props) {
   const survivedNoti = useSelector((state) => state.game.survived)
   const currentTime = useSelector((state) => state.game.night)
   const roomInfo = useSelector((state) => state.room.current)
-  const startCard = useSelector(state => state.game.card);
+  const startCard = useSelector(state => state.game.card)
   const players = useSelector(state => state.game.jobNoti)
   const currentId = localStorage.getItem('userId')
 
@@ -48,8 +48,12 @@ function GameRoom(props) {
     if (memberSocket.length < 4) {
       alert('게임시작을 위해서 최소 4명이상이 필요합니다')
     } else {
-      socket.emit('startGame')
-      setStart(true)
+      if(memberSocket){
+        socket.emit('startGame')
+        setStart(true)
+      } else {
+        alert('아직 준비를 하지 않은 참가자가 있습니다!')
+      }
     }
   }
   const enterNoti = () => {
@@ -141,7 +145,7 @@ function GameRoom(props) {
                   </Button>
                 ) : (
                   <>
-                    {getReady == false ? (
+                     {getReady == false ? (
                       <ReadyBtn
                         smallBtn
                         onClick={() => {

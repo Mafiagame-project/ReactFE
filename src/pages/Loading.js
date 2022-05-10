@@ -70,6 +70,11 @@ function Loading() {
       dispatch(gameActions.readyCheck(value))
     })
 
+    // socket.on('readyPeople', currentReady => {
+    //   console.log(currentReady)
+    //   dispatch(roomActions.roomReady(currentReady))
+    // })
+
     socket.on('nightVoteResult', (value) => {
       console.log(value)
       dispatch(gameActions.playerWhoKilled(value.diedPeopleArr))
