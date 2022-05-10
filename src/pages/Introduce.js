@@ -18,9 +18,9 @@ function Introduce() {
           역할을 선택해주세요
         </Text>
         <CardBox>
-          {data.map((e) => {
+          {data.map((e, i) => {
             return (
-              <Card>
+              <Card key={i}>
                 <Grid center height="10%">
                   <Text color="white">MAFIYANG</Text>
                 </Grid>

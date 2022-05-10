@@ -1,7 +1,7 @@
 import React from 'react'
 import Peer from 'peerjs'
 import ModalPortal from './ModalPortal'
-import { Grid, Text, Input, Button } from '../../element/index'
+import { Grid, Text, Input, DotButton } from '../../element/index'
 import { actionCreators as roomActions } from '../../redux/modules/room'
 import { actionCreators as gameActions } from '../../redux/modules/game'
 import { history } from '../../redux/configureStore'
@@ -127,14 +127,13 @@ const CreateRoomModal = ({ onClose, socket }) => {
             </Grid>
           </FormBox>
           <Grid center>
-            <Button
-              blackBtn
+            <DotButton
+              black03
+              text="방 만들기 완료"
               _onClick={() => {
                 createRoom()
               }}
-            >
-              방 만들기 완료
-            </Button>
+            />
           </Grid>
         </Content>
       </Background>

@@ -191,7 +191,7 @@ const DayRadioInput = styled.input`
 const AuthInput = styled.input`
   margin: 4px;
   padding: 8px;
-  ${(props) => (props.width ? `width: ${props.width};` : `width: 333px`)};
+  width: 332px;
   ${(props) =>
     props.bg ? `background-color: ${props.bg};` : `background-color: #F6F6F6`};
   height: 48px;

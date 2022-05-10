@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Grid, Button, Text } from '../element/index'
+import { Grid, Button, DotButton, Text } from '../element/index'
 import { useEffect, useState } from 'react'
 import { actionCreators as gameActions } from '../redux/modules/game'
 import { actionCreators as roomActions } from '../redux/modules/room'
@@ -137,51 +137,44 @@ function GameRoom(props) {
                 {getStart == false ? (
                   <Grid isFlex_center>
                     {roomInfo?.userId == currentId || host == currentId ? (
-                      <Button
-                        bg="#C4C4C4"
-                        smallBtn
+                      <DotButton
+                        black02
+                        text="시작하기"
                         _onClick={() => {
                           startGame()
                         }}
-                      >
-                        시작하기
-                      </Button>
+                      />
                     ) : (
                       <>
                         {getReady == false ? (
-                          <ReadyBtn
-                            smallBtn
-                            onClick={() => {
+                          <DotButton
+                            white02
+                            text="준비하기"
+                            _onClick={() => {
                               readyGame()
                             }}
-                          >
-                            준비하기
-                          </ReadyBtn>
+                          />
                         ) : (
-                          <ReadyBtn
-                            bg="gray"
-                            smallBtn
-                            onClick={() => {
+                          <DotButton
+                            black02
+                            text="준비완료"
+                            _onClick={() => {
                               readyGame()
                             }}
-                          >
-                            준비완료
-                          </ReadyBtn>
+                          />
                         )}
                       </>
                     )}
                   </Grid>
                 ) : (
                   <Grid>
-                    <Button
-                      bg="#C4C4C4"
-                      smallBtn
+                    <DotButton
+                      white02
+                      text="투표하기"
                       _onClick={() => {
                         exitRoom()
                       }}
-                    >
-                      투표하기
-                    </Button>
+                    />
                   </Grid>
                 )}
               </Grid>
@@ -228,14 +221,6 @@ const Modalblack = styled.div`
   top: 0;
   z-index: 5;
 `
-const ReadyBtn = styled.button`
-  width: 250px;
-  height: 60px;
-  border: none;
-  font-size: 20px;
-  z-index: 5;
-`
-// background: ${getReady == true ? 'gray' : '#eee'};
 const Container = styled.div`
   width: 100%;
   height: 80vh;

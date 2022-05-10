@@ -4,5 +4,6 @@ import Image from './Image'
 import Input from './Input'
 import AuthInput from './AuthInput'
 import Text from './Text'
+import DotButton from './DotButton'
 
-export { Button, Grid, Image, Input, AuthInput, Text }
+export { Button, Grid, Image, Input, AuthInput, Text, DotButton }

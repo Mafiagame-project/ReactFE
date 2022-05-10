@@ -1,10 +1,11 @@
 import React from 'react'
 import { history } from '../../redux/configureStore'
-import { AuthInput, Grid, Button, Text, Image } from '../../element/index'
+import { Grid, Text, Image, Input, DotButton } from '../../element/index'
 import { actionCreators as userActions } from '../../redux/modules/user'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import kakao from '../../assets/icons/kakao_login.png'
+import blackBtn from '../../assets/button/black/04.png'
 
 function Login() {
   const dispatch = useDispatch()
@@ -53,15 +54,22 @@ function Login() {
   return (
     <>
       <Container>
+        <Grid center>
+          <Text margin="0 0 20px" size="70px">
+            MAFIYANG
+          </Text>
+        </Grid>
         <Grid flex_column>
-          <AuthInput
+          <Input
+            auth
             id="id"
             value={logins.id}
             _onChange={handleChange}
             autocomplete="off"
             placeholder="아이디"
           />
-          <AuthInput
+          <Input
+            auth
             id="pw"
             value={logins.pw}
             type="password"
@@ -69,9 +77,9 @@ function Login() {
             autocomplete="off"
             placeholder="비밀번호"
           />
-          <Button _onClick={handleLogin} margin="8px" purpleBtn>
-            로그인 하기
-          </Button>
+          <Grid margin="20px 0 0">
+            <DotButton black03 text="로그인" _onClick={handleLogin} />
+          </Grid>
           <Grid isFlex_center margin="10px;">
             <Text
               color="#bbb"
@@ -110,7 +118,7 @@ function Login() {
 }
 
 const Container = styled.div`
-  margin: 200px auto;
+  margin: 150px auto;
 `
 
 export default Login

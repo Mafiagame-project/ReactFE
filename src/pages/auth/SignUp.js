@@ -1,7 +1,7 @@
 import React from 'react'
 import { history } from '../../redux/configureStore'
 import { useDispatch } from 'react-redux'
-import { AuthInput, Grid, Button, Text, Image } from '../../element/index'
+import { Input, Grid, Text, DotButton } from '../../element/index'
 import styled from 'styled-components'
 import { actionCreators as userActions } from '../../redux/modules/user'
 import { useFormik } from 'formik'
@@ -41,7 +41,8 @@ function SignUp() {
             회원가입
           </Text>
           <Form onSubmit={formik.handleSubmit}>
-            <AuthInput
+            <Input
+              auth
               id="id"
               value={formik.values.id}
               autoComplete="off"
@@ -51,7 +52,8 @@ function SignUp() {
             <Text margin="0px 3px" color="red">
               {formik.touched.id ? formik.errors.id : ''}
             </Text>
-            <AuthInput
+            <Input
+              auth
               id="email"
               autoComplete="off"
               value={formik.values.email}
@@ -61,7 +63,8 @@ function SignUp() {
             <Text margin="0px 3px" color="red">
               {formik.touched.email ? formik.errors.email : ''}
             </Text>
-            <AuthInput
+            <Input
+              auth
               id="nick"
               autoComplete="off"
               value={formik.values.nick}
@@ -71,7 +74,8 @@ function SignUp() {
             <Text margin="0px 3px" color="red">
               {formik.touched.nick ? formik.errors.nick : ''}
             </Text>
-            <AuthInput
+            <Input
+              auth
               id="pw"
               value={formik.values.pw}
               autoComplete="off"
@@ -82,7 +86,8 @@ function SignUp() {
             <Text margin="0px 3px" color="red">
               {formik.touched.pw ? formik.errors.pw : ''}
             </Text>
-            <AuthInput
+            <Input
+              auth
               id="pwCheck"
               value={formik.values.pwCheck}
               autoComplete="off"
@@ -93,28 +98,15 @@ function SignUp() {
             <Text margin="0px 3px" color="red">
               {formik.touched.pwCheck ? formik.errors.pwCheck : ''}
             </Text>
-            <Grid isFlex>
-              <Button
-                type="submit"
-                value="회원가입"
-                variant="contained"
-                purpleBtn
-                margin="6px"
-                width="150px"
-              >
-                회원가입
-              </Button>
-              <Button
-                blackBtn
-                width="150px"
-                margin="8px"
+            <Grid is_flex margin="30px 0 0">
+              <DotButton
+                white01
+                text="취소"
                 _onClick={() => {
                   history.push('/login')
                 }}
-              >
-                {' '}
-                취소
-              </Button>
+              />
+              <DotButton black01 text="회원가입" type="submit" />
             </Grid>
           </Form>
         </Grid>

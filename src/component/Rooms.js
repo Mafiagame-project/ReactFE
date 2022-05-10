@@ -35,17 +35,17 @@ const Rooms = (props) => {
             dispatch(roomActions.currentRoom(roomInfo))
             dispatch(gameActions.sendPeerId(myPeer.id))
             // myPeer.on('open', (id) => {
-            // socket.emit('joinRoom', roomId, id)
+            socket.emit('joinRoom', roomId, myPeer.id)
             // })
           } else {
             alert('비밀번호가 틀림 ㅋ')
             return null
           }
         } else {
-          history.push(`/gameroom/${roomId}`)
+          history.replace(`/gameroom/${roomId}`)
           dispatch(gameActions.sendSocket(socket))
           dispatch(roomActions.currentRoom(roomInfo))
-          dispatch(gameActions.sendPeerId(myPeer.id))
+          dispatch(gameActions.sendPeerId(myPeer))
           socket.emit('joinRoom', roomId, myPeer.id)
           console.log(myPeer.id)
         }

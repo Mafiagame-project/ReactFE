@@ -87,6 +87,7 @@ const signupDB = (dic) => {
         history.replace('/login')
       })
       .catch((err) => {
+        window.alert('이미 가입된 아이디,닉네임 또는 이메일 입니다.')
         console.log('errrrrr', err)
       })
   }

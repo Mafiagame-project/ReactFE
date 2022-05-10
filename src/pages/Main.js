@@ -1,7 +1,7 @@
 import React from 'react'
 import { history } from '../redux/configureStore'
 import { useSelector } from 'react-redux'
-import { Grid, Text, Button } from '../element/index'
+import { Grid, Text, DotButton } from '../element/index'
 import Header from '../component/Header'
 import Rooms from '../component/Rooms'
 import ModalPortal from '../component/modal/ModalPortal'
@@ -31,22 +31,15 @@ function Main(props) {
         >
           <Text>마피아 게임 룰</Text>
         </Grid>
-        {/* 방목록 컴포넌트로 뺐습니닷 */}
         <Rooms />
-
         <Grid isFlex_center>
-          <Button
+          <DotButton
+            black02
+            text="방 만들기"
             _onClick={() => {
               setIsOpen(true)
             }}
-            smallBtn
-            hoverbg="purple"
-          >
-            방 만들기
-          </Button>
-          <Button smallBtn hoverbg="purple">
-            입장하기
-          </Button>
+          />
         </Grid>
       </Container>
     </>

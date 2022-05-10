@@ -22,9 +22,10 @@ function Loading() {
     socket.on('roomData', (info) => {
       // createModal 이벤트 발생시 실행
       socket.emit('joinRoom', info.roomId, myPeer.id)
+      console.log(info.roomId, myPeer.id)
       dispatch(roomActions.currentRoom(info))
-      dispatch(gameActions.sendPeerId(myPeer))
-      history.push(`/gameroom/${info.roomId}`)
+      // dispatch(gameActions.sendPeerId(myPeer))
+      history.replace(`/gameroom/${info.roomId}`)
     })
 
     socket.on('leaveRoomMsg', (whosout, whosId, host) => {
@@ -72,7 +73,7 @@ function Loading() {
       dispatch(gameActions.readyCheck(value))
     })
 
-    socket.on('readyPeople', currentReady => {
+    socket.on('readyPeople', (currentReady) => {
       console.log(currentReady)
       dispatch(roomActions.roomReady(currentReady))
     })
