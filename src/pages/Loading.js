@@ -2,7 +2,7 @@ import { useHistory } from 'react-router-dom'
 import { Grid, Text, Button } from '../element/index'
 import { useDispatch, useSelector } from 'react-redux'
 import io from 'socket.io-client'
-import game, { actionCreators as gameActions } from '../redux/modules/game'
+import { actionCreators as gameActions } from '../redux/modules/game'
 import { actionCreators as roomActions } from '../redux/modules/room'
 import { actionCreators as memberActions } from '../redux/modules/member'
 import { useEffect } from 'react'
@@ -65,7 +65,7 @@ function Loading() {
       dispatch(gameActions.noticeResult(value.id))
     })
 
-    socket.on('ready', value => {
+    socket.on('ready', (value) => {
       console.log(value)
       dispatch(gameActions.readyCheck(value))
     })

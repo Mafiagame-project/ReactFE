@@ -13,6 +13,8 @@ const Rooms = (props) => {
   const socket = useSelector((state) => state.game.socket)
   const currentId = localStorage.getItem('userId')
   const myPeer = new Peer()
+  console.log(RoomList)
+  console.log(myPeer)
 
   const entrance = (roomInfo) => {
     let roomId = roomInfo.roomId
@@ -31,8 +33,10 @@ const Rooms = (props) => {
             history.push(`/gameroom/${roomId}`)
             dispatch(gameActions.sendSocket(socket))
             dispatch(roomActions.currentRoom(roomInfo))
-            dispatch(gameActions.sendPeerId(myPeer))
-              socket.emit('joinRoom', roomId, myPeer.id)
+            dispatch(gameActions.sendPeerId(myPeer.id))
+            // myPeer.on('open', (id) => {
+            // socket.emit('joinRoom', roomId, id)
+            // })
           } else {
             alert('비밀번호가 틀림 ㅋ')
             return null
@@ -41,25 +45,25 @@ const Rooms = (props) => {
           history.push(`/gameroom/${roomId}`)
           dispatch(gameActions.sendSocket(socket))
           dispatch(roomActions.currentRoom(roomInfo))
-          dispatch(gameActions.sendPeerId(myPeer))
-            socket.emit('joinRoom', roomId, myPeer.id)
+          dispatch(gameActions.sendPeerId(myPeer.id))
+          socket.emit('joinRoom', roomId, myPeer.id)
+          console.log(myPeer.id)
         }
       }
     }
   }
+
   React.useEffect(() => {
     socket.on('roomList', (rooms) => {
       dispatch(roomActions.sendRoomList(rooms))
     })
     return () => {
-      socket.off('roomList') // 소켓 꺼놨슴요
+      socket.off('roomList')
     }
   }, [])
-  React.useEffect(() => {
-    socket.emit('roomList')
-  }, [socket])
 
   React.useEffect(() => {
+    socket.emit('roomList')
     socket.emit('main', currentId)
   }, [socket])
 

@@ -12,12 +12,12 @@ function Introduce() {
   return (
     <>
       <Header />
-      <Grid center padding="50px" width="91vw" height="90vh">
+      <Grid center padding="50px">
         <Text size="40px">역할 튜토리얼</Text>
         <Text bold size="16px" margin="0 0 30px 0">
           역할을 선택해주세요
         </Text>
-        <Grid is_flex>
+        <CardBox>
           {data.map((e) => {
             return (
               <Card>
@@ -39,7 +39,7 @@ function Introduce() {
               </Card>
             )
           })}
-        </Grid>
+        </CardBox>
         {/* <Grid margin="20px 0 0 0" padding="30px" height="40%"></Grid> */}
       </Grid>
     </>
@@ -49,6 +49,14 @@ function Introduce() {
 const Img = styled.img`
   width: 100px;
 `
+const CardBox = styled.div`
+  width: 95%;
+  margin: 0 auto;
+  overflow-x: scroll;
+  display: flex;
+  flex-direction: columns;
+`
+
 const Card = styled.div`
   box-sizing: border-box;
   width: 300px;

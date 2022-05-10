@@ -11,6 +11,8 @@ import VideoContainer from '../component/VideoContainer'
 import Peer from 'peerjs'
 import Noti from '../component/modal/NotiModal'
 import JobModal from '../component/modal/JobModal'
+import VoteModal from '../component/modal/VoteModal'
+import ModalPortal from '../component/modal/ModalPortal'
 
 function GameRoom(props) {
   const dispatch = useDispatch()
@@ -23,14 +25,15 @@ function GameRoom(props) {
   const survivedNoti = useSelector((state) => state.game.survived)
   const currentTime = useSelector((state) => state.game.night)
   const roomInfo = useSelector((state) => state.room.current)
-  const startCard = useSelector(state => state.game.card);
-  const players = useSelector(state => state.game.jobNoti)
+  const startCard = useSelector((state) => state.game.card)
+  const players = useSelector((state) => state.game.jobNoti)
   const currentId = localStorage.getItem('userId')
 
   const [isOpen, setIsOpen] = useState(false)
   const [getNotice, setNotice] = useState(false)
   const [getReady, setReady] = useState(false)
   const [getStart, setStart] = useState(false)
+  const [getVote, setVote] = useState(false)
 
   const exitRoom = () => {
     // 방에서 나가기 버튼을 누를때 호출
@@ -82,12 +85,12 @@ function GameRoom(props) {
     if (voteResult?.length > 0) {
       enterNoti()
     }
-    if(startCard == true){
+    if (startCard == true) {
       setIsOpen(true)
-      setTimeout(()=>{
+      setTimeout(() => {
         setIsOpen(false)
         dispatch(gameActions.startCard(false))
-      },5000)
+      }, 5000)
     }
     return () => {
       dispatch(gameActions.playerWhoKilled(null))
@@ -96,25 +99,25 @@ function GameRoom(props) {
   }, [socket, voteResult, startCard])
 
   const LeftBox = styled.div`
-  text-align: center;
-  margin: 0 auto;
-  width: 100%;
-  height: 90vh;
-  transition-property: background;
-  transition-timing-function: ease;
-  background:${currentTime == '밤' ? '#333333' : 'white'}
-`
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+    height: 90vh;
+    transition-property: background;
+    transition-timing-function: ease;
+    background: ${currentTime == '밤' ? '#333333' : 'white'};
+  `
 
   return (
     <>
       <Header />
       <Container>
         <Grid is_flex>
-          {
-            isOpen == true 
-            ? <Modalblack><JobModal players={players}/></Modalblack>
-            : null
-          }
+          {isOpen == true ? (
+            <Modalblack>
+              <JobModal players={players} />
+            </Modalblack>
+          ) : null}
           {getNotice == true ? (
             <Modalblack>
               <Noti></Noti>
@@ -124,61 +127,61 @@ function GameRoom(props) {
             <Grid margin="17% 0 0 0" isFlex_center height="30%">
               <VideoContainer style={videoContainer} socket={socket} />
             </Grid>
-            <Grid height='30%'/>
+            <Grid height="30%" />
             <Grid height="10vh">
-          <Grid isFlex_center>
-            {getStart == false ? (
               <Grid isFlex_center>
-                {roomInfo?.userId == currentId ? (
-                  <Button
-                    bg="#C4C4C4"
-                    smallBtn
-                    _onClick={() => {
-                      startGame()
-                    }}
-                  >
-                    시작하기
-                  </Button>
-                ) : (
-                  <>
-                    {getReady == false ? (
-                      <ReadyBtn
+                {getStart == false ? (
+                  <Grid isFlex_center>
+                    {roomInfo?.userId == currentId ? (
+                      <Button
+                        bg="#C4C4C4"
                         smallBtn
-                        onClick={() => {
-                          readyGame()
+                        _onClick={() => {
+                          startGame()
                         }}
                       >
-                        준비하기
-                      </ReadyBtn>
+                        시작하기
+                      </Button>
                     ) : (
-                      <ReadyBtn
-                        bg="gray"
-                        smallBtn
-                        onClick={() => {
-                          readyGame()
-                        }}
-                      >
-                        준비완료
-                      </ReadyBtn>
+                      <>
+                        {getReady == false ? (
+                          <ReadyBtn
+                            smallBtn
+                            onClick={() => {
+                              readyGame()
+                            }}
+                          >
+                            준비하기
+                          </ReadyBtn>
+                        ) : (
+                          <ReadyBtn
+                            bg="gray"
+                            smallBtn
+                            onClick={() => {
+                              readyGame()
+                            }}
+                          >
+                            준비완료
+                          </ReadyBtn>
+                        )}
+                      </>
                     )}
-                  </>
+                  </Grid>
+                ) : (
+                  <Grid>
+                    <Button
+                      bg="#C4C4C4"
+                      smallBtn
+                      _onClick={() => {
+                        setVote(true)
+                      }}
+                    >
+                      투표하기
+                    </Button>
+                  </Grid>
                 )}
               </Grid>
-            ) : (
-              <Grid>
-                <Button
-                  bg="#C4C4C4"
-                  smallBtn
-                  _onClick={() => {
-                    exitRoom()
-                  }}
-                >
-                  투표하기
-                </Button>
-              </Grid>
-            )}
-          </Grid>
-        </Grid>
+            </Grid>
           </LeftBox>
 
           <RightBox>
@@ -192,9 +195,22 @@ function GameRoom(props) {
             >
               방 나가기
             </Button>
+            <Button
+              bg="#C4C4C4"
+              smallBtn
+              _onClick={() => {
+                setVote(true)
+              }}
+            >
+              투표하기
+            </Button>
           </RightBox>
         </Grid>
-        
+        {/* <ModalPortal>
+          {getVote && (
+            <VoteModal socket={socket} onClose={() => setVote(false)} />
+          )}
+        </ModalPortal> */}
       </Container>
     </>
   )
@@ -202,7 +218,6 @@ function GameRoom(props) {
 const videoContainer = styled.div``
 
 const PlayerBox = styled.div``
-
 
 const Btns = styled.div`
   z-index: 9999;
