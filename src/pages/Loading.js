@@ -94,7 +94,7 @@ function Loading() {
       // 경찰이 밤에 선택했을때 전달받는 소켓
       console.log(selected)
       dispatch(gameActions.copSelected(selected))
-      dispatch(gameActions.noticeCop(selected))
+      dispatch(gameActions.noticeCop(true))
     })
 
     socket.on('reporter', (data) => {

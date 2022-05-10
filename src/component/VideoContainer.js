@@ -1,20 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Planet } from 'react-planet'
 import { Grid, Text } from '../element/index'
 import styled from 'styled-components'
 import ReadyTag from './ReadyTag'
+import { actionCreators as gameActions } from '../redux/modules/game'
 import Peer from 'peerjs'
 import '../shared/video.css'
 
 const VideoContainer = (props) => {
+  const dispatch = useDispatch();
   const socket = props.socket
   const memberId = useSelector((state) => state.member.memberId)
   const myPeer = useSelector((state) => state.game.peerId)
   const playerJob = useSelector((state) => state.game.job)
   const killed = useSelector((state) => state.game.killed)
-  const copSelect = useSelector((state) => state.game.copSelect)
   const is_night = useSelector((state) => state.game.night)
   const roomInfo = useSelector((state) => state.room.current)
   const currentTime = useSelector((state) => state.game.night)
@@ -25,7 +26,6 @@ const VideoContainer = (props) => {
   const active = (clickedId, clicker, time) => {
     let clickerJob = clicker.playerJob
     let clickerId = clicker.player
-    let policeCnt = 0
     if (currentId == clickedId) {
       alert('다른사람을 뽑아주세요')
       return
@@ -37,17 +37,11 @@ const VideoContainer = (props) => {
           alert('죽었습니다')
           return
         } else {
-          if (clickerJob == 'police') {
-          }
           socket.emit('vote', { clickerJob, clickerId, clickedId })
         }
       })
     } else {
       socket.emit('vote', { clickerJob, clickerId, clickedId })
-    }
-    if (clickerJob == 'police' && time == true && policeCnt == 0) {
-      alert(`${clickedId}의 직업은 ${copSelect}입니다`)
-      policeCnt++ // 아직 경찰이 어떻게 알림 받아서 사용할 지는 안정해짐.
     }
   }
 
@@ -55,7 +49,7 @@ const VideoContainer = (props) => {
     setTime(true)
     setTimeout(() => {
       setTime(false)
-    }, 5000)
+    }, 3000)
   }
   // --------- 여기서부터 peer -------------
 
@@ -76,10 +70,8 @@ const VideoContainer = (props) => {
 `
 
   useEffect(() => {
-    if(!endGameNoti){
-      if(currentTime){
+    if(!endGameNoti && currentTime){
         timeNoti()
-      }
     }
     try {
       navigator.mediaDevices
@@ -140,7 +132,7 @@ const VideoContainer = (props) => {
       // console.log('잘가요', userId)
       if (peers[userId]) peers[userId].close()
     })
-  }, [])
+  }, [currentTime])
 
   function addVideoStream(video, stream) {
     video.srcObject = stream

@@ -12,22 +12,18 @@ import VideoContainer from '../component/VideoContainer'
 import Peer from 'peerjs'
 import Noti from '../component/modal/NotiModal'
 import JobModal from '../component/modal/JobModal'
-// import ReadyBtn from '../component/ReadyBtn'
 
 function GameRoom(props) {
   const dispatch = useDispatch()
   const socket = useSelector((state) => state.game.socket)
   const memberSocket = useSelector((state) => state.member.socketId)
-  const enterOutNoti = useSelector((state) => state.game.enterOutNoti)
   const voteResult = useSelector((state) => state.game.resultNoti)
   const currentReady = useSelector((state) => state.room.ready)
-  const endGameNoti = useSelector((state) => state.game.endGameNoti)
-  const survivedNoti = useSelector((state) => state.game.survived)
+  const copNoti = useSelector(state => state.game.copNoti);
   const host = useSelector(state => state.room.host);
   const currentTime = useSelector((state) => state.game.night)
   const roomInfo = useSelector((state) => state.room.current)
   const startCard = useSelector(state => state.game.card)
-  const players = useSelector(state => state.game.jobNoti)
   const currentId = localStorage.getItem('userId')
 
   const [isOpen, setIsOpen] = useState(false)
@@ -62,7 +58,7 @@ function GameRoom(props) {
     setNotice(true)
     setTimeout(() => {
       setNotice(false)
-    }, 5000)
+    }, 3000)
   }
 
   const readyGame = () => {
@@ -88,18 +84,23 @@ function GameRoom(props) {
     if (voteResult?.length > 0) {
       enterNoti()
     }
-    if(startCard == true){
+    
+    if(startCard || copNoti){
+      console.log(copNoti)
       setIsOpen(true)
       setTimeout(()=>{
         setIsOpen(false)
-        dispatch(gameActions.startCard(false))
-      },5000)
+        dispatch(gameActions.startCard(null))
+        if(copNoti){
+          dispatch(gameActions.noticeCop(null))
+        }
+      },3000)
     }
     return () => {
       dispatch(gameActions.playerWhoKilled(null))
       unlisten()
     }
-  }, [socket, voteResult, startCard])
+  }, [socket, voteResult, startCard, copNoti])
 
   const LeftBox = styled.div`
   text-align: center;
@@ -118,7 +119,7 @@ function GameRoom(props) {
         <Grid is_flex>
           {
             isOpen == true 
-            ? <Modalblack><JobModal players={players}/></Modalblack>
+            ? <Modalblack><JobModal/></Modalblack>
             : null
           }
           {getNotice == true ? (

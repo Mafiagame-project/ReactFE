@@ -31,7 +31,7 @@ const Rooms = (props) => {
             history.push(`/gameroom/${roomId}`)
             dispatch(gameActions.sendSocket(socket))
             dispatch(roomActions.currentRoom(roomInfo))
-            dispatch(gameActions.sendPeerId(myPeer))
+            dispatch(gameActions.sendPeerId(myPeer.id))
               socket.emit('joinRoom', roomId, myPeer.id)
           } else {
             alert('비밀번호가 틀림 ㅋ')
@@ -41,7 +41,7 @@ const Rooms = (props) => {
           history.push(`/gameroom/${roomId}`)
           dispatch(gameActions.sendSocket(socket))
           dispatch(roomActions.currentRoom(roomInfo))
-          dispatch(gameActions.sendPeerId(myPeer))
+          dispatch(gameActions.sendPeerId(myPeer.id))
             socket.emit('joinRoom', roomId, myPeer.id)
         }
       }
@@ -54,15 +54,12 @@ const Rooms = (props) => {
     return () => {
       socket.off('roomList') // 소켓 꺼놨슴요
     }
-  }, [])
+  }, [socket])
   React.useEffect(() => {
     socket.emit('roomList')
-  }, [socket])
-
-  React.useEffect(() => {
     socket.emit('main', currentId)
   }, [socket])
-  console.log(RoomList)
+
   return (
     <>
       <Grid>
