@@ -51,7 +51,7 @@ const FriendlistModal = ({ onClose }) => {
               {/* <Button _onClick={addFriendBtn}>추가</Button> */}
             </Grid>
             <Grid>
-              {friendList.length !== 0 ? (
+              {friendList ? (
                 friendList.map((e, i) => {
                   return (
                     <FriendList onClick={showBtn} key={i}>

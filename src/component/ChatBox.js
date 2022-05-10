@@ -3,12 +3,14 @@ import Chatdiv from './Chatdiv'
 import Timer from '../component/Timer'
 import { Grid, Text, Button } from '../element/index'
 import styled from 'styled-components'
+import { useSelector } from 'react-redux'
 
 const ChatBox = ({ socket }) => {
   const chatting = React.useRef()
   const chatRef = React.useRef(null)
   const [getWrite, setWrite] = React.useState([])
   const currentId = localStorage.getItem('userId')
+  const currentTime = useSelector(state => state.game.night)
 
   const send = () => {
     // 채팅을 보낼 때 호출되는 함수

@@ -60,8 +60,7 @@ const Rooms = (props) => {
     return () => {
       socket.off('roomList')
     }
-  }, [])
-
+  }, [socket])
   React.useEffect(() => {
     socket.emit('roomList')
     socket.emit('main', currentId)

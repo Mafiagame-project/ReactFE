@@ -9,12 +9,6 @@ function NotiModal() {
     const currentTime = useSelector((state) => state.game.night)
     const reportNoti = useSelector(state => state.game.repNoti)
 
-    console.log(reportNoti)
-    console.log(currentTime)
-    console.log(survivedNoti)
-    console.log(voteResult)
-    console.log(endGameNoti)
-
     return (
         <>
         {
@@ -37,7 +31,7 @@ function NotiModal() {
                         }
                      </>
                     : <Noti>
-                    <Grid is_flex bg='#eee'>
+                    <Grid is_flex bg='#eee' height='100%'>
                         <Grid center height='100%'>
                             <Grid height='10%'>
                                 <Text>특종</Text>

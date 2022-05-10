@@ -27,11 +27,13 @@ function Loading() {
       history.push(`/gameroom/${info.roomId}`)
     })
 
-    socket.on('leaveRoomMsg', (whosout, whosId) => {
+    socket.on('leaveRoomMsg', (whosout, whosId, host) => {
       //whosId
+      console.log(host)
       dispatch(memberActions.exitSocketId(whosout))
       dispatch(memberActions.exitUserId(whosId))
       dispatch(gameActions.noticeEnterOut(whosId))
+      dispatch(roomActions.changeHost(host))
     })
 
     socket.on('joinRoomMsg', (incoming, idValue, currentAll) => {
@@ -70,6 +72,11 @@ function Loading() {
       dispatch(gameActions.readyCheck(value))
     })
 
+    socket.on('readyPeople', currentReady => {
+      console.log(currentReady)
+      dispatch(roomActions.roomReady(currentReady))
+    })
+
     socket.on('nightVoteResult', (value) => {
       console.log(value)
       dispatch(gameActions.playerWhoKilled(value.diedPeopleArr))
@@ -87,7 +94,7 @@ function Loading() {
       // 경찰이 밤에 선택했을때 전달받는 소켓
       console.log(selected)
       dispatch(gameActions.copSelected(selected))
-      dispatch(gameActions.noticeCop(selected))
+      dispatch(gameActions.noticeCop(true))
     })
 
     socket.on('reporter', (data) => {
