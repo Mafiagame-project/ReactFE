@@ -239,6 +239,124 @@
 // export default VideoContainer
 
 // 새로 테스트 중 ....
+// import React from 'react'
+// import Peer from 'peerjs'
+// import { useParams } from 'react-router-dom'
+// import { useSelector } from 'react-redux'
+
+// const VideoContainer = () => {
+//   const socket = useSelector((state) => state.game.socket)
+//   // const myPeer = useSelector((state) => state.game.peerId)
+//   let myStream = null
+//   let myPeerId = ''
+
+//   const videoGrid = React.useRef('')
+//   // const myVideo = React.useRef()
+//   const myVideo = document.createElement('video')
+//   myVideo.muted = true
+//   const peers = {}
+//   const { roomId } = useParams()
+//   // const myPeer = new Peer()
+//   console.log(roomId)
+//   React.useEffect(() => {
+//     console.log('ddd')
+//     const myPeer = new Peer({
+//       config: { iceServers: [{ url: 'stun:stun.l.google.com:19302' }] },
+//     })
+//     console.log(myPeer.id)
+
+//     navigator.mediaDevices
+//       .getUserMedia({
+//         video: true,
+//         audio: false,
+//       })
+//       .then((stream) => {
+//         myStream = stream
+//         addVideoStream(myVideo, stream)
+//         videoGrid.current.prepend(myVideo)
+//         console.log('here')
+
+//         myPeer.on('open', (id) => {
+//           // console.log(id)
+//           // socket.emit('joinRoom', roomId, id)
+//         })
+
+//         myPeer.on('call', (call) => {
+//           console.log('콜 찍히니?')
+//           call.answer(stream)
+//           const videoBox = document.createElement('div')
+//           const peerVideo = document.createElement('video')
+//           videoBox.prepend(peerVideo)
+//           console.log(videoBox)
+
+//           call.on('stream', (userVideoStream) => {
+//             addVideoStream(peerVideo, userVideoStream)
+//             videoBox.prepend(peerVideo)
+//             console.log('here')
+//           })
+//         })
+
+//         socket.on('user-connected', (userId) => {
+//           const call = myPeer.call(userId, myStream)
+//           console.log(userId, stream)
+//           const videoBox = document.createElement('div')
+//           const newVideo = document.createElement('video')
+//           videoBox.prepend(newVideo)
+//           console.log('유저 연결 추가')
+//           // connectToNewUser(userId, stream)
+//           // console.log('연결함수 실행완')
+
+//           call.on('stream', (newStream) => {
+//             addVideoStream(newVideo, newStream)
+//             videoBox.prepend(newVideo)
+//           })
+//         })
+//       })
+
+//     socket.on('user-disconnected', (userId) => {
+//       if (peers[userId]) peers[userId].close()
+//     })
+
+//     function connectToNewUser(userId, myStream) {
+//       const call = myPeer.call(userId, myStream)
+//       const video = document.createElement('video')
+//       console.log('유저연결 실행')
+//       call.on('stream', (userVideoStream) => {
+//         addVideoStream(video, userVideoStream)
+//         console.log('비디오 함수 실행완')
+//       })
+//       call.on('close', () => {
+//         video.remove()
+//       })
+
+//       peers[userId] = call
+//     }
+//   }, [])
+
+//   return (
+//     <>
+//       <div className="video_grid" ref={videoGrid}></div>
+//       {/* <video ref={myVideo}></video> */}
+//     </>
+//   )
+// }
+
+// function addVideoStream(video, stream) {
+//   console.log(stream)
+//   video.srcObject = stream
+//   console.log(video)
+//   video.addEventListener('loadedmetadata', () => {
+//     video.play()
+//   })
+//   // console.log('찍히나?')
+//   // if (videoGrid !== null) {
+//   //   videoGrid.current.append(video)
+//   //   console.log('추가완')
+//   // }
+// }
+
+// export default VideoContainer
+
 import React from 'react'
 import Peer from 'peerjs'
 import { useParams } from 'react-router-dom'
@@ -289,7 +407,7 @@ const VideoContainer = () => {
 
         socket.on('user-connected', (userId) => {
           console.log(userId, stream)
-          connectToNewUser(userId, stream)
+          setTimeout(connectToNewUser, 3000, userId, stream)
           console.log('연결함수 실행완')
         })
       })
