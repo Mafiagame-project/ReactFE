@@ -12,8 +12,9 @@ const Rooms = (props) => {
   const RoomList = useSelector((state) => state.room.rooms)
   const socket = useSelector((state) => state.game.socket)
   const currentId = localStorage.getItem('userId')
-  // const myPeer = new Peer()
+  const myPeer = new Peer()
   console.log(RoomList)
+  console.log(myPeer)
 
   const entrance = (roomInfo) => {
     let roomId = roomInfo.roomId
@@ -32,9 +33,9 @@ const Rooms = (props) => {
             history.push(`/gameroom/${roomId}`)
             dispatch(gameActions.sendSocket(socket))
             dispatch(roomActions.currentRoom(roomInfo))
-            // dispatch(gameActions.sendPeerId(myPeer.id))
+            dispatch(gameActions.sendPeerId(myPeer.id))
             // myPeer.on('open', (id) => {
-            socket.emit('joinRoom', roomId)
+            socket.emit('joinRoom', roomId, myPeer.id)
             // })
           } else {
             alert('비밀번호가 틀림 ㅋ')
@@ -44,8 +45,9 @@ const Rooms = (props) => {
           history.replace(`/gameroom/${roomId}`)
           dispatch(gameActions.sendSocket(socket))
           dispatch(roomActions.currentRoom(roomInfo))
-          // dispatch(gameActions.sendPeerId(myPeer))
-          socket.emit('joinRoom', roomId)
+          dispatch(gameActions.sendPeerId(myPeer))
+          socket.emit('joinRoom', roomId, myPeer.id)
+          console.log(myPeer.id)
         }
       }
     }

@@ -22,7 +22,7 @@ function Loading() {
     socket.on('roomData', (info) => {
       // createModal 이벤트 발생시 실행
       socket.emit('joinRoom', info.roomId)
-      console.log(info.roomId, myPeer.id)
+
       dispatch(roomActions.currentRoom(info))
       // dispatch(gameActions.sendPeerId(myPeer))
       history.replace(`/gameroom/${info.roomId}`)
