@@ -364,7 +364,7 @@ import { useSelector } from 'react-redux'
 
 const VideoContainer = () => {
   const socket = useSelector((state) => state.game.socket)
-  const myPeer = useSelector((state) => state.game.peerId)
+  // const myPeer = useSelector((state) => state.game.peerId)
   let myStream = null
   let myPeerId = ''
 
@@ -373,12 +373,10 @@ const VideoContainer = () => {
   const myVideo = document.createElement('video')
   myVideo.muted = true
   const peers = {}
+  const myPeer = new Peer()
   const { roomId } = useParams()
 
-  console.log(roomId)
   React.useEffect(() => {
-    console.log('ddd')
-
     navigator.mediaDevices
       .getUserMedia({
         video: true,
@@ -389,10 +387,10 @@ const VideoContainer = () => {
         addVideoStream(myVideo, stream)
         console.log('here')
 
-        // myPeer.on('open', (id) => {
-        //   console.log(id)
-        //   socket.emit('joinRoom', roomId, id)
-        // })
+        myPeer.on('open', (id) => {
+          console.log(id)
+          socket.emit('peerJoinRoom', id)
+        })
 
         myPeer.on('call', (call) => {
           console.log('콜 찍히니?')
@@ -407,7 +405,7 @@ const VideoContainer = () => {
 
         socket.on('user-connected', (userId) => {
           console.log(userId, stream)
-          setTimeout(connectToNewUser, 3000, userId, stream)
+          connectToNewUser(userId, stream)
           console.log('연결함수 실행완')
         })
       })
