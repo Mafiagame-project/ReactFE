@@ -373,10 +373,12 @@ const VideoContainer = () => {
   const myVideo = document.createElement('video')
   myVideo.muted = true
   const peers = {}
-  const myPeer = new Peer()
+
   const { roomId } = useParams()
 
   React.useEffect(() => {
+    const myPeer = new Peer()
+
     navigator.mediaDevices
       .getUserMedia({
         video: true,

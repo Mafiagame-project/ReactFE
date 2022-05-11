@@ -31,76 +31,76 @@ function GameRoom(props) {
   const [getReady, setReady] = useState(false)
   const [getStart, setStart] = useState(false)
 
-  const exitRoom = () => {
-    // 방에서 나가기 버튼을 누를때 호출
-    socket.emit('leaveRoom')
-    history.replace('/gamemain')
-    dispatch(gameActions.noticeResult(null))
-    dispatch(gameActions.playerWhoSurvived(null))
-    dispatch(gameActions.dayAndNight(null))
-    dispatch(gameActions.noticeEndGame(null))
-    dispatch(gameActions.readyCheck(null))
-    dispatch(gameActions.noticeJob(null))
-  }
-  const startGame = () => {
-    if (memberSocket.length < 4) {
-      alert('게임시작을 위해서 최소 4명이상이 필요합니다')
-    } else {
-      if (memberSocket.length - 1 == currentReady.length) {
-        socket.emit('startGame')
-        setStart(true)
-      } else {
-        alert('아직 준비를 하지 않은 참가자가 있습니다!')
-      }
-    }
-  }
-  const enterNoti = () => {
-    setNotice(true)
-    setTimeout(() => {
-      setNotice(false)
-    }, 3000)
-  }
+  // const exitRoom = () => {
+  //   // 방에서 나가기 버튼을 누를때 호출
+  //   socket.emit('leaveRoom')
+  //   history.replace('/gamemain')
+  //   dispatch(gameActions.noticeResult(null))
+  //   dispatch(gameActions.playerWhoSurvived(null))
+  //   dispatch(gameActions.dayAndNight(null))
+  //   dispatch(gameActions.noticeEndGame(null))
+  //   dispatch(gameActions.readyCheck(null))
+  //   dispatch(gameActions.noticeJob(null))
+  // }
+  // const startGame = () => {
+  //   if (memberSocket.length < 4) {
+  //     alert('게임시작을 위해서 최소 4명이상이 필요합니다')
+  //   } else {
+  //     if (memberSocket.length - 1 == currentReady.length) {
+  //       socket.emit('startGame')
+  //       setStart(true)
+  //     } else {
+  //       alert('아직 준비를 하지 않은 참가자가 있습니다!')
+  //     }
+  //   }
+  // }
+  // const enterNoti = () => {
+  //   setNotice(true)
+  //   setTimeout(() => {
+  //     setNotice(false)
+  //   }, 3000)
+  // }
 
-  const readyGame = () => {
-    if (getReady == false) {
-      socket.emit('ready', true)
-    } else {
-      socket.emit('ready', false)
-    }
-    setReady(!getReady)
-  }
+  // const readyGame = () => {
+  //   if (getReady == false) {
+  //     socket.emit('ready', true)
+  //   } else {
+  //     socket.emit('ready', false)
+  //   }
+  //   setReady(!getReady)
+  // }
 
-  useEffect(() => {
-    let unlisten = history.listen((location) => {
-      // 브라우저 뒤로가기 버튼(나가기) 누를때 호출
-      if (history.action === 'POP') {
-        socket.emit('leaveRoom')
-        dispatch(gameActions.noticeResult(null))
-        dispatch(gameActions.playerWhoSurvived(null))
-        dispatch(gameActions.dayAndNight(null))
-        dispatch(gameActions.noticeEndGame(null))
-      }
-    })
-    if (voteResult?.length > 0) {
-      enterNoti()
-    }
+  // useEffect(() => {
+  //   let unlisten = history.listen((location) => {
+  //     // 브라우저 뒤로가기 버튼(나가기) 누를때 호출
+  //     if (history.action === 'POP') {
+  //       socket.emit('leaveRoom')
+  //       dispatch(gameActions.noticeResult(null))
+  //       dispatch(gameActions.playerWhoSurvived(null))
+  //       dispatch(gameActions.dayAndNight(null))
+  //       dispatch(gameActions.noticeEndGame(null))
+  //     }
+  //   })
+  //   if (voteResult?.length > 0) {
+  //     enterNoti()
+  //   }
 
-    if (startCard || copNoti) {
-      console.log(copNoti)
-      setIsOpen(true)
-      setTimeout(() => {
-        setIsOpen(false)
-        dispatch(gameActions.startCard(null))
-        if (copNoti) {
-          dispatch(gameActions.noticeCop(null))
-        }
-      }, 3000)
-    }
-    return () => {
-      dispatch(gameActions.playerWhoKilled(null))
-      unlisten()
-    }
-  }, [socket, voteResult, startCard, copNoti])
+  //   if (startCard || copNoti) {
+  //     console.log(copNoti)
+  //     setIsOpen(true)
+  //     setTimeout(() => {
+  //       setIsOpen(false)
+  //       dispatch(gameActions.startCard(null))
+  //       if (copNoti) {
+  //         dispatch(gameActions.noticeCop(null))
+  //       }
+  //     }, 3000)
+  //   }
+  //   return () => {
+  //     dispatch(gameActions.playerWhoKilled(null))
+  //     unlisten()
+  //   }
+  // }, [socket, voteResult, startCard, copNoti])
 
   const LeftBox = styled.div`
     text-align: center;
@@ -114,7 +114,7 @@ function GameRoom(props) {
 
   return (
     <>
-      <Header />
+      {/* <Header />
       <Container>
         <Grid is_flex>
           {isOpen == true ? (
@@ -128,9 +128,9 @@ function GameRoom(props) {
             </Modalblack>
           ) : null}
           <LeftBox>
-            <Grid margin="17% 0 0 0" isFlex_center height="30%">
-              <VideoContainer style={videoContainer} socket={socket} />
-            </Grid>
+            <Grid margin="17% 0 0 0" isFlex_center height="30%"> */}
+      <VideoContainer style={videoContainer} socket={socket} />
+      {/* </Grid>
             <Grid height="30%" />
             <Grid height="10vh">
               <Grid isFlex_center>
@@ -194,7 +194,9 @@ function GameRoom(props) {
             </Button>
           </RightBox>
         </Grid>
+        <Button></Button>
       </Container>
+    </> */}
     </>
   )
 }
