@@ -18,6 +18,10 @@ function Loading() {
     history.push('/gamemain')
     const socket = io.connect('https://sparta-dongsun.shop')
     dispatch(gameActions.sendSocket(socket))
+    socket.emit('roomList')
+    socket.on('roomList', (rooms) => {
+      dispatch(roomActions.sendRoomList(rooms))
+    })
 
     socket.on('roomData', (info) => {
       // createModal 이벤트 발생시 실행
