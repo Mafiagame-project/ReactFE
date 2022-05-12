@@ -32,7 +32,7 @@ function GameRoom(props) {
   const [getNotice, setNotice] = useState(false)
   const [getReady, setReady] = useState(false)
   const [getStart, setStart] = useState(false)
-
+  //테스트
   const exitRoom = () => {
     // 방에서 나가기 버튼을 누를때 호출
     socket.emit('leaveRoom')
