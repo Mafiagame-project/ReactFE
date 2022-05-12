@@ -23,6 +23,8 @@ Grid.defaultProps = {
   _onClick: () => {},
   flex: '',
   border: false,
+  borderRight : false,
+  borderBottom : false,
   is_flex: false,
   flex_column: false,
   isFlex_start: false,
@@ -38,6 +40,10 @@ const GridBox = styled.div`
   box-sizing: border-box;
   ${(props) =>
     props.border ? `border: 2px solid black; border-radius: 10px;` : ''}
+  ${(props) =>
+    props.borderRight ? `border-right: 2px solid black;` : ''}
+  ${(props) =>
+    props.borderBottom ? `border-bottom: 2px solid black;` : ''}
   ${(props) => (props.padding ? `padding: ${props.padding};` : '')}
     ${(props) => (props.margin ? `margin: ${props.margin};` : '')}
     ${(props) => (props.bg ? `background-color: ${props.bg};` : '')}

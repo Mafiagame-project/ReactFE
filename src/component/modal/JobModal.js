@@ -4,89 +4,81 @@ import styled from 'styled-components'
 import { Grid, Text } from '../../element/index'
 import { actionCreators as gameActions } from '../../redux/modules/game'
 import data from '../../shared/introduce';
+import 양 from '../../assets/image/character/양_시민.png'
 
 const JobModal = () => {
   const dispatch = useDispatch();
-  const copNoti = useSelector(state => state.game.copNoti);
   const startCard = useSelector(state => state.game.card)
-  const copSelect = useSelector(state => state.game.copSelect)
   const player = useSelector(state => state.game.jobNoti)
   const [getJob, setJob] = useState();
   const [getDesc, setDesc] = useState();
-  
-  useEffect(()=>{
+  const [getTest, setTest] = useState(false)
 
-    if(startCard){
+  useEffect(()=>{
+    if(getTest){
       data.forEach((element) => {
         if(player == element.name ){
           setJob(element.title)
           setDesc(element.explain)
         } 
       })
-    }
-
-    if(copNoti){
-      data.forEach((element) => {
-        if(copSelect == element.name ){
-          setJob(element.title)
-        } 
-      })
+      setTimeout(()=>{
+        // dispatch(gameActions.startCard(null))
+        setTest(!getTest)
+      },16000)
     }
     
-  },[getJob, copNoti, copSelect])
+  },[getTest])
 
-  console.log(copNoti, copSelect)
   return (
     <>
-    {
-      startCard == true
-          ? <Noti>
-              <Text bold size='20px'> 당신의 직업은...</Text>
-              <Grid>
-                <Text bold size='24px'>{getJob}</Text>
+    <button onClick={()=>{setTest(!getTest)}}></button>
+      {
+        getTest == true
+          ? <Modalblack>
+            <Grid margin='150px 0 -50px 0' height='10%'>
+              <Text color='white' size='40px'>당신의 직업은...</Text>
+            </Grid>
+            <Noti>
+              <div style={{width:'100%', height:'10%', marginTop:'-25px', paddingTop:'12px', borderRadius:'40px 40px 0 0', background:'black'}}>
+                <Text color='white' size='24px'>MAFIYANG</Text>
+              </div>
+              <Grid height='15%'/>
+              <Grid height='40%'>
+                <img style={{width:'150px', height:'150px'}} src={양}/>
               </Grid>
-              <Grid>
-                <Text bold size='20px'>{getDesc}</Text>
+              <Grid isFlex_center height='15%'>
+                <Grid width='200px' height='50px' bg='black'>
+                  <Text size='30px' color='white' margin='8px 0 15px 0'>시민</Text>
+                </Grid>
               </Grid>
             </Noti>
-          : <>
-            {
-              copNoti == true
-              ? <Noti2>
-                  <Text bold size='20px'>당신이 선택한 사람의 직업은</Text>
-                  <Text bold size='32px'>{getJob}입니다</Text>
-                </Noti2>
-              : null
-            }
-            </>
-    }
-        
+          </Modalblack>
+          : null
+      }
     </>
   )
 }
+const Modalblack = styled.div`
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  text-align: center;
+  left: 0;
+  top: 0;
+  z-index: 5;
+  transition: 1s;
+`
 
 const Noti = styled.div`
   display: inline-block;
-  background: white;
-  margin-top: 100px;
-  width: 50%;
-  height: 600px;
-  padding: 40px;
+  background:white;
+  width: 550px;
+  height: 725px;
   box-sizing: border-box;
-  border-radius: 20px;
-  box-shadow: 2px 2px 2px 2px #d2d2d2;
-  `
-
-  const Noti2 = styled.div`
-  display: inline-block;
-  background: white;
-  margin-top: 100px;
-  width: 50%;
-  height: 600px;
-  padding: 40px;
-  box-sizing: border-box;
-  border-radius: 20px;
-  box-shadow: 2px 2px 2px 2px #d2d2d2;
+  border-radius: 40px 40px 0 0;
+  transition: 1s;
   `
 
 export default JobModal
