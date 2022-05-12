@@ -3,6 +3,9 @@ import { Grid, Text, DotButton, Input } from '../../element/index'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import ModalPortal from './ModalPortal'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import '../video.css';
 
 const VoteModal = ({ onClose }) => {
   const [clickedId, setClickedId] = React.useState()
@@ -23,10 +26,17 @@ const VoteModal = ({ onClose }) => {
   console.log(playerJob)
   console.log(is_night)
 
+  const policePointed = (pointed, hisJob) => {
+    toast.warning(`${pointed}의 정체는 ${hisJob}입니다`, {
+      position : toast.POSITION.TOP_LEFT,
+      className : 'toast-police',
+      autoClose : 3000,
+    })
+  }
+
   const active = (clickedId, clicker, time) => {
     let clickerJob = clicker.playerJob
     let clickerId = clicker.player
-    let policeCnt = 0
     if (currentId == clickedId) {
       alert('다른사람을 뽑아주세요')
       return
@@ -48,9 +58,8 @@ const VoteModal = ({ onClose }) => {
       socket.emit('vote', { clickerJob, clickerId, clickedId })
       return onClose()
     }
-    if (clickerJob == 'police' && time == true && policeCnt == 0) {
-      alert(`${clickedId}의 직업은 ${copSelect}입니다`)
-      policeCnt++ // 아직 경찰이 어떻게 알림 받아서 사용할 지는 안정해짐.
+    if (clickerJob == 'police' && time == true) {
+      policePointed(`${clickedId}의 직업은 ${copSelect}입니다`)
     }
   }
   //밤에는 마피아 모달, 경찰, 의사 구분 주기
@@ -60,7 +69,7 @@ const VoteModal = ({ onClose }) => {
     <>
       <ModalPortal>
         <Background>
-          {is_night ? (
+          {!is_night ? (
             <Container onClick={(e) => e.stopPropagation()}>
               <Text size="40px" color="#fff">
                 낮이 되었습니다.

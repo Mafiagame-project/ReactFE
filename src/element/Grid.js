@@ -26,6 +26,7 @@ Grid.defaultProps = {
   border: false,
   borderRight : false,
   borderBottom : false,
+  borderLeft : false,
   is_flex: false,
   flex_column: false,
   flexColumn: false,
@@ -45,6 +46,8 @@ const GridBox = styled.div`
     props.border ? `border: 2px solid black; border-radius: 10px;` : ''}
   ${(props) =>
     props.borderRight ? `border-right: 2px solid black;` : ''}
+  ${(props) =>
+    props.borderLeft ? `border-left: 2px solid black;` : ''}
   ${(props) =>
     props.borderBottom ? `border-bottom: 2px solid black;` : ''}
   ${(props) => (props.padding ? `padding: ${props.padding};` : '')}

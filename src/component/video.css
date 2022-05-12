@@ -22,5 +22,12 @@
     width: 450px;
     height:200px;
     text-align: center;
-    
+}
+
+.toast-time{
+    font-size:20px;
+}
+
+.toast-police{
+    font-size:20px;
 }

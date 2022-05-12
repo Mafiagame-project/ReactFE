@@ -53,6 +53,22 @@ function GameRoom(props) {
       })
     }
   }
+  
+  const dayOrNight = (time) => {
+    if(time == true){
+      toast.error('밤이 되었습니다', {
+        position : toast.POSITION.TOP_LEFT,
+        className : 'toast-time',
+        autoClose : 3000,
+      })
+    } else if (time == false){
+      toast.success('낮이 되었습니다', {
+        position : toast.POSITION.TOP_LEFT,
+        className : 'toast-time',
+        autoClose : 3000,
+      })
+    }
+  }
 
   const exitRoom = () => {
     // 방에서 나가기 버튼을 누를때 호출
@@ -81,7 +97,7 @@ function GameRoom(props) {
     setNotice(true)
     setTimeout(() => {
       setNotice(false)
-    }, 16000)
+    }, 6000)
   }
 
   useEffect(() => {
@@ -108,6 +124,15 @@ function GameRoom(props) {
     }
   },[voteResult])
 
+  useEffect(()=>{
+    if(currentTime === false ){
+      dayOrNight(false)
+    } else if (currentTime === true){
+      dayOrNight(true)
+    }
+    
+  },[currentTime])
+  
   useEffect(()=>{
     if(startCard){
       setIsOpen(true)
