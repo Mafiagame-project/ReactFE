@@ -26,18 +26,14 @@ function Loading() {
     socket.on('roomData', (info) => {
       // createModal 이벤트 발생시 실행
       socket.emit('joinRoom', info.roomId)
-      console.log(info.roomId, myPeer.id)
       dispatch(roomActions.currentRoom(info))
-      // dispatch(gameActions.sendPeerId(myPeer))
       history.replace(`/gameroom/${info.roomId}`)
     })
 
-    socket.on('leaveRoomMsg', (whosout, whosId, host) => {
-      //whosId
-      console.log(host)
-      dispatch(memberActions.exitSocketId(whosout))
-      dispatch(memberActions.exitUserId(whosId))
-      dispatch(gameActions.noticeEnterOut(whosId))
+    socket.on('leaveRoomMsg', (offSocketId, offId, host) => {
+      dispatch(memberActions.exitSocketId(offSocketId))
+      dispatch(memberActions.exitUserId(offId))
+      dispatch(gameActions.noticeEnterOut(offId)) // 들어오고 나가고의 알림 없다면 삭제
       dispatch(roomActions.changeHost(host))
     })
 
@@ -45,7 +41,7 @@ function Loading() {
       // 참가자가 방에 들어올때 호출
       dispatch(memberActions.currentSocketId(idValue))
       dispatch(memberActions.currentUserId(currentAll))
-      dispatch(gameActions.noticeEnterOut(incoming))
+      dispatch(gameActions.noticeEnterOut(incoming)) // 들어오고 나가고의 알림 없다면 삭제
     })
 
     socket.on('getJob', (player, playerJob) => {
@@ -68,18 +64,18 @@ function Loading() {
 
     socket.on('dayVoteResult', (value) => {
       console.log(value)
-      dispatch(gameActions.playerWhoKilled(value.diedPeopleArr))
-      dispatch(gameActions.noticeResult(value.id))
+      dispatch(gameActions.playerWhoKilled(value.diedPeopleArr)) // 죽은 전체명단
+      dispatch(gameActions.noticeResult(value.id)) // 방금 죽은사람
     })
 
     socket.on('ready', (value) => {
       console.log(value)
-      dispatch(gameActions.readyCheck(value))
+      dispatch(gameActions.readyCheck(value)) // 게임시작 누르고 오는거라 필요없는듯?
     })
 
     socket.on('readyPeople', (currentReady) => {
       console.log(currentReady)
-      dispatch(roomActions.roomReady(currentReady))
+      dispatch(roomActions.roomReady(currentReady)) // 레디한사람 전체 배열
     })
 
     socket.on('nightVoteResult', (value) => {

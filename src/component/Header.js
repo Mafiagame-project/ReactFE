@@ -50,7 +50,7 @@ function Header(props) {
           <Grid is_flex>
             <Grid center margin="0 10px">
               <Icons src={soundIcon} />
-              <Text margin="0" color="#fff" size="12px" color="#fff">
+              <Text margin="0" color="#fff" size="12px">
                 sound
               </Text>
             </Grid>

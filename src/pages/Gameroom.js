@@ -2,16 +2,19 @@ import styled from 'styled-components'
 import { Grid, Button, DotButton, Text } from '../element/index'
 import { useEffect, useState } from 'react'
 import { actionCreators as gameActions } from '../redux/modules/game'
-import { actionCreators as roomActions } from '../redux/modules/room'
 import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../redux/configureStore'
-import { useParams } from 'react-router-dom'
 import Header from '../component/Header'
 import ChatBox from '../component/ChatBox'
 import VideoContainer from '../component/VideoContainer'
-import Peer from 'peerjs'
 import Noti from '../component/modal/NotiModal'
 import JobModal from '../component/modal/JobModal'
+import ReadyBtn from '../component/ReadyBtn';
+import outBtn from '../assets/icons/black/로그아웃.png'
+import OutBtnW from '../assets/icons/white/로그아웃(백).png'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import '../component/video.css'
 
 function GameRoom(props) {
   const dispatch = useDispatch()
@@ -28,9 +31,23 @@ function GameRoom(props) {
 
   const [isOpen, setIsOpen] = useState(false)
   const [getNotice, setNotice] = useState(false)
-  const [getReady, setReady] = useState(false)
   const [getStart, setStart] = useState(false)
-  console.log('twice3')
+  const notify = () => {
+    toast('Wow so easy', {
+      position : toast.POSITION.TOP_CENTER,
+      className : 'toasted',
+      autoClose : 3000,
+    })
+  }
+
+  const startPeopleNoti = () => {
+    toast('게임시작을 위해서 최소 4명이상이 필요합니다', {
+      position : toast.POSITION.TOP_CENTER,
+      className : 'toast-startPeople',
+      autoClose : 3000,
+    })
+  }
+
   const exitRoom = () => {
     // 방에서 나가기 버튼을 누를때 호출
     socket.emit('leaveRoom')
@@ -44,7 +61,7 @@ function GameRoom(props) {
   }
   const startGame = () => {
     if (memberSocket.length < 4) {
-      alert('게임시작을 위해서 최소 4명이상이 필요합니다')
+      startPeopleNoti()
     } else {
       if (memberSocket.length - 1 == currentReady.length) {
         socket.emit('startGame')
@@ -61,14 +78,7 @@ function GameRoom(props) {
     }, 3000)
   }
 
-  const readyGame = () => {
-    if (getReady == false) {
-      socket.emit('ready', true)
-    } else {
-      socket.emit('ready', false)
-    }
-    setReady(!getReady)
-  }
+  
 
   useEffect(() => {
     let unlisten = history.listen((location) => {
@@ -81,42 +91,32 @@ function GameRoom(props) {
         dispatch(gameActions.noticeEndGame(null))
       }
     })
-    // if (voteResult?.length > 0) {
-    //   enterNoti()
-    // }
+    if (voteResult?.length > 0) {
+      enterNoti()
+    }
 
-    // if (startCard || copNoti) {
-    //   console.log(copNoti)
-    //   setIsOpen(true)
-    //   setTimeout(() => {
-    //     setIsOpen(false)
-    //     dispatch(gameActions.startCard(null))
-    //     if (copNoti) {
-    //       dispatch(gameActions.noticeCop(null))
-    //     }
-    //   }, 3000)
-    // }
+    if (startCard || copNoti) {
+      console.log(copNoti)
+      setIsOpen(true)
+      setTimeout(() => {
+        setIsOpen(false)
+        dispatch(gameActions.startCard(null))
+        if (copNoti) {
+          dispatch(gameActions.noticeCop(null))
+        }
+      }, 3000)
+    }
     return () => {
       dispatch(gameActions.playerWhoKilled(null))
       unlisten()
     }
   }, [socket, voteResult, startCard, copNoti])
 
-  // const LeftBox = styled.div`
-  //   text-align: center;
-  //   margin: 0 auto;
-  //   width: 100%;
-  //   height: 90vh;
-  //   transition-property: background;
-  //   transition-timing-function: ease;
-  //   background: ${currentTime == '밤' ? '#333333' : 'white'};
-  // `
-
   return (
     <>
       <Header />
-      <Container>
-        <Grid is_flex>
+      <Grid height='90vh'>
+        <Grid is_flex height='90%'>
           {isOpen == true ? (
             <Modalblack>
               <JobModal />
@@ -127,75 +127,58 @@ function GameRoom(props) {
               <Noti></Noti>
             </Modalblack>
           ) : null}
-          <Grid>
-            <Grid margin="17% 0 0 0" isFlex_center height="30%">
-      <VideoContainer style={videoContainer} socket={socket} />
-      </Grid>
-            <Grid height="30%" />
-            <Grid height="10vh">
-              <Grid isFlex_center>
-                {getStart == false ? (
-                  <Grid isFlex_center>
-                    {roomInfo?.userId == currentId || host == currentId ? (
-                      <DotButton
-                        black02
-                        text="시작하기"
-                        _onClick={() => {
-                          startGame()
-                        }}
-                      />
-                    ) : (
-                      <>
-                        {getReady == false ? (
-                          <DotButton
-                            white02
-                            text="준비하기"
-                            _onClick={() => {
-                              readyGame()
-                            }}
-                          />
-                        ) : (
-                          <DotButton
-                            black02
-                            text="준비완료"
-                            _onClick={() => {
-                              readyGame()
-                            }}
-                          />
-                        )}
-                      </>
-                    )}
-                  </Grid>
-                ) : (
-                  <Grid>
-                    <DotButton
-                      white02
-                      text="투표하기"
-                      _onClick={() => {
-                        exitRoom()
-                      }}
-                    />
-                  </Grid>
-                )}
+          <Grid height='100%'>
+            <Grid margin='30px' height='5%' width='5%' _onClick={() => { exitRoom() }}>
+              <Icons src={outBtn} />
+              <Text margin="0" size="20px">나가</Text>
+            </Grid>
+            <Grid>
+              <Grid margin="17% 0 0 0" isFlex_center height="30%">
+                <VideoContainer style={videoContainer} socket={socket} />
               </Grid>
             </Grid>
           </Grid>
 
-          <RightBox>
-            <ChatBox socket={socket} />
-            <Button
-              bg="black"
-              smallBtn
-              _onClick={() => {
-                exitRoom()
-              }}
-            >
-              방 나가기
-            </Button>
-          </RightBox>
+          <Grid padding='3% 0 0 0' width='25vw' height='100%'>
+            <RightBox>
+              <ChatBox socket={socket} />
+              <button onClick={()=>{notify()}}>NOTIFY</button>
+              <ToastContainer/>
+            </RightBox>
+          </Grid>
         </Grid>
-        <Button></Button>
-      </Container>
+        <Grid isFlex_center>
+          {
+            getStart == false
+              ?
+              <>
+                {
+                  roomInfo?.userId == currentId || host == currentId
+                    ?
+                    <DotButton
+                      black02
+                      text="시작하기"
+                      _onClick={() => {
+                        startGame()
+                      }}
+                    />
+                    :
+                    <ReadyBtn />
+                }
+              </>
+              :
+              <>
+                <DotButton
+                  white02
+                  text="투표하기"
+                  _onClick={() => {
+                    exitRoom()
+                  }}
+                />
+              </>
+          }
+        </Grid>
+      </Grid>
     </>
   )
 }
@@ -225,6 +208,9 @@ const Modalblack = styled.div`
 const Container = styled.div`
   width: 100%;
   height: 80vh;
+`
+const Icons = styled.img`
+  width: 30px;
 `
 //  background: ${currentTime == '밤' ? 'black' : 'white'};
 export default GameRoom

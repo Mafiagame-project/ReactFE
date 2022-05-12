@@ -36,7 +36,7 @@ const ChatBox = ({ socket }) => {
           overflow="scroll"
           padding="10px 0 0 10px"
           bg="#F6F6F6"
-          height="500px"
+          height="600px"
         >
           {getWrite.map((e) => {
             return <Chatdiv currentId={currentId} e={e} getWrite={getWrite} />

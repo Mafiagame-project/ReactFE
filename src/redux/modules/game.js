@@ -20,6 +20,7 @@ const START_CARD = 'START_CARD'
 const sendSocket = createAction(SEND_SOCKET, (socket) => ({ socket }))
 const sendPeerId = createAction(SEND_PEERID, (peer) => ({ peer }))
 const noticeEnterOut = createAction(ROOM_NOTI, (noti) => ({ noti }))
+// 들어오고 나가고의 알림 없다면 삭제
 const noticeJob = createAction(JOB_NOTI, (noti) => ({ noti }))
 const noticeResult = createAction(RESULT_NOTI, (noti) => ({ noti }))
 const noticeCop = createAction(COP_NOTI, (noti) => ({ noti }))

@@ -9,3 +9,15 @@
     object-fit: cover;
     border-radius: 50%;
 }
+
+.toasted{
+    font-size: 40px;
+    margin-top: 200px;
+    width:700px;
+}
+
+.toast-startPeople{
+    font-size: 25px;
+    margin-top: 200px;
+    width: 450px;
+}
