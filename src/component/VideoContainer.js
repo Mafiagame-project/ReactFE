@@ -1,28 +1,21 @@
 import React from 'react'
 import Peer from 'peerjs'
-import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import './video.css';
 
 const VideoContainer = () => {
-  // const myPeer = useSelector((state) => state.game.peerId)
-  const socket = useSelector(state => state.game.socket)
-  let myStream = null
-  let myPeerId = ''
-  
+  const socket = useSelector((state) => state.game.socket)
+
   const videoGrid = React.useRef()
-  // const myPeer = new Peer()
   const myVideo = document.createElement('video')
-  myVideo.classList.add('video_box')
   myVideo.muted = true
   const peers = {}
-  
-  const { roomId } = useParams()
-  
+  //테스트
+
   React.useEffect(() => {
     const myPeer = new Peer()
+
     myPeer.on('open', (id) => {
-      console.log(id)  // 6번
+      console.log(id)
       socket.emit('peerJoinRoom', id)
     })
 
@@ -32,27 +25,24 @@ const VideoContainer = () => {
         audio: false,
       })
       .then((stream) => {
-        myStream = stream
         addVideoStream(myVideo, stream)
-        console.log('here')  // 5번
-
+        console.log('here')
 
         myPeer.on('call', (call) => {
-          console.log('콜 찍히니?')  //10번
+          console.log('콜 찍히니?')
           call.answer(stream)
           const video = document.createElement('video')
-          video.classList.add('video_box')
-          console.log('here')  // 11번
+          console.log('here')
           call.on('stream', (userVideoStream) => {
             addVideoStream(video, userVideoStream)
-            console.log('here') // 15번
+            console.log('here')
           })
         })
 
         socket.on('user-connected', (userId) => {
-          console.log(userId, stream)  //7번
+          console.log(userId, stream)
           connectToNewUser(userId, stream)
-          console.log('연결함수 실행완')  //9번
+          console.log('연결함수 실행완')
         })
       })
 
@@ -63,13 +53,14 @@ const VideoContainer = () => {
     function connectToNewUser(userId, myStream) {
       const call = myPeer.call(userId, myStream)
       const video = document.createElement('video')
-      video.classList.add('video_box')
-      console.log('유저연결 실행')  //8번
+      console.log('유저연결 실행')
       call.on('stream', (userVideoStream) => {
         addVideoStream(video, userVideoStream)
         console.log('비디오 함수 실행완')
       })
+
       call.on('close', () => {
+        console.log('삭제')
         video.remove()
       })
 
@@ -78,21 +69,20 @@ const VideoContainer = () => {
   }, [])
 
   function addVideoStream(video, stream) {
-    console.log(stream) // 1번 // 12번
+    console.log(stream)
     video.srcObject = stream
-    console.log(video)  // 2번 // 13번
+    console.log(video)
     video.addEventListener('loadedmetadata', () => {
       video.play()
     })
-    videoGrid.current.append(video)  // 3번
-    console.log('추가완') // 4번  // 14번
+    videoGrid.current.append(video)
+    console.log('추가완')
   }
   return (
     <>
-      <div className="video_grid" ref={videoGrid}></div>
+      <div className="video_grid" ref={videoGrid} />
     </>
   )
 }
-
 
 export default VideoContainer

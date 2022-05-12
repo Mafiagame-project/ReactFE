@@ -6,13 +6,11 @@ import { actionCreators as gameActions } from '../redux/modules/game'
 import { actionCreators as roomActions } from '../redux/modules/room'
 import { actionCreators as memberActions } from '../redux/modules/member'
 import { useEffect } from 'react'
-import Peer from 'peerjs'
 
 function Loading() {
   const dispatch = useDispatch()
   const history = useHistory()
   const token = localStorage.getItem('token')
-  const myPeer = new Peer()
 
   const entrance = () => {
     history.push('/gamemain')
@@ -52,14 +50,9 @@ function Loading() {
     })
 
     socket.on('isNight', (value) => {
-      let time
-      if (value == true) {
-        time = '밤'
-        dispatch(gameActions.dayAndNight(time))
-      } else {
-        time = '낮'
-        dispatch(gameActions.dayAndNight(time))
-      }
+      console.log(value)
+      dispatch(gameActions.dayAndNight(value))
+      
     })
 
     socket.on('dayVoteResult', (value) => {

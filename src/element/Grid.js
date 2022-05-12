@@ -20,6 +20,7 @@ Grid.defaultProps = {
   margin: false,
   bg: false,
   center: false,
+  start: false,
   _onClick: () => {},
   flex: '',
   border: false,
@@ -27,10 +28,12 @@ Grid.defaultProps = {
   borderBottom : false,
   is_flex: false,
   flex_column: false,
+  flexColumn: false,
   isFlex_start: false,
   isFlex_center: false,
   isFlex_end: false,
   _cursor: false,
+  br: '',
 }
 
 const GridBox = styled.div`
@@ -52,6 +55,7 @@ const GridBox = styled.div`
         ? `display: flex; align-items: center; justify-content: space-between;`
         : ''}
     ${(props) => (props.center ? `text-align: center` : '')}
+    ${(props) => (props.start ? `text-align: start` : '')}
     ${(props) =>
       props.flex
         ? `position: relative; display: flex; justify-content: center; flex-direction: column;`
@@ -60,6 +64,10 @@ const GridBox = styled.div`
      props.flex_column
        ? `display: flex; flex-direction: column; justify-content: center; align-items: center;`
        : null};
+       ${(props) =>
+         props.flexColumn
+           ? `display: flex; flex-direction: column; justify-content: space-between; align-items: center;`
+           : null};
     ${(props) =>
       props.isFlex_start
         ? `display: flex; align-items: center; justify-content: start;`

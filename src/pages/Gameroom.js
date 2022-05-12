@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Grid, Button, DotButton, Text } from '../element/index'
+import { Grid, Button, DotButton } from '../element/index'
 import { useEffect, useState } from 'react'
 import { actionCreators as gameActions } from '../redux/modules/game'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,11 +11,13 @@ import Noti from '../component/modal/NotiModal'
 import JobModal from '../component/modal/JobModal'
 import ReadyBtn from '../component/ReadyBtn';
 import outBtn from '../assets/icons/black/로그아웃.png'
-import OutBtnW from '../assets/icons/white/로그아웃(백).png'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../component/video.css'
-import logo from '../assets/image/Dao.png'
+import ModalPortal from '../component/modal/ModalPortal'
+import VoteModal from '../component/modal/VoteModal'
+import ExitModal from '../component/modal/ExitModal'
+import exit from '../assets/icons/black/돌아가기.png'
 
 function GameRoom(props) {
   const dispatch = useDispatch()
@@ -30,7 +32,8 @@ function GameRoom(props) {
   const startCard = useSelector((state) => state.game.card)
   const playerJob = useSelector(state => state.game.jobNoti)
   const currentId = localStorage.getItem('userId')
-
+  const [voteOpen, setVoteOpen] = useState(false)
+  const [exitOpen, setExitOpen] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [getNotice, setNotice] = useState(false)
   const [getStart, setStart] = useState(false)
@@ -119,7 +122,13 @@ function GameRoom(props) {
     <>
       <Header />
       <Grid height='90vh'>
+      <ModalPortal>
+          {exitOpen && (
+            <ExitModal socket={socket} onClose={() => setExitOpen(false)} />
+          )}
+        </ModalPortal>
         <Grid is_flex height='90%'>
+        
             <JobModal />
             <button onClick={enterNoti}></button>
           {getNotice == true ? (
@@ -127,16 +136,14 @@ function GameRoom(props) {
           ) : null}
           <Grid height='100%'>
             <Grid margin='30px' height='5%' width='5%' _onClick={() => { exitRoom() }}>
-              <Icons src={outBtn} />
-              <Text margin="0" size="20px">나가</Text>
+              <img src={exit} onClick={() => setExitOpen(true)} />
             </Grid>
             <Grid>
               <Grid margin="17% 0 0 0" isFlex_center height="30%">
-                <VideoContainer style={videoContainer} socket={socket} />
+                <VideoContainer socket={socket} />
               </Grid>
             </Grid>
           </Grid>
-
           <Grid padding='3% 0 0 0' width='25vw' height='100%'>
             <RightBox>
               <ChatBox socket={socket} />
@@ -176,22 +183,24 @@ function GameRoom(props) {
           }
         </Grid>
       </Grid>
+      <ModalPortal>
+        {voteOpen && <VoteModal onClose={() => setVoteOpen(false)} />}
+      </ModalPortal>
     </>
   )
 }
-const videoContainer = styled.div``
 
-const PlayerBox = styled.div``
-
-const Btns = styled.div`
-  z-index: 9999;
-  position: fixed;
-  bottom: 0;
+const LeftBox = styled.div`
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+  height: 90vh;
+  transition-property: background;
+  transition-timing-function: ease;
 `
 const RightBox = styled.div`
   margin: 40px;
 `
-
 const Modalblack = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
@@ -209,5 +218,4 @@ const Container = styled.div`
 const Icons = styled.img`
   width: 30px;
 `
-//  background: ${currentTime == '밤' ? 'black' : 'white'};
 export default GameRoom

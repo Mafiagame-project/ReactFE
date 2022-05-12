@@ -1,32 +1,48 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import { BrowserRouter as Router, Switch, useLocation } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { actionCreators as userAction } from '../redux/modules/user'
+import naver from '../assets/icons/social/naver.png'
 
-//네이버 설정 여쭤보고 추후 연결 하기...어렵네요 네이버 로그인,,
-const { naver } = window
-const location = useLocation()
-const NAVER_CALLBACK_URL = 'NAVER_CALLBACK_URL'
-const NAVER_CLIENT_ID = '클라이언트 ID'
+function NaverLogin() {
+  const dispatch = useDispatch()
+  const naverRef = React.useRef()
+  const { naver } = window
 
-const NaverLogin = () => {
-  const naverLogin = new naver.LoginWithNaverId({
-    clientId: NAVER_CLIENT_ID,
-    callbackUrl: NAVER_CALLBACK_URL,
-    isPopup: false,
-    loginButton: { color: 'white', type: 1, height: '47' },
-  })
-  naverLogin.init()
+  const Login = () => {
+    Naver()
+    UserProfile()
+  }
+
+  React.useEffect(Login, [])
+
+  function Naver() {
+    const naverLogin = new naver.LoginWithNaverId({
+      clientId: '9WNFXnar7frmNNTQmP4N',
+      callbackUrl: 'http://localhost:3000/naverLogin/main',
+      isPopup: false, // popup 형식으로 띄울것인지 설정
+      loginButton: { color: 'green', type: 1, height: '60' }, //버튼의 스타일, 타입, 크기를 지정
+    })
+    naverLogin.init()
+  }
+
+  const UserProfile = () => {
+    window.location.href.includes('access_token') && GetUser()
+    function GetUser() {
+      const location = window.location.href.split('=')[1]
+      const token = location.split('&')[0]
+      console.log('token: ', token)
+      dispatch(userAction.naverLogin(token))
+    }
+  }
+
+  return (
+    <>
+      <div ref={naverRef} id="naverIdLogin" onClick={Login}></div>
+      {/* <button onClick={Login} className="naver">
+        <img src={naver} />
+      </button> */}
+    </>
+  )
 }
-
-const getNaverToken = () => {
-  if (!location.hash) return
-  const token = location.hash.split('=')[1].split('&')[0]
-  console.log(token)
-}
-
-React.useEffect(() => {
-  NaverLogin()
-  getNaverToken()
-}, [])
 
 export default NaverLogin

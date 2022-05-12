@@ -5,14 +5,14 @@ import { history } from '../redux/configureStore'
 import { useDispatch, useSelector } from 'react-redux'
 import { Grid, Text, Button } from '../element/index'
 import styled from 'styled-components'
-import Peer from 'peerjs'
+import sheep from '../assets/image/character/양_시민.png'
 
 const Rooms = (props) => {
   const dispatch = useDispatch()
   const RoomList = useSelector((state) => state.room.rooms)
   const socket = useSelector((state) => state.game.socket)
   const currentId = localStorage.getItem('userId')
-  // const myPeer = new Peer()
+
   console.log(RoomList)
   console.log('twice')
   const entrance = (roomInfo) => {
@@ -32,10 +32,7 @@ const Rooms = (props) => {
             history.push(`/gameroom/${roomId}`)
             dispatch(gameActions.sendSocket(socket))
             dispatch(roomActions.currentRoom(roomInfo))
-            // dispatch(gameActions.sendPeerId(myPeer.id))
-            // myPeer.on('open', (id) => {
             socket.emit('joinRoom', roomId)
-            // })
           } else {
             alert('비밀번호가 틀림 ㅋ')
             return null
@@ -44,7 +41,6 @@ const Rooms = (props) => {
           history.replace(`/gameroom/${roomId}`)
           dispatch(gameActions.sendSocket(socket))
           dispatch(roomActions.currentRoom(roomInfo))
-          // dispatch(gameActions.sendPeerId(myPeer))
           socket.emit('joinRoom', roomId)
         }
       }
@@ -83,21 +79,33 @@ const Rooms = (props) => {
                     <Text color="white">MAFIYANG</Text>
                   </Grid>
                   <Grid
-                    padding="20px 60px 20px 60px"
+                    padding="50px 60px"
                     center
                     bg="white"
                     height="100%"
+                    flexColumn
                   >
                     <Text size="30px" bold>
                       {room.roomTitle}
                     </Text>
-                    <Text size="15px" bold>
-                      방장 : {room.userId}
-                    </Text>
-                    <Grid border isFlex_center height="40px" bg="black">
-                      <Text color="white" size="20px" bold>
-                        {room.currentPeople.length} / {room.roomPeople}
+                    <Grid>
+                      <Text size="15px" bold>
+                        방장 : {room.userId}
                       </Text>
+
+                      <Grid
+                        width=""
+                        isFlex_center
+                        center
+                        bg="black"
+                        border
+                        margin="0 30px"
+                      >
+                        <img src={sheep} style={{ width: '32px' }} />
+                        <Text color="#fff" size="22px" margin="13px">
+                          {room.currentPeople.length}/{room.roomPeople}
+                        </Text>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </Room>
@@ -113,7 +121,6 @@ const Rooms = (props) => {
 const RoomBox = styled.div`
   width: 95%;
   height: 60%;
-  padding: 30px 50px 30px 10px;
   overflow-x: scroll;
   display: flex;
   flex-direction: columns;
@@ -124,13 +131,12 @@ const RoomBox = styled.div`
 `
 
 const Room = styled.div`
-  width: 300px;
-  min-width: 300px;
+  min-width: 330px;
   height: 386px;
   background-color: black;
   border: 1px solid black;
   border-radius: 20px 20px 0px 0px;
-  margin-right: 20px;
+  margin-right: 30px;
   box-shadow: 3px 3px black;
   display: flex;
   flex-direction: column;
