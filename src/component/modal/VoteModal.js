@@ -4,7 +4,9 @@ import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import ModalPortal from './ModalPortal'
 
-const VoteModal = ({ onClose, socket }) => {
+const VoteModal = ({ onClose }) => {
+  const [clickedId, setClickedId] = React.useState()
+  const socket = useSelector((state) => state.game.socket)
   const is_night = useSelector((state) => state.game.night)
   const playerJob = useSelector((state) => state.game.job)
   const killed = useSelector((state) => state.game.killed)
@@ -12,7 +14,14 @@ const VoteModal = ({ onClose, socket }) => {
   const memberId = useSelector((state) => state.member.memberId)
   const currentId = localStorage.getItem('userId')
 
-  // const is_killed = (e) => {}
+  const is_killed = (e) => {
+    console.log(e.target.value)
+    setClickedId(e.target.value)
+  }
+  console.log(clickedId)
+  console.log(memberId)
+  console.log(playerJob)
+  console.log(is_night)
 
   const active = (clickedId, clicker, time) => {
     let clickerJob = clicker.playerJob
@@ -32,10 +41,12 @@ const VoteModal = ({ onClose, socket }) => {
           if (clickerJob == 'police') {
           }
           socket.emit('vote', { clickerJob, clickerId, clickedId })
+          return onClose()
         }
       })
     } else {
       socket.emit('vote', { clickerJob, clickerId, clickedId })
+      return onClose()
     }
     if (clickerJob == 'police' && time == true && policeCnt == 0) {
       alert(`${clickedId}의 직업은 ${copSelect}입니다`)
@@ -57,58 +68,85 @@ const VoteModal = ({ onClose, socket }) => {
                 우리에 가둘 양을 선택해 주세요
               </Text>
               <VoteBox>
-                <Input dayRadio text="최강마피아" value="vote" _name="vote" />
-                <Input dayRadio text="지존마피아" value="vote" _name="vote" />
-                <Input dayRadio text="지존마피아" value="vote" _name="vote" />
-                <Input dayRadio text="지존마피아" value="vote" _name="vote" />
+                {memberId.map((e, i) => {
+                  return (
+                    <Input
+                      key={i}
+                      dayRadio
+                      text={e}
+                      value={e}
+                      _name="vote"
+                      _onChange={is_killed}
+                    />
+                  )
+                })}
               </VoteBox>
               <DotButton
                 white02
                 text="투표 완료"
                 _onClick={() => {
-                  active(e, playerJob, is_night)
+                  active(clickedId, playerJob, is_night)
+                }}
+              />
+              <DotButton
+                black02
+                text="취소"
+                _onClick={() => {
+                  onClose()
                 }}
               />
             </Container>
           ) : (
             <Container onClick={(e) => e.stopPropagation()}>
-              {playerJob === mafia ? (
+              {playerJob.playerJob === 'mafia' ? (
                 <Text size="40px" color="#fff">
                   밤이 되었습니다.
                   <br />
                   잡아먹고 싶은 양을 선택해 주세요
                 </Text>
-              ) : playerJob === cop ? (
+              ) : playerJob.playerJob === 'police' ? (
                 <Text size="40px" color="#fff">
                   밤이 되었습니다.
                   <br />
                   정체를 알고싶은 양을 선택해 주세요
                 </Text>
-              ) : playerJob === doctor ? (
+              ) : playerJob.playerJob === 'doctor' ? (
                 <Text size="40px" color="#fff">
                   밤이 되었습니다.
                   <br />
                   살리고 싶은 양을 선택해 주세요
                 </Text>
-              ) : null}
-
+              ) : (
+                <Text size="40px" color="#fff">
+                  시민은..잠에 듭니다
+                </Text>
+              )}
               <VoteBox>
-                <Input
-                  radio
-                  text="최강마피아"
-                  value="유저아이디"
-                  _name="vote"
-                  _onChange={is_killed}
-                />
-                <Input radio text="지존마피아" value="vote" _name="vote" />
-                <Input radio text="지존마피아" value="vote" _name="vote" />
-                <Input radio text="지존마피아" value="vote" _name="vote" />
+                {memberId.map((e, i) => {
+                  return (
+                    <Input
+                      key={i}
+                      radio
+                      text={e}
+                      value={e}
+                      _name="vote"
+                      _onChange={is_killed}
+                    />
+                  )
+                })}
               </VoteBox>
               <DotButton
                 white02
                 text="선택 완료"
                 _onClick={() => {
-                  active(e, playerJob, is_night)
+                  active(clickedId, playerJob, is_night)
+                }}
+              />
+              <DotButton
+                black02
+                text="취소"
+                _onClick={() => {
+                  onClose()
                 }}
               />
             </Container>

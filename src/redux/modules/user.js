@@ -184,7 +184,7 @@ const naverLogin = (token) => {
     await axios({
       headers: {
         'Content-Type': 'application/json',
-        Authorization: { token },
+        Authorization: token,
       },
       method: 'get',
       url: `${BASE_URL}/naverLogin`,

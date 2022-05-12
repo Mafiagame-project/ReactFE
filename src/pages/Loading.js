@@ -50,14 +50,16 @@ function Loading() {
     })
 
     socket.on('isNight', (value) => {
-      let time
-      if (value == true) {
-        time = '밤'
-        dispatch(gameActions.dayAndNight(time))
-      } else {
-        time = '낮'
-        dispatch(gameActions.dayAndNight(time))
-      }
+      console.log(value)
+      dispatch(gameActions.dayAndNight(value))
+      // let time
+      // if (value == true) {
+      //   time = '밤'
+      //   dispatch(gameActions.dayAndNight(time))
+      // } else {
+      //   time = '낮'
+      //   dispatch(gameActions.dayAndNight(time))
+      // }
     })
 
     socket.on('dayVoteResult', (value) => {

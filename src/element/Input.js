@@ -177,12 +177,18 @@ opacity: 0;
 
 const RadioInput = styled.input`
   display: none;
+  :checked ~ span {
+    color: red;
+  }
   :checked ~ .sheep {
     transform: rotate(90deg);
   }
 `
 const DayRadioInput = styled.input`
   display: none;
+  :checked ~ span {
+    color: red;
+  }
   :checked ~ .cage {
     top: -7px;
     opacity: 1;

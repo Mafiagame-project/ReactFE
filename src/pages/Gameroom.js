@@ -9,6 +9,10 @@ import ChatBox from '../component/ChatBox'
 import VideoContainer from '../component/VideoContainer'
 import Noti from '../component/modal/NotiModal'
 import JobModal from '../component/modal/JobModal'
+import ModalPortal from '../component/modal/ModalPortal'
+import VoteModal from '../component/modal/VoteModal'
+import ExitModal from '../component/modal/ExitModal'
+import exit from '../assets/icons/black/돌아가기.png'
 
 function GameRoom(props) {
   const dispatch = useDispatch()
@@ -22,7 +26,8 @@ function GameRoom(props) {
   const roomInfo = useSelector((state) => state.room.current)
   const startCard = useSelector((state) => state.game.card)
   const currentId = localStorage.getItem('userId')
-
+  const [voteOpen, setVoteOpen] = useState(false)
+  const [exitOpen, setExitOpen] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [getNotice, setNotice] = useState(false)
   const [getReady, setReady] = useState(false)
@@ -105,6 +110,11 @@ function GameRoom(props) {
     <>
       <Header />
       <Container>
+        <ModalPortal>
+          {exitOpen && (
+            <ExitModal socket={socket} onClose={() => setExitOpen(false)} />
+          )}
+        </ModalPortal>
         <Grid is_flex>
           {isOpen == true ? (
             <Modalblack>
@@ -117,8 +127,9 @@ function GameRoom(props) {
             </Modalblack>
           ) : null}
           <LeftBox>
+            <img src={exit} onClick={() => setExitOpen(true)} />
             <Grid margin="17% 0 0 0" isFlex_center height="30%">
-              <VideoContainer />
+              {/* <VideoContainer /> */}
             </Grid>
             <Grid height="30%" />
             <Grid height="10vh">
@@ -161,7 +172,7 @@ function GameRoom(props) {
                       white02
                       text="투표하기"
                       _onClick={() => {
-                        exitRoom()
+                        setVoteOpen(true)
                       }}
                     />
                   </Grid>
@@ -181,10 +192,21 @@ function GameRoom(props) {
             >
               방 나가기
             </Button>
+            <Button
+              bg="black"
+              smallBtn
+              _onClick={() => {
+                setVoteOpen(true)
+              }}
+            >
+              투표하기
+            </Button>
           </RightBox>
         </Grid>
-        <Button></Button>
       </Container>
+      <ModalPortal>
+        {voteOpen && <VoteModal onClose={() => setVoteOpen(false)} />}
+      </ModalPortal>
     </>
   )
 }
