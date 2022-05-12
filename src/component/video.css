@@ -1,0 +1,11 @@
+.video_grid {
+    width: 200px;
+    height: 100px;
+}
+
+.video_box {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}

@@ -14,7 +14,7 @@ const Rooms = (props) => {
   const currentId = localStorage.getItem('userId')
 
   console.log(RoomList)
-
+  console.log('twice')
   const entrance = (roomInfo) => {
     let roomId = roomInfo.roomId
     // 방에 입장시 생기는 이벤트
@@ -46,17 +46,14 @@ const Rooms = (props) => {
       }
     }
   }
-
+  
   React.useEffect(() => {
-    socket.on('roomList', (rooms) => {
-      dispatch(roomActions.sendRoomList(rooms))
-    })
+    
     return () => {
       socket.off('roomList')
     }
   }, [socket])
   React.useEffect(() => {
-    socket.emit('roomList')
     socket.emit('main', currentId)
   }, [socket])
 

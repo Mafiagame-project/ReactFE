@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Grid, Button, DotButton, Text } from '../element/index'
+import { Grid, Button, DotButton } from '../element/index'
 import { useEffect, useState } from 'react'
 import { actionCreators as gameActions } from '../redux/modules/game'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,7 +12,7 @@ import JobModal from '../component/modal/JobModal'
 import ModalPortal from '../component/modal/ModalPortal'
 import VoteModal from '../component/modal/VoteModal'
 import ExitModal from '../component/modal/ExitModal'
-import exit from '../assets/icons/black/exit_game.png'
+import exit from '../assets/icons/black/돌아가기.png'
 
 function GameRoom(props) {
   const dispatch = useDispatch()
@@ -127,17 +127,7 @@ function GameRoom(props) {
             </Modalblack>
           ) : null}
           <LeftBox>
-            <Grid start margin="0 0 0 20px">
-              <img
-                src={exit}
-                onClick={() => setExitOpen(true)}
-                style={{ width: '40px' }}
-              />
-              <Text margin="0" size="12px">
-                게임 종료
-              </Text>
-            </Grid>
-
+            <img src={exit} onClick={() => setExitOpen(true)} />
             <Grid margin="17% 0 0 0" isFlex_center height="30%">
               {/* <VideoContainer /> */}
             </Grid>
