@@ -7,7 +7,6 @@ const VideoContainer = () => {
 
   const videoGrid = React.useRef()
   const myVideo = document.createElement('video')
-  // const socket = io.connect('https://sparta-dongsun.shop')
   myVideo.muted = true
   const peers = {}
   //테스트
