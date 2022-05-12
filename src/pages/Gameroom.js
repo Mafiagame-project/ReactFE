@@ -1,15 +1,12 @@
 import styled from 'styled-components'
-import { Grid, Button, DotButton, Text } from '../element/index'
+import { Grid, Button, DotButton } from '../element/index'
 import { useEffect, useState } from 'react'
 import { actionCreators as gameActions } from '../redux/modules/game'
-import { actionCreators as roomActions } from '../redux/modules/room'
 import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../redux/configureStore'
-import { useParams } from 'react-router-dom'
 import Header from '../component/Header'
 import ChatBox from '../component/ChatBox'
 import VideoContainer from '../component/VideoContainer'
-import Peer from 'peerjs'
 import Noti from '../component/modal/NotiModal'
 import JobModal from '../component/modal/JobModal'
 
@@ -81,6 +78,7 @@ function GameRoom(props) {
         dispatch(gameActions.noticeEndGame(null))
       }
     })
+
     if (voteResult?.length > 0) {
       enterNoti()
     }
@@ -96,10 +94,11 @@ function GameRoom(props) {
         }
       }, 3000)
     }
+
     return () => {
       dispatch(gameActions.playerWhoKilled(null))
       unlisten()
-    }
+    } //socket out
   }, [socket, voteResult, startCard, copNoti])
 
   return (
@@ -126,7 +125,7 @@ function GameRoom(props) {
               <Grid isFlex_center>
                 {getStart == false ? (
                   <Grid isFlex_center>
-                    {roomInfo?.userId == currentId || host == currentId ? (
+                    {roomInfo?.userId === currentId || host === currentId ? (
                       <DotButton
                         black02
                         text="시작하기"
@@ -198,11 +197,9 @@ const LeftBox = styled.div`
   transition-property: background;
   transition-timing-function: ease;
 `
-
 const RightBox = styled.div`
   margin: 40px;
 `
-
 const Modalblack = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;

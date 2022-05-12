@@ -25,10 +25,12 @@ Grid.defaultProps = {
   border: false,
   is_flex: false,
   flex_column: false,
+  flexColumn: false,
   isFlex_start: false,
   isFlex_center: false,
   isFlex_end: false,
   _cursor: false,
+  br: '',
 }
 
 const GridBox = styled.div`
@@ -38,6 +40,7 @@ const GridBox = styled.div`
   box-sizing: border-box;
   ${(props) =>
     props.border ? `border: 2px solid black; border-radius: 10px;` : ''}
+    ${(props) => (props.br ? `border-radius: ${props.br}` : '')}
   ${(props) => (props.padding ? `padding: ${props.padding};` : '')}
     ${(props) => (props.margin ? `margin: ${props.margin};` : '')}
     ${(props) => (props.bg ? `background-color: ${props.bg};` : '')}
@@ -54,6 +57,10 @@ const GridBox = styled.div`
      props.flex_column
        ? `display: flex; flex-direction: column; justify-content: center; align-items: center;`
        : null};
+       ${(props) =>
+         props.flexColumn
+           ? `display: flex; flex-direction: column; justify-content: space-between; align-items: center;`
+           : null};
     ${(props) =>
       props.isFlex_start
         ? `display: flex; align-items: center; justify-content: start;`

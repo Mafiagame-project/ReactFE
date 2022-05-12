@@ -4,8 +4,8 @@ import { Grid, Text, Image, Input, DotButton } from '../../element/index'
 import { actionCreators as userActions } from '../../redux/modules/user'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import kakao from '../../assets/icons/kakao_login.png'
-import blackBtn from '../../assets/button/black/04.png'
+import NaverLogin from '../../shared/NaverLogin'
+import kakao from '../../assets/icons/social/kakao.png'
 
 function Login() {
   const dispatch = useDispatch()
@@ -27,18 +27,6 @@ function Login() {
     }
     dispatch(userActions.loginDB(logins))
   }
-
-  //네이버 로그인
-  // const naverLogin = () => {
-  //   const login = new window.naver.LoginWithNaverId({
-  //       clientId: wf2T_gOSUmm9zZD52uHu,
-  //       callbackUrl,
-  //       isPopup: true,
-  //       loginButton: { color: "grren", type: 1, hegiht: 25},
-  //       callbackHandle: true,
-  //   });
-  //   login.init();
-  //  }
 
   //  React.useEffect(() => {
   //      naverLogin();
@@ -105,11 +93,9 @@ function Login() {
           <Text size="20px">sns 로그인</Text>
           <Grid isFlex_center>
             <a href={KAKAO_AUTH_URL}>
-              <Image size="80" margin="5px" />
+              <Image size="80" margin="5px" src={kakao} />
             </a>
-            <a href={KAKAO_AUTH_URL}>
-              <Image size="80" margin="5px" />
-            </a>
+            <NaverLogin />
           </Grid>
         </Grid>
       </Container>

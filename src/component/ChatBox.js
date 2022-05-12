@@ -10,7 +10,7 @@ const ChatBox = ({ socket }) => {
   const chatRef = React.useRef(null)
   const [getWrite, setWrite] = React.useState([])
   const currentId = localStorage.getItem('userId')
-  const currentTime = useSelector(state => state.game.night)
+  const currentTime = useSelector((state) => state.game.night)
 
   const send = () => {
     // 채팅을 보낼 때 호출되는 함수
@@ -38,8 +38,15 @@ const ChatBox = ({ socket }) => {
           bg="#F6F6F6"
           height="500px"
         >
-          {getWrite.map((e) => {
-            return <Chatdiv currentId={currentId} e={e} getWrite={getWrite} />
+          {getWrite.map((e, i) => {
+            return (
+              <Chatdiv
+                key={i}
+                currentId={currentId}
+                e={e}
+                getWrite={getWrite}
+              />
+            )
           })}
           <div ref={chatRef} />
         </Grid>

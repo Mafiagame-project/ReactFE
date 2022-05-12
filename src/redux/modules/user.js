@@ -4,7 +4,7 @@ import { produce } from 'immer'
 
 //Axios
 import axios from 'axios'
-import { WindowOutlined } from '@mui/icons-material'
+import { Api } from '../../shared/api'
 
 const BASE_URL = 'https://sparta-dongsun.shop'
 
@@ -177,6 +177,23 @@ const changePwDB = (dic) => {
   }
 }
 
+//naver Login
+const naverLogin = (token) => {
+  console.log(token)
+  return async function (dispatch, getState, { history }) {
+    await axios({
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: { token },
+      },
+      method: 'get',
+      url: `${BASE_URL}/naverLogin`,
+    }).then((res) => {
+      console.log(res)
+    })
+  }
+}
+
 //kakao login
 const kakaoLogin = (code) => {
   return async function (dispatch, getState, { history }) {
@@ -296,6 +313,7 @@ export default handleActions(
 
 const actionCreators = {
   kakaoLogin,
+  naverLogin,
   loginDB,
   signupDB,
   isLoginDB,
