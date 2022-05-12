@@ -60,7 +60,7 @@ const VoteModal = ({ onClose }) => {
     <>
       <ModalPortal>
         <Background>
-          {!is_night ? (
+          {is_night ? (
             <Container onClick={(e) => e.stopPropagation()}>
               <Text size="40px" color="#fff">
                 낮이 되었습니다.

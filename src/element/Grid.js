@@ -20,6 +20,7 @@ Grid.defaultProps = {
   margin: false,
   bg: false,
   center: false,
+  start: false,
   _onClick: () => {},
   flex: '',
   border: false,
@@ -49,6 +50,7 @@ const GridBox = styled.div`
         ? `display: flex; align-items: center; justify-content: space-between;`
         : ''}
     ${(props) => (props.center ? `text-align: center` : '')}
+    ${(props) => (props.start ? `text-align: start` : '')}
     ${(props) =>
       props.flex
         ? `position: relative; display: flex; justify-content: center; flex-direction: column;`

@@ -20,9 +20,13 @@ const ExitModal = ({ onClose, socket }) => {
           }}
         >
           <Content onClick={(e) => e.stopPropagation()}>
-            <Text> 정말 나가시겠어요?? </Text>
-            <DotButton black01 text="나가기" _onClick={() => exitRoom()} />
-            <DotButton white01 text="아니용" _onClick={() => onClose()} />
+            <Grid padding="30px" height="100%" flex_column>
+              <Text> 정말 나가시겠어요?? </Text>
+              <Grid marign="40px 0 0">
+                <DotButton black01 text="나가기" _onClick={() => exitRoom()} />
+                <DotButton white01 text="아니용" _onClick={() => onClose()} />
+              </Grid>
+            </Grid>
           </Content>
         </Background>
       </ModalPortal>
@@ -44,6 +48,7 @@ const Background = styled.div`
 
 const Content = styled.div`
   position: fixed;
+  text-align: center;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -55,6 +60,7 @@ const Content = styled.div`
   width: 100%;
   background-color: #eee;
   position: relative;
+  border-radius: 10px;
 `
 
 export default ExitModal
