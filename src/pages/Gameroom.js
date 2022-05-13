@@ -25,7 +25,6 @@ function GameRoom(props) {
   const memberSocket = useSelector((state) => state.member.socketId)
   const voteResult = useSelector((state) => state.game.resultNoti)
   const currentReady = useSelector((state) => state.room.ready)
-  const copNoti = useSelector((state) => state.game.copNoti)
   const host = useSelector((state) => state.room.host)
   const currentTime = useSelector((state) => state.game.night)
   const roomInfo = useSelector((state) => state.room.current)
@@ -50,6 +49,22 @@ function GameRoom(props) {
         position: toast.POSITION.TOP_CENTER,
         className: 'toast-startPeople',
         autoClose: 2000,
+      })
+    }
+  }
+
+  const dayOrNight = (time) => {
+    if (time == true) {
+      toast.error('밤이 되었습니다', {
+        position: toast.POSITION.TOP_LEFT,
+        className: 'toast-time',
+        autoClose: 3000,
+      })
+    } else if (time == false) {
+      toast.success('낮이 되었습니다', {
+        position: toast.POSITION.TOP_LEFT,
+        className: 'toast-time',
+        autoClose: 3000,
       })
     }
   }
@@ -81,7 +96,7 @@ function GameRoom(props) {
     setNotice(true)
     setTimeout(() => {
       setNotice(false)
-    }, 16000)
+    }, 6000)
   }
 
   useEffect(() => {
@@ -98,6 +113,10 @@ function GameRoom(props) {
 
     return () => {
       dispatch(gameActions.playerWhoKilled(null))
+      dispatch(gameActions.playerJob(null))
+      dispatch(gameActions.copSelected(null))
+      dispatch(gameActions.noticeRep(null))
+      // dispatch(gameActions.roomReady(null))
       unlisten()
     }
   }, [socket])
@@ -107,6 +126,14 @@ function GameRoom(props) {
       enterNoti()
     }
   }, [voteResult])
+
+  useEffect(() => {
+    if (currentTime === false) {
+      dayOrNight(false)
+    } else if (currentTime === true) {
+      dayOrNight(true)
+    }
+  }, [currentTime])
 
   useEffect(() => {
     if (startCard) {
@@ -129,7 +156,13 @@ function GameRoom(props) {
         <Grid flexColumn height="70vh">
           <Grid start>
             <Grid>
-              <img src={exit} onClick={() => setExitOpen(true)} />
+              <img
+                src={exit}
+                onClick={() => {
+                  exitRoom()
+                  setExitOpen(true)
+                }}
+              />
               <Text size="12px">방 나가기</Text>
             </Grid>
             <VideoContainer socket={socket} />

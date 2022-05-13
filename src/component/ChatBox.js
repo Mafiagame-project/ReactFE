@@ -18,6 +18,12 @@ const ChatBox = ({ socket }) => {
     chatting.current.value = ''
   }
 
+  const onKeyPress = (e) => {
+    if (e.key == 'Enter') {
+      send()
+    }
+  }
+
   React.useEffect(() => {
     socket.on('msg', (data) => {
       // 서버에서 오는 메세지 데이터를 받음
@@ -41,7 +47,11 @@ const ChatBox = ({ socket }) => {
           })}
           <div ref={chatRef} />
           <TextContainer>
-            <ChatInput ref={chatting} placeholder="채팅 내용을 입력해주세요." />
+            <ChatInput
+              ref={chatting}
+              onKeyPress={onKeyPress}
+              placeholder="채팅 내용을 입력해주세요."
+            />
             <Button
               chatBtn
               _onClick={() => {

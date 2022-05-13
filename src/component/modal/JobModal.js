@@ -12,6 +12,7 @@ const JobModal = () => {
   const player = useSelector(state => state.game.jobNoti)
   const [getJob, setJob] = useState();
   const [getDesc, setDesc] = useState();
+  const [getImg, setImg] = useState();
   const [getTest, setTest] = useState(false)
 
   useEffect(()=>{
@@ -20,19 +21,19 @@ const JobModal = () => {
         if(player == element.name ){
           setJob(element.title)
           setDesc(element.explain)
+          setImg(element.img)
         } 
       })
       setTimeout(()=>{
-        // dispatch(gameActions.startCard(null))
+        dispatch(gameActions.startCard(null))
         setTest(!getTest)
-      },16000)
+      },4000)
     }
     
   },[getTest])
 
   return (
     <>
-    <button onClick={()=>{setTest(!getTest)}}></button>
       {
         getTest == true
           ? <Modalblack>
@@ -45,11 +46,11 @@ const JobModal = () => {
               </div>
               <Grid height='15%'/>
               <Grid height='40%'>
-                <img style={{width:'150px', height:'150px'}} src={양}/>
+                <img style={{width:'150px', height:'150px'}} src={getImg}/>
               </Grid>
               <Grid isFlex_center height='15%'>
                 <Grid width='200px' height='50px' bg='black'>
-                  <Text size='30px' color='white' margin='8px 0 15px 0'>시민</Text>
+                  <Text size='30px' color='white' margin='8px 0 15px 0'>{getJob}</Text>
                 </Grid>
               </Grid>
             </Noti>

@@ -11,7 +11,6 @@ import Gameroom from '../pages/Gameroom'
 import KakaoLogin from './KakaoLogin'
 import NaverLogin from './NaverLogin'
 import Loading from '../pages/Loading'
-import Functions from './functions'
 import Introduce from '../pages/Introduce'
 import EditUser from '../pages/auth/EditUser'
 import { useDispatch } from 'react-redux'
@@ -31,7 +30,6 @@ function App() {
         <Route exact path="/gameroom/:roomId" component={Gameroom} />
         <Route exact path="/main" component={KakaoLogin} />
         <Route exact path="/naverLogin/main" component={NaverLogin} />
-        <Route exact path="/functions" component={Functions} />
         <Route exact path="/introduce" component={Introduce} />
         <Route exact path="/edituser" component={EditUser} />
       </ConnectedRouter>

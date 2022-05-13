@@ -13,8 +13,6 @@ const Rooms = (props) => {
   const socket = useSelector((state) => state.game.socket)
   const currentId = localStorage.getItem('userId')
 
-  console.log(RoomList)
-  console.log('twice')
   const entrance = (roomInfo) => {
     let roomId = roomInfo.roomId
     // 방에 입장시 생기는 이벤트
