@@ -2,7 +2,7 @@ name: mafiyang
 on: 
   push: 
     branches: 
-      - zzinao
+      [zzinao]
 jobs:
   deploy:
     runs-on: ubuntu-latest
