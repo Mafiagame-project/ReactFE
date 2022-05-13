@@ -5,7 +5,6 @@ import 늑대 from '../../assets/image/character/늑대_.png'
 import 피해자 from '../../assets/image/character/양_시민.png'
 import 신문 from '../../assets/image/noti/기사_하단이미지.png'
 import 모자이크 from '../../assets/image/noti/양_피그마판형.png'
-import { Rectangle } from "@mui/icons-material"
 
 function NotiModal() {
     const voteResult = useSelector((state) => state.game.resultNoti)

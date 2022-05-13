@@ -11,7 +11,6 @@ const FriendlistModal = ({ onClose }) => {
   const [openBtn, setOpenBtn] = React.useState(false)
   const userId = localStorage.getItem('userId')
   const friendList = useSelector((state) => state?.user?.friendList)
-  console.log(friendList)
 
   React.useEffect(() => {
     dispatch(userActions.getFriendDB())

@@ -43,36 +43,30 @@ function Loading() {
     })
 
     socket.on('getJob', (player, playerJob) => {
-      console.log(player, playerJob)
       dispatch(gameActions.noticeJob(playerJob))
       dispatch(gameActions.playerJob({ player, playerJob }))
       dispatch(gameActions.startCard(true))
     })
 
     socket.on('isNight', (value) => {
-      console.log(value)
       dispatch(gameActions.dayAndNight(value))
       
     })
 
     socket.on('dayVoteResult', (value) => {
-      console.log(value)
       dispatch(gameActions.playerWhoKilled(value.diedPeopleArr)) // 죽은 전체명단
       dispatch(gameActions.noticeResult(value.id)) // 방금 죽은사람
     })
 
     socket.on('ready', (value) => {
-      console.log(value)
       dispatch(gameActions.readyCheck(value)) // 게임시작 누르고 오는거라 필요없는듯?
     })
 
     socket.on('readyPeople', (currentReady) => {
-      console.log(currentReady)
       dispatch(roomActions.roomReady(currentReady)) // 레디한사람 전체 배열
     })
 
     socket.on('nightVoteResult', (value) => {
-      console.log(value)
       dispatch(gameActions.playerWhoKilled(value.diedPeopleArr))
       dispatch(gameActions.noticeResult(value.died[0]))
       dispatch(gameActions.playerWhoSurvived(value.saved[0]))
@@ -80,13 +74,11 @@ function Loading() {
 
     socket.on('endGame', (data) => {
       // 게임이 끝났을 때 노티
-      console.log(data)
       dispatch(gameActions.noticeEndGame(data?.msg))
     })
 
     socket.on('police', (selected) => {
       // 경찰이 밤에 선택했을때 전달받는 소켓
-      console.log(selected)
       dispatch(gameActions.copSelected(selected))
       dispatch(gameActions.noticeCop(true))
     })
@@ -94,7 +86,6 @@ function Loading() {
     socket.on('reporter', (data) => {
       //데이터가 Json 타입임 1번 기자가 고른사람의 직업, 2번 기자가 고른사람의 아이디 3번 기자가 고른사람이 누굴 찍었는지
       // 3번은 회의 후 지양할 것, 정체만 알면 될것같은데 누굴 찍었는지는 좀...
-      console.log(data) // clickerJob, clickerId
       dispatch(gameActions.noticeRep(data))
     })
   }

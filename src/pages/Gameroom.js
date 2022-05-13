@@ -25,12 +25,10 @@ function GameRoom(props) {
   const memberSocket = useSelector((state) => state.member.socketId)
   const voteResult = useSelector((state) => state.game.resultNoti)
   const currentReady = useSelector((state) => state.room.ready)
-  const copNoti = useSelector((state) => state.game.copNoti)
   const host = useSelector((state) => state.room.host)
   const currentTime = useSelector((state) => state.game.night)
   const roomInfo = useSelector((state) => state.room.current)
   const startCard = useSelector((state) => state.game.card)
-  const playerJob = useSelector(state => state.game.jobNoti)
   const currentId = localStorage.getItem('userId')
   const [voteOpen, setVoteOpen] = useState(false)
   const [exitOpen, setExitOpen] = useState(false)
@@ -199,15 +197,7 @@ function GameRoom(props) {
                 }
               </>
               :
-              <>
-                <DotButton
-                  white02
-                  text="투표하기"
-                  _onClick={() => {
-                    exitRoom()
-                  }}
-                />
-              </>
+              null
           }
         </Grid>
       </Grid>
