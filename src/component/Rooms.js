@@ -44,6 +44,11 @@ const Rooms = (props) => {
       }
     }
   }
+  React.useEffect(() => {
+    socket.on('roomList', (rooms) => {
+      dispatch(roomActions.sendRoomList(rooms))
+    })
+  }, [socket])
 
   React.useEffect(() => {
     return () => {

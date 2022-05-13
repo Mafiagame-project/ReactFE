@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux'
 import { history } from '../redux/configureStore'
 import { actionCreators as userActions } from '../redux/modules/user'
 import FriendsListModal from './modal/FriendsListModal'
-import ModalPortal from './modal/ModalPortal'
 import friendIcon from '../assets/icons/white/친구(백).png'
 import soundIcon from '../assets/icons/white/소리(백).png'
 import LogoutIcon from '../assets/icons/white/로그아웃(백).png'
@@ -76,11 +75,10 @@ function Header(props) {
         </Rightside>
       </Container>
       {/* 친구 목록 모달 부분입니다 */}
-      <ModalPortal>
-        {isOpen && (
-          <FriendsListModal onClose={() => setIsOpen(false)}></FriendsListModal>
-        )}
-      </ModalPortal>
+
+      {isOpen && (
+        <FriendsListModal onClose={() => setIsOpen(false)}></FriendsListModal>
+      )}
     </>
   )
 }

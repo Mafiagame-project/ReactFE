@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { Grid, Text, Button, DotButton } from '../element/index'
 import { useEffect, useState } from 'react'
 import { actionCreators as gameActions } from '../redux/modules/game'
+import { actionCreators as roomActions } from '../redux/modules/room'
 import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../redux/configureStore'
 import Header from '../component/Header'
@@ -14,7 +15,6 @@ import ReadyBtn from '../component/ReadyBtn'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import '../component/video.css'
-import ModalPortal from '../component/modal/ModalPortal'
 import VoteModal from '../component/modal/VoteModal'
 import ExitModal from '../component/modal/ExitModal'
 import exit from '../assets/icons/black/exit_game.png'
@@ -79,6 +79,7 @@ function GameRoom(props) {
     dispatch(gameActions.noticeEndGame(null))
     dispatch(gameActions.readyCheck(null))
     dispatch(gameActions.noticeJob(null))
+    dispatch(roomActions.changeHost(null))
   }
   const startGame = () => {
     if (memberSocket.length < 4) {
@@ -118,6 +119,7 @@ function GameRoom(props) {
       dispatch(gameActions.noticeRep(null))
       // dispatch(gameActions.roomReady(null))
       unlisten()
+      dispatch(roomActions.changeHost(null))
     }
   }, [socket])
 
@@ -149,7 +151,6 @@ function GameRoom(props) {
     <>
       <Header />
       <JobModal />
-      <button onClick={enterNoti}></button>
       {getNotice == true ? <Noti></Noti> : null}
 
       <Grid is_flex width="90%" margin="0 auto">
@@ -159,7 +160,6 @@ function GameRoom(props) {
               <img
                 src={exit}
                 onClick={() => {
-                  exitRoom()
                   setExitOpen(true)
                 }}
               />
@@ -170,7 +170,7 @@ function GameRoom(props) {
           <Grid isFlex_center>
             {getStart == false ? (
               <>
-                {roomInfo?.userId == currentId || host == currentId ? (
+                {roomInfo?.userId == currentId ? (
                   <DotButton
                     black02
                     text="시작하기"
@@ -182,17 +182,14 @@ function GameRoom(props) {
                   <ReadyBtn />
                 )}
               </>
-            ) : (
-              <>
-                <DotButton
-                  white02
-                  text="투표하기"
-                  _onClick={() => {
-                    exitRoom()
-                  }}
-                />
-              </>
-            )}
+            ) : null}
+            <DotButton
+              white02
+              text="투표하기"
+              _onClick={() => {
+                setVoteOpen(true)
+              }}
+            />
           </Grid>
         </Grid>
 
@@ -202,15 +199,10 @@ function GameRoom(props) {
           <ToastContainer />
         </Grid>
       </Grid>
-
-      <ModalPortal>
-        {voteOpen && <VoteModal onClose={() => setVoteOpen(false)} />}
-      </ModalPortal>
-      <ModalPortal>
-        {exitOpen && (
-          <ExitModal socket={socket} onClose={() => setExitOpen(false)} />
-        )}
-      </ModalPortal>
+      {voteOpen && <VoteModal onClose={() => setVoteOpen(false)} />}
+      {exitOpen && (
+        <ExitModal socket={socket} onClose={() => setExitOpen(false)} />
+      )}
     </>
   )
 }

@@ -39,7 +39,7 @@ function Introduce() {
                     </Grid>
                   </Grid>
                 </Card>
-                <Grid>{e.explain}</Grid>
+                {/* <Grid>{e.explain}</Grid> */}
               </>
             )
           })}
