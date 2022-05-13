@@ -2,7 +2,7 @@ name: mafiyang
 on: 
   push: 
     branches: 
-      - zzinao
+      - main
 jobs:
   deploy:
     runs-on: macos-10.15
