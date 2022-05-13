@@ -11,6 +11,9 @@ body * {
   font-family: 'neodgm';
 }
 
+body {
+}
+
 @media only screen and (max-width: 635px) {
   .headerText {
     display: none;

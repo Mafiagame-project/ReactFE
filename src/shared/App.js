@@ -15,6 +15,8 @@ import Functions from './functions'
 import Introduce from '../pages/Introduce'
 import EditUser from '../pages/auth/EditUser'
 import { useDispatch } from 'react-redux'
+import styled, { createGlobalStyle } from 'styled-components'
+import pattern from '../assets/image/pattern/03_opacity.png'
 
 function App() {
   const dispatch = useDispatch()
@@ -33,8 +35,17 @@ function App() {
         <Route exact path="/introduce" component={Introduce} />
         <Route exact path="/edituser" component={EditUser} />
       </ConnectedRouter>
+      <GlobalStyle />
     </>
   )
 }
+
+const GlobalStyle = createGlobalStyle`
+body {
+
+  background-image: url(${pattern});
+  
+}
+`
 
 export default App

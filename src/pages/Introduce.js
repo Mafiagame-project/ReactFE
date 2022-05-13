@@ -20,23 +20,27 @@ function Introduce() {
         <CardBox>
           {data.map((e, i) => {
             return (
-              <Card key={i}>
-                <Grid center height="10%">
-                  <Text color="white">MAFIYANG</Text>
-                </Grid>
-                <Grid
-                  padding="20px 60px 20px 60px"
-                  center
-                  bg="white"
-                  height="100%"
-                  _onlick={toggleBtn}
-                >
-                  <Img src={e.img} />
-                  <Grid bg="#000">
-                    <Text color="#fff">{e.title}</Text>
+              <>
+                <Card key={i}>
+                  <Grid center height="10%">
+                    <Text color="white">MAFIYANG</Text>
                   </Grid>
-                </Grid>
-              </Card>
+                  <Grid
+                    flexColumn
+                    padding="20px 60px 20px 60px"
+                    center
+                    bg="white"
+                    height="100%"
+                    _onlick={toggleBtn}
+                  >
+                    <Img src={e.img} />
+                    <Grid bg="#000">
+                      <Text color="#fff">{e.title}</Text>
+                    </Grid>
+                  </Grid>
+                </Card>
+                <Grid>{e.explain}</Grid>
+              </>
             )
           })}
         </CardBox>
@@ -47,7 +51,7 @@ function Introduce() {
 }
 
 const Img = styled.img`
-  width: 100px;
+  width: 150px;
 `
 const CardBox = styled.div`
   width: 95%;

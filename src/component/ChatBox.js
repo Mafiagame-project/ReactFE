@@ -1,6 +1,5 @@
 import React from 'react'
 import Chatdiv from './Chatdiv'
-import Timer from '../component/Timer'
 import { Grid, Text, Button } from '../element/index'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
@@ -28,16 +27,8 @@ const ChatBox = ({ socket }) => {
 
   return (
     <>
-      <Grid center width="400px">
-        <Grid width="100%" height="5%">
-          <Timer />
-        </Grid>
-        <Grid
-          overflow="scroll"
-          padding="10px 0 0 10px"
-          bg="#F6F6F6"
-          height="600px"
-        >
+      <ChatContainer>
+        <Chatbox>
           {getWrite.map((e, i) => {
             return (
               <Chatdiv
@@ -49,35 +40,52 @@ const ChatBox = ({ socket }) => {
             )
           })}
           <div ref={chatRef} />
-        </Grid>
-        <Grid isFlex_center padding="10px 0 0 0" height="15%">
-          <ChatInput ref={chatting} placeholder="채팅 내용을 입력해주세요." />
-          <Button
-            chatBtn
-            _onClick={() => {
-              send()
-            }}
-          >
-            보내기
-          </Button>
-        </Grid>
-      </Grid>
+          <TextContainer>
+            <ChatInput ref={chatting} placeholder="채팅 내용을 입력해주세요." />
+            <Button
+              chatBtn
+              _onClick={() => {
+                send()
+              }}
+            >
+              보내기
+            </Button>
+          </TextContainer>
+        </Chatbox>
+      </ChatContainer>
     </>
   )
 }
 
-// const Chatbox = styled.div`
-//   width: 100%;
-//   height: 70vh;
-//   border-radius: 5%;
-// `
+const ChatContainer = styled.div`
+  position: relative;
+  height: 75vh;
+  margin: 0 1.17vw;
+  min-width: 400px;
+  box-shadow: 0px 4px 35px 4px rgba(162, 162, 162, 0.25);
+  border-radius: 16px;
+  box-sizing: border-box;
+  background-color: #f6f6f6;
+`
+
+const Chatbox = styled.div`
+  padding: 18px;
+  height: calc(100% - 150px);
+  overflow: scroll;
+`
+
+const TextContainer = styled.div`
+  position: absolute;
+  bottom: 20px;
+  width: 92%;
+  left: 50%;
+  transform: translateX(-50%);
+`
 
 const ChatInput = styled.input`
-  margin: 0 10px 0 0;
   padding: 20px;
   border: none;
   width: 70%;
-  background: #f6f6f6;
   &:focus {
     outline: none;
   }

@@ -88,7 +88,7 @@ const ElButton = styled.button`
 
   ${(props) =>
     props.chatBtn
-      ? `background-color:#000; color: #fff; font-size: 20px; width: 127px; height: 60px; border-radius:5px; `
+      ? `background-color:#000; color: #fff; font-size: 20px; width: 72px; height: 51px; border-radius:5px; `
       : ''}
       ${(props) =>
         props.smallBtn

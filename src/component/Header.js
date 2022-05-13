@@ -90,7 +90,7 @@ const Container = styled.div`
   justify-content: space-between;
   background-color: #000;
   padding: 0 8vw;
-  height: 10vh;
+  height: 9vh;
 
   @media ${({ theme }) => theme.device.mobile} {
     padding: 0 3vw;
@@ -101,6 +101,7 @@ const Container = styled.div`
   }
   @media @media ${({ theme }) => theme.device.pc} { {
     padding: 0 6vw;
+    height: 9vh;
   }
 `
 

@@ -1,23 +1,23 @@
 import styled from 'styled-components'
-import { Grid, Button, DotButton } from '../element/index'
+import { Grid, Text, Button, DotButton } from '../element/index'
 import { useEffect, useState } from 'react'
 import { actionCreators as gameActions } from '../redux/modules/game'
 import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../redux/configureStore'
 import Header from '../component/Header'
+import Timer from '../component/Timer'
 import ChatBox from '../component/ChatBox'
 import VideoContainer from '../component/VideoContainer'
 import Noti from '../component/modal/NotiModal'
 import JobModal from '../component/modal/JobModal'
-import ReadyBtn from '../component/ReadyBtn';
-import outBtn from '../assets/icons/black/로그아웃.png'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import ReadyBtn from '../component/ReadyBtn'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import '../component/video.css'
 import ModalPortal from '../component/modal/ModalPortal'
 import VoteModal from '../component/modal/VoteModal'
 import ExitModal from '../component/modal/ExitModal'
-import exit from '../assets/icons/black/돌아가기.png'
+import exit from '../assets/icons/black/exit_game.png'
 
 function GameRoom(props) {
   const dispatch = useDispatch()
@@ -30,7 +30,7 @@ function GameRoom(props) {
   const currentTime = useSelector((state) => state.game.night)
   const roomInfo = useSelector((state) => state.room.current)
   const startCard = useSelector((state) => state.game.card)
-  const playerJob = useSelector(state => state.game.jobNoti)
+  const playerJob = useSelector((state) => state.game.jobNoti)
   const currentId = localStorage.getItem('userId')
   const [voteOpen, setVoteOpen] = useState(false)
   const [exitOpen, setExitOpen] = useState(false)
@@ -39,17 +39,17 @@ function GameRoom(props) {
   const [getStart, setStart] = useState(false)
 
   const startGameNoti = (count) => {
-    if(count === 1){
+    if (count === 1) {
       toast.info('게임시작을 위해서 최소 4명이상이 필요합니다', {
-        position : toast.POSITION.TOP_CENTER,
-        className : 'toast-startPeople',
-        autoClose : 2000,
+        position: toast.POSITION.TOP_CENTER,
+        className: 'toast-startPeople',
+        autoClose: 2000,
       })
     } else {
       toast.info('아직 준비를 하지 않은 참가자가 있습니다!', {
-        position : toast.POSITION.TOP_CENTER,
-        className : 'toast-startPeople',
-        autoClose : 2000,
+        position: toast.POSITION.TOP_CENTER,
+        className: 'toast-startPeople',
+        autoClose: 2000,
       })
     }
   }
@@ -95,82 +95,61 @@ function GameRoom(props) {
         dispatch(gameActions.noticeEndGame(null))
       }
     })
-    
+
     return () => {
       dispatch(gameActions.playerWhoKilled(null))
       unlisten()
     }
   }, [socket])
 
-  useEffect(()=>{
+  useEffect(() => {
     if (voteResult?.length > 0) {
       enterNoti()
     }
-  },[voteResult])
+  }, [voteResult])
 
-  useEffect(()=>{
-    if(startCard){
+  useEffect(() => {
+    if (startCard) {
       setIsOpen(true)
       setTimeout(() => {
         setIsOpen(false)
         dispatch(gameActions.startCard(null))
-      },3000)
+      }, 3000)
     }
-  },[startCard])
+  }, [startCard])
 
   return (
     <>
       <Header />
-      <Grid height='90vh'>
-      <ModalPortal>
-          {exitOpen && (
-            <ExitModal socket={socket} onClose={() => setExitOpen(false)} />
-          )}
-        </ModalPortal>
-        <Grid is_flex height='90%'>
-        
-            <JobModal />
-            <button onClick={enterNoti}></button>
-          {getNotice == true ? (
-              <Noti></Noti>
-          ) : null}
-          <Grid height='100%'>
-            <Grid margin='30px' height='5%' width='5%' _onClick={() => { exitRoom() }}>
-              <img src={exit} onClick={() => setExitOpen(true)} />
-            </Grid>
+      <JobModal />
+      <button onClick={enterNoti}></button>
+      {getNotice == true ? <Noti></Noti> : null}
+
+      <Grid is_flex width="90%" margin="0 auto">
+        <Grid flexColumn height="70vh">
+          <Grid start>
             <Grid>
-              <Grid margin="17% 0 0 0" isFlex_center height="30%">
-                <VideoContainer socket={socket} />
-              </Grid>
+              <img src={exit} onClick={() => setExitOpen(true)} />
+              <Text size="12px">방 나가기</Text>
             </Grid>
+            <VideoContainer socket={socket} />
           </Grid>
-          <Grid padding='3% 0 0 0' width='25vw' height='100%'>
-            <RightBox>
-              <ChatBox socket={socket} />
-              <ToastContainer/>
-            </RightBox>
-          </Grid>
-        </Grid>
-        <Grid isFlex_center>
-          {
-            getStart == false
-              ?
+          <Grid isFlex_center>
+            {getStart == false ? (
               <>
-                {
-                  roomInfo?.userId == currentId || host == currentId
-                    ?
-                    <DotButton
-                      black02
-                      text="시작하기"
-                      _onClick={() => {
-                        startGame()
-                      }}
-                    />
-                    :
-                    <ReadyBtn />
-                }
+                {roomInfo?.userId == currentId || host == currentId ? (
+                  <DotButton
+                    black02
+                    text="시작하기"
+                    _onClick={() => {
+                      startGame()
+                    }}
+                  />
+                ) : (
+                  <ReadyBtn />
+                )}
               </>
-              :
+            ) : (
               <>
                 <DotButton
                   white02
@@ -180,42 +159,27 @@ function GameRoom(props) {
                   }}
                 />
               </>
-          }
+            )}
+          </Grid>
+        </Grid>
+
+        <Grid center width="40%">
+          <Timer />
+          <ChatBox socket={socket} />
+          <ToastContainer />
         </Grid>
       </Grid>
+
       <ModalPortal>
         {voteOpen && <VoteModal onClose={() => setVoteOpen(false)} />}
+      </ModalPortal>
+      <ModalPortal>
+        {exitOpen && (
+          <ExitModal socket={socket} onClose={() => setExitOpen(false)} />
+        )}
       </ModalPortal>
     </>
   )
 }
 
-const LeftBox = styled.div`
-  text-align: center;
-  margin: 0 auto;
-  width: 100%;
-  height: 90vh;
-  transition-property: background;
-  transition-timing-function: ease;
-`
-const RightBox = styled.div`
-  margin: 40px;
-`
-const Modalblack = styled.div`
-  background-color: rgba(0, 0, 0, 0.5);
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  text-align: center;
-  left: 0;
-  top: 0;
-  z-index: 5;
-`
-const Container = styled.div`
-  width: 100%;
-  height: 80vh;
-`
-const Icons = styled.img`
-  width: 30px;
-`
 export default GameRoom

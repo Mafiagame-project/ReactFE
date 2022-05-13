@@ -8,12 +8,13 @@ import whiteBtn02 from '../assets/button/white/02.png'
 import whiteBtn03 from '../assets/button/white/03.png'
 import whiteBtn04 from '../assets/button/white/04.png'
 import twoBtn from '../assets/button/00.png'
+import signupBtn from '../assets/button/black/signupBtn.png'
 import styled from 'styled-components'
 
 const DotButton = (props) => {
   const {
     text,
-    type,
+    _type,
     _onClick,
     black01,
     black02,
@@ -23,6 +24,7 @@ const DotButton = (props) => {
     white02,
     white03,
     white04,
+    test01,
   } = props
 
   if (black01) {
@@ -30,7 +32,7 @@ const DotButton = (props) => {
       <>
         <ButtonBox onClick={_onClick}>
           <img src={blackBtn01} />
-          <button type={type} style={{ display: 'none ' }} />
+          <button type={_type} style={{ display: 'none ' }} />
           <WhiteText>{text}</WhiteText>
         </ButtonBox>
       </>
@@ -42,7 +44,7 @@ const DotButton = (props) => {
       <>
         <ButtonBox onClick={_onClick}>
           <img src={blackBtn02} />
-          <button type={type} style={{ display: 'none' }} />
+          <button type={_type} style={{ display: 'none' }} />
           <WhiteText>{text}</WhiteText>
         </ButtonBox>
       </>
@@ -53,7 +55,7 @@ const DotButton = (props) => {
       <>
         <ButtonBox onClick={_onClick}>
           <img src={blackBtn03} />
-          <button type={type} style={{ display: 'none' }} />
+          <button type={_type} style={{ display: 'none' }} />
           <WhiteText>{text}</WhiteText>
         </ButtonBox>
       </>
@@ -64,7 +66,7 @@ const DotButton = (props) => {
       <>
         <ButtonBox onClick={_onClick}>
           <img src={blackBtn04} />
-          <button type={type} style={{ display: 'none' }} />
+          <button type={_type} style={{ display: 'none' }} />
           <WhiteText>{text}</WhiteText>
         </ButtonBox>
       </>
@@ -76,7 +78,7 @@ const DotButton = (props) => {
       <>
         <ButtonBox onClick={_onClick}>
           <img src={whiteBtn01} />
-          <button type={type} style={{ display: 'none' }} />
+          <button type={_type} style={{ display: 'none' }} />
           <BlackText>{text}</BlackText>
         </ButtonBox>
       </>
@@ -87,7 +89,7 @@ const DotButton = (props) => {
       <>
         <ButtonBox onClick={_onClick}>
           <img src={whiteBtn02} />
-          <button type={type} style={{ display: 'none' }} />
+          <button type={_type} style={{ display: 'none' }} />
           <BlackText>{text}</BlackText>
         </ButtonBox>
       </>
@@ -98,7 +100,7 @@ const DotButton = (props) => {
       <>
         <ButtonBox onClick={_onClick}>
           <img src={whiteBtn03} />
-          <button type={type} style={{ display: 'none' }} />
+          <button type={_type} style={{ display: 'none' }} />
           <BlackText>{text}</BlackText>
         </ButtonBox>
       </>
@@ -109,9 +111,19 @@ const DotButton = (props) => {
       <>
         <ButtonBox onClick={_onClick}>
           <img src={whiteBtn04} />
-          <button type={type} style={{ display: 'none' }} />
+          <button type={_type} style={{ display: 'none' }} />
           <BlackText>{text}</BlackText>
         </ButtonBox>
+      </>
+    )
+  }
+
+  if (test01) {
+    return (
+      <>
+        <TestButton type={_type}>
+          <img src={signupBtn} />
+        </TestButton>
       </>
     )
   }
@@ -120,8 +132,8 @@ const DotButton = (props) => {
     <>
       <ButtonBox onClick={_onClick}>
         <img src={twoBtn} />
-        <button type={type} style={{ display: 'none' }} />
-        <BlackText>{text}</BlackText>
+        <button type={_type} style={{ display: 'none', width: '140px' }} />
+        <TwoBlackText>{text}</TwoBlackText>
       </ButtonBox>
     </>
   )
@@ -131,9 +143,15 @@ export default DotButton
 
 DotButton.defaultProps = {
   text: '',
-  type: '',
+  _type: '',
   _onClick: () => {},
 }
+
+const TestButton = styled.button`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+`
 
 const ButtonBox = styled.div`
   cursor: pointer;
@@ -143,6 +161,7 @@ const ButtonBox = styled.div`
 
 const WhiteText = styled.div`
   color: #fff;
+  width: 100%;
   position: absolute;
   z-index: 10;
   top: 50%;
@@ -152,10 +171,20 @@ const WhiteText = styled.div`
 `
 const BlackText = styled.div`
   color: #000;
+  width: 100%;
   position: absolute;
   z-index: 10;
   top: 50%;
   left: 50%;
   font-size: 25px;
+  transform: translate(-50%, -50%);
+`
+const TwoBlackText = styled.div`
+  color: #000;
+  position: absolute;
+  z-index: 10;
+  top: 40%;
+  left: 50%;
+  font-size: 20px;
   transform: translate(-50%, -50%);
 `

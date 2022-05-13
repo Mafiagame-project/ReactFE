@@ -106,7 +106,8 @@ function SignUp() {
                   history.push('/login')
                 }}
               />
-              <DotButton black01 text="회원가입" type="submit" />
+
+              <DotButton test01 _type="submit" />
             </Grid>
           </Form>
         </Grid>
@@ -124,4 +125,5 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
 `
+
 export default SignUp

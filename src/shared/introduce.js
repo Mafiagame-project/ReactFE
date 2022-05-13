@@ -1,5 +1,8 @@
 import citizenImg from '../assets/image/character/양_시민.png'
 import mafiaImg from '../assets/image/character/늑대_.png'
+import doctorImg from '../assets/image/character/의사_양.png'
+import policeImg from '../assets/image/character/경찰.png'
+import reporterImg from '../assets/image/character/양_기자.png'
 
 export default [
   {
@@ -21,20 +24,20 @@ export default [
     name: 'doctor',
     title: '의사',
     explain: '본인을 살릴 수 없다.',
-    img: citizenImg,
+    img: doctorImg,
   },
   {
     id: 4,
     name: 'police',
     title: '경찰',
     explain: '민중의 지팡이',
-    img: citizenImg,
+    img: policeImg,
   },
   {
     id: 5,
     name: 'reporter',
     title: '리포터',
     explain: '딱 한번 능력을 사용하여 상대방의 직업을 모두에게 밝힐 수 있다.',
-    img: citizenImg,
+    img: reporterImg,
   },
 ]

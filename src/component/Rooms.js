@@ -46,9 +46,8 @@ const Rooms = (props) => {
       }
     }
   }
-  
+
   React.useEffect(() => {
-    
     return () => {
       socket.off('roomList')
     }
@@ -119,7 +118,6 @@ const Rooms = (props) => {
 }
 
 const RoomBox = styled.div`
-  width: 95%;
   height: 60%;
   overflow-x: scroll;
   display: flex;
@@ -131,7 +129,7 @@ const RoomBox = styled.div`
 `
 
 const Room = styled.div`
-  min-width: 330px;
+  min-width: 305px;
   height: 386px;
   background-color: black;
   border: 1px solid black;

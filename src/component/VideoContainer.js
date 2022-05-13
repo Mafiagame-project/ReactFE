@@ -1,6 +1,7 @@
 import React from 'react'
 import Peer from 'peerjs'
 import { useSelector } from 'react-redux'
+import styled from 'styled-components'
 
 const VideoContainer = () => {
   const socket = useSelector((state) => state.game.socket)
@@ -25,6 +26,7 @@ const VideoContainer = () => {
         audio: false,
       })
       .then((stream) => {
+        myVideo.classList.add('video_box')
         addVideoStream(myVideo, stream)
         console.log('here')
 
@@ -32,7 +34,9 @@ const VideoContainer = () => {
           console.log('콜 찍히니?')
           call.answer(stream)
           const video = document.createElement('video')
+          video.classList.add('video_box')
           console.log('here')
+
           call.on('stream', (userVideoStream) => {
             addVideoStream(video, userVideoStream)
             console.log('here')
@@ -53,6 +57,7 @@ const VideoContainer = () => {
     function connectToNewUser(userId, myStream) {
       const call = myPeer.call(userId, myStream)
       const video = document.createElement('video')
+      video.classList.add('video_box')
       console.log('유저연결 실행')
       call.on('stream', (userVideoStream) => {
         addVideoStream(video, userVideoStream)
@@ -80,9 +85,19 @@ const VideoContainer = () => {
   }
   return (
     <>
-      <div className="video_grid" ref={videoGrid} />
+      <Container>
+        <div className="video_container">
+          <div className="video_grid" ref={videoGrid} />
+        </div>
+      </Container>
     </>
   )
 }
+
+const Container = styled.div`
+  max-width: 800px;
+  height: auto;
+  padding: 0 100px;
+`
 
 export default VideoContainer

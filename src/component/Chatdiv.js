@@ -15,9 +15,15 @@ function Chatdiv({ getWrite, currentId, e }) {
 
   return (
     <>
-      <OneChat>
-        {id !== currentId ? <Chatid>{id}</Chatid> : null}
-        <Chatword>{e.data.msg}</Chatword>
+      <OneChat id currentId>
+        {id !== currentId ? (
+          <Chatid id currentId>
+            {id}
+          </Chatid>
+        ) : null}
+        <Chatword id currentId>
+          {e.data.msg}
+        </Chatword>
         <div ref={chatRef} />
       </OneChat>
     </>

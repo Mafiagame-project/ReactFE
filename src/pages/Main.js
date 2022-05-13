@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { Grid, Text, DotButton } from '../element/index'
 import Header from '../component/Header'
 import Rooms from '../component/Rooms'
+import TutorialBanner from '../component/TutorialBanner'
 import ModalPortal from '../component/modal/ModalPortal'
 import CreateRoomModal from '../component/modal/CreateRoomModal'
 import styled from 'styled-components'
@@ -14,23 +15,9 @@ function Main(props) {
   return (
     <>
       <Header />
-      <ModalPortal>
-        {isOpen && (
-          <CreateRoomModal socket={socket} onClose={() => setIsOpen(false)} />
-        )}
-      </ModalPortal>
+
       <Container>
-        <Grid
-          height="300px"
-          bg="#eee"
-          padding="30px"
-          margin="20px 0 "
-          _onClick={() => {
-            history.push('/introduce')
-          }}
-        >
-          <Text>마피아 게임 룰</Text>
-        </Grid>
+        <TutorialBanner />
         <Rooms />
         <Grid isFlex_center>
           <DotButton
@@ -42,6 +29,11 @@ function Main(props) {
           />
         </Grid>
       </Container>
+      <ModalPortal>
+        {isOpen && (
+          <CreateRoomModal socket={socket} onClose={() => setIsOpen(false)} />
+        )}
+      </ModalPortal>
     </>
   )
 }

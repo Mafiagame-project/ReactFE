@@ -1,11 +1,12 @@
 import { useHistory } from 'react-router-dom'
-import { Grid, Text, Button } from '../element/index'
+import { Grid, Text, Button, DotButton } from '../element/index'
 import { useDispatch, useSelector } from 'react-redux'
 import io from 'socket.io-client'
 import { actionCreators as gameActions } from '../redux/modules/game'
 import { actionCreators as roomActions } from '../redux/modules/room'
 import { actionCreators as memberActions } from '../redux/modules/member'
 import { useEffect } from 'react'
+import styled from 'styled-components'
 
 function Loading() {
   const dispatch = useDispatch()
@@ -52,7 +53,6 @@ function Loading() {
     socket.on('isNight', (value) => {
       console.log(value)
       dispatch(gameActions.dayAndNight(value))
-      
     })
 
     socket.on('dayVoteResult', (value) => {
@@ -101,43 +101,42 @@ function Loading() {
 
   return (
     <>
-      <Grid width="100vw" height="100vh" bg="#eee">
-        <Grid is_flex flex>
-          {token ? (
-            <Text
+      <Container>
+        <Text size="80px">MAFIYANG</Text>
+
+        {token ? (
+          <DotButton
+            black03
+            text="게임시작"
+            _onClick={() => {
+              entrance()
+            }}
+          />
+        ) : (
+          <>
+            <DotButton
+              black03
+              text="로그인"
               _onClick={() => {
-                entrance()
+                history.push('/login')
               }}
-              bold
-              size="32px"
-            >
-              게임시작
-            </Text>
-          ) : (
-            <Grid is_flex flex>
-              <Text
-                _onClick={() => {
-                  history.push('/login')
-                }}
-                bold
-                size="32px"
-              >
-                로그인
-              </Text>
-              <Text
-                _onClick={() => {
-                  history.push('/signup')
-                }}
-                bold
-                size="32px"
-              >
-                회원가입
-              </Text>
-            </Grid>
-          )}
-        </Grid>
-      </Grid>
+            />
+            <DotButton
+              white03
+              text="회원가입"
+              _onClick={() => {
+                history.push('/signup')
+              }}
+            />
+          </>
+        )}
+      </Container>
     </>
   )
 }
+
+const Container = styled.div`
+  text-align: center;
+  margin-top: 200px;
+`
 export default Loading

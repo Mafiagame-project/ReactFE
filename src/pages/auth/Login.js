@@ -93,7 +93,7 @@ function Login() {
           <Text size="20px">sns 로그인</Text>
           <Grid isFlex_center>
             <a href={KAKAO_AUTH_URL}>
-              <Image size="80" margin="5px" src={kakao} />
+              <Image size="80" margin="0 10px 0 0" src={kakao} />
             </a>
             <NaverLogin />
           </Grid>
