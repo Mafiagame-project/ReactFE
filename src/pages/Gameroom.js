@@ -114,6 +114,10 @@ function GameRoom(props) {
     
     return () => {
       dispatch(gameActions.playerWhoKilled(null))
+      dispatch(gameActions.playerJob(null))
+      dispatch(gameActions.copSelected(null))
+      dispatch(gameActions.noticeRep(null))
+      dispatch(gameActions.rommReady(null))
       unlisten()
     }
   }, [socket])
@@ -155,7 +159,6 @@ function GameRoom(props) {
         <Grid is_flex height='90%'>
         
             <JobModal />
-            <button onClick={enterNoti}></button>
           {getNotice == true ? (
               <Noti></Noti>
           ) : null}

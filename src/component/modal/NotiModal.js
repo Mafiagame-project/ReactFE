@@ -18,24 +18,24 @@ function NotiModal() {
         <>
             {
                 endGameNoti // 게임이 끝났냐 안끝났냐
-                    ? <Noti>{endGameNoti}</Noti>
+                    ? <Modalblack><VoteNoti>{endGameNoti}</VoteNoti></Modalblack>
                     : <>
                         {
-                            currentTime === true // 밤이면 낮의 결과가 출력
+                            currentTime // 밤이면 낮의 결과가 출력
                                 ? <>
                                     {
                                         voteResult
                                             ? <Modalblack>
-                                                <Noti>
-                                                    <Text>투표 결과 </Text>
-                                                    <Text>{voteResult}가 잡혔습니다 </Text>
-                                                </Noti>
+                                                <VoteNoti>
+                                                    <Text size='32px'>낮 투표결과 </Text>
+                                                    <Text bold size='32px'>{voteResult}가 잡혔습니다 </Text>
+                                                </VoteNoti>
                                             </Modalblack>
                                             : <Modalblack>
-                                                <Noti>
-                                                    <Text>투표결과</Text>
-                                                    <Text>아무도 죽지 않았습니다</Text>
-                                                </Noti>
+                                                <VoteNoti>
+                                                    <Text size='32px'>낮 투표결과</Text>
+                                                    <Text bold size='32px'>아무도 죽지 않았습니다</Text>
+                                                </VoteNoti>
                                             </Modalblack>
                                     }
                                 </>
@@ -56,7 +56,7 @@ function NotiModal() {
                                             <Grid borderRight center height='100%'>
                                                 <Grid height='50%'>
                                                     {
-                                                        !reportNoti
+                                                        reportNoti
                                                             ? <>
                                                                 <BreakingHead>
                                                                     <Text>속보!</Text>
@@ -66,14 +66,14 @@ function NotiModal() {
                                                                     <Grid>
                                                                         <Text color='white' size='32px'>reportNoti?.clickerId</Text>
                                                                         <Text color='#61FF00' size='32px'>reportNoti?.clickerJob</Text>
-                                                                        <Text color='white' size='20px'>인것으로 밝혀져... 존나충격...</Text>
+                                                                        <Text color='white' size='20px'>인것으로 밝혀져... 충격...</Text>
                                                                     </Grid>
                                                                 </Frame94>
                                                             </>
                                                             : <>
                                                                 <Grid isFlex_center height='100%' width='100%'>
                                                                     <Grid>
-                                                                        <Text size='30px' left>유명 배우 이범규 과거에 양아치였지만
+                                                                        <Text size='30px' left>유명 배우 ○○○ 과거에 양아치였지만
                                                                             지금은 아니야...
                                                                         </Text>
                                                                         <Grid borderLeft>
@@ -117,7 +117,7 @@ function NotiModal() {
                                                 <Grid height='50%'>
                                                     <Text size='32px'>마피양 마을에 발견된 사체...</Text>
                                                     {
-                                                        !voteResult
+                                                        voteResult
                                                         ?<><Grid isFlex_center>
                                                             <Victim></Victim>
                                                             <Text size='32px' bold>피해자 {voteResult}</Text>
@@ -130,7 +130,7 @@ function NotiModal() {
                                                 <Grid height='40%'>
                                                     <Text size='32px'>마피양 마을의 천사</Text>
                                                     {
-                                                        !survivedNoti
+                                                        survivedNoti
                                                         ?<>
                                                         <Grid isFlex_center>
                                                             <Victim></Victim>
@@ -243,6 +243,18 @@ const Noti = styled.div`
   transition:all 2s;
   animation: fadein 3s;
   -webkit-animation: fadein 3s;
+  `
+
+  const VoteNoti = styled.div`
+  display: inline-block;
+  background: white;
+  margin-top: 100px;
+  width: 30%;
+  height: 300px;
+  padding: 40px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  box-shadow: 2px 2px 2px 2px #d2d2d2;
   `
 
 export default NotiModal

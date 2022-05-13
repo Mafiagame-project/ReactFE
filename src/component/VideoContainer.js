@@ -10,7 +10,7 @@ const VideoContainer = () => {
   myVideo.muted = true
   const peers = {}
   //테스트
-
+  
   React.useEffect(() => {
     const myPeer = new Peer()
 

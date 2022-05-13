@@ -59,6 +59,7 @@ const VoteModal = ({ onClose }) => {
       return onClose()
     }
     if (clickerJob == 'police' && time == true) {
+      console.log(clickerJob, clickedId, copSelect)
       policePointed(`${clickedId}의 직업은 ${copSelect}입니다`)
     }
   }
@@ -90,6 +91,7 @@ const VoteModal = ({ onClose }) => {
                   )
                 })}
               </VoteBox>
+              <ToastContainer/>
               <DotButton
                 white02
                 text="투표 완료"
