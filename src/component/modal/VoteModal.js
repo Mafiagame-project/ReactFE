@@ -3,9 +3,9 @@ import { Grid, Text, DotButton, Input } from '../../element/index'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import ModalPortal from './ModalPortal'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import '../video.css';
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import '../video.css'
 
 const VoteModal = ({ onClose }) => {
   const [clickedId, setClickedId] = React.useState()
@@ -28,9 +28,9 @@ const VoteModal = ({ onClose }) => {
 
   const policePointed = (pointed, hisJob) => {
     toast.warning(`${pointed}의 정체는 ${hisJob}입니다`, {
-      position : toast.POSITION.TOP_LEFT,
-      className : 'toast-police',
-      autoClose : 3000,
+      position: toast.POSITION.TOP_LEFT,
+      className: 'toast-police',
+      autoClose: 3000,
     })
   }
 
@@ -60,7 +60,7 @@ const VoteModal = ({ onClose }) => {
     }
     if (clickerJob == 'police' && time == true) {
       console.log(clickerJob, clickedId, copSelect)
-      policePointed(`${clickedId}의 직업은 ${copSelect}입니다`)
+      policePointed(clickedId, copSelect)
     }
   }
   //밤에는 마피아 모달, 경찰, 의사 구분 주기
@@ -91,7 +91,7 @@ const VoteModal = ({ onClose }) => {
                   )
                 })}
               </VoteBox>
-              <ToastContainer/>
+              <ToastContainer />
               <DotButton
                 white02
                 text="투표 완료"

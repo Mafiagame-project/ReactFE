@@ -1,14 +1,25 @@
 import React from 'react'
 import { history } from '../../redux/configureStore'
 import ModalPortal from './ModalPortal'
+import { actionCreators as gameActions } from '../../redux/modules/game'
+import { actionCreators as roomActions } from '../../redux/modules/room'
+import { useDispatch } from 'react-redux'
 import { Grid, Text, DotButton, Input, Image } from '../../element/index'
 import styled from 'styled-components'
 
 const ExitModal = ({ onClose, socket }) => {
+  const dispatch = useDispatch()
   const exitRoom = () => {
     // 방에서 나가기 버튼을 누를때 호출
     socket.emit('leaveRoom')
     history.replace('/gamemain')
+    dispatch(gameActions.noticeResult(null))
+    dispatch(gameActions.playerWhoSurvived(null))
+    dispatch(gameActions.dayAndNight(null))
+    dispatch(gameActions.noticeEndGame(null))
+    dispatch(gameActions.readyCheck(null))
+    dispatch(gameActions.noticeJob(null))
+    dispatch(roomActions.changeHost(null))
   }
   return (
     <>
@@ -23,7 +34,7 @@ const ExitModal = ({ onClose, socket }) => {
             <Grid padding="30px" height="100%" flex_column>
               <Text> 정말 나가시겠어요?? </Text>
               <Grid marign="40px 0 0">
-                <DotButton black01 text="나가기" _onClick={() => exitRoom()} />
+                <DotButton black01 text="나가기" _onClick={exitRoom} />
                 <DotButton white01 text="아니용" _onClick={() => onClose()} />
               </Grid>
             </Grid>

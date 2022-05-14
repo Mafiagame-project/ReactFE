@@ -2,20 +2,28 @@ import React from 'react'
 import { history } from '../redux/configureStore'
 import { useSelector } from 'react-redux'
 import { Grid, Text, DotButton } from '../element/index'
+import { useDispatch } from 'react-redux'
+import { actionCreators as roomActions } from '../redux/modules/room'
 import Header from '../component/Header'
 import Rooms from '../component/Rooms'
 import TutorialBanner from '../component/TutorialBanner'
-import ModalPortal from '../component/modal/ModalPortal'
 import CreateRoomModal from '../component/modal/CreateRoomModal'
 import styled from 'styled-components'
 
 function Main(props) {
   const socket = useSelector((state) => state.game.socket)
   const [isOpen, setIsOpen] = React.useState(false)
+  const dispatch = useDispatch()
+
+  React.useEffect(() => {
+    socket.on('roomList', (rooms) => {
+      dispatch(roomActions.sendRoomList(rooms))
+    })
+  }, [socket])
+
   return (
     <>
       <Header />
-
       <Container>
         <TutorialBanner />
         <Rooms />
@@ -29,11 +37,9 @@ function Main(props) {
           />
         </Grid>
       </Container>
-      <ModalPortal>
-        {isOpen && (
-          <CreateRoomModal socket={socket} onClose={() => setIsOpen(false)} />
-        )}
-      </ModalPortal>
+      {isOpen && (
+        <CreateRoomModal socket={socket} onClose={() => setIsOpen(false)} />
+      )}
     </>
   )
 }
