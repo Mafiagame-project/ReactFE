@@ -1,21 +1,47 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { Grid, Button, Text } from '../../element/index'
 import 늑대 from '../../assets/image/character/늑대_.png'
 import 피해자 from '../../assets/image/character/양_시민.png'
 import 신문 from '../../assets/image/noti/기사_하단이미지.png'
 import 모자이크 from '../../assets/image/noti/양_피그마판형.png'
+import { useEffect, useState } from 'react'
+import { actionCreators as gameActions } from '../../redux/modules/game'
 
 function NotiModal() {
+  const dispatch = useDispatch();
   const voteResult = useSelector((state) => state.game.resultNoti)
   const endGameNoti = useSelector((state) => state.game.endGameNoti)
   const survivedNoti = useSelector((state) => state.game.survived)
   const currentTime = useSelector((state) => state.game.night)
   const reportNoti = useSelector((state) => state.game.repNoti)
+  const dayCount = useSelector(state => state.game.cnt)
+  const [getNotice, setNotice] = useState(false);
   console.log(voteResult)
+
+  const printNoti = () => {
+    setNotice(true)
+    setTimeout(() => {
+      setNotice(false)
+    }, 6000)
+    dispatch(gameActions.noticeRep(null))
+  }
+
+  useEffect(()=>{
+    console.log(dayCount)
+    if(dayCount < 2){
+      return
+    } else {
+      printNoti();
+    }
+  },[dayCount])
+
   return (
     <>
-      {endGameNoti ? ( // 게임이 끝났냐 안끝났냐
+    {
+      getNotice === true 
+      ?<>
+        {endGameNoti ? ( // 게임이 끝났냐 안끝났냐
         <Modalblack>
           <VoteNoti>
             <Text bold size='32px'>{endGameNoti}</Text>
@@ -23,9 +49,9 @@ function NotiModal() {
         </Modalblack>
       ) : (
         <>
-          {currentTime ? ( // 밤이면 낮의 결과가 출력
+          {currentTime ? ( // 밤이면 낮의 결과가 출력 
             <>
-              {voteResult ? (
+              {voteResult ? ( // 아무도 안 죽음 (?)을 아무도 죽지않았습니다로 출력하게!
                 <Modalblack>
                   <VoteNoti>
                     <Text size="32px">낮 투표결과 </Text>
@@ -180,6 +206,10 @@ function NotiModal() {
           )}
         </>
       )}
+      </>
+      : null
+    }
+      
     </>
   )
 }

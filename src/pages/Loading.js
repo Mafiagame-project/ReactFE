@@ -69,6 +69,7 @@ function Loading() {
     })
 
     socket.on('nightVoteResult', (value) => {
+      console.log(value)
       dispatch(gameActions.playerWhoKilled(value.diedPeopleArr))
       dispatch(gameActions.noticeResult(value.died[0]))
       dispatch(gameActions.playerWhoSurvived(value.saved[0]))

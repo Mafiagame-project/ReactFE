@@ -19,16 +19,10 @@ import '../component/video.css'
 function GameRoom(props) {
   const dispatch = useDispatch()
   const socket = useSelector((state) => state.game.socket)
-  const memberSocket = useSelector((state) => state.member.socketId)
-  const voteResult = useSelector((state) => state.game.resultNoti)
   const currentTime = useSelector((state) => state.game.night)
-  const roomInfo = useSelector((state) => state.room.current)
   const startCard = useSelector((state) => state.game.card)
-  const playerJob = useSelector((state) => state.game.jobNoti)
   const currentId = localStorage.getItem('userId')
-  const dayCount = useSelector(state => state.game.cnt)
   const [isOpen, setIsOpen] = useState(false)
-  const [getNotice, setNotice] = useState(false)
 
   const dayOrNight = (time) => {
     if (time == true) {
@@ -44,14 +38,6 @@ function GameRoom(props) {
         autoClose: 3000,
       })
     }
-  }
-
-  const enterNoti = () => {
-    setNotice(true)
-    setTimeout(() => {
-      setNotice(false)
-    }, 6000)
-    dispatch(gameActions.noticeRep(null))
   }
 
   useEffect(() => {
@@ -83,14 +69,6 @@ function GameRoom(props) {
       dispatch(roomActions.changeHost(null))
     }
   }, [socket])
-
-  useEffect(() => {
-    if(currentTime === null || dayCount < 2){
-      return
-    } else {
-      enterNoti()
-    }
-  }, [currentTime])
 
   useEffect(() => {
     if (currentTime === false) {
@@ -128,7 +106,7 @@ function GameRoom(props) {
       </Grid>
 
       <JobModal />
-      {getNotice == true ? <Noti></Noti> : null}
+      <Noti/>
       <ToastContainer />
     </>
   )

@@ -20,7 +20,7 @@ function Timer(props) {
 
   return (
     <>
-      <div style={{fontSize:'32px', marginBottom:'20px'}}>
+      <div style={{fontSize:'52px', marginBottom:'20px'}}>
         {minutes} : {seconds}
       </div>
     </>

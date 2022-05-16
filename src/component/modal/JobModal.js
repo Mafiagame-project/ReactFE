@@ -13,7 +13,6 @@ const JobModal = () => {
   const [getJob, setJob] = useState()
   const [getDesc, setDesc] = useState()
   const [getImg, setImg] = useState()
-  const [getTest, setTest] = useState(false)
 
   useEffect(() => {
     if (startCard) {
