@@ -28,8 +28,8 @@ function Header(props) {
         <Rightside>
           <Grid flex_column>
             <Grid isFlex_start>
-              <Image size="50" />
-              <Grid margin="0 22px" className="headerText">
+              <Image size="40" />
+              <Grid margin="0 22px" className="headerText" width="100px">
                 <Text margin="0px" color="#fff">
                   {currentId}
                 </Text>

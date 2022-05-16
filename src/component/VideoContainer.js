@@ -11,7 +11,7 @@ const VideoContainer = () => {
   myVideo.muted = true
   const peers = {}
   //테스트
-  
+
   React.useEffect(() => {
     const myPeer = new Peer()
 
@@ -95,9 +95,7 @@ const VideoContainer = () => {
 }
 
 const Container = styled.div`
-  max-width: 800px;
-  height: auto;
-  padding: 0 100px;
+  height: 600px;
 `
 
 export default VideoContainer

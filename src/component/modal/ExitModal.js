@@ -3,12 +3,13 @@ import { history } from '../../redux/configureStore'
 import ModalPortal from './ModalPortal'
 import { actionCreators as gameActions } from '../../redux/modules/game'
 import { actionCreators as roomActions } from '../../redux/modules/room'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Grid, Text, DotButton, Input, Image } from '../../element/index'
 import styled from 'styled-components'
 
-const ExitModal = ({ onClose, socket }) => {
+const ExitModal = ({ onClose }) => {
   const dispatch = useDispatch()
+  const socket = useSelector((state) => state.game.socket)
   const exitRoom = () => {
     // 방에서 나가기 버튼을 누를때 호출
     socket.emit('leaveRoom')

@@ -28,12 +28,6 @@ function Login() {
     dispatch(userActions.loginDB(logins))
   }
 
-  //  React.useEffect(() => {
-  //      naverLogin();
-  //      setError(false);
-  //      setAlert(false);
-  //  })
-
   //kakao 나중에 따로 파일 빼기
   const REST_API_KEY = '6c9c16d27b420108ed23421696dfba3b'
   const REDIRECT_URI = 'https://d191gfhy5yq8br.cloudfront.net/main'

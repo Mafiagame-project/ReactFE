@@ -1,5 +1,4 @@
 import React from 'react'
-import { history } from '../redux/configureStore'
 import { useSelector } from 'react-redux'
 import { Grid, Text, DotButton } from '../element/index'
 import { useDispatch } from 'react-redux'

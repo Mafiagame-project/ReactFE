@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from '../../component/Header'
 import { history } from '../../redux/configureStore'
-import { Text, Grid, Button, AuthInput, Image } from '../../element/index'
+import { Text, Grid, Button, Image } from '../../element/index'
 import styled from 'styled-components'
 
 const EditUser = () => {
@@ -19,11 +19,7 @@ const EditUser = () => {
             <Text size="20px">99승 99패</Text>
           </Grid>
         </Grid>
-        <Grid flex_column>
-          <AuthInput placeholder="현재 비밀번호" />
-          <AuthInput placeholder="새 비밀번호" />
-          <AuthInput placeholder="비밀번호 확인" />
-        </Grid>
+        <Grid flex_column></Grid>
         <Button blackBtn width="150px">
           확인
         </Button>

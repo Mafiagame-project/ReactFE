@@ -1,6 +1,8 @@
 import React from 'react'
 import Chatdiv from './Chatdiv'
+import Timer from './Timer'
 import { Grid, Text, Button } from '../element/index'
+
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 
@@ -32,7 +34,8 @@ const ChatBox = ({ socket }) => {
   }, [socket])
 
   return (
-    <>
+    <Grid center width="">
+      <Timer />
       <ChatContainer>
         <Chatbox>
           {getWrite.map((e, i) => {
@@ -63,7 +66,7 @@ const ChatBox = ({ socket }) => {
           </TextContainer>
         </Chatbox>
       </ChatContainer>
-    </>
+    </Grid>
   )
 }
 
