@@ -19,6 +19,7 @@ const VideoContainer = () => {
       console.log(id)
       socket.emit('peerJoinRoom', id)
     })
+    try {
 
     navigator.mediaDevices
       .getUserMedia({
@@ -49,6 +50,12 @@ const VideoContainer = () => {
           console.log('연결함수 실행완')
         })
       })
+
+    } catch {
+      const video = document.createElement('video')
+          video.classList.add('video_box')
+    }
+
 
     socket.on('user-disconnected', (userId) => {
       if (peers[userId]) peers[userId].close()

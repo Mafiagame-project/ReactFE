@@ -16,6 +16,7 @@ const IS_NIGHT = 'IS_NIGHT'
 const COP_SELECTED = 'COP_SELECTED'
 const ALL_READY = 'ALL_READY'
 const START_CARD = 'START_CARD'
+const DAY_CNT = 'DAY_CNT'
 
 const sendSocket = createAction(SEND_SOCKET, (socket) => ({ socket }))
 const sendPeerId = createAction(SEND_PEERID, (peer) => ({ peer }))
@@ -33,6 +34,7 @@ const dayAndNight = createAction(IS_NIGHT, (boolean) => ({ boolean }))
 const copSelected = createAction(COP_SELECTED, (selected) => ({ selected }))
 const readyCheck = createAction(ALL_READY, (ready) => ({ready}))
 const startCard = createAction(START_CARD, (card) => ({card}))
+const dayCount = createAction(DAY_CNT)
 
 const initialState = {
   socket: null,
@@ -50,6 +52,7 @@ const initialState = {
   copSelect: null,
   ready: null,
   card : null,
+  cnt : 0,
 }
 
 export default handleActions(
@@ -118,6 +121,11 @@ export default handleActions(
       produce(state, (draft) => {
         draft.ready = action.payload.ready
       }),
+    [DAY_CNT]: (state, action) =>
+      produce(state, (draft) => {
+        let count = 1;
+        draft.cnt = draft.cnt + count;
+      }),
   },
   initialState,
 )
@@ -136,7 +144,8 @@ const actionCreators = {
   noticeEndGame,
   startCard,
   readyCheck,
-  noticeRep
+  noticeRep,
+  dayCount,
 }
 
 export { actionCreators }

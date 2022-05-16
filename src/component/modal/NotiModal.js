@@ -12,12 +12,15 @@ function NotiModal() {
   const survivedNoti = useSelector((state) => state.game.survived)
   const currentTime = useSelector((state) => state.game.night)
   const reportNoti = useSelector((state) => state.game.repNoti)
-
+  console.log(voteResult)
+  console.log(currentTime)
   return (
     <>
       {endGameNoti ? ( // 게임이 끝났냐 안끝났냐
         <Modalblack>
-          <VoteNoti>{endGameNoti}</VoteNoti>
+          <VoteNoti>
+            <Text bold size='32px'>{endGameNoti}</Text>
+          </VoteNoti>
         </Modalblack>
       ) : (
         <>

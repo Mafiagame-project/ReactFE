@@ -26,8 +26,10 @@ function GameRoom(props) {
   const startCard = useSelector((state) => state.game.card)
   const playerJob = useSelector((state) => state.game.jobNoti)
   const currentId = localStorage.getItem('userId')
+  const dayCount = useSelector(state => state.game.cnt)
   const [isOpen, setIsOpen] = useState(false)
   const [getNotice, setNotice] = useState(false)
+  const [getCnt, setCnt] = useState(0);
 
   const dayOrNight = (time) => {
     if (time == true) {
@@ -61,6 +63,7 @@ function GameRoom(props) {
         dispatch(gameActions.playerWhoSurvived(null))
         dispatch(gameActions.dayAndNight(null))
         dispatch(gameActions.noticeEndGame(null))
+        socket.off('leaveRoom')
       }
     })
 
@@ -69,17 +72,26 @@ function GameRoom(props) {
       dispatch(gameActions.playerJob(null))
       dispatch(gameActions.copSelected(null))
       dispatch(gameActions.noticeRep(null))
+      socket.off('leaveRoomMsg')
+      socket.off('joinRoomMsg')
+      socket.off('isNight')
+      socket.removeAllListeners('isNight')
+      dispatch(gameActions.dayCount(0))
       // dispatch(gameActions.roomReady(null))
       unlisten()
+      
       dispatch(roomActions.changeHost(null))
     }
   }, [socket])
 
   useEffect(() => {
-    if (voteResult?.length > 0) {
+    if(currentTime === null || dayCount < 2){
+      console.log('아무것도 없음' + dayCount)
+    } else {
+      console.log('노티 실행')
       enterNoti()
     }
-  }, [voteResult])
+  }, [currentTime])
 
   useEffect(() => {
     if (currentTime === false) {

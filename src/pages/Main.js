@@ -8,16 +8,23 @@ import Rooms from '../component/Rooms'
 import TutorialBanner from '../component/TutorialBanner'
 import CreateRoomModal from '../component/modal/CreateRoomModal'
 import styled from 'styled-components'
+import { useHistory } from 'react-router-dom'
 
 function Main(props) {
+  const history = useHistory();
   const socket = useSelector((state) => state.game.socket)
   const [isOpen, setIsOpen] = React.useState(false)
   const dispatch = useDispatch()
 
   React.useEffect(() => {
-    socket.on('roomList', (rooms) => {
-      dispatch(roomActions.sendRoomList(rooms))
-    })
+    try {
+      socket.on('roomList', (rooms) => {
+        dispatch(roomActions.sendRoomList(rooms))
+      })
+    } catch {
+      alert('비정상적 접근으로인해 메인으로 이동합니다')
+      window.location = '/'
+    }
   }, [socket])
 
   return (

@@ -21,17 +21,27 @@ const VoteModal = ({ onClose }) => {
     console.log(e.target.value)
     setClickedId(e.target.value)
   }
-  console.log(clickedId)
-  console.log(memberId)
-  console.log(playerJob)
-  console.log(is_night)
+  // console.log(clickedId)
+  // console.log(memberId)
+  // console.log(playerJob)
+  // console.log(is_night)
 
-  const policePointed = (pointed, hisJob) => {
-    toast.warning(`${pointed}의 정체는 ${hisJob}입니다`, {
-      position: toast.POSITION.TOP_LEFT,
-      className: 'toast-police',
-      autoClose: 3000,
-    })
+  const policePointed = (pointed, isMafia) => {
+    if(isMafia === true){
+      toast.warning(`${pointed}의 정체는 마피아입니다`, {
+        position: toast.POSITION.TOP_LEFT,
+        className: 'toast-police',
+        autoClose: 3000,
+      })
+    } else if(isMafia === false) {
+      toast.warning(`${pointed}의 정체는 마피아가 아닙니다`, {
+        position: toast.POSITION.TOP_LEFT,
+        className: 'toast-police',
+        autoClose: 3000,
+      })
+    } else {
+      return null
+    }
   }
 
   const active = (clickedId, clicker, time) => {
@@ -41,27 +51,33 @@ const VoteModal = ({ onClose }) => {
       alert('다른사람을 뽑아주세요')
       return
     }
-    console.log(killed)
     if (killed?.length > 0) {
       killed.forEach((id) => {
         if (clicker.player == id) {
           alert('죽었습니다')
           return
         } else {
-          if (clickerJob == 'police') {
+          if (clickerJob == 'police' ) {
           }
           socket.emit('vote', { clickerJob, clickerId, clickedId })
+          if (clickerJob == 'police' && time == true) {
+            socket.on('police', selected => {
+              policePointed(clickedId, selected)
+            })
+          }
           return onClose()
         }
       })
     } else {
       socket.emit('vote', { clickerJob, clickerId, clickedId })
+      if (clickerJob == 'police' && time == true) {
+        socket.on('police', selected => {
+          policePointed(clickedId, selected)
+        })
+      }
       return onClose()
     }
-    if (clickerJob == 'police' && time == true) {
-      console.log(clickerJob, clickedId, copSelect)
-      policePointed(clickedId, copSelect)
-    }
+    
   }
   //밤에는 마피아 모달, 경찰, 의사 구분 주기
   //낮에는 통일
