@@ -93,7 +93,6 @@ const signupDB = (dic) => {
   }
 }
 
-//header에 토큰 올려야하는지 여쭤보기
 const isLoginDB = () => {
   return async function (dispatch, getState, { history }) {
     await axios({
