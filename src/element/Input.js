@@ -86,9 +86,10 @@ const Input = (props) => {
             value={value}
             {...styles}
           />
+
           <Cage src={test} className="cage" />
           <Img src={sheep} className="sheep" />
-          <span>{text}</span>
+          <p>{text}</p>
         </RadioLabel>
       </RadioBox>
     )
@@ -134,50 +135,39 @@ Input.defaultProps = {
 }
 const RadioBox = styled.div`
 margin: 10px 30px;
-position: relative;
-display: flex;
 align-items; center;
-flex-direction: column;
+cursor: pointer;
 `
 
 const RadioLabel = styled.label`
-  > span {
-    position: relative;
-    display: inline-block;
-    width: 170px;
+  > p {
     padding: 15px 20px;
-    background-color: #000;
     color: #fff;
-    border: 1px solid #fff;
+    font-size: 25px;
     margin: 0 0.8vw 0.9vw 0;
     cursor: pointer;
   }
 `
 const Img = styled.img`
-  position: absolute;
-  width: 60px;
-  top: -7px;
-  left: -35px;
+  width: 80px;
   transition-duration: 0.5s;
   transform: rotate(0);
-  z-index: 10;
+  z-index: 5;
+  cursor: pointer;
 `
 
 const Cage = styled.img`
 opacity: 0;
-  position: absolute;
-  width: 65px;
-  top: -35px;
-  left: -39px;
+  width: 90px;
   transition-duration: 0.5s;
   transform: rotate(0);
-  z-index: 20;
+  z-index: 6;
   }
 `
 
 const RadioInput = styled.input`
   display: none;
-  :checked ~ span {
+  :checked ~ p {
     color: red;
   }
   :checked ~ .sheep {
@@ -186,11 +176,12 @@ const RadioInput = styled.input`
 `
 const DayRadioInput = styled.input`
   display: none;
-  :checked ~ span {
+  :checked ~ p {
     color: red;
   }
   :checked ~ .cage {
-    top: -7px;
+    top: -6px;
+    left: -5px;
     opacity: 1;
   }
 `

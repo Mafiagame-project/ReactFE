@@ -7,9 +7,9 @@ const VideoContainer = () => {
   const socket = useSelector((state) => state.game.socket)
   const [cameraOn, setCameraOn] = React.useState(true)
   const [display, setDisplay] = React.useState(false)
-  const videoWrap = React.useRef()
-  const videoGrid = React.useRef()
-  const videoBack = React.useRef()
+  const videoWrap = React.useRef('')
+  const videoGrid = React.useRef('')
+  const videoBack = React.useRef('')
   // const myVideo = document.createElement('video')
   const myVideo = React.useRef()
   let allStream = React.useRef()
@@ -24,20 +24,20 @@ const VideoContainer = () => {
 
   let userNick = localStorage.getItem('userNick')
 
-  const handleCamera = () => {
-    setCameraOn((prev) => !prev)
-    if (cameraOn) {
-      let video = allStream.current.getTracks()
-      video[0].enabled = false
-      let src = document.querySelector('.video_non_src')
-      src.style.display = 'block'
-    } else {
-      let video = allStream.current.getTracks()
-      video[0].enabled = true
-      let src = document.querySelector('.video_non_src')
-      src.style.display = 'none'
-    }
-  }
+  // const handleCamera = () => {
+  //   setCameraOn((prev) => !prev)
+  //   if (cameraOn) {
+  //     let video = allStream.current.getTracks()
+  //     video[0].enabled = false
+  //     let src = document.querySelector('.video_non_src')
+  //     src.style.display = 'block'
+  //   } else {
+  //     let video = allStream.current.getTracks()
+  //     video[0].enabled = true
+  //     let src = document.querySelector('.video_non_src')
+  //     src.style.display = 'none'
+  //   }
+  // }
 
   //테스트
 
@@ -186,11 +186,11 @@ const VideoContainer = () => {
                   setDisplay(!display)
                 }}
               ></div>
-              <button
+              {/* <button
                 cameraOn={cameraOn}
                 display={display}
                 handleCamera={handleCamera}
-              />
+              /> */}
               <div className="userview_name fl">
                 <p>{userNick}</p>
               </div>

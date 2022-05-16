@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from '../../component/Header'
 import { history } from '../../redux/configureStore'
-import { Text, Grid, Button, Image } from '../../element/index'
+import { Text, Grid, DotButton, Image } from '../../element/index'
 import styled from 'styled-components'
 
 const EditUser = () => {
@@ -19,17 +19,15 @@ const EditUser = () => {
             <Text size="20px">99승 99패</Text>
           </Grid>
         </Grid>
-        <Grid flex_column></Grid>
-        <Button blackBtn width="150px">
-          확인
-        </Button>
-        <Button
-          blackBtn
-          width="150px"
-          _onClick={() => history.push('/gamemain')}
-        >
-          취소
-        </Button>
+        <Grid center>
+          <DotButton
+            black03
+            text="프로필 변경"
+            _onClick={() => history.push('/gamemain')}
+          >
+            취소
+          </DotButton>
+        </Grid>
       </Container>
     </>
   )

@@ -11,7 +11,7 @@ const Rooms = (props) => {
   const dispatch = useDispatch()
   const RoomList = useSelector((state) => state.room.rooms)
   const socket = useSelector((state) => state.game.socket)
-  const currentId = localStorage.getItem('userId')
+  const currentId = localStorage.getItem('userNick')
 
   const entrance = (roomInfo) => {
     let roomId = roomInfo.roomId

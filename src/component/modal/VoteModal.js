@@ -92,20 +92,27 @@ const VoteModal = ({ onClose }) => {
                 })}
               </VoteBox>
               <ToastContainer />
-              <DotButton
-                white02
-                text="투표 완료"
-                _onClick={() => {
-                  active(clickedId, playerJob, is_night)
-                }}
-              />
-              <DotButton
-                black02
-                text="취소"
-                _onClick={() => {
-                  onClose()
-                }}
-              />
+              <Text color="#fff" size="25px">
+                {clickedId}님을 선택하시겠습니까?
+              </Text>
+              <Grid isFlex_center>
+                <DotButton
+                  white02
+                  margin="0 5px"
+                  text="투표 완료"
+                  _onClick={() => {
+                    active(clickedId, playerJob, is_night)
+                  }}
+                />
+                <DotButton
+                  black02
+                  margin="0 5px"
+                  text="취소"
+                  _onClick={() => {
+                    onClose()
+                  }}
+                />
+              </Grid>
             </Container>
           ) : (
             <Container onClick={(e) => e.stopPropagation()}>

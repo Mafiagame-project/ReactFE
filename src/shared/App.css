@@ -11,6 +11,10 @@ body * {
   font-family: 'neodgm';
 }
 
+.MuiSlider-thumb {
+  background-color: #aaa;
+}
+
 @media only screen and (max-width: 635px) {
   .headerText {
     display: none;

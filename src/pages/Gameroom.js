@@ -12,6 +12,7 @@ import Noti from '../component/modal/NotiModal'
 import JobModal from '../component/modal/JobModal'
 import StartBtn from '../component/buttons/StartBtn'
 import ExitBtn from '../component/buttons/ExitBtn'
+import VoteBtn from '../component/buttons/VoteBtn'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import '../component/video.css'
@@ -105,6 +106,7 @@ function GameRoom(props) {
       <Grid isFlex_center width="90%" margin="0 auto">
         <Grid>
           <ExitBtn />
+          {/* <VoteBtn /> */}
           <Grid margin="0 auto" width="60%">
             <VideoContainer socket={socket} />
             <StartBtn socket={socket} />

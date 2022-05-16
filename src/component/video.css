@@ -27,6 +27,19 @@
   transform: scaleX(-1);
 }
 
+.userview_name {
+  background-color: #000;
+  color: #fff;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 23px;
+  width: 180px;
+  border: 2px solid #61ff00;
+  margin: 20px auto;
+}
+
 .toasted {
   font-size: 40px;
   margin-top: 200px;

@@ -9,6 +9,41 @@ import { useDispatch } from 'react-redux'
 import { Slider } from '@mui/material'
 import styled from 'styled-components'
 import closeIcon from '../../assets/icons/black/닫기.png'
+import { makeStyles, withStyles } from '@mui/styles'
+import sheep from '../../assets/image/character/양_시민.png'
+
+const useStyles = makeStyles({
+  thumb: {
+    backgroundImage: `url(${sheep})`,
+  },
+})
+
+const ImageSlider = withStyles({
+  thumb: {
+    width: 45,
+    height: 45,
+    backgroundImage: `url(${sheep})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundColor: 'transparent',
+    backgroundSize: 'cover',
+    borderRadius: 0,
+    '&:before': {
+      width: 0,
+    },
+  },
+  track: {
+    height: 15,
+    color: 'black',
+    borderRadius: 0,
+  },
+  rail: {
+    color: 'white',
+    opacity: 1,
+    height: 15,
+    border: '1px solid black',
+    borderRadius: 0,
+  },
+})(Slider)
 
 const CreateRoomModal = ({ onClose, socket }) => {
   const dispatch = useDispatch()
@@ -17,6 +52,7 @@ const CreateRoomModal = ({ onClose, socket }) => {
   const title = React.useRef()
   const people = React.useRef()
   const pwd = React.useRef()
+  const classes = useStyles()
 
   React.useEffect(() => {}, [socket])
   const createRoom = () => {
@@ -76,19 +112,17 @@ const CreateRoomModal = ({ onClose, socket }) => {
               <Text margin="10px 0" size="22px">
                 인원 수
               </Text>
-              <Slider
+              <ImageSlider
                 aria-label="time-indicator"
                 defaultValue={5}
                 max={10}
                 min={4}
                 step={1}
                 valueLabelDisplay="on"
-                size="big"
                 onChange={(e) => {
                   setPeople(e.target.value)
                 }}
               />
-              {/* <input type="range" /> */}
             </Grid>
 
             <Grid margin="40px 0 ">
