@@ -2,11 +2,14 @@ import React from 'react'
 import Peer from 'peerjs'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
-
+//이름이 안떠,,,
 const VideoContainer = () => {
   const socket = useSelector((state) => state.game.socket)
+  const [cameraOn, setCameraOn] = React.useState(true)
+  const [display, setDisplay] = React.useState(false)
   const videoWrap = React.useRef()
   const videoGrid = React.useRef()
+  const videoBack = React.useRef()
   // const myVideo = document.createElement('video')
   const myVideo = React.useRef()
   let allStream = React.useRef()
@@ -20,6 +23,21 @@ const VideoContainer = () => {
   let myStream = null
 
   let userNick = localStorage.getItem('userNick')
+
+  const handleCamera = () => {
+    setCameraOn((prev) => !prev)
+    if (cameraOn) {
+      let video = allStream.current.getTracks()
+      video[0].enabled = false
+      let src = document.querySelector('.video_non_src')
+      src.style.display = 'block'
+    } else {
+      let video = allStream.current.getTracks()
+      video[0].enabled = true
+      let src = document.querySelector('.video_non_src')
+      src.style.display = 'none'
+    }
+  }
 
   //테스트
 
@@ -40,7 +58,7 @@ const VideoContainer = () => {
         let streamId = stream.id
         addVideoStream(myVideo.current, stream)
         myVideo.current.classList.add('video_box')
-        videoGrid.current.append(myVideo.current)
+        videoGrid.current.prepend(myVideo.current)
         allStream.current = stream
 
         console.log(myPeer)
@@ -52,7 +70,6 @@ const VideoContainer = () => {
 
         if (myPeer._id == null) {
           myPeer.on('open', (peerId) => {
-            //소켓을 통해 서버로 방ID, 유저ID 보내주기
             console.log(peerId)
             myPeerId = peerId
             socket.emit('peerJoinRoom', myPeerId, userNick, streamId)
@@ -63,7 +80,7 @@ const VideoContainer = () => {
 
         myPeer.on('connection', (dataConnection) => {
           peersNick = dataConnection.metadata
-          const peerNick = document.createElement('p')
+          let peerNick = document.createElement('p')
           peerNick.innerText = peersNick
           const nickBox = document.querySelector('.userview_name')
           nickBox.prepend(peerNick)
@@ -87,7 +104,7 @@ const VideoContainer = () => {
 
           call.on('stream', (userVideoStream) => {
             addVideoStream(peerVideo, userVideoStream)
-            videoBox.append(peerVideo)
+            videoBox.prepend(peerVideo)
             console.log('here')
           })
           return null
@@ -106,17 +123,17 @@ const VideoContainer = () => {
           newVideo.classList.add('video_box')
           const nickBox = document.createElement('div')
           nickBox.classList.add('userview_name')
-          const peerNick = document.createElement('p')
+          let peerNick = document.createElement('p')
           peerNick.innerText = userNick
-          nickBox.append(peerNick)
-          videoBox.append(newVideo)
-          videoBox.append(nickBox)
+          nickBox.prepend(peerNick)
+          videoBox.prepend(newVideo)
+          videoBox.prepend(nickBox)
           videoWrap.current.prepend(videoBox)
           console.log('연결함수 실행완')
 
           call.on('stream', (newStream) => {
             addVideoStream(newVideo, newStream)
-            videoBox.append(newVideo)
+            videoBox.prepend(newVideo)
             console.log('추가완료')
           })
         })
@@ -138,7 +155,7 @@ const VideoContainer = () => {
       }
       removeVideo.parentNode.remove()
     })
-    // return
+    return
     // function cleanup() {
     //   myStream.getTracks().forEach((track) => {
     //     track.stop()
@@ -153,7 +170,27 @@ const VideoContainer = () => {
         <div className="real_container">
           <div className="video_container" ref={videoWrap}>
             <div className="video_grid" ref={videoGrid}>
-              <video ref={myVideo} className="myvideo"></video>
+              <video
+                ref={myVideo}
+                className="myvideo"
+                onMouseOver={() => {
+                  videoBack.current.style.display = 'block'
+                  setDisplay(!display)
+                }}
+              ></video>
+              <div
+                className="video_background"
+                ref={videoBack}
+                onMouseOut={() => {
+                  videoBack.current.style.display = 'none'
+                  setDisplay(!display)
+                }}
+              ></div>
+              <button
+                cameraOn={cameraOn}
+                display={display}
+                handleCamera={handleCamera}
+              />
               <div className="userview_name fl">
                 <p>{userNick}</p>
               </div>
