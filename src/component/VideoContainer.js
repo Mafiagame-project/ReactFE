@@ -5,20 +5,30 @@ import styled from 'styled-components'
 
 const VideoContainer = () => {
   const socket = useSelector((state) => state.game.socket)
-
+  const videoWrap = React.useRef()
   const videoGrid = React.useRef()
-  const myVideo = document.createElement('video')
+  // const myVideo = document.createElement('video')
+  const myVideo = React.useRef()
+  let allStream = React.useRef()
   myVideo.muted = true
   const peers = {}
+
+  let peersNick
+  let peerNick = ''
+  let peerNickname = ''
+  let myPeerId = ''
+  let myStream = null
+
+  let userNick = localStorage.getItem('userNick')
+
   //테스트
 
   React.useEffect(() => {
     const myPeer = new Peer()
-
-    myPeer.on('open', (id) => {
-      console.log(id)
-      socket.emit('peerJoinRoom', id)
-    })
+    //   {
+    //   config: { iceServers: [{ url: 'turn:numb.viagenie.ca' }] },
+    // }
+    myPeer.nick = userNick
 
     navigator.mediaDevices
       .getUserMedia({
@@ -26,72 +36,145 @@ const VideoContainer = () => {
         audio: false,
       })
       .then((stream) => {
-        myVideo.classList.add('video_box')
-        addVideoStream(myVideo, stream)
-        console.log('here')
+        myStream = stream
+        let streamId = stream.id
+        addVideoStream(myVideo.current, stream)
+        myVideo.current.classList.add('video_box')
+        videoGrid.current.append(myVideo.current)
+        allStream.current = stream
 
+        console.log(myPeer)
+
+        // myPeer.on('open', (id) => {
+        //   console.log(id)
+        //   socket.emit('peerJoinRoom', id, userNick, streamId)
+        // })
+
+        if (myPeer._id == null) {
+          myPeer.on('open', (peerId) => {
+            //소켓을 통해 서버로 방ID, 유저ID 보내주기
+            console.log(peerId)
+            myPeerId = peerId
+            socket.emit('peerJoinRoom', myPeerId, userNick, streamId)
+          })
+        } else {
+          socket.emit('peerJoinRoom', myPeer._id, userNick, streamId)
+        }
+
+        myPeer.on('connection', (dataConnection) => {
+          peersNick = dataConnection.metadata
+          const peerNick = document.createElement('p')
+          peerNick.innerText = peersNick
+          const nickBox = document.querySelector('.userview_name')
+          nickBox.prepend(peerNick)
+          console.log(nickBox)
+        })
+        //새 피어가 연결을 원할 때
         myPeer.on('call', (call) => {
           console.log('콜 찍히니?')
           call.answer(stream)
-          const video = document.createElement('video')
-          video.classList.add('video_box')
-          console.log('here')
+          const videoBox = document.createElement('div')
+          videoBox.classList.add('video_grid')
+          const peerVideo = document.createElement('video')
+          peerVideo.classList.add('video_box')
+          const nickBox = document.createElement('div')
+          nickBox.classList.add('userview_name', 'fl')
+
+          videoBox.prepend(peerVideo)
+          videoBox.prepend(nickBox)
+          console.log(videoBox)
+          videoWrap.current.prepend(videoBox)
 
           call.on('stream', (userVideoStream) => {
-            addVideoStream(video, userVideoStream)
+            addVideoStream(peerVideo, userVideoStream)
+            videoBox.append(peerVideo)
             console.log('here')
           })
+          return null
         })
 
-        socket.on('user-connected', (userId) => {
-          console.log(userId, stream)
-          connectToNewUser(userId, stream)
+        //두번째 순서 => peer.call
+        socket.on('user-connected', (userId, userNick, streamId) => {
+          console.log(userId, streamId, userNick)
+
+          const call = myPeer.call(userId, myStream)
+          const dataConnection = myPeer.connect(userId, { metadata: userNick })
+
+          const videoBox = document.createElement('div')
+          videoBox.classList.add('video_grid')
+          const newVideo = document.createElement('video')
+          newVideo.classList.add('video_box')
+          const nickBox = document.createElement('div')
+          nickBox.classList.add('userview_name')
+          const peerNick = document.createElement('p')
+          peerNick.innerText = userNick
+          nickBox.append(peerNick)
+          videoBox.append(newVideo)
+          videoBox.append(nickBox)
+          videoWrap.current.prepend(videoBox)
           console.log('연결함수 실행완')
+
+          call.on('stream', (newStream) => {
+            addVideoStream(newVideo, newStream)
+            videoBox.append(newVideo)
+            console.log('추가완료')
+          })
         })
       })
+      .catch((err) => {
+        console.log('err', err)
+      })
 
-    socket.on('user-disconnected', (userId) => {
-      if (peers[userId]) peers[userId].close()
+    socket.on('user-disconnected', (userId, userNick, streamId) => {
+      const video = document.querySelectorAll('video')
+      const video_box = document.querySelectorAll('video_box')
+      const nick_box = document.querySelectorAll('userview_name')
+      let removeVideo
+
+      for (let i = 0; i < video.length; i++) {
+        if (video[i].srcObject.id === streamId) {
+          removeVideo = video[i]
+        }
+      }
+      removeVideo.parentNode.remove()
     })
-
-    function connectToNewUser(userId, myStream) {
-      const call = myPeer.call(userId, myStream)
-      const video = document.createElement('video')
-      video.classList.add('video_box')
-      console.log('유저연결 실행')
-      call.on('stream', (userVideoStream) => {
-        addVideoStream(video, userVideoStream)
-        console.log('비디오 함수 실행완')
-      })
-
-      call.on('close', () => {
-        console.log('삭제')
-        video.remove()
-      })
-
-      peers[userId] = call
-    }
+    // return
+    // function cleanup() {
+    //   myStream.getTracks().forEach((track) => {
+    //     track.stop()
+    //   })
+    //   myPeer.destroy()
+    // }
   }, [])
 
-  function addVideoStream(video, stream) {
-    console.log(stream)
-    video.srcObject = stream
-    console.log(video)
-    video.addEventListener('loadedmetadata', () => {
-      video.play()
-    })
-    videoGrid.current.append(video)
-    console.log('추가완')
-  }
   return (
     <>
       <Container>
-        <div className="video_container">
-          <div className="video_grid" ref={videoGrid} />
+        <div className="real_container">
+          <div className="video_container" ref={videoWrap}>
+            <div className="video_grid" ref={videoGrid}>
+              <video ref={myVideo} className="myvideo"></video>
+              <div className="userview_name fl">
+                <p>{userNick}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </Container>
     </>
   )
+}
+
+function addVideoStream(video, stream) {
+  console.log(stream)
+  video.srcObject = stream
+  console.log(video)
+  video.addEventListener('loadedmetadata', () => {
+    video.play()
+  })
+  return null
+  // videoGrid.current.append(video)
+  // console.log('추가완')
 }
 
 const Container = styled.div`

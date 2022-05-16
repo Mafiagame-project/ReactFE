@@ -102,7 +102,6 @@ function GameRoom(props) {
   return (
     <>
       <Header />
-
       <Grid isFlex_center width="90%" margin="0 auto">
         <Grid>
           <ExitBtn />
