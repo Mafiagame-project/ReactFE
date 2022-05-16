@@ -16,9 +16,14 @@ import EditUser from '../pages/auth/EditUser'
 import { useDispatch } from 'react-redux'
 import styled, { createGlobalStyle } from 'styled-components'
 import pattern from '../assets/image/pattern/03_opacity.png'
+import { actionCreators as userAction } from '../redux/modules/user'
 
 function App() {
   const dispatch = useDispatch()
+  React.useEffect(() => {
+    dispatch(userAction.isLoginDB())
+  }, [])
+
   return (
     <>
       <ConnectedRouter history={history}>

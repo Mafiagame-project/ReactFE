@@ -1,11 +1,14 @@
 .video_container {
-}
-
-.video_grid {
   display: grid;
   grid-gap: 2rem 1rem;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   transition: 0.2s;
+}
+
+.video_grid {
+  text-align: center;
+  flex-direction: column;
+  margin: 0 auto;
 }
 
 /* .video_grid :nth-child(3n + 1) {
@@ -20,8 +23,7 @@
   height: 200px;
   border-radius: 70%;
   object-fit: cover;
-  flex-direction: column;
-  margin: 0 auto;
+
   transform: scaleX(-1);
 }
 

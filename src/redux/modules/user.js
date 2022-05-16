@@ -98,13 +98,15 @@ const isLoginDB = () => {
     await axios({
       headers: {
         'Content-Type': 'application/json',
-        // Authorization: `Bearer${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
       method: 'get',
       url: `${BASE_URL}/user/loginCheck`,
     })
       .then((res) => {
         console.log(res)
+        localStorage.setItem('userId', res.data.userId)
+        localStorage.setItem('userNick', res.data.userNick)
         dispatch(
           setUser({
             userId: res.data.userId,

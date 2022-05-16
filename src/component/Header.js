@@ -11,7 +11,7 @@ import LogoutIcon from '../assets/icons/white/로그아웃(백).png'
 
 function Header(props) {
   const dispatch = useDispatch()
-  const currentId = localStorage.getItem('userId')
+  const userNick = localStorage.getItem('userNick')
   const [getFriend, setFriend] = React.useState(false)
   const [isOpen, setIsOpen] = React.useState(false)
   const handleLogOut = () => {
@@ -31,7 +31,7 @@ function Header(props) {
               <Image size="40" />
               <Grid margin="0 22px" className="headerText" width="100px">
                 <Text margin="0px" color="#fff">
-                  {currentId}
+                  {userNick}
                 </Text>
                 <Text margin="0px" color="#fff">
                   0승 25패
