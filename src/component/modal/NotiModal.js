@@ -13,7 +13,6 @@ function NotiModal() {
   const currentTime = useSelector((state) => state.game.night)
   const reportNoti = useSelector((state) => state.game.repNoti)
   console.log(voteResult)
-  console.log(currentTime)
   return (
     <>
       {endGameNoti ? ( // 게임이 끝났냐 안끝났냐
@@ -71,11 +70,19 @@ function NotiModal() {
                             <Frame45></Frame45>
                             <Grid>
                               <Text color="white" size="32px">
-                                reportNoti?.clickerId
+                                {reportNoti?.clickerId}
                               </Text>
-                              <Text color="#61FF00" size="32px">
-                                reportNoti?.clickerJob
-                              </Text>
+                                  {reportNoti?.clickerJob === 'mafia' ? (
+                                    <Text color="#61FF00" size="32px">마피아</Text>
+                                  ) : reportNoti?.clickerJob === 'police' ? (
+                                    <Text color="#61FF00" size="32px">경찰</Text>
+                                  ) : reportNoti?.clickerJob === 'doctor' ? (
+                                    <Text color="#61FF00" size="32px">의사</Text>
+                                  ) : reportNoti?.clickerJob === 'reporter' ? (
+                                    <Text color="#61FF00" size="32px">기자</Text>
+                                  ) : reportNoti?.clickerJob === 'citizen' ? (
+                                    <Text color="#61FF00" size="32px">시민</Text>
+                                  ) : null}
                               <Text color="white" size="20px">
                                 인것으로 밝혀져... 충격...
                               </Text>

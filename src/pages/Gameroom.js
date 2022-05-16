@@ -29,7 +29,6 @@ function GameRoom(props) {
   const dayCount = useSelector(state => state.game.cnt)
   const [isOpen, setIsOpen] = useState(false)
   const [getNotice, setNotice] = useState(false)
-  const [getCnt, setCnt] = useState(0);
 
   const dayOrNight = (time) => {
     if (time == true) {
@@ -52,6 +51,7 @@ function GameRoom(props) {
     setTimeout(() => {
       setNotice(false)
     }, 6000)
+    dispatch(gameActions.noticeRep(null))
   }
 
   useEffect(() => {
@@ -75,20 +75,19 @@ function GameRoom(props) {
       socket.off('leaveRoomMsg')
       socket.off('joinRoomMsg')
       socket.off('isNight')
+      socket.off('reporterOver')
       socket.removeAllListeners('isNight')
       dispatch(gameActions.dayCount(0))
-      // dispatch(gameActions.roomReady(null))
       unlisten()
-      
+      dispatch(gameActions.repChanceOver(null))
       dispatch(roomActions.changeHost(null))
     }
   }, [socket])
 
   useEffect(() => {
     if(currentTime === null || dayCount < 2){
-      console.log('아무것도 없음' + dayCount)
+      return
     } else {
-      console.log('노티 실행')
       enterNoti()
     }
   }, [currentTime])

@@ -6,6 +6,7 @@ import ModalPortal from './ModalPortal'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import '../video.css'
+import { actionCreators as gameActions } from '../../redux/modules/game'
 
 const VoteModal = ({ onClose }) => {
   const [clickedId, setClickedId] = React.useState()
@@ -13,7 +14,7 @@ const VoteModal = ({ onClose }) => {
   const is_night = useSelector((state) => state.game.night)
   const playerJob = useSelector((state) => state.game.job)
   const killed = useSelector((state) => state.game.killed)
-  const copSelect = useSelector((state) => state.game.copSelect)
+  const chance = useSelector((state) => state.game.chance)
   const memberId = useSelector((state) => state.member.memberId)
   const currentId = localStorage.getItem('userId')
 
@@ -44,27 +45,56 @@ const VoteModal = ({ onClose }) => {
     }
   }
 
+  const actionAlert = (num) => {
+    if(num === 1){
+      toast.warning('본인을 선택할 수 없습니다', {
+        position : toast.POSITION.TOP_RIGHT,
+        className : 'toast-police',
+        autoClose : 3000,
+      })
+    } else if(num === 2){
+      toast.warning('이미 죽은사람을 선택할 수 없습니다', {
+        position : toast.POSITION.TOP_RIGHT,
+        className : 'toast-police',
+        autoClose : 3000,
+      })
+    } else if(num === 3){
+      toast.warning('당신은 죽었기때문에 선택할 수 없습니다', {
+        position : toast.POSITION.TOP_RIGHT,
+        className : 'toast-police',
+        autoClose : 3000,
+      })
+    }
+  }
+
   const active = (clickedId, clicker, time) => {
     let clickerJob = clicker.playerJob
     let clickerId = clicker.player
     if (currentId == clickedId) {
-      alert('다른사람을 뽑아주세요')
+      actionAlert(1)
       return
     }
     if (killed?.length > 0) {
       killed.forEach((id) => {
-        if (clicker.player == id) {
-          alert('죽었습니다')
-          return
+        if(clickerId == id){
+          actionAlert(3)
+          return onClose()
+        }
+        if(clickedId == id){
+          actionAlert(2)
+          return onClose()
         } else {
-          if (clickerJob == 'police' ) {
-          }
           socket.emit('vote', { clickerJob, clickerId, clickedId })
           if (clickerJob == 'police' && time == true) {
             socket.on('police', selected => {
               policePointed(clickedId, selected)
             })
-          }
+          } else if (clickerJob == 'reporter' && time == true){
+            if(chance == true){
+              alert('기회 없음')
+              return onClose()
+            }
+          } 
           return onClose()
         }
       })
@@ -74,7 +104,12 @@ const VoteModal = ({ onClose }) => {
         socket.on('police', selected => {
           policePointed(clickedId, selected)
         })
-      }
+      } else if (clickerJob == 'reporter' && time == true){
+        if(chance == true){
+          alert('기회 없음')
+          return onClose()
+        }
+      } 
       return onClose()
     }
     

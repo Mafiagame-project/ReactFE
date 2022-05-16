@@ -24,7 +24,7 @@ const StartBtn = ({ socket }) => {
       }
     }
   }
-
+  
   const startGameNoti = (count) => {
     if (count === 1) {
       toast.info('게임시작을 위해서 최소 4명이상이 필요합니다', {

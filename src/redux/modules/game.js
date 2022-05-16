@@ -17,6 +17,7 @@ const COP_SELECTED = 'COP_SELECTED'
 const ALL_READY = 'ALL_READY'
 const START_CARD = 'START_CARD'
 const DAY_CNT = 'DAY_CNT'
+const CHANCE = 'CHANCE'
 
 const sendSocket = createAction(SEND_SOCKET, (socket) => ({ socket }))
 const sendPeerId = createAction(SEND_PEERID, (peer) => ({ peer }))
@@ -34,7 +35,8 @@ const dayAndNight = createAction(IS_NIGHT, (boolean) => ({ boolean }))
 const copSelected = createAction(COP_SELECTED, (selected) => ({ selected }))
 const readyCheck = createAction(ALL_READY, (ready) => ({ready}))
 const startCard = createAction(START_CARD, (card) => ({card}))
-const dayCount = createAction(DAY_CNT)
+const dayCount = createAction(DAY_CNT, (num) => ({num}))
+const repChanceOver = createAction(CHANCE, (chance) => ({chance}))
 
 const initialState = {
   socket: null,
@@ -53,6 +55,7 @@ const initialState = {
   ready: null,
   card : null,
   cnt : 0,
+  chance : null,
 }
 
 export default handleActions(
@@ -123,8 +126,16 @@ export default handleActions(
       }),
     [DAY_CNT]: (state, action) =>
       produce(state, (draft) => {
-        let count = 1;
-        draft.cnt = draft.cnt + count;
+        if(action.payload.num === 0){
+          draft.cnt = 0;
+        } else {
+          let count = 1;
+          draft.cnt = draft.cnt + count;
+        }
+      }),
+      [CHANCE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.chance = action.payload.chance
       }),
   },
   initialState,
@@ -146,6 +157,7 @@ const actionCreators = {
   readyCheck,
   noticeRep,
   dayCount,
+  repChanceOver,
 }
 
 export { actionCreators }

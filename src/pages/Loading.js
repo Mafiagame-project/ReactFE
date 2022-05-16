@@ -55,6 +55,7 @@ function Loading() {
     })
 
     socket.on('dayVoteResult', (value) => {
+      console.log(value)
       dispatch(gameActions.playerWhoKilled(value.diedPeopleArr)) // 죽은 전체명단
       dispatch(gameActions.noticeResult(value.id)) // 방금 죽은사람
     })
@@ -78,12 +79,9 @@ function Loading() {
       dispatch(gameActions.noticeEndGame(data?.msg))
     })
 
-    // socket.on('police', (selected) => {
-    //   console.log(selected)
-    //   // 경찰이 밤에 선택했을때 전달받는 소켓
-    //   dispatch(gameActions.copSelected(selected))
-    //   dispatch(gameActions.noticeCop(true))
-    // })
+    socket?.on('reporterOver', () => {
+      dispatch(gameActions.repChanceOver(true))
+    })
 
     socket.on('reporter', (data) => {
       //데이터가 Json 타입임 1번 기자가 고른사람의 직업, 2번 기자가 고른사람의 아이디 3번 기자가 고른사람이 누굴 찍었는지

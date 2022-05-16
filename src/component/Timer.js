@@ -7,10 +7,16 @@ function Timer(props) {
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] = useState(0)
 
-  socket.on('timer', (time) => {
-    setMinutes(time.min)
-    setSeconds(time.sec)
-  })
+  try {
+    socket.on('timer', (time) => {
+      setMinutes(time.min)
+      setSeconds(time.sec)
+    })
+  } catch {
+    alert('비정상적 접근으로인해 메인으로 이동합니다')
+    window.location = '/'
+  }
+
 
   return (
     <>
