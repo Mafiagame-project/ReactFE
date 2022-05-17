@@ -34,11 +34,10 @@ function Loading() {
       history.replace(`/gameroom/${info.roomId}`)
     })
 
-    socket.on('leaveRoomMsg', (offSocketId, offId, host) => {
+    socket.on('leaveRoomMsg', (offSocketId, offId) => {
       dispatch(memberActions.exitSocketId(offSocketId))
       dispatch(memberActions.exitUserId(offId))
       dispatch(gameActions.noticeEnterOut(offId)) // 들어오고 나가고의 알림 없다면 삭제
-      dispatch(roomActions.changeHost(host))
     })
 
     socket.on('joinRoomMsg', (incoming, idValue, currentAll) => {
@@ -52,13 +51,16 @@ function Loading() {
       dispatch(gameActions.noticeJob(playerJob))
       dispatch(gameActions.playerJob({ player, playerJob }))
       dispatch(gameActions.startCard(true))
+      dispatch(roomActions.startCheck(true))
     })
 
     socket.on('isNight', (value) => {
       dispatch(gameActions.dayAndNight(value))
+      dispatch(gameActions.dayCount())
     })
 
     socket.on('dayVoteResult', (value) => {
+      console.log(value)
       dispatch(gameActions.playerWhoKilled(value.diedPeopleArr)) // 죽은 전체명단
       dispatch(gameActions.noticeResult(value.id)) // 방금 죽은사람
     })
@@ -80,17 +82,14 @@ function Loading() {
     socket.on('endGame', (data) => {
       // 게임이 끝났을 때 노티
       dispatch(gameActions.noticeEndGame(data?.msg))
+      dispatch(roomActions.startCheck(null))
     })
 
-    socket.on('police', (selected) => {
-      // 경찰이 밤에 선택했을때 전달받는 소켓
-      dispatch(gameActions.copSelected(selected))
-      dispatch(gameActions.noticeCop(true))
+    socket?.on('reporterOver', () => {
+      dispatch(gameActions.repChanceOver(true))
     })
 
     socket.on('reporter', (data) => {
-      //데이터가 Json 타입임 1번 기자가 고른사람의 직업, 2번 기자가 고른사람의 아이디 3번 기자가 고른사람이 누굴 찍었는지
-      // 3번은 회의 후 지양할 것, 정체만 알면 될것같은데 누굴 찍었는지는 좀...
       dispatch(gameActions.noticeRep(data))
     })
   }

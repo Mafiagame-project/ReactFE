@@ -34,7 +34,7 @@ const ChatBox = ({ socket }) => {
   }, [socket])
 
   return (
-    <Grid center width="">
+    <Grid margin='30px 0 0 0' center width="">
       <Timer />
       <ChatContainer>
         <Chatbox>

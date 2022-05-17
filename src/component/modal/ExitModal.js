@@ -12,7 +12,7 @@ const ExitModal = ({ onClose }) => {
   const socket = useSelector((state) => state.game.socket)
   const exitRoom = () => {
     // 방에서 나가기 버튼을 누를때 호출
-    socket.emit('leaveRoom')
+    // socket.emit('leaveRoom')
     history.replace('/gamemain')
     dispatch(gameActions.noticeResult(null))
     dispatch(gameActions.playerWhoSurvived(null))
@@ -21,6 +21,7 @@ const ExitModal = ({ onClose }) => {
     dispatch(gameActions.readyCheck(null))
     dispatch(gameActions.noticeJob(null))
     dispatch(roomActions.changeHost(null))
+    dispatch(roomActions.roomReady(null))
   }
   return (
     <>

@@ -53,6 +53,8 @@ const Rooms = (props) => {
   React.useEffect(() => {
     return () => {
       socket.off('roomList')
+      socket.off('joinRoom')
+      socket.removeAllListeners('joinRoom')
     }
   }, [socket])
   React.useEffect(() => {

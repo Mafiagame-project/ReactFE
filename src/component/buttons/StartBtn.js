@@ -4,16 +4,16 @@ import { useSelector } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify'
 import ReadyBtn from './ReadyBtn'
 import VoteBtn from './VoteBtn'
+import { history } from '../../redux/configureStore'
 
 const StartBtn = ({ socket }) => {
   const roomInfo = useSelector((state) => state.room.current)
   const currentReady = useSelector((state) => state.room.ready)
   const memberSocket = useSelector((state) => state.member.socketId)
-  const currentId = localStorage.getItem('userNick')
+  const members = useSelector((state) => state.member.memberId)
+  const startCheck = useSelector((state) => state.room.check)
+  const currentId = localStorage.getItem('userId')
   const [getStart, setStart] = React.useState(false)
-
-  console.log(roomInfo)
-
   const startGame = () => {
     if (memberSocket.length < 4) {
       startGameNoti(1)
@@ -26,6 +26,19 @@ const StartBtn = ({ socket }) => {
       }
     }
   }
+
+  React.useEffect(() => {
+    let check = members?.includes(roomInfo?.userId)
+    if (members.length >= 1) {
+      if (check == false && !startCheck) {
+        history.replace('/gamemain')
+        alert('방장이 나가서 방이 폭파되었습니다 ㅋ')
+        return
+      }
+    } else {
+      return
+    }
+  }, [members])
 
   const startGameNoti = (count) => {
     if (count === 1) {

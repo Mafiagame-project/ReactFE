@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Grid, Text, Image } from '../element/index'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../redux/configureStore'
 import { actionCreators as userActions } from '../redux/modules/user'
 import FriendsListModal from './modal/FriendsListModal'
@@ -10,6 +10,7 @@ import soundIcon from '../assets/icons/white/소리(백).png'
 import LogoutIcon from '../assets/icons/white/로그아웃(백).png'
 
 function Header(props) {
+  const socket = useSelector(state => state.game.socket)
   const dispatch = useDispatch()
   const userNick = localStorage.getItem('userNick')
   const [getFriend, setFriend] = React.useState(false)
@@ -20,7 +21,7 @@ function Header(props) {
   return (
     <>
       <Container>
-        <Grid _onClick={() => history.push('/')}>
+        <Grid _onClick={() => {history.push('/'); socket.disconnect()}}>
           <Text size="30px" color="#fff">
             MAFIYANG
           </Text>
