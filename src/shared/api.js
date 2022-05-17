@@ -24,5 +24,6 @@ api.interceptors.request.use(async (config) => {
 // }
 
 export const Api = {
-  getNaverToken: (token) => api.get(`/naverLogin`),
+  getNaverCode: (code, state) =>
+    Api.get(`/naverLogin/main?code=${code}&state=${state}`),
 }

@@ -22,7 +22,7 @@ const VideoContainer = () => {
   let myPeerId = ''
   let myStream = null
 
-  let userNick = localStorage.getItem('userNick')
+  let UserNick = localStorage.getItem('userNick')
 
   // const handleCamera = () => {
   //   setCameraOn((prev) => !prev)
@@ -43,10 +43,8 @@ const VideoContainer = () => {
 
   React.useEffect(() => {
     const myPeer = new Peer()
-    //   {
-    //   config: { iceServers: [{ url: 'turn:numb.viagenie.ca' }] },
-    // }
-    myPeer.nick = userNick
+
+    myPeer.nick = UserNick
 
     navigator.mediaDevices
       .getUserMedia({
@@ -63,19 +61,14 @@ const VideoContainer = () => {
 
         console.log(myPeer)
 
-        // myPeer.on('open', (id) => {
-        //   console.log(id)
-        //   socket.emit('peerJoinRoom', id, userNick, streamId)
-        // })
-
         if (myPeer._id == null) {
           myPeer.on('open', (peerId) => {
             console.log(peerId)
             myPeerId = peerId
-            socket.emit('peerJoinRoom', myPeerId, userNick, streamId)
+            socket.emit('peerJoinRoom', myPeerId, UserNick, streamId)
           })
         } else {
-          socket.emit('peerJoinRoom', myPeer._id, userNick, streamId)
+          socket.emit('peerJoinRoom', myPeer._id, UserNick, streamId)
         }
 
         myPeer.on('connection', (dataConnection) => {
@@ -97,8 +90,8 @@ const VideoContainer = () => {
           const nickBox = document.createElement('div')
           nickBox.classList.add('userview_name', 'fl')
 
+          nickBox.prepend(videoBox)
           videoBox.prepend(peerVideo)
-          videoBox.prepend(nickBox)
           console.log(videoBox)
           videoWrap.current.prepend(videoBox)
 
@@ -115,7 +108,7 @@ const VideoContainer = () => {
           console.log(userId, streamId, userNick)
 
           const call = myPeer.call(userId, myStream)
-          const dataConnection = myPeer.connect(userId, { metadata: userNick })
+          const dataConnection = myPeer.connect(userId, { metadata: UserNick })
 
           const videoBox = document.createElement('div')
           videoBox.classList.add('video_grid')
@@ -144,8 +137,8 @@ const VideoContainer = () => {
 
     socket.on('user-disconnected', (userId, userNick, streamId) => {
       const video = document.querySelectorAll('video')
-      const video_box = document.querySelectorAll('video_box')
-      const nick_box = document.querySelectorAll('userview_name')
+      // const video_box = document.querySelectorAll('video_box')
+      // const nick_box = document.querySelectorAll('userview_name')
       let removeVideo
 
       for (let i = 0; i < video.length; i++) {
@@ -155,13 +148,12 @@ const VideoContainer = () => {
       }
       removeVideo.parentNode.remove()
     })
-    return
-    // function cleanup() {
-    //   myStream.getTracks().forEach((track) => {
-    //     track.stop()
-    //   })
-    //   myPeer.destroy()
-    // }
+    return function cleanup() {
+      myStream.getTracks().forEach((track) => {
+        track.stop()
+      })
+      myPeer.destroy()
+    }
   }, [])
 
   return (
@@ -192,7 +184,7 @@ const VideoContainer = () => {
                 handleCamera={handleCamera}
               /> */}
               <div className="userview_name fl">
-                <p>{userNick}</p>
+                <p>{UserNick}</p>
               </div>
             </div>
           </div>

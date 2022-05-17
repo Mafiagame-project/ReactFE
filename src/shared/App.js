@@ -13,17 +13,9 @@ import NaverLogin from './NaverLogin'
 import Loading from '../pages/Loading'
 import Introduce from '../pages/Introduce'
 import EditUser from '../pages/auth/EditUser'
-import { useDispatch } from 'react-redux'
-import styled, { createGlobalStyle } from 'styled-components'
-import pattern from '../assets/image/pattern/03_opacity.png'
-import { actionCreators as userAction } from '../redux/modules/user'
+import EditProfile from '../pages/auth/EditProfile'
 
 function App() {
-  const dispatch = useDispatch()
-  React.useEffect(() => {
-    dispatch(userAction.isLoginDB())
-  }, [])
-
   return (
     <>
       <ConnectedRouter history={history}>
@@ -37,18 +29,10 @@ function App() {
         <Route exact path="/naverLogin/main" component={NaverLogin} />
         <Route exact path="/introduce" component={Introduce} />
         <Route exact path="/edituser" component={EditUser} />
+        <Route exact path="/editprofile" component={EditProfile} />
       </ConnectedRouter>
-      <GlobalStyle />
     </>
   )
 }
-
-const GlobalStyle = createGlobalStyle`
-body {
-
-  background-image: url(${pattern});
-  
-}
-`
 
 export default App

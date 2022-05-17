@@ -5,6 +5,7 @@ import io from 'socket.io-client'
 import { actionCreators as gameActions } from '../redux/modules/game'
 import { actionCreators as roomActions } from '../redux/modules/room'
 import { actionCreators as memberActions } from '../redux/modules/member'
+import { actionCreators as userAction } from '../redux/modules/user'
 import { useEffect } from 'react'
 import styled from 'styled-components'
 
@@ -12,6 +13,10 @@ function Loading() {
   const dispatch = useDispatch()
   const history = useHistory()
   const token = localStorage.getItem('token')
+
+  useEffect(() => {
+    dispatch(userAction.isLoginDB())
+  }, [])
 
   const entrance = () => {
     history.push('/gamemain')

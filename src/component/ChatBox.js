@@ -10,7 +10,7 @@ const ChatBox = ({ socket }) => {
   const chatting = React.useRef()
   const chatRef = React.useRef(null)
   const [getWrite, setWrite] = React.useState([])
-  const currentId = localStorage.getItem('userId')
+  const currentId = localStorage.getItem('userNick')
   const currentTime = useSelector((state) => state.game.night)
 
   const send = () => {

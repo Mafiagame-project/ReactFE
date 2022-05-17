@@ -68,7 +68,7 @@ const Input = (props) => {
             {...styles}
           />
           <Img src={sheep} className="sheep" />
-          <span>{text}</span>
+          <p>{text}</p>
         </RadioLabel>
       </RadioBox>
     )
@@ -89,6 +89,7 @@ const Input = (props) => {
 
           <Cage src={test} className="cage" />
           <Img src={sheep} className="sheep" />
+
           <p>{text}</p>
         </RadioLabel>
       </RadioBox>
@@ -133,15 +134,20 @@ Input.defaultProps = {
   _onChange: () => {},
   _onKeyDown: () => {},
 }
+
 const RadioBox = styled.div`
-margin: 10px 30px;
+margin: 50px 30px;
+position: relative;
+justify-content: center;
+display: flex;
 align-items; center;
-cursor: pointer;
+flex-direction: column;
 `
 
 const RadioLabel = styled.label`
   > p {
-    padding: 15px 20px;
+    position: relative;
+    display: inline-block;
     color: #fff;
     font-size: 25px;
     margin: 0 0.8vw 0.9vw 0;
@@ -149,19 +155,24 @@ const RadioLabel = styled.label`
   }
 `
 const Img = styled.img`
+  position: absolute;
   width: 80px;
+  top: -90px;
+  left: 73px;
   transition-duration: 0.5s;
   transform: rotate(0);
-  z-index: 5;
-  cursor: pointer;
+  z-index: 10;
 `
 
 const Cage = styled.img`
 opacity: 0;
+  position: absolute;
   width: 90px;
+  top: -130px;
+  left: 66px;
   transition-duration: 0.5s;
   transform: rotate(0);
-  z-index: 6;
+  z-index: 20;
   }
 `
 
@@ -180,8 +191,7 @@ const DayRadioInput = styled.input`
     color: red;
   }
   :checked ~ .cage {
-    top: -6px;
-    left: -5px;
+    top: -90px;
     opacity: 1;
   }
 `

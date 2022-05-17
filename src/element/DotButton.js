@@ -157,6 +157,7 @@ const ButtonBox = styled.div`
   cursor: pointer;
   position: relative;
   text-align: center;
+  margin: 10px;
 `
 
 const WhiteText = styled.div`

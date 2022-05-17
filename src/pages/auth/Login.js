@@ -33,6 +33,11 @@ function Login() {
   const REDIRECT_URI = 'https://d191gfhy5yq8br.cloudfront.net/main'
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`
 
+  const NAVER_CLIENT_ID = '9WNFXnar7frmNNTQmP4N'
+  const NAVER_CALLBACK_URI = 'http://localhost:3000/naverLogin/main'
+
+  const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${NAVER_CALLBACK_URI}&state=login`
+
   return (
     <>
       <Container>
@@ -87,6 +92,9 @@ function Login() {
           <Text size="20px">sns 로그인</Text>
           <Grid isFlex_center>
             <a href={KAKAO_AUTH_URL}>
+              <Image size="80" margin="0 10px 0 0" src={kakao} />
+            </a>
+            <a href={NAVER_AUTH_URL}>
               <Image size="80" margin="0 10px 0 0" src={kakao} />
             </a>
             <NaverLogin />

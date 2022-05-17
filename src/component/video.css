@@ -19,8 +19,8 @@
 } */
 
 .video_box {
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   border-radius: 70%;
   object-fit: cover;
 

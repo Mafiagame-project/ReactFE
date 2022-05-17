@@ -28,6 +28,7 @@ Grid.defaultProps = {
   borderBottom: false,
   borderLeft: false,
   is_flex: false,
+  column: false,
   flex_column: false,
   flexColumn: false,
   isFlex_start: false,
@@ -60,6 +61,7 @@ const GridBox = styled.div`
       props.flex
         ? `position: relative; display: flex; justify-content: center; flex-direction: column;`
         : ''};
+    ${(props) => (props.column ? `flex-direction: column;` : null)};
    ${(props) =>
      props.flex_column
        ? `display: flex; flex-direction: column; justify-content: center; align-items: center;`

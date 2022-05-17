@@ -2,13 +2,33 @@ import React from 'react'
 import { Grid, Text } from '../../element/index'
 import ExitModal from '../modal/ExitModal'
 import exit from '../../assets/icons/black/exit_game.png'
+import exitWhite from '../../assets/icons/white/exit.png'
 
-const ExitBtn = () => {
+const ExitBtn = (props) => {
   const [exitOpen, setExitOpen] = React.useState(false)
+  const { night } = props
 
+  if (night) {
+    return (
+      <>
+        <Grid center width="65px" margin="10px">
+          <img
+            src={exitWhite}
+            onClick={() => {
+              setExitOpen(true)
+            }}
+          />
+          <Text color="#fff" margin="0" size="12px">
+            게임 종료
+          </Text>
+        </Grid>
+        {exitOpen && <ExitModal onClose={() => setExitOpen(false)} />}
+      </>
+    )
+  }
   return (
     <>
-      <Grid center width="65px" margin="30px">
+      <Grid center width="65px" margin="10px">
         <img
           src={exit}
           onClick={() => {

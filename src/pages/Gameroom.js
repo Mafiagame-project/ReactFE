@@ -29,15 +29,18 @@ function GameRoom(props) {
   const currentId = localStorage.getItem('userId')
   const [isOpen, setIsOpen] = useState(false)
   const [getNotice, setNotice] = useState(false)
+  const [darkMode, setDarkMode] = useState(true)
 
   const dayOrNight = (time) => {
     if (time == true) {
+      setDarkMode(true)
       toast.error('밤이 되었습니다', {
         position: toast.POSITION.TOP_LEFT,
         className: 'toast-time',
         autoClose: 3000,
       })
     } else if (time == false) {
+      setDarkMode(false)
       toast.success('낮이 되었습니다', {
         position: toast.POSITION.TOP_LEFT,
         className: 'toast-time',
@@ -103,23 +106,25 @@ function GameRoom(props) {
   return (
     <>
       <Header />
-      <Grid isFlex_center width="90%" margin="0 auto">
-        <Grid>
-          <ExitBtn />
-          {/* <VoteBtn /> */}
-          <Grid margin="0 auto" width="60%">
-            <VideoContainer socket={socket} />
-            <StartBtn socket={socket} />
+      <div className={`${darkMode && 'dark-mode'}`}>
+        <Grid isFlex_center width="90%" height="90vh" margin="0 auto">
+          <Grid>
+            {darkMode ? <ExitBtn night /> : <ExitBtn />}
+            {/* <VoteBtn /> */}
+            <Grid margin="0 auto" width="60%">
+              <VideoContainer socket={socket} />
+              <StartBtn socket={socket} />
+            </Grid>
+          </Grid>
+          <Grid width="40%">
+            <ChatBox socket={socket} />
           </Grid>
         </Grid>
-        <Grid width="40%">
-          <ChatBox socket={socket} />
-        </Grid>
-      </Grid>
 
-      <JobModal />
-      {getNotice == true ? <Noti></Noti> : null}
-      <ToastContainer />
+        <JobModal />
+        {getNotice == true ? <Noti></Noti> : null}
+        <ToastContainer />
+      </div>
     </>
   )
 }

@@ -9,8 +9,10 @@ const StartBtn = ({ socket }) => {
   const roomInfo = useSelector((state) => state.room.current)
   const currentReady = useSelector((state) => state.room.ready)
   const memberSocket = useSelector((state) => state.member.socketId)
-  const currentId = localStorage.getItem('userId')
+  const currentId = localStorage.getItem('userNick')
   const [getStart, setStart] = React.useState(false)
+
+  console.log(roomInfo)
 
   const startGame = () => {
     if (memberSocket.length < 4) {

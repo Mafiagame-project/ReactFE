@@ -7,18 +7,37 @@
   text-align: center;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body * {
   font-family: 'neodgm';
 }
 
-.MuiSlider-thumb {
-  background-color: #aaa;
+body {
+  background-image: url('../assets/image/pattern/03_opacity.png');
+  width: 100%;
+  height: 100%;
 }
 
 @media only screen and (max-width: 635px) {
   .headerText {
     display: none;
   }
+}
+
+.false {
+  transition-duration: 0.3s;
+  background-color: transparent;
+}
+
+.dark-mode {
+  width: 100%;
+  height: 100%;
+  transition-duration: 0.3s;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 /* #naverIdLogin {

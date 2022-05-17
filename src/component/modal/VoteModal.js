@@ -201,7 +201,7 @@ const VoteBox = styled.div`
   text-align: center;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  max-width: 600px;
+  max-width: 800px;
   margin: 100px auto;
 `
 
