@@ -29,15 +29,16 @@ function Loading() {
       history.replace(`/gameroom/${info.roomId}`)
     })
 
-    socket.on('leaveRoomMsg', (offSocketId, offId, host) => {
+    socket.on('leaveRoomMsg', (offSocketId, offId) => {
       dispatch(memberActions.exitSocketId(offSocketId))
       dispatch(memberActions.exitUserId(offId))
       dispatch(gameActions.noticeEnterOut(offId)) // 들어오고 나가고의 알림 없다면 삭제
-      dispatch(roomActions.changeHost(host))
+      console.log(offId)
     })
 
     socket.on('joinRoomMsg', (incoming, idValue, currentAll) => {
       // 참가자가 방에 들어올때 호출
+      console.log(idValue)
       dispatch(memberActions.currentSocketId(idValue))
       dispatch(memberActions.currentUserId(currentAll))
       dispatch(gameActions.noticeEnterOut(incoming)) // 들어오고 나가고의 알림 없다면 삭제
@@ -47,6 +48,7 @@ function Loading() {
       dispatch(gameActions.noticeJob(playerJob))
       dispatch(gameActions.playerJob({ player, playerJob }))
       dispatch(gameActions.startCard(true))
+      dispatch(roomActions.startCheck(true))
     })
 
     socket.on('isNight', (value) => {
@@ -78,6 +80,7 @@ function Loading() {
     socket.on('endGame', (data) => {
       // 게임이 끝났을 때 노티
       dispatch(gameActions.noticeEndGame(data?.msg))
+      dispatch(roomActions.startCheck(null))
     })
 
     socket?.on('reporterOver', () => {

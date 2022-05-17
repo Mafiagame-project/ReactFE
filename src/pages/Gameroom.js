@@ -3,6 +3,7 @@ import { Grid } from '../element/index'
 import { useEffect, useState } from 'react'
 import { actionCreators as gameActions } from '../redux/modules/game'
 import { actionCreators as roomActions } from '../redux/modules/room'
+import { actionCreators as memberActions } from '../redux/modules/member'
 import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../redux/configureStore'
 import Header from '../component/Header'
@@ -21,35 +22,37 @@ function GameRoom(props) {
   const socket = useSelector((state) => state.game.socket)
   const currentTime = useSelector((state) => state.game.night)
   const startCard = useSelector((state) => state.game.card)
+  const members = useSelector(state => state.member.memberId)
+  const roomInfo = useSelector(state => state.room.current)
+  console.log(members)
   const currentId = localStorage.getItem('userId')
   const [isOpen, setIsOpen] = useState(false)
-
   const dayOrNight = (time) => {
     if (time == true) {
       toast.error('밤이 되었습니다', {
         position: toast.POSITION.TOP_LEFT,
-        className: 'toast-time',
+        className: 'toast-night-time',
         autoClose: 3000,
       })
     } else if (time == false) {
       toast.success('낮이 되었습니다', {
         position: toast.POSITION.TOP_LEFT,
-        className: 'toast-time',
+        className: 'toast-day-time',
         autoClose: 3000,
       })
     }
   }
+  
 
   useEffect(() => {
     let unlisten = history.listen((location) => {
       // 브라우저 뒤로가기 버튼(나가기) 누를때 호출
       if (history.action === 'POP') {
-        socket.emit('leaveRoom')
+        // socket.emit('leaveRoom')
         dispatch(gameActions.noticeResult(null))
         dispatch(gameActions.playerWhoSurvived(null))
         dispatch(gameActions.dayAndNight(null))
         dispatch(gameActions.noticeEndGame(null))
-        socket.off('leaveRoom')
       }
     })
 
@@ -58,11 +61,13 @@ function GameRoom(props) {
       dispatch(gameActions.playerJob(null))
       dispatch(gameActions.copSelected(null))
       dispatch(gameActions.noticeRep(null))
-      socket.off('leaveRoomMsg')
-      socket.off('joinRoomMsg')
+      dispatch(memberActions.currentUserId([]))
       socket.off('isNight')
       socket.off('reporterOver')
       socket.removeAllListeners('isNight')
+      socket.off('vote')
+      socket.off('createRoom')
+      socket.emit('leaveRoom')
       dispatch(gameActions.dayCount(0))
       unlisten()
       dispatch(gameActions.repChanceOver(null))
@@ -91,7 +96,7 @@ function GameRoom(props) {
   return (
     <>
       <Header />
-
+      
       <Grid isFlex_center width="90%" margin="0 auto">
         <Grid>
           <ExitBtn />

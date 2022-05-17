@@ -29,13 +29,13 @@ const VoteModal = ({ onClose }) => {
 
   const policePointed = (pointed, isMafia) => {
     if(isMafia === true){
-      toast.warning(`${pointed}의 정체는 마피아입니다`, {
+      toast.warning(`${pointed}는 마피아입니다`, {
         position: toast.POSITION.TOP_LEFT,
         className: 'toast-police',
         autoClose: 3000,
       })
     } else if(isMafia === false) {
-      toast.warning(`${pointed}의 정체는 마피아가 아닙니다`, {
+      toast.warning(`${pointed}는 마피아가 아닙니다`, {
         position: toast.POSITION.TOP_LEFT,
         className: 'toast-police',
         autoClose: 3000,
@@ -48,21 +48,27 @@ const VoteModal = ({ onClose }) => {
   const actionAlert = (num) => {
     if(num === 1){
       toast.warning('본인을 선택할 수 없습니다', {
-        position : toast.POSITION.TOP_RIGHT,
-        className : 'toast-police',
-        autoClose : 3000,
+        position : toast.POSITION.TOP_LEFT,
+        className : 'toast-dup',
+        autoClose : 2500,
       })
     } else if(num === 2){
       toast.warning('이미 죽은사람을 선택할 수 없습니다', {
-        position : toast.POSITION.TOP_RIGHT,
-        className : 'toast-police',
-        autoClose : 3000,
+        position : toast.POSITION.TOP_LEFT,
+        className : 'toast-dup',
+        autoClose : 2500,
       })
     } else if(num === 3){
       toast.warning('당신은 죽었기때문에 선택할 수 없습니다', {
-        position : toast.POSITION.TOP_RIGHT,
-        className : 'toast-police',
-        autoClose : 3000,
+        position : toast.POSITION.TOP_LEFT,
+        className : 'toast-dup',
+        autoClose : 2500,
+      })
+    } else if(num === 4){
+      toast.warning('기회를 모두 사용하였습니다', {
+        position : toast.POSITION.TOP_LEFT,
+        className : 'toast-rep',
+        autoClose : 2500,
       })
     }
   }
@@ -91,7 +97,7 @@ const VoteModal = ({ onClose }) => {
             })
           } else if (clickerJob == 'reporter' && time == true){
             if(chance == true){
-              alert('기회 없음')
+              actionAlert(4)
               return onClose()
             }
           } 
@@ -106,7 +112,7 @@ const VoteModal = ({ onClose }) => {
         })
       } else if (clickerJob == 'reporter' && time == true){
         if(chance == true){
-          alert('기회 없음')
+          actionAlert(4)
           return onClose()
         }
       } 
