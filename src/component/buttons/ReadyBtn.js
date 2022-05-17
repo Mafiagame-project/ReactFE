@@ -8,8 +8,10 @@ function ReadyBtn() {
   const readyGame = () => {
     if (getReady == false) {
       socket.emit('ready', true)
+      socket.off('ready')
     } else {
       socket.emit('ready', false)
+      socket.off('ready')
     }
     setReady(!getReady)
   }

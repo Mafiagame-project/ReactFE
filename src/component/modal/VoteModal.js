@@ -6,6 +6,7 @@ import ModalPortal from './ModalPortal'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import '../video.css'
+import { actionCreators as gameActions } from '../../redux/modules/game'
 
 const VoteModal = ({ onClose }) => {
   const [clickedId, setClickedId] = React.useState()
@@ -13,7 +14,7 @@ const VoteModal = ({ onClose }) => {
   const is_night = useSelector((state) => state.game.night)
   const playerJob = useSelector((state) => state.game.job)
   const killed = useSelector((state) => state.game.killed)
-  const copSelect = useSelector((state) => state.game.copSelect)
+  const chance = useSelector((state) => state.game.chance)
   const memberId = useSelector((state) => state.member.memberId)
   const currentId = localStorage.getItem('userId')
 
@@ -21,47 +22,103 @@ const VoteModal = ({ onClose }) => {
     console.log(e.target.value)
     setClickedId(e.target.value)
   }
-  console.log(clickedId)
-  console.log(memberId)
-  console.log(playerJob)
-  console.log(is_night)
+  // console.log(clickedId)
+  // console.log(memberId)
+  // console.log(playerJob)
+  // console.log(is_night)
 
-  const policePointed = (pointed, hisJob) => {
-    toast.warning(`${pointed}의 정체는 ${hisJob}입니다`, {
-      position: toast.POSITION.TOP_LEFT,
-      className: 'toast-police',
-      autoClose: 3000,
-    })
+  const policePointed = (pointed, isMafia) => {
+    if(isMafia === true){
+      toast.warning(`${pointed}는 마피아입니다`, {
+        position: toast.POSITION.TOP_LEFT,
+        className: 'toast-police',
+        autoClose: 3000,
+      })
+    } else if(isMafia === false) {
+      toast.warning(`${pointed}는 마피아가 아닙니다`, {
+        position: toast.POSITION.TOP_LEFT,
+        className: 'toast-police',
+        autoClose: 3000,
+      })
+    } else {
+      return null
+    }
+  }
+
+  const actionAlert = (num) => {
+    if(num === 1){
+      toast.warning('본인을 선택할 수 없습니다', {
+        position : toast.POSITION.TOP_LEFT,
+        className : 'toast-dup',
+        autoClose : 2500,
+      })
+    } else if(num === 2){
+      toast.warning('이미 죽은사람을 선택할 수 없습니다', {
+        position : toast.POSITION.TOP_LEFT,
+        className : 'toast-dup',
+        autoClose : 2500,
+      })
+    } else if(num === 3){
+      toast.warning('당신은 죽었기때문에 선택할 수 없습니다', {
+        position : toast.POSITION.TOP_LEFT,
+        className : 'toast-dup',
+        autoClose : 2500,
+      })
+    } else if(num === 4){
+      toast.warning('기회를 모두 사용하였습니다', {
+        position : toast.POSITION.TOP_LEFT,
+        className : 'toast-rep',
+        autoClose : 2500,
+      })
+    }
   }
 
   const active = (clickedId, clicker, time) => {
     let clickerJob = clicker.playerJob
     let clickerId = clicker.player
     if (currentId == clickedId) {
-      alert('다른사람을 뽑아주세요')
+      actionAlert(1)
       return
     }
-    console.log(killed)
     if (killed?.length > 0) {
       killed.forEach((id) => {
-        if (clicker.player == id) {
-          alert('죽었습니다')
-          return
+        if(clickerId == id){
+          actionAlert(3)
+          return onClose()
+        }
+        if(clickedId == id){
+          actionAlert(2)
+          return onClose()
         } else {
-          if (clickerJob == 'police') {
-          }
           socket.emit('vote', { clickerJob, clickerId, clickedId })
+          if (clickerJob == 'police' && time == true) {
+            socket.on('police', selected => {
+              policePointed(clickedId, selected)
+            })
+          } else if (clickerJob == 'reporter' && time == true){
+            if(chance == true){
+              actionAlert(4)
+              return onClose()
+            }
+          } 
           return onClose()
         }
       })
     } else {
       socket.emit('vote', { clickerJob, clickerId, clickedId })
+      if (clickerJob == 'police' && time == true) {
+        socket.on('police', selected => {
+          policePointed(clickedId, selected)
+        })
+      } else if (clickerJob == 'reporter' && time == true){
+        if(chance == true){
+          actionAlert(4)
+          return onClose()
+        }
+      } 
       return onClose()
     }
-    if (clickerJob == 'police' && time == true) {
-      console.log(clickerJob, clickedId, copSelect)
-      policePointed(clickedId, copSelect)
-    }
+    
   }
   //밤에는 마피아 모달, 경찰, 의사 구분 주기
   //낮에는 통일

@@ -5,11 +5,13 @@ const CURRENT_ROOM = 'CURRENT_ROOM';
 const SEND_LIST = 'SEND_LIST'
 const READY = 'READY'
 const HOST = 'HOST'
+const CHECK = 'CHECK'
 
 const currentRoom = createAction(CURRENT_ROOM, (room) => ({ room }))
 const sendRoomList = createAction(SEND_LIST, (rooms) => ({ rooms }))
 const roomReady = createAction(READY, (toggle) => ({toggle}))
 const changeHost = createAction(HOST, (host) => ({host}))
+const startCheck = createAction(CHECK, (check) => ({check}))
 
 
 const initialState = {
@@ -17,6 +19,7 @@ const initialState = {
     rooms : [],
     ready : [],
     host : null,
+    check : null,
   }
 
 export default handleActions(
@@ -37,6 +40,10 @@ export default handleActions(
             produce(state, (draft) => {
                 draft.host = action.payload.host
             }),
+        [CHECK]: (state, action) =>
+            produce(state, (draft) => {
+                draft.check = action.payload.check
+            }),
         
     },
     initialState,
@@ -46,7 +53,8 @@ export default handleActions(
       currentRoom,
       sendRoomList,
       roomReady,
-      changeHost
+      changeHost,
+      startCheck
   }
   
   export { actionCreators }

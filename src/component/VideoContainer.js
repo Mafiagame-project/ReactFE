@@ -50,6 +50,7 @@ const VideoContainer = () => {
         })
       })
 
+
     socket.on('user-disconnected', (userId) => {
       if (peers[userId]) peers[userId].close()
     })

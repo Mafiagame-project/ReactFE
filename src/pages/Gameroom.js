@@ -3,6 +3,7 @@ import { Grid } from '../element/index'
 import { useEffect, useState } from 'react'
 import { actionCreators as gameActions } from '../redux/modules/game'
 import { actionCreators as roomActions } from '../redux/modules/room'
+import { actionCreators as memberActions } from '../redux/modules/member'
 import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../redux/configureStore'
 import Header from '../component/Header'
@@ -19,44 +20,33 @@ import '../component/video.css'
 function GameRoom(props) {
   const dispatch = useDispatch()
   const socket = useSelector((state) => state.game.socket)
-  const memberSocket = useSelector((state) => state.member.socketId)
-  const voteResult = useSelector((state) => state.game.resultNoti)
   const currentTime = useSelector((state) => state.game.night)
-  const roomInfo = useSelector((state) => state.room.current)
   const startCard = useSelector((state) => state.game.card)
-  const playerJob = useSelector((state) => state.game.jobNoti)
+  const members = useSelector(state => state.member.memberId)
+  const roomInfo = useSelector(state => state.room.current)
   const currentId = localStorage.getItem('userId')
   const [isOpen, setIsOpen] = useState(false)
-  const [getNotice, setNotice] = useState(false)
-
   const dayOrNight = (time) => {
     if (time == true) {
       toast.error('밤이 되었습니다', {
         position: toast.POSITION.TOP_LEFT,
-        className: 'toast-time',
+        className: 'toast-night-time',
         autoClose: 3000,
       })
     } else if (time == false) {
       toast.success('낮이 되었습니다', {
         position: toast.POSITION.TOP_LEFT,
-        className: 'toast-time',
+        className: 'toast-day-time',
         autoClose: 3000,
       })
     }
-  }
-
-  const enterNoti = () => {
-    setNotice(true)
-    setTimeout(() => {
-      setNotice(false)
-    }, 6000)
   }
 
   useEffect(() => {
     let unlisten = history.listen((location) => {
       // 브라우저 뒤로가기 버튼(나가기) 누를때 호출
       if (history.action === 'POP') {
-        socket.emit('leaveRoom')
+        // socket.emit('leaveRoom')
         dispatch(gameActions.noticeResult(null))
         dispatch(gameActions.playerWhoSurvived(null))
         dispatch(gameActions.dayAndNight(null))
@@ -69,17 +59,19 @@ function GameRoom(props) {
       dispatch(gameActions.playerJob(null))
       dispatch(gameActions.copSelected(null))
       dispatch(gameActions.noticeRep(null))
-      // dispatch(gameActions.roomReady(null))
+      dispatch(memberActions.currentUserId([]))
+      socket.off('isNight')
+      socket.off('reporterOver')
+      socket.removeAllListeners('isNight')
+      socket.off('vote')
+      socket.off('createRoom')
+      socket.emit('leaveRoom')
+      dispatch(gameActions.dayCount(0))
       unlisten()
+      dispatch(gameActions.repChanceOver(null))
       dispatch(roomActions.changeHost(null))
     }
   }, [socket])
-
-  useEffect(() => {
-    if (voteResult?.length > 0) {
-      enterNoti()
-    }
-  }, [voteResult])
 
   useEffect(() => {
     if (currentTime === false) {
@@ -102,8 +94,8 @@ function GameRoom(props) {
   return (
     <>
       <Header />
-
-      <Grid isFlex_center width="90%" margin="0 auto">
+      
+      <Grid bg={currentTime === true ? 'black' : 'none'} isFlex_center width="100%" height='91vh' margin="0 auto">
         <Grid>
           <ExitBtn />
           <Grid margin="0 auto" width="60%">
@@ -117,7 +109,7 @@ function GameRoom(props) {
       </Grid>
 
       <JobModal />
-      {getNotice == true ? <Noti></Noti> : null}
+      <Noti/>
       <ToastContainer />
     </>
   )
