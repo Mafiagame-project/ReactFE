@@ -13,7 +13,6 @@ const StartBtn = ({ socket }) => {
   const members = useSelector(state => state.member.memberId)
   const startCheck = useSelector(state => state.room.check)
   const currentId = localStorage.getItem('userId')
-  const host = useSelector(state => state.room.host)
   const [getStart, setStart] = React.useState(false)
   const startGame = () => {
     if (memberSocket.length < 4) {
@@ -35,8 +34,8 @@ const StartBtn = ({ socket }) => {
     if(members.length >= 1){
       console.log(check)
       if(check == false && !startCheck){
-        alert('방장이 나가서 방이 폭파되었습니다 ㅋ')
         history.replace('/gamemain')
+        alert('방장이 나가서 방이 폭파되었습니다 ㅋ')
         return
       }
     } else {

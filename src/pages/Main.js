@@ -12,7 +12,7 @@ import { useHistory } from 'react-router-dom'
 
 function Main(props) {
   const history = useHistory();
-  const socket = useSelector((state) => state.game.socket)
+  let socket = useSelector((state) => state.game.socket)
   const [isOpen, setIsOpen] = React.useState(false)
   const dispatch = useDispatch()
 
@@ -24,6 +24,7 @@ function Main(props) {
     } catch {
       alert('비정상적 접근으로인해 메인으로 이동합니다')
       window.location = '/'
+      socket.disconnect();
     }
   }, [socket])
 

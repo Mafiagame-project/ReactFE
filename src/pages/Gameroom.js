@@ -42,7 +42,6 @@ function GameRoom(props) {
       })
     }
   }
-  
 
   useEffect(() => {
     let unlisten = history.listen((location) => {
@@ -97,7 +96,7 @@ function GameRoom(props) {
     <>
       <Header />
       
-      <Grid isFlex_center width="90%" margin="0 auto">
+      <Grid bg={currentTime === true ? 'black' : 'none'} isFlex_center width="100%" height='91vh' margin="0 auto">
         <Grid>
           <ExitBtn />
           <Grid margin="0 auto" width="60%">
