@@ -29,10 +29,7 @@ const StartBtn = ({ socket }) => {
   
   React.useEffect(()=>{
     let check = members?.includes(roomInfo?.userId)
-    console.log(members)
-    console.log(startCheck)
     if(members.length >= 1){
-      console.log(check)
       if(check == false && !startCheck){
         history.replace('/gamemain')
         alert('방장이 나가서 방이 폭파되었습니다 ㅋ')
@@ -78,7 +75,6 @@ const StartBtn = ({ socket }) => {
       ) : (
         <VoteBtn />
       )}
-      <VoteBtn />
     </>
   )
 }

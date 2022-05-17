@@ -24,7 +24,6 @@ function GameRoom(props) {
   const startCard = useSelector((state) => state.game.card)
   const members = useSelector(state => state.member.memberId)
   const roomInfo = useSelector(state => state.room.current)
-  console.log(members)
   const currentId = localStorage.getItem('userId')
   const [isOpen, setIsOpen] = useState(false)
   const dayOrNight = (time) => {

@@ -33,12 +33,10 @@ function Loading() {
       dispatch(memberActions.exitSocketId(offSocketId))
       dispatch(memberActions.exitUserId(offId))
       dispatch(gameActions.noticeEnterOut(offId)) // 들어오고 나가고의 알림 없다면 삭제
-      console.log(offId)
     })
 
     socket.on('joinRoomMsg', (incoming, idValue, currentAll) => {
       // 참가자가 방에 들어올때 호출
-      console.log(idValue)
       dispatch(memberActions.currentSocketId(idValue))
       dispatch(memberActions.currentUserId(currentAll))
       dispatch(gameActions.noticeEnterOut(incoming)) // 들어오고 나가고의 알림 없다면 삭제
@@ -71,7 +69,6 @@ function Loading() {
     })
 
     socket.on('nightVoteResult', (value) => {
-      console.log(value)
       dispatch(gameActions.playerWhoKilled(value.diedPeopleArr))
       dispatch(gameActions.noticeResult(value.died[0]))
       dispatch(gameActions.playerWhoSurvived(value.saved[0]))
