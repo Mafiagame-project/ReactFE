@@ -11,7 +11,6 @@ import styled from 'styled-components'
 import closeIcon from '../../assets/icons/black/닫기.png'
 import { withStyles } from '@mui/styles'
 import sheep from '../../assets/image/character/양_시민.png'
-import pop from '../../assets/sound/effect/pop.wav'
 
 const ImageSlider = withStyles({
   thumb: {
@@ -48,8 +47,6 @@ const CreateRoomModal = ({ onClose, socket }) => {
   const people = React.useRef()
   const pwd = React.useRef()
 
-  const click = new Audio(pop)
-
   React.useEffect(() => {}, [socket])
   const createRoom = () => {
     let roomTitle = title.current.value
@@ -62,7 +59,6 @@ const CreateRoomModal = ({ onClose, socket }) => {
     if (getOpen == true) {
       // 비공개방일때
       roomPwd = pwd.current.value
-
       socket.emit('createRoom', { roomTitle, roomPeople, roomPwd })
     } else {
       // 공개방일때
@@ -72,6 +68,8 @@ const CreateRoomModal = ({ onClose, socket }) => {
     socket.on('roomList', (rooms) => {
       dispatch(roomActions.sendRoomList(rooms))
     })
+    return socket.off('createRoom')
+    socket.off('roomList')
   }
 
   const toggleSecret = () => {

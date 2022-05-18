@@ -8,15 +8,16 @@ import { history } from '../../redux/configureStore'
 import { actionCreators as gameActions } from '../../redux/modules/game'
 
 const StartBtn = ({ socket }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const roomInfo = useSelector((state) => state.room.current)
   const currentReady = useSelector((state) => state.room.ready)
   const memberSocket = useSelector((state) => state.member.socketId)
   const members = useSelector((state) => state.member.memberId)
   const startCheck = useSelector((state) => state.room.check)
-  const endGame = useSelector(state => state.game.endGameNoti)
+  const endGame = useSelector((state) => state.game.endGameNoti)
   const currentId = localStorage.getItem('userNick')
   const [getStart, setStart] = React.useState(false)
+
   const startGame = () => {
     if (memberSocket.length < 4) {
       startGameNoti(1)
@@ -30,7 +31,7 @@ const StartBtn = ({ socket }) => {
       }
     }
   }
-  console.log(endGame)
+
   React.useEffect(() => {
     let check = members?.includes(roomInfo?.userId)
     if (members.length >= 1) {
@@ -59,7 +60,6 @@ const StartBtn = ({ socket }) => {
       })
     }
   }
-
   return (
     <>
       {getStart == false || endGame ? (
@@ -77,7 +77,7 @@ const StartBtn = ({ socket }) => {
           )}
         </>
       ) : (
-        <VoteBtn />
+        <ReadyBtn />
       )}
       <VoteBtn />
     </>

@@ -23,8 +23,10 @@ const VideoContainer = () => {
   let peerNickname = ''
   let myPeerId = ''
   let myStream = null
-
+  let userNick = localStorage.getItem('userNick')
   let UserNick = localStorage.getItem('userNick')
+
+  console.log(videoWrap.current)
 
   // const handleCamera = () => {
   //   setCameraOn((prev) => !prev)
@@ -46,8 +48,6 @@ const VideoContainer = () => {
   React.useEffect(() => {
     const myPeer = new Peer()
     myPeer.nick = UserNick
-    
-  try {
 
     navigator.mediaDevices
       .getUserMedia({
@@ -68,21 +68,21 @@ const VideoContainer = () => {
           myPeer.on('open', (peerId) => {
             console.log(peerId)
             myPeerId = peerId
-            socket.emit('peerJoinRoom', myPeerId, UserNick, streamId)
+            socket.emit('peerJoinRoom', myPeerId, userNick, streamId)
           })
         } else {
-          socket.emit('peerJoinRoom', myPeer._id, UserNick, streamId)
+          socket.emit('peerJoinRoom', myPeer._id, userNick, streamId)
         }
 
-        myPeer.on('connection', (dataConnection) => {
-          console.log(dataConnection)
-          peersNick = dataConnection.metadata
-          let peerNick = document.createElement('p')
-          peerNick.innerText = peersNick
-          const nickBox = document.querySelector('.userview_name')
-          nickBox.prepend(peerNick)
-          console.log(nickBox)
-        })
+        // myPeer?.on('connection', (dataConnection) => {
+        //   peersNick = dataConnection.metadata
+        //   let peerNick = document.createElement('p')
+        //   peerNick.innerText = peersNick
+        //   const nickBox = document.querySelector('.userview_name')
+        //   nickBox.prepend(peerNick)
+        //   console.log(nickBox)
+        // })
+
         //새 피어가 연결을 원할 때
         myPeer.on('call', (call) => {
           console.log('콜 찍히니?')
@@ -104,7 +104,6 @@ const VideoContainer = () => {
             videoBox.prepend(peerVideo)
             console.log('here')
           })
-          return null
         })
 
         //두번째 순서 => peer.call
@@ -140,93 +139,12 @@ const VideoContainer = () => {
         console.log('err', err)
       })
 
-    } catch {
-      console.log('error activate')
-      myPeer.on('open', (peerId) => {
-        let fake = 'hello'
-        console.log(peerId)
-        myPeerId = peerId
-        socket.emit('peerJoinRoom', myPeerId, UserNick, fake)
-      })
-
-      socket.on('user-connected', (userId, userNick, streamId) => {
-        console.log(userId, streamId, userNick)
-
-        const call = myPeer.call(userId, myStream)
-        myPeer.connect(userId, { metadata: UserNick })
-
-        const videoBox = document.createElement('div')
-        videoBox.classList.add('video_grid')
-        const newVideo = document.createElement('video')
-        newVideo.classList.add('video_box')
-        const nickBox = document.createElement('div')
-        nickBox.classList.add('userview_name')
-        let peerNick = document.createElement('p')
-        peerNick.innerText = userNick
-        nickBox.prepend(peerNick)
-        videoBox.prepend(newVideo)
-        videoBox.prepend(nickBox)
-        console.log(videoWrap.current)
-        videoWrap.current.prepend(videoBox)
-        console.log('연결함수 실행완')
-
-        call.on('stream', (newStream) => {
-          addVideoStream(newVideo, newStream)
-          videoBox.prepend(newVideo)
-          console.log('추가완료')
-        })
-      })
-
-      myPeer.on('connection', (dataConnection) => {
-        console.log(dataConnection)
-        peersNick = dataConnection.metadata
-        peerNick.innerText = peersNick
-        nickBox.prepend(peerNick)
-        console.log(nickBox)
-
-        const videoBox = document.createElement('div')
-        videoBox.classList.add('video_grid')
-        const newVideo = document.createElement('video')
-        newVideo.classList.add('video_box')
-        const nickBox = document.createElement('div')
-        nickBox.classList.add('userview_name')
-        let peerNick = document.createElement('p')
-      })
-
-      myPeer.on('call', (call) => {
-        console.log('콜 찍히니?')
-        call.answer(stream)
-        const videoBox = document.createElement('div')
-        videoBox.classList.add('video_grid')
-        const peerVideo = document.createElement('video')
-        peerVideo.classList.add('video_box')
-        const nickBox = document.createElement('div')
-        nickBox.classList.add('userview_name', 'fl')
-
-        nickBox.prepend(videoBox)
-        videoBox.prepend(peerVideo)
-        console.log(videoBox)
-        videoWrap.current.prepend(videoBox)
-
-        call.on('stream', (userVideoStream) => {
-          addVideoStream(peerVideo, userVideoStream)
-          videoBox.prepend(peerVideo)
-          console.log('here')
-        })
-        return null
-      })
-    }
-
-   
-
-    
-
-
     socket.on('user-disconnected', (userId, userNick, streamId) => {
       const video = document.querySelectorAll('video')
       // const video_box = document.querySelectorAll('video_box')
       // const nick_box = document.querySelectorAll('userview_name')
       let removeVideo
+      console.log('나감')
 
       for (let i = 0; i < video.length; i++) {
         if (video[i].srcObject.id === streamId) {
@@ -247,10 +165,6 @@ const VideoContainer = () => {
     <>
       <Container>
         <div className="video_container" ref={videoWrap}>
-          {/* <KillVideo>
-            <div className="killed_bg"></div>
-            <img src={cage} />
-          </KillVideo> */}
           <div className="video_grid" ref={videoGrid}>
             <video
               ref={myVideo}
@@ -274,7 +188,7 @@ const VideoContainer = () => {
                 handleCamera={handleCamera}
               /> */}
             <div className="userview_name fl">
-              <p>{UserNick}</p>
+              <p>{userNick}</p>
             </div>
           </div>
         </div>
@@ -299,30 +213,6 @@ function addVideoStream(video, stream) {
 const Container = styled.div`
   width: 62%;
   padding: 15vh 0 0 15vh;
-`
-
-const KillVideo = styled.div`
-  position: absolute;
-  display: block;
-  text-align: center;
-  z-index: 1;
-  > .killed_bg {
-    position: relative;
-    width: 180px;
-    height: 180px;
-    background-color: red;
-    opacity: 0;
-    border-radius: 70%;
-  }
-  > img {
-    position: absolute;
-    top: 50%;
-    left: 100%;
-    transform: translate(-50%, -50%);
-    width: 200px;
-    opacity: 1;
-    z-index: 1;
-  }
 `
 
 export default VideoContainer
