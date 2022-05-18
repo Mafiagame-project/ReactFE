@@ -26,35 +26,34 @@ const VideoContainer = () => {
 
   let UserNick = localStorage.getItem('userNick')
 
-  const handleCamera = () => {
-    setCameraOn((prev) => !prev)
-    if (cameraOn) {
-      let video = allStream.current.getTracks()
-      video[0].enabled = false
-      let src = document.querySelector('.video_non_src')
-      src.style.display = 'block'
-    } else {
-      let video = allStream.current.getTracks()
-      video[0].enabled = true
-      let src = document.querySelector('.video_non_src')
-      src.style.display = 'none'
-    }
-  }
+  // const handleCamera = () => {
+  //   setCameraOn((prev) => !prev)
+  //   if (cameraOn) {
+  //     let video = allStream.current.getTracks()
+  //     video[0].enabled = false
+  //     let src = document.querySelector('.video_non_src')
+  //     src.style.display = 'block'
+  //   } else {
+  //     let video = allStream.current.getTracks()
+  //     video[0].enabled = true
+  //     let src = document.querySelector('.video_non_src')
+  //     src.style.display = 'none'
+  //   }
+  // }
 
   //테스트
 
   React.useEffect(() => {
     const myPeer = new Peer()
-try{
     myPeer.nick = UserNick
     
 
     navigator.mediaDevices
-      .getUserMedia({
+      ?.getUserMedia({
         video: true,
         audio: false,
       })
-      .then((stream) => {
+      ?.then((stream) => {
         myStream = stream
         let streamId = stream.id
         addVideoStream(myVideo.current, stream)
@@ -64,7 +63,7 @@ try{
 
         console.log(myPeer)
 
-        if (myPeer._id == null) {
+        if (myPeer?._id == null) {
           myPeer.on('open', (peerId) => {
             console.log(peerId)
             myPeerId = peerId
@@ -74,7 +73,7 @@ try{
           socket.emit('peerJoinRoom', myPeer._id, UserNick, streamId)
         }
 
-        myPeer.on('connection', (dataConnection) => {
+        myPeer?.on('connection', (dataConnection) => {
           peersNick = dataConnection.metadata
           let peerNick = document.createElement('p')
           peerNick.innerText = peersNick
@@ -83,7 +82,7 @@ try{
           console.log(nickBox)
         })
         //새 피어가 연결을 원할 때
-        myPeer.on('call', (call) => {
+        myPeer?.on('call', (call) => {
           console.log('콜 찍히니?')
           call.answer(stream)
           const videoBox = document.createElement('div')
@@ -98,7 +97,7 @@ try{
           console.log(videoBox)
           videoWrap.current.prepend(videoBox)
 
-          call.on('stream', (userVideoStream) => {
+          call?.on('stream', (userVideoStream) => {
             addVideoStream(peerVideo, userVideoStream)
             videoBox.prepend(peerVideo)
             console.log('here')
@@ -107,7 +106,7 @@ try{
         })
 
         //두번째 순서 => peer.call
-        socket.on('user-connected', (userId, userNick, streamId) => {
+        socket?.on('user-connected', (userId, userNick, streamId) => {
           console.log(userId, streamId, userNick)
 
           const call = myPeer.call(userId, myStream)
@@ -138,9 +137,9 @@ try{
       .catch((err) => {
         console.log('err', err)
       })
-    } catch{
-      console.log('error')
-    }
+   
+
+    
 
 
     socket.on('user-disconnected', (userId, userNick, streamId) => {

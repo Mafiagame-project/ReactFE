@@ -27,6 +27,7 @@ function NotiModal() {
   }
 
   useEffect(()=>{
+    console.log(dayCount)
     if(dayCount < 2){
       return
     } else {

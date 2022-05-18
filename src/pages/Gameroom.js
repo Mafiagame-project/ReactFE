@@ -23,9 +23,7 @@ function GameRoom(props) {
   const socket = useSelector((state) => state.game.socket)
   const currentTime = useSelector((state) => state.game.night)
   const startCard = useSelector((state) => state.game.card)
-  const members = useSelector((state) => state.member.memberId)
-  const roomInfo = useSelector((state) => state.room.current)
-  const currentId = localStorage.getItem('userId')
+  const endGame = useSelector(state => state.game.endGameNoti)
   const [isOpen, setIsOpen] = useState(false)
   const [getNotice, setNotice] = useState(false)
   const [darkMode, setDarkMode] = useState(false)
@@ -46,16 +44,13 @@ function GameRoom(props) {
       })
     }
   }
-
+  console.log(currentTime)
   useEffect(() => {
     let unlisten = history.listen((location) => {
       // 브라우저 뒤로가기 버튼(나가기) 누를때 호출
       if (history.action === 'POP') {
         // socket.emit('leaveRoom')
-        dispatch(gameActions.noticeResult(null))
-        dispatch(gameActions.playerWhoSurvived(null))
-        dispatch(gameActions.dayAndNight(null))
-        dispatch(gameActions.noticeEndGame(null))
+        
       }
     })
 
@@ -75,6 +70,10 @@ function GameRoom(props) {
       unlisten()
       dispatch(gameActions.repChanceOver(null))
       dispatch(roomActions.changeHost(null))
+      dispatch(gameActions.noticeResult(null))
+      dispatch(gameActions.playerWhoSurvived(null))
+      dispatch(gameActions.dayAndNight(null))
+      dispatch(gameActions.noticeEndGame(null))
     }
   }, [socket])
 
