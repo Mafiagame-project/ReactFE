@@ -3,21 +3,32 @@ import Header from '../component/Header'
 import { Grid, Text, Button } from '../element/index'
 import styled from 'styled-components'
 import data from '../shared/introduce'
+import Tutorial from './Tutorial'
+import 돌아가기 from '../assets/icons/black/돌아가기.png'
+import { history } from '../redux/configureStore'
 
 function Introduce() {
   const [isOpen, setIsOpen] = React.useState(false)
+  const [getPage, setPage] = React.useState(false)
   const toggleBtn = () => {
     setIsOpen(!isOpen)
   }
   return (
     <>
       <Header />
+      <img onClick={()=>{history.replace('/gamemain')}} style={{position:'absolute', margin:'15px'}} src={돌아가기}/>
+
       <Grid center padding="50px">
-        <Text size="40px">역할 튜토리얼</Text>
-        <Text bold size="16px" margin="0 0 30px 0">
-          역할을 선택해주세요
-        </Text>
-        <CardBox>
+        <Grid isFlex_center height='5px'>
+          <Text _onClick={()=>{setPage(false)}} size="40px">역할 튜토리얼</Text>
+          <Text size="40px">/</Text>
+          <Text _onClick={()=>{setPage(true)}} size="40px">게임 튜토리얼</Text>
+        </Grid>
+        <Grid height='50px'></Grid>
+        {
+          getPage === true 
+          ? <Tutorial/>
+          : <CardBox>
           {data.map((e, idx) => {
             return (
               <>
@@ -44,6 +55,8 @@ function Introduce() {
             )
           })}
         </CardBox>
+        }
+        
         {/* <Grid margin="20px 0 0 0" padding="30px" height="40%"></Grid> */}
       </Grid>
     </>
