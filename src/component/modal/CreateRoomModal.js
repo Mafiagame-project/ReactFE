@@ -97,7 +97,7 @@ const CreateRoomModal = ({ onClose, socket }) => {
 
           <FormBox>
             <Grid margin="40px 0 ">
-              <Text margin="10px 0" size="22px">
+              <Text margin="0.9vh 0" size="1.37em">
                 방 제목
               </Text>
               <TitleInput
@@ -203,8 +203,8 @@ const Content = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 999;
-  height: 650px;
-  max-width: 850px;
+  height: 65vh;
+  max-width: 48vw;
   width: 100%;
   background-color: #fff;
   position: relative;
@@ -212,7 +212,7 @@ const Content = styled.div`
 `
 
 const FormBox = styled.div`
-  max-width: 650px;
+  max-width: 33vw;
   width: 100%;
   margin: 0 auto;
 `

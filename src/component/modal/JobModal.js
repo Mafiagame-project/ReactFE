@@ -33,62 +33,77 @@ const JobModal = () => {
     <>
       {startCard == true ? (
         <Modalblack>
-          <Grid margin="150px 0 -50px 0" height="10%">
-            <Text color="white" size="40px">
+          <Noti>
+            <Text color="white" size="30px" margin="0 0 7vh 0">
               당신의 직업은...
             </Text>
-          </Grid>
-          <Noti>
-            <div
-              style={{
-                width: '100%',
-                height: '10%',
-                marginTop: '-25px',
-                paddingTop: '12px',
-                borderRadius: '40px 40px 0 0',
-                background: 'black',
-              }}
-            >
-              <Text color="white" size="24px">
-                MAFIYANG
-              </Text>
-            </div>
-            <Grid height="15%" />
-            <Grid height="40%">
-              <img style={{ width: '150px', height: '150px' }} src={getImg} />
-            </Grid>
-            <Grid isFlex_center height="15%">
-              <Grid width="200px" height="50px" bg="black">
-                <Text size="30px" color="white" margin="8px 0 15px 0">
-                  {getJob}
+            <Contents>
+              <div
+                style={{
+                  width: '100%',
+                  height: '10%',
+                  marginTop: '-25px',
+                  paddingTop: '12px',
+                  borderRadius: '40px 40px 0 0',
+                  background: 'black',
+                }}
+              >
+                <Text color="white" size="24px">
+                  MAFIYANG
                 </Text>
+              </div>
+              <Grid height="15%" />
+              <Grid height="50%">
+                <img style={{ width: '150px', height: '150px' }} src={getImg} />
               </Grid>
-            </Grid>
+              <Grid isFlex_center height="15%">
+                <Grid width="200px" height="40px" bg="black">
+                  <Text size="30px" color="white" margin="8px 0 15px 0">
+                    {getJob}
+                  </Text>
+                </Grid>
+              </Grid>
+            </Contents>
           </Noti>
         </Modalblack>
       ) : null}
     </>
   )
 }
+
+const Contents = styled.div`
+  background: white;
+  width: 330px;
+  height: 435px;
+  box-sizing: border-box;
+  border-radius: 40px 40px 0 0;
+  margin: 0 auto;
+`
+
 const Modalblack = styled.div`
-  background-color: rgba(0, 0, 0, 0.5);
-  width: 100%;
-  height: 100%;
   position: fixed;
-  text-align: center;
-  left: 0;
   top: 0;
-  z-index: 100;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.8);
   transition: 1s;
 `
 
 const Noti = styled.div`
-  display: inline-block;
-  background: white;
-  width: 550px;
-  height: 725px;
-  box-sizing: border-box;
-  border-radius: 40px 40px 0 0;
+  position: fixed;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  position: relative;
+
   transition: 1s;
 `
 

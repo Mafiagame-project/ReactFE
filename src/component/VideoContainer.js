@@ -28,23 +28,6 @@ const VideoContainer = () => {
 
   console.log(videoWrap.current)
 
-  // const handleCamera = () => {
-  //   setCameraOn((prev) => !prev)
-  //   if (cameraOn) {
-  //     let video = allStream.current.getTracks()
-  //     video[0].enabled = false
-  //     let src = document.querySelector('.video_non_src')
-  //     src.style.display = 'block'
-  //   } else {
-  //     let video = allStream.current.getTracks()
-  //     video[0].enabled = true
-  //     let src = document.querySelector('.video_non_src')
-  //     src.style.display = 'none'
-  //   }
-  // }
-
-  //테스트
-
   React.useEffect(() => {
     const myPeer = new Peer()
     myPeer.nick = UserNick
@@ -110,29 +93,33 @@ const VideoContainer = () => {
         socket?.on('user-connected', (userId, userNick, streamId) => {
           console.log(userId, streamId, userNick)
 
-          const call = myPeer.call(userId, myStream)
-          const dataConnection = myPeer.connect(userId, { metadata: UserNick })
+          if (videoWrap.current) {
+            const call = myPeer.call(userId, myStream)
+            const dataConnection = myPeer.connect(userId, {
+              metadata: UserNick,
+            })
 
-          const videoBox = document.createElement('div')
-          videoBox.classList.add('video_grid')
-          const newVideo = document.createElement('video')
-          newVideo.classList.add('video_box')
-          const nickBox = document.createElement('div')
-          nickBox.classList.add('userview_name')
-          let peerNick = document.createElement('p')
-          peerNick.innerText = userNick
-          nickBox.prepend(peerNick)
-          videoBox.prepend(newVideo)
-          videoBox.prepend(nickBox)
-          console.log(videoWrap.current)
-          videoWrap.current.prepend(videoBox)
-          console.log('연결함수 실행완')
-
-          call.on('stream', (newStream) => {
-            addVideoStream(newVideo, newStream)
+            const videoBox = document.createElement('div')
+            videoBox.classList.add('video_grid')
+            const newVideo = document.createElement('video')
+            newVideo.classList.add('video_box')
+            const nickBox = document.createElement('div')
+            nickBox.classList.add('userview_name')
+            let peerNick = document.createElement('p')
+            peerNick.innerText = userNick
+            nickBox.prepend(peerNick)
             videoBox.prepend(newVideo)
-            console.log('추가완료')
-          })
+            videoBox.prepend(nickBox)
+            console.log(videoWrap.current)
+            videoWrap.current.prepend(videoBox)
+            console.log('연결함수 실행완')
+
+            call.on('stream', (newStream) => {
+              addVideoStream(newVideo, newStream)
+              videoBox.prepend(newVideo)
+              console.log('추가완료')
+            })
+          }
         })
       })
       .catch((err) => {
