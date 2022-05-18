@@ -18,7 +18,6 @@ function Introduce() {
   }
 
   const seleted = (element, num) => {
-    console.log(element, num)
     setDesc(element?.explain)
     setShow(true)
     setTimeout(()=>{

@@ -14,7 +14,6 @@ const StartBtn = ({ socket }) => {
   const startCheck = useSelector((state) => state.room.check)
   const currentId = localStorage.getItem('userNick')
   const [getStart, setStart] = React.useState(false)
-  console.log(socket)
   const startGame = () => {
     if (memberSocket.length < 4) {
       startGameNoti(1)
