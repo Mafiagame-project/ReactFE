@@ -9,14 +9,9 @@ import { useDispatch } from 'react-redux'
 import { Slider } from '@mui/material'
 import styled from 'styled-components'
 import closeIcon from '../../assets/icons/black/닫기.png'
-import { makeStyles, withStyles } from '@mui/styles'
+import { withStyles } from '@mui/styles'
 import sheep from '../../assets/image/character/양_시민.png'
-
-const useStyles = makeStyles({
-  thumb: {
-    backgroundImage: `url(${sheep})`,
-  },
-})
+import pop from '../../assets/sound/effect/pop.wav'
 
 const ImageSlider = withStyles({
   thumb: {
@@ -52,20 +47,22 @@ const CreateRoomModal = ({ onClose, socket }) => {
   const title = React.useRef()
   const people = React.useRef()
   const pwd = React.useRef()
-  const classes = useStyles()
+
+  const click = new Audio(pop)
 
   React.useEffect(() => {}, [socket])
   const createRoom = () => {
     let roomTitle = title.current.value
     let roomPeople = getPeople
     let roomPwd
-    if(!roomPeople){
+    if (!roomPeople) {
       roomPeople = 5
     }
 
     if (getOpen == true) {
       // 비공개방일때
       roomPwd = pwd.current.value
+
       socket.emit('createRoom', { roomTitle, roomPeople, roomPwd })
     } else {
       // 공개방일때

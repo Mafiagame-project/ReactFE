@@ -44,7 +44,16 @@ const Rooms = (props) => {
       }
     }
   }
+
+  const roomReload = () => {
+    console.log(';;')
+    socket.emit('roomList')
+    socket.on('roomList', (rooms) => {
+      dispatch(roomActions.sendRoomList(rooms))
+    })
+  }
   React.useEffect(() => {
+    socket.emit('roomList')
     socket.on('roomList', (rooms) => {
       dispatch(roomActions.sendRoomList(rooms))
     })
@@ -69,6 +78,9 @@ const Rooms = (props) => {
             <Text size="25px" bold>
               전체 방 목록
             </Text>
+            <Grid _onClick={roomReload}>
+              <Text>새로고침</Text>
+            </Grid>
           </Grid>
           <RoomBox>
             {RoomList.map((room, i) => {

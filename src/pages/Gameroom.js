@@ -30,6 +30,8 @@ function GameRoom(props) {
   const [getNotice, setNotice] = useState(false)
   const [darkMode, setDarkMode] = useState(false)
 
+  console.log(currentTime)
+
   const dayOrNight = (time) => {
     if (time == true) {
       setDarkMode(true)
@@ -101,19 +103,11 @@ function GameRoom(props) {
     <>
       <Header />
       <div className={`${darkMode && 'dark-mode'}`}>
-        <Grid isFlex_center width="90%" height="90vh" margin="0 auto">
-          <Grid>
-            {darkMode ? <ExitBtn night /> : <ExitBtn />}
-            {/* <VoteBtn /> */}
-            <Grid margin="0 auto" width="60%">
-              <VideoContainer socket={socket} />
-              <StartBtn socket={socket} />
-            </Grid>
-          </Grid>
-          <Grid width="40%">
-            <ChatBox socket={socket} />
-          </Grid>
-        </Grid>
+        {darkMode ? <ExitBtn night /> : <ExitBtn />}
+        <Container>
+          <VideoContainer socket={socket} />
+          <ChatBox socket={socket} currentTime={currentTime} />
+        </Container>
 
         <JobModal />
         <Noti />
@@ -123,4 +117,9 @@ function GameRoom(props) {
   )
 }
 
+const Container = styled.div`
+  display: flex;
+  width: 100vw;
+  height: auto;
+`
 export default GameRoom

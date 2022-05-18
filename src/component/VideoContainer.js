@@ -2,6 +2,8 @@ import React from 'react'
 import Peer from 'peerjs'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
+import StartBtn from './buttons/StartBtn'
+import cage from '../assets/icons/test.png'
 //이름이 안떠,,,
 const VideoContainer = () => {
   const socket = useSelector((state) => state.game.socket)
@@ -24,20 +26,20 @@ const VideoContainer = () => {
 
   let UserNick = localStorage.getItem('userNick')
 
-  // const handleCamera = () => {
-  //   setCameraOn((prev) => !prev)
-  //   if (cameraOn) {
-  //     let video = allStream.current.getTracks()
-  //     video[0].enabled = false
-  //     let src = document.querySelector('.video_non_src')
-  //     src.style.display = 'block'
-  //   } else {
-  //     let video = allStream.current.getTracks()
-  //     video[0].enabled = true
-  //     let src = document.querySelector('.video_non_src')
-  //     src.style.display = 'none'
-  //   }
-  // }
+  const handleCamera = () => {
+    setCameraOn((prev) => !prev)
+    if (cameraOn) {
+      let video = allStream.current.getTracks()
+      video[0].enabled = false
+      let src = document.querySelector('.video_non_src')
+      src.style.display = 'block'
+    } else {
+      let video = allStream.current.getTracks()
+      video[0].enabled = true
+      let src = document.querySelector('.video_non_src')
+      src.style.display = 'none'
+    }
+  }
 
   //테스트
 
@@ -121,6 +123,7 @@ const VideoContainer = () => {
           nickBox.prepend(peerNick)
           videoBox.prepend(newVideo)
           videoBox.prepend(nickBox)
+          console.log(videoWrap.current)
           videoWrap.current.prepend(videoBox)
           console.log('연결함수 실행완')
 
@@ -159,36 +162,39 @@ const VideoContainer = () => {
   return (
     <>
       <Container>
-        <div className="real_container">
-          <div className="video_container" ref={videoWrap}>
-            <div className="video_grid" ref={videoGrid}>
-              <video
-                ref={myVideo}
-                className="myvideo"
-                onMouseOver={() => {
-                  videoBack.current.style.display = 'block'
-                  setDisplay(!display)
-                }}
-              ></video>
-              <div
-                className="video_background"
-                ref={videoBack}
-                onMouseOut={() => {
-                  videoBack.current.style.display = 'none'
-                  setDisplay(!display)
-                }}
-              ></div>
-              {/* <button
+        <div className="video_container" ref={videoWrap}>
+          {/* <KillVideo>
+            <div className="killed_bg"></div>
+            <img src={cage} />
+          </KillVideo> */}
+          <div className="video_grid" ref={videoGrid}>
+            <video
+              ref={myVideo}
+              className="myvideo"
+              onMouseOver={() => {
+                videoBack.current.style.display = 'block'
+                setDisplay(!display)
+              }}
+            ></video>
+            <div
+              className="video_background"
+              ref={videoBack}
+              onMouseOut={() => {
+                videoBack.current.style.display = 'none'
+                setDisplay(!display)
+              }}
+            ></div>
+            {/* <button
                 cameraOn={cameraOn}
                 display={display}
                 handleCamera={handleCamera}
               /> */}
-              <div className="userview_name fl">
-                <p>{UserNick}</p>
-              </div>
+            <div className="userview_name fl">
+              <p>{UserNick}</p>
             </div>
           </div>
         </div>
+        <StartBtn socket={socket} />
       </Container>
     </>
   )
@@ -207,7 +213,32 @@ function addVideoStream(video, stream) {
 }
 
 const Container = styled.div`
-  height: 600px;
+  width: 62%;
+  padding: 15vh 0 0 15vh;
+`
+
+const KillVideo = styled.div`
+  position: absolute;
+  display: block;
+  text-align: center;
+  z-index: 1;
+  > .killed_bg {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    background-color: red;
+    opacity: 0;
+    border-radius: 70%;
+  }
+  > img {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    opacity: 1;
+    z-index: 1;
+  }
 `
 
 export default VideoContainer

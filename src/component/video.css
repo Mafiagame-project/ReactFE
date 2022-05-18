@@ -1,29 +1,32 @@
 .video_container {
-  display: grid;
-  grid-gap: 2rem 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  height: 82%;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
   transition: 0.2s;
 }
 
 .video_grid {
+  width: 27%;
   text-align: center;
-  flex-direction: column;
-  margin: 0 auto;
+  position: relative;
+  height: calc(50% - 12.5px);
+  margin-left: 2%;
 }
-
-/* .video_grid :nth-child(3n + 1) {
-  margin-left: 0px;
-}
-.video_grid :nth-child(n + 4) {
-  margin-top: 25px;
-} */
+/* &:nth-child(3n + 1) {
+        margin-left: 0px;
+      }
+      &:nth-child(n + 4) {
+        margin-top: 25px;
+      } */
 
 .video_box {
   width: 180px;
   height: 180px;
   border-radius: 70%;
   object-fit: cover;
-
+  position: relative;
   transform: scaleX(-1);
 }
 
@@ -58,41 +61,41 @@
   width: 400px;
   height: 100px;
   font-size: 40px;
-  color:black;
+  color: black;
   font-weight: 500 !important;
 }
-.toast-night-time{
+.toast-night-time {
   width: 400px;
   height: 100px;
   font-size: 40px;
   background-color: black !important;
-  color:white;
+  color: white;
   font-weight: 500 !important;
 }
 
 .toast-police {
   font-size: 40px;
-  width:700px;
-  height:100px;
+  width: 700px;
+  height: 100px;
   color: rgb(248, 57, 57);
-  background: #FCCC00!important;
+  background: #fccc00 !important;
 }
 
-.toast-dup{
+.toast-dup {
   width: 850px;
   height: 100px;
   font-size: 40px;
   background-color: white !important;
-  color:black;
+  color: black;
   font-weight: 500 !important;
   margin-right: 400px;
 }
 
-.toast-rep{
+.toast-rep {
   width: 600px;
   height: 100px;
   font-size: 40px;
   background-color: white !important;
-  color:black;
+  color: black;
   font-weight: 500 !important;
 }
