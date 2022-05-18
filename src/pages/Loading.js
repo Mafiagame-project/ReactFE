@@ -55,6 +55,7 @@ function Loading() {
     })
 
     socket.on('isNight', (value) => {
+      console.log('...', value)
       dispatch(gameActions.dayAndNight(value))
       dispatch(gameActions.dayCount())
     })
@@ -66,14 +67,17 @@ function Loading() {
     })
 
     socket.on('ready', (value) => {
+      console.log(value)
       dispatch(gameActions.readyCheck(value)) // 게임시작 누르고 오는거라 필요없는듯?
     })
 
     socket.on('readyPeople', (currentReady) => {
+      console.log(currentReady)
       dispatch(roomActions.roomReady(currentReady)) // 레디한사람 전체 배열
     })
 
     socket.on('nightVoteResult', (value) => {
+      console.log(value)
       dispatch(gameActions.playerWhoKilled(value.diedPeopleArr))
       dispatch(gameActions.noticeResult(value.died[0]))
       dispatch(gameActions.playerWhoSurvived(value.saved[0]))

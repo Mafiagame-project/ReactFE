@@ -45,6 +45,9 @@ const Rooms = (props) => {
     }
   }
 
+  const roomReload = () => {
+    socket.emit('roomList')
+  }
   React.useEffect(() => {
     socket.on('roomList', (rooms) => {
       dispatch(roomActions.sendRoomList(rooms))
