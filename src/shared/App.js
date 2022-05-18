@@ -14,6 +14,7 @@ import Loading from '../pages/Loading'
 import Introduce from '../pages/Introduce'
 import EditUser from '../pages/auth/EditUser'
 import EditProfile from '../pages/auth/EditProfile'
+import Tutorial from '../pages/Tutorial'
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route exact path="/introduce" component={Introduce} />
         <Route exact path="/edituser" component={EditUser} />
         <Route exact path="/editprofile" component={EditProfile} />
+        <Route exact path='/tutorial' component={Tutorial}/>
       </ConnectedRouter>
     </>
   )

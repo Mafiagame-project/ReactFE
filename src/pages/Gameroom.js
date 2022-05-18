@@ -29,9 +29,6 @@ function GameRoom(props) {
   const [isOpen, setIsOpen] = useState(false)
   const [getNotice, setNotice] = useState(false)
   const [darkMode, setDarkMode] = useState(false)
-
-  console.log(currentTime)
-
   const dayOrNight = (time) => {
     if (time == true) {
       setDarkMode(true)
