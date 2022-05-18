@@ -12,8 +12,11 @@ const StartBtn = ({ socket }) => {
   const memberSocket = useSelector((state) => state.member.socketId)
   const members = useSelector((state) => state.member.memberId)
   const startCheck = useSelector((state) => state.room.check)
-  const currentId = localStorage.getItem('userId')
+  const currentId = localStorage.getItem('userNick')
   const [getStart, setStart] = React.useState(false)
+
+  console.log(currentReady)
+  console.log(startCheck)
   const startGame = () => {
     if (memberSocket.length < 4) {
       startGameNoti(1)
@@ -26,6 +29,7 @@ const StartBtn = ({ socket }) => {
       }
     }
   }
+  //게임 시작 후 레디한 사람들 리덕스 비워주기?
 
   React.useEffect(() => {
     let check = members?.includes(roomInfo?.userId)
@@ -55,26 +59,21 @@ const StartBtn = ({ socket }) => {
       })
     }
   }
-
   return (
     <>
-      {getStart == false ? (
-        <>
-          {roomInfo?.userId == currentId ? (
-            <DotButton
-              black02
-              text="시작하기"
-              _onClick={() => {
-                startGame()
-              }}
-            />
-          ) : (
-            <ReadyBtn />
-          )}
-        </>
+      {!getStart && roomInfo?.userId === currentId ? (
+        <DotButton
+          black02
+          text="시작하기"
+          _onClick={() => {
+            startGame()
+          }}
+        />
       ) : (
-        <VoteBtn />
+        <ReadyBtn />
       )}
+      {currentReady ? <VoteBtn /> : null}
+      <VoteBtn />
     </>
   )
 }

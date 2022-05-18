@@ -5,6 +5,7 @@ import { Grid, Button, DotButton, Text } from '../../element/index'
 function ReadyBtn() {
   const socket = useSelector((state) => state.game.socket)
   const [getReady, setReady] = useState(false)
+
   const readyGame = () => {
     if (getReady == false) {
       socket.emit('ready', true)
