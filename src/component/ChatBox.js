@@ -146,7 +146,7 @@ const Block = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 8vw;
+    width: 100px;
     opacity: 1;
     z-index: 1;
   }
