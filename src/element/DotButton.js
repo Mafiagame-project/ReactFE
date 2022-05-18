@@ -10,9 +10,6 @@ import whiteBtn04 from '../assets/button/white/04.png'
 import twoBtn from '../assets/button/00.png'
 import signupBtn from '../assets/button/black/signupBtn.png'
 import styled from 'styled-components'
-import pop from '../assets/sound/effect/pop.wav'
-
-const click = new Audio(pop)
 
 const DotButton = (props) => {
   const {
@@ -28,7 +25,6 @@ const DotButton = (props) => {
     white03,
     white04,
     test01,
-    sound,
   } = props
 
   if (black01) {
@@ -37,7 +33,7 @@ const DotButton = (props) => {
         <ButtonBox onClick={_onClick}>
           <img src={blackBtn01} />
           <button style={{ display: 'none ' }} />
-          <WhiteText onClick={() => click.play()}>{text}</WhiteText>
+          <WhiteText>{text}</WhiteText>
         </ButtonBox>
       </>
     )
@@ -49,7 +45,7 @@ const DotButton = (props) => {
         <ButtonBox onClick={_onClick}>
           <img src={blackBtn02} />
           <button style={{ display: 'none' }} />
-          <WhiteText onClick={() => click.play()}>{text}</WhiteText>
+          <WhiteText>{text}</WhiteText>
         </ButtonBox>
       </>
     )
@@ -60,7 +56,7 @@ const DotButton = (props) => {
         <ButtonBox onClick={_onClick}>
           <img src={blackBtn03} />
           <button style={{ display: 'none' }} />
-          <WhiteText onClick={() => click.play()}>{text}</WhiteText>
+          <WhiteText>{text}</WhiteText>
         </ButtonBox>
       </>
     )
@@ -71,7 +67,7 @@ const DotButton = (props) => {
         <ButtonBox onClick={_onClick}>
           <img src={blackBtn04} />
           <button style={{ display: 'none' }} />
-          <WhiteText onClick={() => click.play()}>{text}</WhiteText>
+          <WhiteText>{text}</WhiteText>
         </ButtonBox>
       </>
     )
@@ -83,7 +79,7 @@ const DotButton = (props) => {
         <ButtonBox onClick={_onClick}>
           <img src={whiteBtn01} />
           <button style={{ display: 'none' }} />
-          <BlackText onClick={() => click.play()}>{text}</BlackText>
+          <BlackText>{text}</BlackText>
         </ButtonBox>
       </>
     )
@@ -94,7 +90,7 @@ const DotButton = (props) => {
         <ButtonBox onClick={_onClick}>
           <img src={whiteBtn02} />
           <button style={{ display: 'none' }} />
-          <BlackText onClick={() => click.play()}>{text}</BlackText>
+          <BlackText>{text}</BlackText>
         </ButtonBox>
       </>
     )
@@ -105,7 +101,7 @@ const DotButton = (props) => {
         <ButtonBox onClick={_onClick}>
           <img src={whiteBtn03} />
           <button style={{ display: 'none' }} />
-          <BlackText onClick={() => click.play()}>{text}</BlackText>
+          <BlackText>{text}</BlackText>
         </ButtonBox>
       </>
     )
@@ -116,7 +112,7 @@ const DotButton = (props) => {
         <ButtonBox onClick={_onClick}>
           <img src={whiteBtn04} />
           <button style={{ display: 'none' }} />
-          <BlackText onClick={() => click.play()}>{text}</BlackText>
+          <BlackText>{text}</BlackText>
         </ButtonBox>
       </>
     )

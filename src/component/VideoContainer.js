@@ -23,37 +23,38 @@ const VideoContainer = () => {
   let peerNickname = ''
   let myPeerId = ''
   let myStream = null
-
+  let userNick = localStorage.getItem('userNick')
   let UserNick = localStorage.getItem('userNick')
 
-  const handleCamera = () => {
-    setCameraOn((prev) => !prev)
-    if (cameraOn) {
-      let video = allStream.current.getTracks()
-      video[0].enabled = false
-      let src = document.querySelector('.video_non_src')
-      src.style.display = 'block'
-    } else {
-      let video = allStream.current.getTracks()
-      video[0].enabled = true
-      let src = document.querySelector('.video_non_src')
-      src.style.display = 'none'
-    }
-  }
+  console.log(videoWrap.current)
+
+  // const handleCamera = () => {
+  //   setCameraOn((prev) => !prev)
+  //   if (cameraOn) {
+  //     let video = allStream.current.getTracks()
+  //     video[0].enabled = false
+  //     let src = document.querySelector('.video_non_src')
+  //     src.style.display = 'block'
+  //   } else {
+  //     let video = allStream.current.getTracks()
+  //     video[0].enabled = true
+  //     let src = document.querySelector('.video_non_src')
+  //     src.style.display = 'none'
+  //   }
+  // }
 
   //테스트
 
   React.useEffect(() => {
     const myPeer = new Peer()
-
     myPeer.nick = UserNick
 
     navigator.mediaDevices
-      .getUserMedia({
+      ?.getUserMedia({
         video: true,
         audio: false,
       })
-      .then((stream) => {
+      ?.then((stream) => {
         myStream = stream
         let streamId = stream.id
         addVideoStream(myVideo.current, stream)
@@ -63,26 +64,27 @@ const VideoContainer = () => {
 
         console.log(myPeer)
 
-        if (myPeer._id == null) {
+        if (myPeer?._id == null) {
           myPeer.on('open', (peerId) => {
             console.log(peerId)
             myPeerId = peerId
-            socket.emit('peerJoinRoom', myPeerId, UserNick, streamId)
+            socket.emit('peerJoinRoom', myPeerId, userNick, streamId)
           })
         } else {
-          socket.emit('peerJoinRoom', myPeer._id, UserNick, streamId)
+          socket.emit('peerJoinRoom', myPeer._id, userNick, streamId)
         }
 
-        myPeer.on('connection', (dataConnection) => {
-          peersNick = dataConnection.metadata
-          let peerNick = document.createElement('p')
-          peerNick.innerText = peersNick
-          const nickBox = document.querySelector('.userview_name')
-          nickBox.prepend(peerNick)
-          console.log(nickBox)
-        })
+        // myPeer?.on('connection', (dataConnection) => {
+        //   peersNick = dataConnection.metadata
+        //   let peerNick = document.createElement('p')
+        //   peerNick.innerText = peersNick
+        //   const nickBox = document.querySelector('.userview_name')
+        //   nickBox.prepend(peerNick)
+        //   console.log(nickBox)
+        // })
+
         //새 피어가 연결을 원할 때
-        myPeer.on('call', (call) => {
+        myPeer?.on('call', (call) => {
           console.log('콜 찍히니?')
           call.answer(stream)
           const videoBox = document.createElement('div')
@@ -97,16 +99,15 @@ const VideoContainer = () => {
           console.log(videoBox)
           videoWrap.current.prepend(videoBox)
 
-          call.on('stream', (userVideoStream) => {
+          call?.on('stream', (userVideoStream) => {
             addVideoStream(peerVideo, userVideoStream)
             videoBox.prepend(peerVideo)
             console.log('here')
           })
-          return null
         })
 
         //두번째 순서 => peer.call
-        socket.on('user-connected', (userId, userNick, streamId) => {
+        socket?.on('user-connected', (userId, userNick, streamId) => {
           console.log(userId, streamId, userNick)
 
           const call = myPeer.call(userId, myStream)
@@ -143,6 +144,7 @@ const VideoContainer = () => {
       // const video_box = document.querySelectorAll('video_box')
       // const nick_box = document.querySelectorAll('userview_name')
       let removeVideo
+      console.log('나감')
 
       for (let i = 0; i < video.length; i++) {
         if (video[i].srcObject.id === streamId) {
@@ -163,10 +165,6 @@ const VideoContainer = () => {
     <>
       <Container>
         <div className="video_container" ref={videoWrap}>
-          {/* <KillVideo>
-            <div className="killed_bg"></div>
-            <img src={cage} />
-          </KillVideo> */}
           <div className="video_grid" ref={videoGrid}>
             <video
               ref={myVideo}
@@ -190,7 +188,7 @@ const VideoContainer = () => {
                 handleCamera={handleCamera}
               /> */}
             <div className="userview_name fl">
-              <p>{UserNick}</p>
+              <p>{userNick}</p>
             </div>
           </div>
         </div>
@@ -215,30 +213,6 @@ function addVideoStream(video, stream) {
 const Container = styled.div`
   width: 62%;
   padding: 15vh 0 0 15vh;
-`
-
-const KillVideo = styled.div`
-  position: absolute;
-  display: block;
-  text-align: center;
-  z-index: 1;
-  > .killed_bg {
-    position: relative;
-    width: 180px;
-    height: 180px;
-    background-color: red;
-    opacity: 0;
-    border-radius: 70%;
-  }
-  > img {
-    position: absolute;
-    top: 50%;
-    left: 100%;
-    transform: translate(-50%, -50%);
-    width: 200px;
-    opacity: 1;
-    z-index: 1;
-  }
 `
 
 export default VideoContainer
