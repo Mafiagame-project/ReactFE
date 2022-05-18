@@ -43,8 +43,9 @@ const VideoContainer = () => {
 
   React.useEffect(() => {
     const myPeer = new Peer()
-
+try{
     myPeer.nick = UserNick
+    
 
     navigator.mediaDevices
       .getUserMedia({
@@ -134,6 +135,10 @@ const VideoContainer = () => {
       .catch((err) => {
         console.log('err', err)
       })
+    } catch{
+      console.log('error')
+    }
+
 
     socket.on('user-disconnected', (userId, userNick, streamId) => {
       const video = document.querySelectorAll('video')
