@@ -139,14 +139,14 @@ const Block = styled.div`
     width: 100%;
     height: 100%;
     background-color: #000;
-    opacity: 1;
+    opacity: 0.6;
   }
   > img {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 4.17vw;
+    width: 8vw;
     opacity: 1;
     z-index: 1;
   }
