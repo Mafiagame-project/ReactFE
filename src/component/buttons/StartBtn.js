@@ -75,6 +75,7 @@ const StartBtn = ({ socket }) => {
       ) : (
         <VoteBtn />
       )}
+      <VoteBtn />
     </>
   )
 }
