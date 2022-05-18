@@ -37,8 +37,8 @@ const Chatid = styled.div`
 const Chatword = styled.div`
   text-align: ${(props) => (props.isMe ? 'right' : 'left')}
     position: relative;
-    background: ${(props) => (props.isMe ? '#FFE27A' : 'white')};
-    border-radius: 5%;
+    background: ${(props) => (props.isMe ? '#FFEE59' : 'white')};
+    border-radius: 5px;
     border: 1px solid black;
     padding: 10px;
     display: inline-block;
@@ -48,7 +48,7 @@ const Chatword = styled.div`
 const OneChat = styled.div`
   width: 100%;
   height: 50px;
-  margin-top: 18px;
+  margin-top: ${(props) => (props.isMe ? '10px' : '32px')};
   text-align: ${(props) => (props.isMe ? 'right' : 'left')};
 `
 export default Chatdiv

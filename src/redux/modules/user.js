@@ -179,42 +179,42 @@ const changePwDB = (dic) => {
 }
 
 //naver Login
-// const naverLogin = (code, state) => {
-//   console.log(code, state)
-//   return async function (dispatch, getState, { history }) {
-//     await axios
-//       .get(`${BASE_URL}/naverLogin/main?code=${code}&state=${state}`)
-//       .then((res) => {
-//         console.log(res)
-//       })
-//       .catch((err) => {
-//         console.log('errr', err)
-//       })
-//   }
-// }
-
-// const userData = await axios.get('https://openapi.naver.com/v1/nid/me', {
-//         headers : {
-//             'Authorization' : `Bearer ${token}`,
-//         }
-//     })
-
-//naver Login2
-const naverLogin = (token) => {
-  console.log(token)
+const naverLogin = (code, state) => {
+  console.log(code, state)
   return async function (dispatch, getState, { history }) {
-    await axios({
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      method: 'get',
-      url: `${BASE_URL}/naverLogin`,
-    }).then((res) => {
-      console.log(res)
-    })
+    await axios
+      .get(`${BASE_URL}/naverLogin/main?code=${code}&state=${state}`)
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log('errr', err)
+      })
   }
 }
+
+// const userData = await axios.get('https://openapi.naver.com/v1/nid/me', {
+//   headers: {
+//     Authorization: `Bearer ${token}`,
+//   },
+// })
+
+//naver Login2
+// const naverLogin = (token) => {
+//   console.log(token)
+//   return async function (dispatch, getState, { history }) {
+//     await axios({
+//       headers: {
+//         'Content-Type': 'application/json',
+//         Authorization: `Bearer ${token}`,
+//       },
+//       method: 'get',
+//       url: `${BASE_URL}/naverLogin`,
+//     }).then((res) => {
+//       console.log(res)
+//     })
+//   }
+// }
 
 //kakao login
 const kakaoLogin = (code) => {

@@ -44,6 +44,7 @@ const Rooms = (props) => {
       }
     }
   }
+
   React.useEffect(() => {
     socket.on('roomList', (rooms) => {
       dispatch(roomActions.sendRoomList(rooms))
@@ -69,6 +70,9 @@ const Rooms = (props) => {
             <Text size="25px" bold>
               전체 방 목록
             </Text>
+            <Grid>
+              <Text>새로고침</Text>
+            </Grid>
           </Grid>
           <RoomBox>
             {RoomList.map((room, i) => {

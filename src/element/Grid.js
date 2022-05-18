@@ -36,12 +36,14 @@ Grid.defaultProps = {
   isFlex_end: false,
   _cursor: false,
   br: '',
+  position: false,
 }
 
 const GridBox = styled.div`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   overflow:${(props) => props.overflow};
+  position:${(props) => props.position};
   box-sizing: border-box;
   ${(props) =>
     props.border ? `border: 2px solid black; border-radius: 10px;` : ''}

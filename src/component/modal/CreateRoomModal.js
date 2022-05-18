@@ -9,14 +9,8 @@ import { useDispatch } from 'react-redux'
 import { Slider } from '@mui/material'
 import styled from 'styled-components'
 import closeIcon from '../../assets/icons/black/닫기.png'
-import { makeStyles, withStyles } from '@mui/styles'
+import { withStyles } from '@mui/styles'
 import sheep from '../../assets/image/character/양_시민.png'
-
-const useStyles = makeStyles({
-  thumb: {
-    backgroundImage: `url(${sheep})`,
-  },
-})
 
 const ImageSlider = withStyles({
   thumb: {
@@ -52,14 +46,13 @@ const CreateRoomModal = ({ onClose, socket }) => {
   const title = React.useRef()
   const people = React.useRef()
   const pwd = React.useRef()
-  const classes = useStyles()
 
   React.useEffect(() => {}, [socket])
   const createRoom = () => {
     let roomTitle = title.current.value
     let roomPeople = getPeople
     let roomPwd
-    if(!roomPeople){
+    if (!roomPeople) {
       roomPeople = 5
     }
 
@@ -75,6 +68,8 @@ const CreateRoomModal = ({ onClose, socket }) => {
     socket.on('roomList', (rooms) => {
       dispatch(roomActions.sendRoomList(rooms))
     })
+    return socket.off('createRoom')
+    socket.off('roomList')
   }
 
   const toggleSecret = () => {

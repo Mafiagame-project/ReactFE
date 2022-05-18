@@ -1,35 +1,36 @@
 import React from 'react'
 import { Grid, DotButton } from '../../element/index'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify'
 import ReadyBtn from './ReadyBtn'
 import VoteBtn from './VoteBtn'
 import { history } from '../../redux/configureStore'
+import { actionCreators as gameActions } from '../../redux/modules/game'
 
 const StartBtn = ({ socket }) => {
+  const dispatch = useDispatch()
   const roomInfo = useSelector((state) => state.room.current)
   const currentReady = useSelector((state) => state.room.ready)
   const memberSocket = useSelector((state) => state.member.socketId)
   const members = useSelector((state) => state.member.memberId)
   const startCheck = useSelector((state) => state.room.check)
+  const endGame = useSelector((state) => state.game.endGameNoti)
   const currentId = localStorage.getItem('userNick')
   const [getStart, setStart] = React.useState(false)
 
-  console.log(currentReady)
-  console.log(startCheck)
   const startGame = () => {
     if (memberSocket.length < 4) {
       startGameNoti(1)
     } else {
       if (memberSocket.length - 1 == currentReady.length) {
         socket.emit('startGame')
+        dispatch(gameActions.noticeEndGame(null))
         setStart(true)
       } else {
         startGameNoti(2)
       }
     }
   }
-  //게임 시작 후 레디한 사람들 리덕스 비워주기?
 
   React.useEffect(() => {
     let check = members?.includes(roomInfo?.userId)
@@ -61,18 +62,23 @@ const StartBtn = ({ socket }) => {
   }
   return (
     <>
-      {!getStart && roomInfo?.userId === currentId ? (
-        <DotButton
-          black02
-          text="시작하기"
-          _onClick={() => {
-            startGame()
-          }}
-        />
+      {getStart == false || endGame ? (
+        <>
+          {roomInfo?.userId == currentId ? (
+            <DotButton
+              black02
+              text="시작하기"
+              _onClick={() => {
+                startGame()
+              }}
+            />
+          ) : (
+            <ReadyBtn />
+          )}
+        </>
       ) : (
         <ReadyBtn />
       )}
-      {currentReady ? <VoteBtn /> : null}
       <VoteBtn />
     </>
   )

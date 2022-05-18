@@ -17,7 +17,6 @@ function NotiModal() {
   const reportNoti = useSelector((state) => state.game.repNoti)
   const dayCount = useSelector(state => state.game.cnt)
   const [getNotice, setNotice] = useState(false);
-  console.log(voteResult)
 
   const printNoti = () => {
     setNotice(true)

@@ -10,7 +10,7 @@ import soundIcon from '../assets/icons/white/소리(백).png'
 import LogoutIcon from '../assets/icons/white/로그아웃(백).png'
 
 function Header(props) {
-  const socket = useSelector(state => state.game.socket)
+  const socket = useSelector((state) => state.game.socket)
   const dispatch = useDispatch()
   const userNick = localStorage.getItem('userNick')
   const [getFriend, setFriend] = React.useState(false)
@@ -21,7 +21,12 @@ function Header(props) {
   return (
     <>
       <Container>
-        <Grid _onClick={() => {history.push('/'); socket.disconnect()}}>
+        <Grid
+          _onClick={() => {
+            history.push('/')
+            socket.disconnect()
+          }}
+        >
           <Text size="30px" color="#fff">
             MAFIYANG
           </Text>

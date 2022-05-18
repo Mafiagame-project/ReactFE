@@ -8,7 +8,7 @@ const Text = (props) => {
     bold: bold,
     color: color,
     size: size,
-    margin,
+    margin : margin,
     font: font,
     center: center,
     left : left,
