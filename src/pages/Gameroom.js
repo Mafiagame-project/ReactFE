@@ -27,6 +27,15 @@ function GameRoom(props) {
   const [isOpen, setIsOpen] = useState(false)
   const [getNotice, setNotice] = useState(false)
   const [darkMode, setDarkMode] = useState(false)
+
+  useEffect(() => {
+    socket.on('isNight', (value) => {
+      console.log('...', value)
+      dispatch(gameActions.dayAndNight(value))
+      dispatch(gameActions.dayCount())
+    })
+  })
+
   const dayOrNight = (time) => {
     if (time == true) {
       setDarkMode(true)
@@ -44,7 +53,7 @@ function GameRoom(props) {
       })
     }
   }
-  console.log(currentTime)
+
   useEffect(() => {
     let unlisten = history.listen((location) => {
       // 브라우저 뒤로가기 버튼(나가기) 누를때 호출

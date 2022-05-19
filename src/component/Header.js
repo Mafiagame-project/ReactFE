@@ -15,9 +15,11 @@ function Header(props) {
   const userNick = localStorage.getItem('userNick')
   const [getFriend, setFriend] = React.useState(false)
   const [isOpen, setIsOpen] = React.useState(false)
+
   const handleLogOut = () => {
     dispatch(userActions.logOutDB())
   }
+
   return (
     <>
       <Container>

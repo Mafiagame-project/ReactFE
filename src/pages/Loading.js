@@ -8,11 +8,13 @@ import { actionCreators as memberActions } from '../redux/modules/member'
 import { actionCreators as userAction } from '../redux/modules/user'
 import { useEffect } from 'react'
 import styled from 'styled-components'
+import bgm from '../assets/sound/bgm/big_helmet.mp3'
 
 function Loading() {
   const dispatch = useDispatch()
   const history = useHistory()
   const token = localStorage.getItem('token')
+  const startBgm = new Audio(bgm)
 
   useEffect(() => {
     dispatch(userAction.isLoginDB())
@@ -54,12 +56,6 @@ function Loading() {
       dispatch(roomActions.startCheck(true))
     })
 
-    socket.on('isNight', (value) => {
-      console.log('...', value)
-      dispatch(gameActions.dayAndNight(value))
-      dispatch(gameActions.dayCount())
-    })
-
     socket.on('dayVoteResult', (value) => {
       console.log(value)
       dispatch(gameActions.playerWhoKilled(value.diedPeopleArr)) // 죽은 전체명단
@@ -85,6 +81,7 @@ function Loading() {
 
     socket.on('endGame', (data) => {
       // 게임이 끝났을 때 노티
+      // startBgm.pause()
       dispatch(gameActions.noticeEndGame(data?.msg))
       dispatch(roomActions.startCheck(null))
     })

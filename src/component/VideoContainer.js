@@ -26,8 +26,6 @@ const VideoContainer = () => {
   let userNick = localStorage.getItem('userNick')
   let UserNick = localStorage.getItem('userNick')
 
-  console.log(videoWrap.current)
-
   React.useEffect(() => {
     const myPeer = new Peer()
     myPeer.nick = UserNick
