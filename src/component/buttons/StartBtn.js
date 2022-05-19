@@ -6,6 +6,7 @@ import ReadyBtn from './ReadyBtn'
 import VoteBtn from './VoteBtn'
 import { history } from '../../redux/configureStore'
 import { actionCreators as gameActions } from '../../redux/modules/game'
+import bgm from '../../assets/sound/bgm/big_helmet.mp3'
 
 const StartBtn = ({ socket }) => {
   const dispatch = useDispatch()
@@ -18,6 +19,8 @@ const StartBtn = ({ socket }) => {
   const currentId = localStorage.getItem('userNick')
   const [getStart, setStart] = React.useState(false)
 
+  const startBgm = new Audio(bgm)
+
   const startGame = () => {
     if (memberSocket.length < 4) {
       startGameNoti(1)
@@ -26,6 +29,7 @@ const StartBtn = ({ socket }) => {
         socket.emit('startGame')
         dispatch(gameActions.noticeEndGame(null))
         setStart(true)
+        startBgm.play()
       } else {
         startGameNoti(2)
       }
@@ -62,7 +66,7 @@ const StartBtn = ({ socket }) => {
   }
   return (
     <>
-      {!startCheck || endGame ? (
+      {!startCheck ? (
         <>
           {roomInfo?.userId == currentId ? (
             <DotButton
