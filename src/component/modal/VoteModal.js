@@ -18,6 +18,12 @@ const VoteModal = ({ onClose }) => {
   const memberId = useSelector((state) => state.member.memberId)
   const currentId = localStorage.getItem('userId')
 
+  console.log(killed)
+  console.log(memberId)
+
+  let saveArray = memberId.filter((e) => !killed.includes(e.memberId))
+  console.log(saveArray)
+
   const is_killed = (e) => {
     console.log(e.target.value)
     setClickedId(e.target.value)
@@ -28,13 +34,13 @@ const VoteModal = ({ onClose }) => {
   // console.log(is_night)
 
   const policePointed = (pointed, isMafia) => {
-    if(isMafia === true){
+    if (isMafia === true) {
       toast.warning(`${pointed}는 마피아입니다`, {
         position: toast.POSITION.TOP_LEFT,
         className: 'toast-police',
         autoClose: 3000,
       })
-    } else if(isMafia === false) {
+    } else if (isMafia === false) {
       toast.warning(`${pointed}는 마피아가 아닙니다`, {
         position: toast.POSITION.TOP_LEFT,
         className: 'toast-police',
@@ -46,29 +52,29 @@ const VoteModal = ({ onClose }) => {
   }
 
   const actionAlert = (num) => {
-    if(num === 1){
+    if (num === 1) {
       toast.warning('본인을 선택할 수 없습니다', {
-        position : toast.POSITION.TOP_LEFT,
-        className : 'toast-dup',
-        autoClose : 2500,
+        position: toast.POSITION.TOP_LEFT,
+        className: 'toast-dup',
+        autoClose: 2500,
       })
-    } else if(num === 2){
+    } else if (num === 2) {
       toast.warning('이미 죽은사람을 선택할 수 없습니다', {
-        position : toast.POSITION.TOP_LEFT,
-        className : 'toast-dup',
-        autoClose : 2500,
+        position: toast.POSITION.TOP_LEFT,
+        className: 'toast-dup',
+        autoClose: 2500,
       })
-    } else if(num === 3){
+    } else if (num === 3) {
       toast.warning('당신은 죽었기때문에 선택할 수 없습니다', {
-        position : toast.POSITION.TOP_LEFT,
-        className : 'toast-dup',
-        autoClose : 2500,
+        position: toast.POSITION.TOP_LEFT,
+        className: 'toast-dup',
+        autoClose: 2500,
       })
-    } else if(num === 4){
+    } else if (num === 4) {
       toast.warning('기회를 모두 사용하였습니다', {
-        position : toast.POSITION.TOP_LEFT,
-        className : 'toast-rep',
-        autoClose : 2500,
+        position: toast.POSITION.TOP_LEFT,
+        className: 'toast-rep',
+        autoClose: 2500,
       })
     }
   }
@@ -82,46 +88,47 @@ const VoteModal = ({ onClose }) => {
     }
     if (killed?.length > 0) {
       killed.forEach((id) => {
-        if(clickerId == id){
+        if (clickerId == id) {
           actionAlert(3)
           return onClose()
         }
-        if(clickedId == id){
+        if (clickedId == id) {
           actionAlert(2)
           return onClose()
         } else {
           socket.emit('vote', { clickerJob, clickerId, clickedId })
           if (clickerJob == 'police' && time == true) {
-            socket.on('police', selected => {
+            socket.on('police', (selected) => {
               policePointed(clickedId, selected)
             })
-          } else if (clickerJob == 'reporter' && time == true){
-            if(chance == true){
+          } else if (clickerJob == 'reporter' && time == true) {
+            if (chance == true) {
               actionAlert(4)
               return onClose()
             }
-          } 
+          }
           return onClose()
         }
       })
     } else {
       socket.emit('vote', { clickerJob, clickerId, clickedId })
       if (clickerJob == 'police' && time == true) {
-        socket.on('police', selected => {
+        socket.on('police', (selected) => {
           policePointed(clickedId, selected)
         })
-      } else if (clickerJob == 'reporter' && time == true){
-        if(chance == true){
+      } else if (clickerJob == 'reporter' && time == true) {
+        if (chance == true) {
           actionAlert(4)
           return onClose()
         }
-      } 
+      }
       return onClose()
     }
-    
   }
   //밤에는 마피아 모달, 경찰, 의사 구분 주기
   //낮에는 통일
+
+  //명단 죽은 사람만 추가
 
   return (
     <>
@@ -135,7 +142,7 @@ const VoteModal = ({ onClose }) => {
                 우리에 가둘 양을 선택해 주세요
               </Text>
               <VoteBox>
-                {memberId.map((e, i) => {
+                {saveArray.map((e, i) => {
                   return (
                     <Input
                       key={i}
@@ -197,7 +204,7 @@ const VoteModal = ({ onClose }) => {
                 </Text>
               )}
               <VoteBox>
-                {memberId.map((e, i) => {
+                {saveArray.map((e, i) => {
                   return (
                     <Input
                       key={i}

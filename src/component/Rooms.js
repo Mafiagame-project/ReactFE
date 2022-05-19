@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Grid, Text, Button } from '../element/index'
 import styled from 'styled-components'
 import sheep from '../assets/image/character/양_시민.png'
+import reload from '../assets/icons/black/새로고침.png'
 
 const Rooms = (props) => {
   const dispatch = useDispatch()
@@ -73,8 +74,8 @@ const Rooms = (props) => {
             <Title>
               <Text size="25px">방 전체 목록</Text>
             </Title>
-            <Grid _cursor _onClick={roomReload}>
-              <Text right>새로고침</Text>
+            <Grid _cursor _onClick={roomReload} margin="0 1vw">
+              <img src={reload} />
             </Grid>
           </Grid>
           <RoomBox>
