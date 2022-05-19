@@ -5,11 +5,17 @@ import { Text, Grid, DotButton, Image, Input } from '../../element/index'
 import styled from 'styled-components'
 import edit from '../../assets/icons/white/edit_w.png'
 import EditProfileModal from '../../component/modal/EditProfileModal'
+import 마피양 from '../../assets/image/character/profile.jpg'
+import 기자 from '../../assets/image/character/양_기자.png'
+import 경찰 from '../../assets/image/character/경찰.png'
+import 의사 from '../../assets/image/character/의사_양.png'
+import { useSelector } from 'react-redux'
 
 const EditProfile = () => {
   const userId = localStorage.getItem('userId')
   const [isOpen, setIsOpen] = React.useState(false)
-
+  const profileIdx = useSelector(state => state.member.idx)
+  const pictures = [마피양, 기자, 경찰, 의사]
   return (
     <>
       <Background>
@@ -17,7 +23,7 @@ const EditProfile = () => {
           <Text size="70px">MAFIYANG</Text>
           <Grid margin="40px auto 50px">
             <ImgOverlay onClick={() => setIsOpen(true)}>
-              <Image size="140" margin="0 auto 10px " />
+              <Image size="140" margin="0 auto 10px " src={pictures[profileIdx]}/>
               <Overlay className="event">
                 <Image small size="140" src={edit} classNmae="icon" />
               </Overlay>

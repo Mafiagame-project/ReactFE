@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '../component/Header'
-import { Grid, Text, Button } from '../element/index'
+import { Grid, Text, DotButton } from '../element/index'
 import styled from 'styled-components'
 import data from '../shared/introduce'
 import Tutorial from './Tutorial'
@@ -9,7 +9,7 @@ import { history } from '../redux/configureStore'
 
 function Introduce() {
   const [isOpen, setIsOpen] = React.useState(false)
-  const [getPage, setPage] = React.useState(false)
+  const [getPage, setPage] = React.useState(0)
 
   const [getShow, setShow] = React.useState(false)
   const [desc, setDesc] = React.useState()
@@ -25,6 +25,17 @@ function Introduce() {
     }, 3000)
   }
 
+  const box2 = {
+    borderRadius: '10px',
+    padding: '10px',
+    border: `${getPage == 2 ? '3px solid black' : 'none'}`,
+  }
+  const box1 = {
+    borderRadius: '10px',
+    padding: '10px',
+    border: `${getPage == 1 ? '3px solid black' : 'none'}`,
+  }
+
   return (
     <>
       <Header />
@@ -36,30 +47,38 @@ function Introduce() {
         src={돌아가기}
       />
 
-      <Grid center padding="50px">
-        <Grid isFlex_center height="5px">
-          <Text
-            _onClick={() => {
-              setPage(false)
-            }}
-            size="40px"
-          >
-            역할 튜토리얼
-          </Text>
-          <Text size="40px">/</Text>
-          <Text
-            _onClick={() => {
-              setPage(true)
-            }}
-            size="40px"
-          >
-            게임 튜토리얼
-          </Text>
+      <Grid center flexColumn padding="50px">
+        <Grid is_flex width="50%" height="55px">
+          <Grid isFlex_center height="60px" width="40%">
+            <TutorialBox style={box2}>
+              <Text
+                _onClick={() => {
+                  setPage(2)
+                }}
+                size="40px"
+              >
+                역할 튜토리얼
+              </Text>
+            </TutorialBox>
+          </Grid>
+          <Grid isFlex_center height="60px" width="40%">
+            <TutorialBox style={box1}>
+              <Text
+                _onClick={() => {
+                  setPage(1)
+                }}
+                size="40px"
+              >
+                게임 튜토리얼
+              </Text>
+            </TutorialBox>
+          </Grid>
         </Grid>
         <Grid height="50px"></Grid>
-        {getPage === true ? (
+
+        {getPage === 0 ? null : getPage === 1 ? (
           <Tutorial />
-        ) : (
+        ) : getPage === 2 ? (
           <CardBox>
             {data.map((e, idx) => {
               return (
@@ -81,11 +100,8 @@ function Introduce() {
                       height="100%"
                       _onlick={toggleBtn}
                     >
-                      <Img src={e.img} />
-                      <Grid isFlex_center height="50px" bg="#000">
-                        <Text size="20px" color="#fff">
-                          {e.title}
-                        </Text>
+                      <Grid center height="10%">
+                        <Text color="white">MAFIYANG</Text>
                       </Grid>
                     </Grid>
                   </Card>
@@ -94,7 +110,7 @@ function Introduce() {
               )
             })}
           </CardBox>
-        )}
+        ) : null}
         <>
           {getShow == false ? null : (
             <Grid isFlex_center margin="30px 0 0 0">
@@ -152,5 +168,6 @@ const Explain = styled.div`
   border-radius: 15px;
   padding: 20px;
 `
+const TutorialBox = styled.div``
 
 export default Introduce

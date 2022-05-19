@@ -30,11 +30,11 @@ const VideoContainer = () => {
     myPeer.nick = UserNick
 
     navigator.mediaDevices
-      ?.getUserMedia({
+      .getUserMedia({
         video: true,
         audio: false,
       })
-      ?.then((stream) => {
+      .then((stream) => {
         myStream = stream
         let streamId = stream.id
         addVideoStream(myVideo.current, stream)
@@ -45,11 +45,12 @@ const VideoContainer = () => {
         //내 스트림을 받고 실행합니다.
         if (myPeer?._id == null) {
           myPeer.on('open', (peerId) => {
-            console.log(peerId)
+            console.log({ peerId })
             myPeerId = peerId
             socket.emit('peerJoinRoom', myPeerId, userNick, streamId)
           })
         } else {
+          console.log(myPeer._id)
           socket.emit('peerJoinRoom', myPeer._id, userNick, streamId)
         }
 
@@ -68,7 +69,7 @@ const VideoContainer = () => {
           videoBox.prepend(newNickBox)
           videoWrap.current.prepend(videoBox)
 
-          call?.on('stream', (userVideoStream) => {
+          call.on('stream', (userVideoStream) => {
             addVideoStream(peerVideo, userVideoStream)
             videoBox.prepend(peerVideo)
           })

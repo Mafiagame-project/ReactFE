@@ -13,6 +13,7 @@ const ChatBox = ({ socket, currentTime }) => {
   const [getWrite, setWrite] = React.useState([])
   const currentId = localStorage.getItem('userNick')
   const playerJob = useSelector((state) => state.game.job)
+  const endGame = useSelector(state => state.game.endGameNoti)
 
   const send = () => {
     // 채팅을 보낼 때 호출되는 함수
@@ -38,7 +39,7 @@ const ChatBox = ({ socket, currentTime }) => {
     <Grid padding="5vh 0 0 0" center width="">
       <Timer />
       <ChatContainer>
-        {currentTime && playerJob.playerJob !== 'mafia' ? (
+        {currentTime && endGame == null && playerJob.playerJob !== 'mafia' ? (
           <Block>
             <div className="block_bg"></div>
             <img src={lock} alt="밤이라서 채팅금지" />

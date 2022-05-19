@@ -2,9 +2,25 @@ import React from 'react'
 import { history } from '../../redux/configureStore'
 import ModalPortal from './ModalPortal'
 import { Grid, Text, DotButton, Input, Image } from '../../element/index'
+import { actionCreators as memberActions } from '../../redux/modules/member'
 import styled from 'styled-components'
+import 마피양 from '../../assets/image/character/profile.jpg'
+import 기자 from '../../assets/image/character/양_기자.png'
+import 경찰 from '../../assets/image/character/경찰.png'
+import 의사 from '../../assets/image/character/의사_양.png'
+import { useDispatch } from 'react-redux'
+
 
 const EditProfileModal = ({ onClose }) => {
+  const dispatch = useDispatch();
+  const [getFile, setFile] = React.useState(null);
+  const token = localStorage.getItem('token')
+
+  const pictures = [마피양, 기자, 경찰, 의사]
+
+  const changeProfile = (pictureIdx, token) => {
+    dispatch(memberActions.changeProfiles(pictureIdx, token));
+  }
   return (
     <>
       <ModalPortal>
@@ -17,13 +33,17 @@ const EditProfileModal = ({ onClose }) => {
           <Content onClick={(e) => e.stopPropagation()}>
             <Grid padding="30px" height="100%" flex_column>
               <Text> 아이콘 변경 </Text>
-              <Grid is_flex>
-                <Image size={120} />
-                <Image size={120} />
-                <Image size={120} />
+              <Grid is_flex width='100%'>
+                {
+                  pictures.map((element, idx) => {
+                    return(
+                      <PictureBox onClick={()=>{setFile(idx)}}><Image src={element} /></PictureBox>
+                    )
+                  })
+                }
               </Grid>
               <Grid marign="40px 0 0">
-                <DotButton black01 text="저장" />
+                <DotButton _onClick={(e)=>{changeProfile(getFile, token); e.stopPropagation(); onClose()}} black01 text="저장" />
               </Grid>
             </Grid>
           </Content>
@@ -43,6 +63,16 @@ const Background = styled.div`
   width: 100%;
   z-index: 1000;
   background-color: rgba(0, 0, 0, 0.4);
+`
+const PictureBox = styled.div`
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  border:1px solid gray;
+  margin:10px;
+  &:hover{
+    border : 3px solid gray;
+  }
 `
 
 const Content = styled.div`

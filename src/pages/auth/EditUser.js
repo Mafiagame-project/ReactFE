@@ -3,17 +3,23 @@ import Header from '../../component/Header'
 import { history } from '../../redux/configureStore'
 import { Text, Grid, DotButton, Image } from '../../element/index'
 import styled, { createGlobalStyle } from 'styled-components'
+import 마피양 from '../../assets/image/character/profile.jpg'
+import 기자 from '../../assets/image/character/양_기자.png'
+import 경찰 from '../../assets/image/character/경찰.png'
+import 의사 from '../../assets/image/character/의사_양.png'
+import { useSelector } from 'react-redux'
 
 const EditUser = () => {
   const userId = localStorage.getItem('userId')
-
+  const profileIdx = useSelector(state => state.member.idx)
+  const pictures = [마피양, 기자, 경찰, 의사]
   return (
     <>
       <Background>
         <Container>
           <Text size="70px">MAFIYANG</Text>
           <Grid isFlex_center width="300px" margin="50px auto">
-            <Image size="140" />
+            <Image size="140" src={pictures[profileIdx]} />
             <Grid isStart margin="0 0 0 40px">
               <Text size="25px">{userId}</Text>
               <Text size="20px">99승 99패</Text>
