@@ -68,12 +68,12 @@ const VoteModal = ({ onClose }) => {
         className: 'toast-dup',
         autoClose: 2500,
       })
-    } else if (num === 3) {
-      toast.warning('당신은 죽었기때문에 선택할 수 없습니다', {
-        position: toast.POSITION.TOP_LEFT,
-        className: 'toast-dup',
-        autoClose: 2500,
-      })
+      // } else if (num === 3) {
+      //   toast.warning('당신은 죽었기때문에 선택할 수 없습니다', {
+      //     position: toast.POSITION.TOP_LEFT,
+      //     className: 'toast-dup',
+      //     autoClose: 2500,
+      //   })
     } else if (num === 4) {
       toast.warning('기회를 모두 사용하였습니다', {
         position: toast.POSITION.TOP_LEFT,
@@ -205,53 +205,52 @@ const VoteModal = ({ onClose }) => {
                   </Text>
                 ) : (
                   <>
-                  <Text size="40px" color="#fff">
-                    시민은..잠에 듭니다
-                  </Text>
-                   <DotButton
-                   black04
-                   text="다시 자러가기...zzZ"
-                   _onClick={() => {
-                     onClose()
-                   }}
-                 />
-                 </>
+                    <Text size="40px" color="#fff">
+                      시민은..잠에 듭니다
+                    </Text>
+                    <DotButton
+                      black04
+                      text="다시 자러가기...zzZ"
+                      _onClick={() => {
+                        onClose()
+                      }}
+                    />
+                  </>
                 )}
                 {playerJob.playerJob === 'citizen' ? null : (
                   <>
-                  <VoteBox>
-                    {saveArray?.map((e, i) => {
-                      return (
-                        <Input
-                          key={i}
-                          radio
-                          text={e}
-                          value={e}
-                          _name="vote"
-                          _onChange={is_killed}
-                        />
-                      )
-                    })}
-                  </VoteBox>
-                  <Grid isFlex_center>
-                    <DotButton
-                    white01
-                    text="선택 완료"
-                    _onClick={() => {
-                      active(clickedId, playerJob, is_night)
-                    }}
-                  />
-                  <DotButton
-                  black01
-                  text="취소"
-                  _onClick={() => {
-                    onClose()
-                  }}
-                />
-                </Grid>
-                </>
+                    <VoteBox>
+                      {saveArray?.map((e, i) => {
+                        return (
+                          <Input
+                            key={i}
+                            radio
+                            text={e}
+                            value={e}
+                            _name="vote"
+                            _onChange={is_killed}
+                          />
+                        )
+                      })}
+                    </VoteBox>
+                    <Grid isFlex_center>
+                      <DotButton
+                        white01
+                        text="선택 완료"
+                        _onClick={() => {
+                          active(clickedId, playerJob, is_night)
+                        }}
+                      />
+                      <DotButton
+                        black01
+                        text="취소"
+                        _onClick={() => {
+                          onClose()
+                        }}
+                      />
+                    </Grid>
+                  </>
                 )}
-
               </Container>
             )}
           </Background>

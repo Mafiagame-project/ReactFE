@@ -42,10 +42,12 @@ const VideoContainer = () => {
         videoGrid.current.prepend(myVideo.current)
         allStream.current = stream
 
+        console.log(myPeer)
+
         //내 스트림을 받고 실행합니다.
         if (myPeer?._id == null) {
           myPeer.on('open', (peerId) => {
-            console.log({ peerId })
+            console.log(peerId)
             myPeerId = peerId
             socket.emit('peerJoinRoom', myPeerId, userNick, streamId)
           })

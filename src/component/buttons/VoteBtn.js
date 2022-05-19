@@ -10,11 +10,12 @@ const VoteBtn = () => {
   let killed = useSelector((state) => state.game.killed)
   const currentNick = localStorage.getItem('userNick')
 
-  if (killed == null) {
-    killed = []
-  }
+  console.log(killed)
 
   const toggleOpen = () => {
+    if (killed == null) {
+      killed = []
+    }
     if (killed?.includes(currentNick)) {
       setVoteOpen(false)
       toast.warning('당신은 죽었기때문에 선택할 수 없습니다', {
@@ -29,6 +30,7 @@ const VoteBtn = () => {
 
   return (
     <>
+      {/* 첫번째 낮일 때 투표 막기.... */}
       <DotButton white01 text="투표하기" _onClick={toggleOpen} />
       {voteOpen && <VoteModal onClose={() => setVoteOpen(false)} />}
     </>
