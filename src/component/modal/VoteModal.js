@@ -13,15 +13,19 @@ const VoteModal = ({ onClose }) => {
   const socket = useSelector((state) => state.game.socket)
   const is_night = useSelector((state) => state.game.night)
   const playerJob = useSelector((state) => state.game.job)
-  const killed = useSelector((state) => state.game.killed)
+  let killed = useSelector((state) => state.game.killed)
   const chance = useSelector((state) => state.game.chance)
   const memberId = useSelector((state) => state.member.memberId)
-  const currentId = localStorage.getItem('userId')
+  const currentNick = localStorage.getItem('userNick')
 
   console.log(killed)
   console.log(memberId)
 
-  let saveArray = memberId.filter((e) => !killed.includes(e.memberId))
+  if (killed == null) {
+    killed = []
+  }
+
+  let saveArray = memberId.filter((x) => !killed.includes(x))
   console.log(saveArray)
 
   const is_killed = (e) => {
@@ -82,7 +86,7 @@ const VoteModal = ({ onClose }) => {
   const active = (clickedId, clicker, time) => {
     let clickerJob = clicker.playerJob
     let clickerId = clicker.player
-    if (currentId == clickedId) {
+    if (currentNick == clickedId) {
       actionAlert(1)
       return
     }
@@ -132,109 +136,118 @@ const VoteModal = ({ onClose }) => {
 
   return (
     <>
-      <ModalPortal>
-        <Background>
-          {!is_night ? (
-            <Container onClick={(e) => e.stopPropagation()}>
-              <Text size="40px" color="#fff">
-                낮이 되었습니다.
-                <br />
-                우리에 가둘 양을 선택해 주세요
-              </Text>
-              <VoteBox>
-                {saveArray.map((e, i) => {
-                  return (
-                    <Input
-                      key={i}
-                      dayRadio
-                      text={e}
-                      value={e}
-                      _name="vote"
-                      _onChange={is_killed}
+      {saveArray ? (
+        <ModalPortal>
+          <Background>
+            {!is_night ? (
+              <Container onClick={(e) => e.stopPropagation()}>
+                <Text size="40px" color="#fff">
+                  낮이 되었습니다.
+                  <br />
+                  우리에 가둘 양을 선택해 주세요
+                </Text>
+                <VoteBox>
+                  {saveArray?.map((e, i) => {
+                    return (
+                      <Input
+                        key={i}
+                        dayRadio
+                        text={e}
+                        value={e}
+                        _name="vote"
+                        _onChange={is_killed}
+                      />
+                    )
+                  })}
+                </VoteBox>
+                <ToastContainer />
+                <Text color="#fff" size="25px">
+                  {clickedId}님을 선택하시겠습니까?
+                </Text>
+                <Grid isFlex_center>
+                  <DotButton
+                    white02
+                    margin="0 5px"
+                    text="투표 완료"
+                    _onClick={() => {
+                      active(clickedId, playerJob, is_night)
+                    }}
+                  />
+                  <DotButton
+                    black02
+                    margin="0 5px"
+                    text="취소"
+                    _onClick={() => {
+                      onClose()
+                    }}
+                  />
+                </Grid>
+              </Container>
+            ) : (
+              <Container onClick={(e) => e.stopPropagation()}>
+                {playerJob.playerJob === 'mafia' ? (
+                  <Text size="40px" color="#fff">
+                    밤이 되었습니다.
+                    <br />
+                    잡아먹고 싶은 양을 선택해 주세요
+                  </Text>
+                ) : playerJob.playerJob === 'police' ? (
+                  <Text size="40px" color="#fff">
+                    밤이 되었습니다.
+                    <br />
+                    정체를 알고싶은 양을 선택해 주세요
+                  </Text>
+                ) : playerJob.playerJob === 'doctor' ? (
+                  <Text size="40px" color="#fff">
+                    밤이 되었습니다.
+                    <br />
+                    살리고 싶은 양을 선택해 주세요
+                  </Text>
+                ) : (
+                  <Text size="40px" color="#fff">
+                    시민은..잠에 듭니다
+                  </Text>
+                )}
+                {playerJob.playerJob === 'citizen' ? null : (
+                  <VoteBox>
+                    {saveArray?.map((e, i) => {
+                      return (
+                        <Input
+                          key={i}
+                          radio
+                          text={e}
+                          value={e}
+                          _name="vote"
+                          _onChange={is_killed}
+                        />
+                      )
+                    })}
+                  </VoteBox>
+                )}
+
+                <Grid isFlex_center>
+                  {playerJob.playerJob === 'citizen' ? null : (
+                    <DotButton
+                      white01
+                      text="선택 완료"
+                      _onClick={() => {
+                        active(clickedId, playerJob, is_night)
+                      }}
                     />
-                  )
-                })}
-              </VoteBox>
-              <ToastContainer />
-              <Text color="#fff" size="25px">
-                {clickedId}님을 선택하시겠습니까?
-              </Text>
-              <Grid isFlex_center>
-                <DotButton
-                  white02
-                  margin="0 5px"
-                  text="투표 완료"
-                  _onClick={() => {
-                    active(clickedId, playerJob, is_night)
-                  }}
-                />
-                <DotButton
-                  black02
-                  margin="0 5px"
-                  text="취소"
-                  _onClick={() => {
-                    onClose()
-                  }}
-                />
-              </Grid>
-            </Container>
-          ) : (
-            <Container onClick={(e) => e.stopPropagation()}>
-              {playerJob.playerJob === 'mafia' ? (
-                <Text size="40px" color="#fff">
-                  밤이 되었습니다.
-                  <br />
-                  잡아먹고 싶은 양을 선택해 주세요
-                </Text>
-              ) : playerJob.playerJob === 'police' ? (
-                <Text size="40px" color="#fff">
-                  밤이 되었습니다.
-                  <br />
-                  정체를 알고싶은 양을 선택해 주세요
-                </Text>
-              ) : playerJob.playerJob === 'doctor' ? (
-                <Text size="40px" color="#fff">
-                  밤이 되었습니다.
-                  <br />
-                  살리고 싶은 양을 선택해 주세요
-                </Text>
-              ) : (
-                <Text size="40px" color="#fff">
-                  시민은..잠에 듭니다
-                </Text>
-              )}
-              <VoteBox>
-                {saveArray?.map((e, i) => {
-                  return (
-                    <Input
-                      key={i}
-                      radio
-                      text={e}
-                      value={e}
-                      _name="vote"
-                      _onChange={is_killed}
-                    />
-                  )
-                })}
-              </VoteBox>
-              <DotButton
-                white02
-                text="선택 완료"
-                _onClick={() => {
-                  active(clickedId, playerJob, is_night)
-                }}
-              />
-              <DotButton
-                black02
-                text="취소"
-                _onClick={() => {
-                  onClose()
-                }}
-              />
-            </Container>
-          )}
-        </Background>
-      </ModalPortal>
+                  )}
+                  <DotButton
+                    black01
+                    text="취소"
+                    _onClick={() => {
+                      onClose()
+                    }}
+                  />
+                </Grid>
+              </Container>
+            )}
+          </Background>
+        </ModalPortal>
+      ) : null}
     </>
   )
 }
