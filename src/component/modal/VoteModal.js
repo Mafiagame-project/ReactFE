@@ -204,7 +204,7 @@ const VoteModal = ({ onClose }) => {
                 </Text>
               )}
               <VoteBox>
-                {saveArray.map((e, i) => {
+                {saveArray?.map((e, i) => {
                   return (
                     <Input
                       key={i}
