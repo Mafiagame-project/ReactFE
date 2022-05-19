@@ -36,14 +36,24 @@ const StartBtn = ({ socket }) => {
     let check = members?.includes(roomInfo?.userId)
     if (members.length >= 1) {
       if (check == false && !startCheck) {
-        history.replace('/gamemain')
-        alert('방장이 나가서 방이 폭파되었습니다 ㅋ')
+        whenHostOut()
+        setTimeout(()=>{
+          history.replace('/gamemain')
+        },2000)
         return
       }
     } else {
       return
     }
   }, [members])
+
+  const whenHostOut = () => {
+    toast.warning('호스트가 방을 나갔습니다!', {
+      position: toast.POSITION.TOP_CENTER,
+      className: 'toast-host-out',
+      autoClose: 1000,
+    })
+  }
 
   const startGameNoti = (count) => {
     if (count === 1) {

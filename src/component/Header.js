@@ -4,13 +4,20 @@ import { Grid, Text, Image } from '../element/index'
 import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../redux/configureStore'
 import { actionCreators as userActions } from '../redux/modules/user'
+import { actionCreators as memberActions } from '../redux/modules/member'
 import FriendsListModal from './modal/FriendsListModal'
 import friendIcon from '../assets/icons/white/친구(백).png'
 import soundIcon from '../assets/icons/white/소리(백).png'
 import LogoutIcon from '../assets/icons/white/로그아웃(백).png'
+import 마피양 from '../assets/image/character/profile.jpg'
+import 기자 from '../assets/image/character/양_기자.png'
+import 경찰 from '../assets/image/character/경찰.png'
+import 의사 from '../assets/image/character/의사_양.png'
 
 function Header(props) {
   const socket = useSelector((state) => state.game.socket)
+  const profileIdx = useSelector(state => state.member.idx)
+  const pictures = [마피양, 기자, 경찰, 의사]
   const dispatch = useDispatch()
   const userNick = localStorage.getItem('userNick')
   const [getFriend, setFriend] = React.useState(false)
@@ -18,6 +25,10 @@ function Header(props) {
   const handleLogOut = () => {
     dispatch(userActions.logOutDB())
   }
+
+  React.useEffect(()=>{
+    dispatch(memberActions.callUserProfile())
+  },[])
   return (
     <>
       <Container>
@@ -34,7 +45,7 @@ function Header(props) {
         <Rightside>
           <Grid flex_column>
             <Grid isFlex_start>
-              <Image size="40" />
+              <Image size={50} src={pictures[profileIdx]} />
               <Grid margin="0 22px" className="headerText" width="100px">
                 <Text margin="0px" color="#fff">
                   {userNick}

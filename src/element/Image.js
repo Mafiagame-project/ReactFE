@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import sheep from '../assets/image/character/양_시민.png'
-import profile from '../assets/image/character/profile.jpg'
+import 마피아 from '../assets/image/character/profile.jpg'
+import 기자 from '../assets/image/character/양_기자.png'
+import 경찰 from '../assets/image/character/경찰.png'
 
 const Image = (props) => {
   const { shape, src, size, margin, small } = props
@@ -25,7 +27,7 @@ const Image = (props) => {
 
 Image.defaultProps = {
   shape: 'circle',
-  src: profile,
+  src: 기자,
   size: 100,
   margin: '',
 }

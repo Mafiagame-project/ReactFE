@@ -56,6 +56,15 @@
   height: 200px;
   text-align: center;
 }
+.toast-host-out{
+  background: black !important;
+  color:orange;
+  font-size: 25px;
+  margin-top: 200px;
+  width: 450px;
+  height: 200px;
+  text-align: center;
+}
 .toast-start-alarm{
   width: 550px;
   height: 100px;

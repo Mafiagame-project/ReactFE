@@ -74,6 +74,8 @@ function GameRoom(props) {
       socket.off('vote')
       socket.off('createRoom')
       socket.emit('leaveRoom')
+      socket.emit('ready', false)
+      socket.off('ready')
       dispatch(gameActions.dayCount(0))
       unlisten()
       dispatch(gameActions.repChanceOver(null))
