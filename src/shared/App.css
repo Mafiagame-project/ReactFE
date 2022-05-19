@@ -37,13 +37,19 @@ body {
   width: 100%;
   height: 100vh;
   transition-duration: 0.3s;
-  background-color: rgba(0, 0, 0, 0.7);
+
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.923406862745098) 0%,
+    rgba(7, 7, 8, 0.676908263305322) 43%,
+    rgba(0, 0, 0, 0.469625350140056) 98%
+  );
 }
 
 .swiper {
   width: 80%;
   height: 100%;
-  
 }
 
 .swiper-slide {

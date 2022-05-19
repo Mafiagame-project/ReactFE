@@ -1,11 +1,10 @@
 import * as Yup from 'yup'
 
 export function idVal() {
-  // let idReg
+  let idReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,15}$/
   return Yup.string('')
-    .max(12, '아이디는 2~12자 사이로 지어주세요')
-    .min(2, '아이디는 2~12자 사이로 지어주세요')
-    .required('아이디를 입력해주세요')
+    .matches(idReg, { message: '영문/숫자 포함 4~15자를 입력해주세요' })
+    .required('아이디를 입력해주세요!')
 }
 
 export function emailVal() {

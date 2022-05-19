@@ -7,7 +7,7 @@ const VoteBtn = () => {
 
   return (
     <>
-      <DotButton black02 text="투표하기" _onClick={() => setVoteOpen(true)} />
+      <DotButton white01 text="투표하기" _onClick={() => setVoteOpen(true)} />
       {voteOpen && <VoteModal onClose={() => setVoteOpen(false)} />}
     </>
   )

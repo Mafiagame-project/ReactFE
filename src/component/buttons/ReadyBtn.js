@@ -21,7 +21,7 @@ function ReadyBtn() {
     <>
       {getReady == false ? (
         <DotButton
-          white02
+          white01
           text="준비하기"
           _onClick={() => {
             readyGame()
@@ -29,7 +29,7 @@ function ReadyBtn() {
         />
       ) : (
         <DotButton
-          black02
+          black01
           text="준비완료"
           _onClick={() => {
             readyGame()

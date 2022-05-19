@@ -62,11 +62,11 @@ const StartBtn = ({ socket }) => {
   }
   return (
     <>
-      {getStart == false || endGame ? (
+      {!startCheck || endGame ? (
         <>
           {roomInfo?.userId == currentId ? (
             <DotButton
-              black02
+              black01
               text="시작하기"
               _onClick={() => {
                 startGame()
@@ -77,9 +77,8 @@ const StartBtn = ({ socket }) => {
           )}
         </>
       ) : (
-        <ReadyBtn />
+        <VoteBtn />
       )}
-      <VoteBtn />
     </>
   )
 }

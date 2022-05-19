@@ -70,11 +70,11 @@ const Rooms = (props) => {
       <Grid>
         <Grid padding="30px">
           <Grid is_flex height="10%" padding="10px">
-            <Text size="25px" bold>
-              전체 방 목록
-            </Text>
-            <Grid>
-              <Text>새로고침</Text>
+            <Title>
+              <Text size="25px">방 전체 목록</Text>
+            </Title>
+            <Grid _cursor _onClick={roomReload}>
+              <Text right>새로고침</Text>
             </Grid>
           </Grid>
           <RoomBox>
@@ -86,11 +86,13 @@ const Rooms = (props) => {
                     entrance(room)
                   }}
                 >
-                  <Grid center height="15%">
-                    <Text color="white">MAFIYANG</Text>
+                  <Grid center height="10%">
+                    <Text margin="0.4vh 0" color="white">
+                      MAFIYANG
+                    </Text>
                   </Grid>
                   <Grid
-                    padding="50px 60px"
+                    padding="50px 60px 20px"
                     center
                     bg="white"
                     height="100%"
@@ -100,9 +102,7 @@ const Rooms = (props) => {
                       {room.roomTitle}
                     </Text>
                     <Grid>
-                      <Text size="15px" bold>
-                        방장 : {room.userId}
-                      </Text>
+                      <Text size="18px">방장 : {room.userId}</Text>
 
                       <Grid
                         width=""
@@ -110,9 +110,9 @@ const Rooms = (props) => {
                         center
                         bg="black"
                         border
-                        margin="0 30px"
+                        margin="10px 30px"
                       >
-                        <img src={sheep} style={{ width: '32px' }} />
+                        <img src={sheep} style={{ width: '28px' }} />
                         <Text color="#fff" size="22px" margin="13px">
                           {room.currentPeople.length}/{room.roomPeople}
                         </Text>
@@ -129,6 +129,16 @@ const Rooms = (props) => {
   )
 }
 
+const Title = styled.div`
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  text-align: center;
+  width: 200px;
+  padding: 0.6vw;
+  margin: 0 0 1vh;
+`
+
 const RoomBox = styled.div`
   height: 60%;
   overflow-x: scroll;
@@ -142,11 +152,11 @@ const RoomBox = styled.div`
 
 const Room = styled.div`
   min-width: 305px;
-  height: 386px;
+  height: 332px;
   background-color: black;
-  border: 1px solid black;
+  border: 4px solid black;
   border-radius: 20px 20px 0px 0px;
-  margin-right: 30px;
+  margin: 0 30px 25px 0;
   box-shadow: 3px 3px black;
   display: flex;
   flex-direction: column;

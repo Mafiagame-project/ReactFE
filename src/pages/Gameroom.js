@@ -23,7 +23,7 @@ function GameRoom(props) {
   const socket = useSelector((state) => state.game.socket)
   const currentTime = useSelector((state) => state.game.night)
   const startCard = useSelector((state) => state.game.card)
-  const endGame = useSelector(state => state.game.endGameNoti)
+  const endGame = useSelector((state) => state.game.endGameNoti)
   const [isOpen, setIsOpen] = useState(false)
   const [getNotice, setNotice] = useState(false)
   const [darkMode, setDarkMode] = useState(false)
@@ -50,7 +50,6 @@ function GameRoom(props) {
       // 브라우저 뒤로가기 버튼(나가기) 누를때 호출
       if (history.action === 'POP') {
         // socket.emit('leaveRoom')
-        
       }
     })
 

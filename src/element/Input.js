@@ -158,7 +158,7 @@ const Img = styled.img`
   position: absolute;
   width: 80px;
   top: -90px;
-  left: 73px;
+  left: 125px;
   transition-duration: 0.5s;
   transform: rotate(0);
   z-index: 10;
@@ -169,7 +169,7 @@ opacity: 0;
   position: absolute;
   width: 90px;
   top: -130px;
-  left: 66px;
+  left: 121px;
   transition-duration: 0.5s;
   transform: rotate(0);
   z-index: 20;
