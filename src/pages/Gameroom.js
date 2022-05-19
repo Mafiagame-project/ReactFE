@@ -11,9 +11,7 @@ import ChatBox from '../component/ChatBox'
 import VideoContainer from '../component/VideoContainer'
 import Noti from '../component/modal/NotiModal'
 import JobModal from '../component/modal/JobModal'
-import StartBtn from '../component/buttons/StartBtn'
 import ExitBtn from '../component/buttons/ExitBtn'
-import VoteBtn from '../component/buttons/VoteBtn'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import '../component/video.css'
@@ -34,7 +32,7 @@ function GameRoom(props) {
       dispatch(gameActions.dayAndNight(value))
       dispatch(gameActions.dayCount())
     })
-  })
+  }, [])
 
   const dayOrNight = (time) => {
     if (time == true) {

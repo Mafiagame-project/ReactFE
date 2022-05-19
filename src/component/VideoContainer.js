@@ -16,11 +16,8 @@ const VideoContainer = () => {
   const myVideo = React.useRef()
   let allStream = React.useRef()
   myVideo.muted = true
-  const peers = {}
 
   let peersNick
-  let peerNick = ''
-  let peerNickname = ''
   let myPeerId = ''
   let myStream = null
   let userNick = localStorage.getItem('userNick')
@@ -45,6 +42,7 @@ const VideoContainer = () => {
 
         console.log(myPeer)
 
+        //내 스트림을 받고 실행합니다.
         if (myPeer?._id == null) {
           myPeer.on('open', (peerId) => {
             console.log(peerId)
@@ -55,42 +53,36 @@ const VideoContainer = () => {
           socket.emit('peerJoinRoom', myPeer._id, userNick, streamId)
         }
 
-        myPeer?.on('connection', (dataConnection) => {
-          peersNick = dataConnection.metadata
-          let peerNick = document.createElement('p')
-          peerNick.innerText = peersNick
-          const nickBox = document.querySelector('.userview_name')
-          nickBox.prepend(peerNick)
-          console.log(nickBox)
-        })
-
-        //새 피어가 연결을 원할 때
+        //새로 들어온 피어는 기존의 피어에게 콜을 받습니다.
         myPeer?.on('call', (call) => {
-          console.log('콜 찍히니?')
           call.answer(stream)
           const videoBox = document.createElement('div')
           videoBox.classList.add('video_grid')
           const peerVideo = document.createElement('video')
           peerVideo.classList.add('video_box')
-          const nickBox = document.createElement('div')
-          nickBox.classList.add('userview_name', 'fl')
+          const newNickBox = document.createElement('div')
+          newNickBox.classList.add('newuser_nick', 'fl')
 
-          nickBox.prepend(videoBox)
           videoBox.prepend(peerVideo)
-          console.log(videoBox)
+          videoBox.prepend(newNickBox)
           videoWrap.current.prepend(videoBox)
 
           call?.on('stream', (userVideoStream) => {
             addVideoStream(peerVideo, userVideoStream)
             videoBox.prepend(peerVideo)
-            console.log('here')
           })
         })
+        //상대의 닉네임 받기
+        myPeer?.on('connection', (dataConnection) => {
+          peersNick = dataConnection.metadata
+          let peerNick = document.createElement('p')
+          peerNick.innerText = peersNick
+          const newNickBox = document.querySelector('.newuser_nick', 'fl')
+          newNickBox.prepend(peerNick)
+        })
 
-        //두번째 순서 => peer.call
+        // 기존에 있던 피어는 새 피어가 room에 입장 시 커넥션을 받습니다.
         socket?.on('user-connected', (userId, userNick, streamId) => {
-          console.log(userId, streamId, userNick)
-
           if (videoWrap.current) {
             const call = myPeer.call(userId, myStream)
             const dataConnection = myPeer.connect(userId, {
@@ -102,20 +94,17 @@ const VideoContainer = () => {
             const newVideo = document.createElement('video')
             newVideo.classList.add('video_box')
             const nickBox = document.createElement('div')
-            nickBox.classList.add('userview_name')
+            nickBox.classList.add('userview_name', 'fl')
             let peerNick = document.createElement('p')
             peerNick.innerText = userNick
             nickBox.prepend(peerNick)
             videoBox.prepend(newVideo)
             videoBox.prepend(nickBox)
-            console.log(videoWrap.current)
             videoWrap.current.prepend(videoBox)
-            console.log('연결함수 실행완')
 
             call.on('stream', (newStream) => {
               addVideoStream(newVideo, newStream)
               videoBox.prepend(newVideo)
-              console.log('추가완료')
             })
           }
         })
@@ -124,6 +113,7 @@ const VideoContainer = () => {
         console.log('err', err)
       })
 
+    //피어가 방을 나갈 때
     socket.on('user-disconnected', (userId, userNick, streamId) => {
       const video = document.querySelectorAll('video')
       // const video_box = document.querySelectorAll('video_box')
@@ -191,8 +181,6 @@ function addVideoStream(video, stream) {
     video.play()
   })
   return null
-  // videoGrid.current.append(video)
-  // console.log('추가완')
 }
 
 const Container = styled.div`

@@ -82,6 +82,7 @@ function Loading() {
     socket.on('endGame', (data) => {
       // 게임이 끝났을 때 노티
       // startBgm.pause()
+      console.log(data)
       dispatch(gameActions.noticeEndGame(data?.msg))
       dispatch(roomActions.startCheck(null))
     })
