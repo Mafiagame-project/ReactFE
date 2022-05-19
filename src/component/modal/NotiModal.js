@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { Grid, Button, Text } from '../../element/index'
+import { Grid, Button, Text, Image } from '../../element/index'
 import 늑대 from '../../assets/image/character/늑대_.png'
 import 피해자 from '../../assets/image/character/양_시민.png'
 import 신문 from '../../assets/image/noti/기사_하단이미지.png'
@@ -37,19 +37,23 @@ function NotiModal() {
 
   return (
     <>
-      {/* <Modalblack>
-        <VoteNoti>
-          <Text bold size="32px">
-            {endGameNoti}
-          </Text>
-        </VoteNoti>
-      </Modalblack> */}
       {getNotice === true ? (
         <>
           {endGameNoti ? ( // 게임이 끝났냐 안끝났냐
             <Modalblack>
               <VoteNoti>
-                <Text bold size="32px">
+                <Text size="40px">게임 결과</Text>
+                <div
+                  style={{
+                    border: '1px solid black',
+                    width: '150px',
+                    height: '150px',
+                    margin: '30px auto',
+                  }}
+                >
+                  사진
+                </div>
+                <Text bold size="25px">
                   {endGameNoti}
                 </Text>
               </VoteNoti>
@@ -61,9 +65,19 @@ function NotiModal() {
                   {voteResult ? ( // 아무도 안 죽음 (?)을 아무도 죽지않았습니다로 출력하게!
                     <Modalblack>
                       <VoteNoti>
-                        <Text size="32px">낮 투표결과 </Text>
+                        <Text size="40px">낮 투표결과 </Text>
+                        <div
+                          style={{
+                            border: '1px solid black',
+                            width: '150px',
+                            height: '150px',
+                            margin: '30px auto',
+                          }}
+                        >
+                          사진
+                        </div>
                         <Text bold size="32px">
-                          {voteResult}가 잡혔습니다{' '}
+                          {voteResult}가 잡혔습니다
                         </Text>
                       </VoteNoti>
                     </Modalblack>
@@ -300,14 +314,15 @@ const BreakingHead = styled.div`
 `
 
 const Modalblack = styled.div`
-  background-color: rgba(0, 0, 0, 0.5);
-  width: 100%;
-  height: 100%;
   position: fixed;
-  text-align: center;
-  left: 0;
   top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
   z-index: 100;
+  background-color: rgba(0, 0, 0, 0.7);
 `
 
 const Noti = styled.div`
@@ -326,14 +341,21 @@ const Noti = styled.div`
 `
 
 const VoteNoti = styled.div`
-  display: inline-block;
   background: white;
-  margin-top: 100px;
-  max-width: 680px;
-  height: 520px;
-  padding: 40px;
+  max-width: 500px;
+  height: 370px;
+  padding: 50px;
   box-sizing: border-box;
   border-radius: 20px;
+  position: fixed;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  position: relative;
 `
 
 export default NotiModal

@@ -57,14 +57,14 @@ const VideoContainer = () => {
           socket.emit('peerJoinRoom', myPeer._id, userNick, streamId)
         }
 
-        // myPeer?.on('connection', (dataConnection) => {
-        //   peersNick = dataConnection.metadata
-        //   let peerNick = document.createElement('p')
-        //   peerNick.innerText = peersNick
-        //   const nickBox = document.querySelector('.userview_name')
-        //   nickBox.prepend(peerNick)
-        //   console.log(nickBox)
-        // })
+        myPeer?.on('connection', (dataConnection) => {
+          peersNick = dataConnection.metadata
+          let peerNick = document.createElement('p')
+          peerNick.innerText = peersNick
+          const nickBox = document.querySelector('.userview_name')
+          nickBox.prepend(peerNick)
+          console.log(nickBox)
+        })
 
         //새 피어가 연결을 원할 때
         myPeer?.on('call', (call) => {
