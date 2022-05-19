@@ -204,11 +204,21 @@ const VoteModal = ({ onClose }) => {
                     살리고 싶은 양을 선택해 주세요
                   </Text>
                 ) : (
+                  <>
                   <Text size="40px" color="#fff">
                     시민은..잠에 듭니다
                   </Text>
+                   <DotButton
+                   black04
+                   text="다시 자러가기...zzZ"
+                   _onClick={() => {
+                     onClose()
+                   }}
+                 />
+                 </>
                 )}
                 {playerJob.playerJob === 'citizen' ? null : (
+                  <>
                   <VoteBox>
                     {saveArray?.map((e, i) => {
                       return (
@@ -223,26 +233,25 @@ const VoteModal = ({ onClose }) => {
                       )
                     })}
                   </VoteBox>
-                )}
-
-                <Grid isFlex_center>
-                  {playerJob.playerJob === 'citizen' ? null : (
+                  <Grid isFlex_center>
                     <DotButton
-                      white01
-                      text="선택 완료"
-                      _onClick={() => {
-                        active(clickedId, playerJob, is_night)
-                      }}
-                    />
-                  )}
-                  <DotButton
-                    black01
-                    text="취소"
+                    white01
+                    text="선택 완료"
                     _onClick={() => {
-                      onClose()
+                      active(clickedId, playerJob, is_night)
                     }}
                   />
+                  <DotButton
+                  black01
+                  text="취소"
+                  _onClick={() => {
+                    onClose()
+                  }}
+                />
                 </Grid>
+                </>
+                )}
+
               </Container>
             )}
           </Background>
