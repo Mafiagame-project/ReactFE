@@ -31,7 +31,7 @@ const StartBtn = ({ socket }) => {
       }
     }
   }
-
+  console.log(currentReady)
   React.useEffect(() => {
     let check = members?.includes(roomInfo?.userId)
     if (members.length >= 1) {

@@ -44,7 +44,15 @@ function GameRoom(props) {
       })
     }
   }
-  console.log(currentTime)
+
+  const startAlarm = () => {
+    toast.success('게임이 시작되었습니다. 이야기를 나눠보세요!', {
+      position: toast.POSITION.TOP_LEFT,
+      className: 'toast-start-alarm',
+      autoClose: 3000,
+    })
+  }
+
   useEffect(() => {
     let unlisten = history.listen((location) => {
       // 브라우저 뒤로가기 버튼(나가기) 누를때 호출
@@ -78,16 +86,22 @@ function GameRoom(props) {
   }, [socket])
 
   useEffect(() => {
-    if (currentTime === false) {
-      dayOrNight(false)
-    } else if (currentTime === true) {
-      dayOrNight(true)
-    }
+    console.log(endGame)
+    if(endGame == null){
+      console.log(endGame)
+      if (currentTime === false) {
+        dayOrNight(false)
+      } else if (currentTime === true) {
+        dayOrNight(true)
+      }
+  }
+
   }, [currentTime])
 
   useEffect(() => {
     if (startCard) {
       setIsOpen(true)
+      startAlarm()
       setTimeout(() => {
         setIsOpen(false)
         dispatch(gameActions.startCard(null))
@@ -98,8 +112,8 @@ function GameRoom(props) {
   return (
     <>
       <Header />
-      <div className={`${darkMode && 'dark-mode'}`}>
-        {darkMode ? <ExitBtn night /> : <ExitBtn />}
+      <div className={`${darkMode && endGame ==null && 'dark-mode'}`}>
+        {darkMode && endGame == null ? <ExitBtn night /> : <ExitBtn />}
         <Container>
           <VideoContainer socket={socket} />
           <ChatBox socket={socket} currentTime={currentTime} />

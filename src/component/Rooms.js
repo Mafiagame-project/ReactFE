@@ -74,7 +74,7 @@ const Rooms = (props) => {
               전체 방 목록
             </Text>
             <Grid>
-              <Text>새로고침</Text>
+              <Text _onClick={roomReload}>새로고침</Text>
             </Grid>
           </Grid>
           <RoomBox>

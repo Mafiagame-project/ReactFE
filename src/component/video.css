@@ -56,6 +56,13 @@
   height: 200px;
   text-align: center;
 }
+.toast-start-alarm{
+  width: 550px;
+  height: 100px;
+  font-size: 40px;
+  color: black;
+  font-weight: 500 !important;
+}
 
 .toast-day-time {
   width: 400px;

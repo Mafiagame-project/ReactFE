@@ -44,11 +44,12 @@ const VideoContainer = () => {
   // }
 
   //테스트
-
+  // 사파리는 지원 대상이 아니다 일단 대상
+  // 
   React.useEffect(() => {
     const myPeer = new Peer()
     myPeer.nick = UserNick
-
+    
     navigator.mediaDevices
       .getUserMedia({
         video: true,
@@ -66,11 +67,12 @@ const VideoContainer = () => {
 
         if (myPeer._id == null) {
           myPeer.on('open', (peerId) => {
-            console.log(peerId)
+            console.log({peerId})
             myPeerId = peerId
             socket.emit('peerJoinRoom', myPeerId, userNick, streamId)
           })
         } else {
+          console.log(myPeer._id)
           socket.emit('peerJoinRoom', myPeer._id, userNick, streamId)
         }
 
@@ -85,7 +87,7 @@ const VideoContainer = () => {
 
         //새 피어가 연결을 원할 때
         myPeer.on('call', (call) => {
-          console.log('콜 찍히니?')
+          console.log('콜 찍히니?',call)
           call.answer(stream)
           const videoBox = document.createElement('div')
           videoBox.classList.add('video_grid')
@@ -93,7 +95,6 @@ const VideoContainer = () => {
           peerVideo.classList.add('video_box')
           const nickBox = document.createElement('div')
           nickBox.classList.add('userview_name', 'fl')
-
           nickBox.prepend(videoBox)
           videoBox.prepend(peerVideo)
           console.log(videoBox)
@@ -124,10 +125,10 @@ const VideoContainer = () => {
           nickBox.prepend(peerNick)
           videoBox.prepend(newVideo)
           videoBox.prepend(nickBox)
+          console.log(videoBox)
           console.log(videoWrap.current)
           videoWrap.current.prepend(videoBox)
           console.log('연결함수 실행완')
-
           call.on('stream', (newStream) => {
             addVideoStream(newVideo, newStream)
             videoBox.prepend(newVideo)
