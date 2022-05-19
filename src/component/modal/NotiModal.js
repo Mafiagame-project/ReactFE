@@ -106,7 +106,7 @@ function NotiModal() {
                       </Grid>
                     </Grid>
                     <Grid is_flex height="100%">
-                      <Grid borderRight center height="100%">
+                      <Grid center height="100%">
                         <Grid height="50%">
                           {reportNoti ? (
                             <>
@@ -154,18 +154,13 @@ function NotiModal() {
                                     유명 배우 ○○○ 과거에 양아치였지만 지금은
                                     아니야...
                                   </Text>
-                                  <Grid borderLeft>
+                                  <Grid borderLeft margin="4vh 0" width="90%">
                                     <Text margin="0 0 0 5px" left>
-                                      ○○○는 풀 한포기도 뜯어먹지 않는
-                                      양아치였다. 과거를 반성하고 풀을
-                                      뜯어먹는데에 이바지하겠다는 의사를 밝혔다.
-                                      구구절절 아무 문장 ○○○는 풀 한포기도
-                                      뜯어먹지 않는 양아치였다. 과거를 반성하고
-                                      풀을 뜯어먹는데에 이바지하겠다는 의사를
-                                      밝혔다.구구절절 아무 문장 ○○○는 풀
-                                      한포기도 뜯어먹지 않는 양아치였다. 과거를
-                                      반성하고 풀을 뜯어먹는데에 이바지하겠다는
-                                      의사를 밝혔다.
+                                      ○○○은 지난 기자회견에서 과거에
+                                      양아치였다는 의혹에 대해 인정하며 '비록
+                                      비뚤어진 과거지만 지금은 양아치가 아닌
+                                      양치기로서의 행보를 기대해 달라'라는
+                                      입장을 표명했다.
                                     </Text>
                                   </Grid>
                                 </Grid>
@@ -202,7 +197,7 @@ function NotiModal() {
                           </Grid>
                         </Grid>
                       </Grid>
-                      <Grid height="90%">
+                      <Grid height="90%" center>
                         <Grid height="50%">
                           <Text size="32px">마피양 마을에 발견된 사체...</Text>
                           {voteResult ? (
@@ -326,15 +321,19 @@ const Modalblack = styled.div`
 `
 
 const Noti = styled.div`
-  display: inline-block;
   background: white;
-  margin-top: 100px;
-  width: 1330px;
+  max-width: 1330px;
   height: 865px;
   padding: 40px;
   box-sizing: border-box;
   border-radius: 20px;
-  box-shadow: 2px 2px 2px 2px #d2d2d2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  position: relative;
   transition: all 2s;
   animation: fadein 3s;
   -webkit-animation: fadein 3s;
