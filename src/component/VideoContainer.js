@@ -18,6 +18,8 @@ const VideoContainer = () => {
   myVideo.muted = true
 
   let peersNick
+  let peerNick = ''
+  let peerNickname = ''
   let myPeerId = ''
   let myStream = null
   let userNick = localStorage.getItem('userNick')
@@ -40,8 +42,6 @@ const VideoContainer = () => {
         videoGrid.current.prepend(myVideo.current)
         allStream.current = stream
 
-        console.log(myPeer)
-
         //내 스트림을 받고 실행합니다.
         if (myPeer?._id == null) {
           myPeer.on('open', (peerId) => {
@@ -55,6 +55,7 @@ const VideoContainer = () => {
 
         //새로 들어온 피어는 기존의 피어에게 콜을 받습니다.
         myPeer?.on('call', (call) => {
+          console.log('콜 찍히니?')
           call.answer(stream)
           const videoBox = document.createElement('div')
           videoBox.classList.add('video_grid')
@@ -72,9 +73,11 @@ const VideoContainer = () => {
             videoBox.prepend(peerVideo)
           })
         })
+
         //상대의 닉네임 받기
         myPeer?.on('connection', (dataConnection) => {
           peersNick = dataConnection.metadata
+          console.log(peersNick)
           let peerNick = document.createElement('p')
           peerNick.innerText = peersNick
           const newNickBox = document.querySelector('.newuser_nick', 'fl')
@@ -83,6 +86,8 @@ const VideoContainer = () => {
 
         // 기존에 있던 피어는 새 피어가 room에 입장 시 커넥션을 받습니다.
         socket?.on('user-connected', (userId, userNick, streamId) => {
+          console.log(userId, streamId, userNick)
+
           if (videoWrap.current) {
             const call = myPeer.call(userId, myStream)
             const dataConnection = myPeer.connect(userId, {
@@ -181,6 +186,8 @@ function addVideoStream(video, stream) {
     video.play()
   })
   return null
+  // videoGrid.current.append(video)
+  // console.log('추가완')
 }
 
 const Container = styled.div`
