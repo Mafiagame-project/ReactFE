@@ -9,8 +9,14 @@ const FriendlistModal = ({ onClose }) => {
   const dispatch = useDispatch()
   const [addFriend, setAddFriend] = React.useState('')
   const [openBtn, setOpenBtn] = React.useState(false)
+  const [clickedId, setClickedId] = React.useState()
   const userId = localStorage.getItem('userId')
   const friendList = useSelector((state) => state?.user?.friendList)
+
+  const clicked = (e) => {
+    console.log(e.target.value)
+    setClickedId(e.target.value)
+  }
 
   React.useEffect(() => {
     dispatch(userActions.getFriendDB())
@@ -25,6 +31,11 @@ const FriendlistModal = ({ onClose }) => {
 
   const addFriendBtn = () => {
     dispatch(userActions.addFriendDB(addFriend))
+  }
+
+  const deleteBtn = () => {
+    console.log('dd')
+    dispatch(userActions.deleteFriendDB(clickedId))
   }
   return (
     <>
@@ -57,15 +68,14 @@ const FriendlistModal = ({ onClose }) => {
                       <Grid is_flex margin="20px">
                         <Image size="80" />
                         <Grid>
+                          <input
+                            type="radio"
+                            value={e.userId}
+                            onChange={clicked}
+                          />
                           <Text margin="0px 20px">{e.userId}</Text>
                         </Grid>
                       </Grid>
-                      {openBtn ? (
-                        <Grid isFlex_end width="40%">
-                          <StarBtn>별표</StarBtn>
-                          <DeleteBtn>삭제</DeleteBtn>
-                        </Grid>
-                      ) : null}
                     </FriendList>
                   )
                 })
@@ -76,6 +86,11 @@ const FriendlistModal = ({ onClose }) => {
                   </Text>
                 </Grid>
               )}
+              {openBtn ? (
+                <Grid isFlex_end width="40%">
+                  <DeleteBtn onClick={deleteBtn}>삭제</DeleteBtn>
+                </Grid>
+              ) : null}
             </Grid>
           </Content>
         </Background>
@@ -89,14 +104,6 @@ const FriendList = styled.div`
   display: flex;
   align-items: center;
   margin: 10px 20px;
-`
-const StarBtn = styled.div`
-  text-align: center;
-  height: 110px;
-  display: flex;
-  align-items: center;
-  color: #fff;
-  background-color: #000;
 `
 const DeleteBtn = styled.div`
   text-align: center;

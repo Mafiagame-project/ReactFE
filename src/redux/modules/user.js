@@ -15,6 +15,7 @@ const SIGN_UP = 'SIGN_UP'
 const SET_USER = 'SET_USER'
 const GET_FRIEND = 'GET_FRIEND'
 const ADD_FRIEND = 'ADD_FRIEND'
+const DELETE_FRIEND = 'DELETE_FRIEND'
 //Action Creators
 const logIn = createAction(LOG_IN, (token, user) => ({ token, user }))
 const signUp = createAction(SIGN_UP, (user) => ({ user }))
@@ -22,6 +23,7 @@ const logOut = createAction(LOG_OUT, (user) => ({ user }))
 const setUser = createAction(SET_USER, (user) => ({ user }))
 const getFriend = createAction(GET_FRIEND, (list) => ({ list }))
 const addFriend = createAction(ADD_FRIEND, (list) => ({ list }))
+const deleteFriend = createAction(DELETE_FRIEND, (list) => ({ list }))
 
 //initialState
 const initialState = {
@@ -252,7 +254,7 @@ const naverLogin = (code, state) => {
   console.log(code, state)
   return async function (dispatch, getState, { history }) {
     await axios
-      .get(`${BASE_URL}/naverLogin/main/code=${code}&state=${state}`)
+      .get(`${BASE_URL}/naverLogin/main?code=${code}&state=${state}`)
       .then((res) => {
         console.log(res)
       })
@@ -370,6 +372,30 @@ const getFriendDB = () => {
   }
 }
 
+const deleteFriendDB = (id) => {
+  return async function (dispatch, useState, { history }) {
+    await axios
+      .post(
+        `${BASE_URL}/user/friendRemove`,
+        JSON.stringify({
+          removeUserId: id,
+        }),
+        {
+          headers: {
+            'Content-Type': `application/json`,
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        },
+      )
+      .then((res) => {
+        console.log(res)
+        dispatch(deleteFriend({ userId: id }))
+      })
+      .catch((err) => {
+        console.log('err', err)
+      })
+  }
+}
 export default handleActions(
   {
     [LOG_IN]: (state, action) =>
@@ -399,6 +425,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.friendList.unshift(action.payload.list)
       }),
+    [DELETE_FRIEND]: (state, action) =>
+      produce(state, (draft) => {
+        draft.friendList.shift(action.payload.list)
+      }),
   },
   initialState,
 )
@@ -417,5 +447,6 @@ const actionCreators = {
   idCheck,
   emailCheck,
   nickCheck,
+  deleteFriendDB,
 }
 export { actionCreators }
