@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { actionCreators as userActions } from '../../redux/modules/user'
 import { Grid, Text, Button, Input, Image } from '../../element/index'
 import styled from 'styled-components'
+import closeIcon from '../../assets/icons/black/닫기.png'
+import pattern01 from '../../assets/image/pattern/01.png'
 
 const FriendlistModal = ({ onClose }) => {
   const dispatch = useDispatch()
@@ -47,13 +49,20 @@ const FriendlistModal = ({ onClose }) => {
           }}
         >
           <Content onClick={(e) => e.stopPropagation()}>
-            <Grid bg="#fff" padding="20px">
-              <Text margin="0px" _onClick={() => onClose()}>
-                X
-              </Text>
+            <Grid bg="#fff" center flex_column>
+              <Grid>
+                <img
+                  src={closeIcon}
+                  onClick={() => onClose()}
+                  style={{ float: 'right' }}
+                />
+              </Grid>
               <Input
                 placeholder="아이디/이메일을 입력하세요"
                 type="text"
+                width="80%"
+                margin="4vh"
+                padding="1vh"
                 value={addFriend}
                 _onChange={onChangeFriend}
                 _onKeyDown={addFriendBtn}
@@ -61,7 +70,7 @@ const FriendlistModal = ({ onClose }) => {
               {/* <Button _onClick={addFriendBtn}>추가</Button> */}
             </Grid>
             <Grid>
-              {friendList ? (
+              {friendList?.length > 0 ? (
                 friendList.map((e, i) => {
                   return (
                     <FriendList onClick={showBtn} key={i}>
@@ -80,11 +89,13 @@ const FriendlistModal = ({ onClose }) => {
                   )
                 })
               ) : (
-                <Grid center>
+                <TextBox>
                   <Text margin="20px" size="20px">
-                    텅텅 🥺...아직 친구가 없어요!
+                    텅텅 🥺...
+                    <br />
+                    아직 친구가 없어요!
                   </Text>
-                </Grid>
+                </TextBox>
               )}
               {openBtn ? (
                 <Grid isFlex_end width="40%">
@@ -137,9 +148,17 @@ const Content = styled.div`
   height: 610px;
   max-width: 410px;
   width: 100%;
-  background-color: #eee;
+  background-image: url(${pattern01});
+  background-color: #aaa;
   position: relative;
   overflow: scroll;
+`
+
+const TextBox = styled.div`
+  text-align: center;
+  width: 80%;
+  background-color: #fff;
+  padding: 4vw;
 `
 
 export default FriendlistModal

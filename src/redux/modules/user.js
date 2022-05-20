@@ -6,6 +6,7 @@ import { produce } from 'immer'
 import axios from 'axios'
 import { Api } from '../../shared/api'
 
+// const BASE_URL = 'https://nhseung.shop'
 const BASE_URL = 'https://sparta-dongsun.shop'
 
 //Action
@@ -165,6 +166,7 @@ const nickCheck = (nick) => {
 }
 
 const isLoginDB = () => {
+  console.log(localStorage.getItem('token'))
   return async function (dispatch, getState, { history }) {
     await axios({
       headers: {
@@ -257,6 +259,20 @@ const naverLogin = (code, state) => {
       .get(`${BASE_URL}/naverLogin/main?code=${code}&state=${state}`)
       .then((res) => {
         console.log(res)
+      })
+      .catch((err) => {
+        console.log('errr', err)
+      })
+  }
+}
+
+//naver Login
+const naverDB = () => {
+  return async function (dispatch, getState, { history }) {
+    await axios
+      .get(`https://cors-anywhere.herokuapp.com/${BASE_URL}/naverLogin`)
+      .then((res) => {
+        console.log(res.data)
       })
       .catch((err) => {
         console.log('errr', err)
@@ -451,5 +467,6 @@ const actionCreators = {
   emailCheck,
   nickCheck,
   deleteFriendDB,
+  naverDB,
 }
 export { actionCreators }

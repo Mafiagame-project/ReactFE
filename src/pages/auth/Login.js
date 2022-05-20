@@ -28,6 +28,11 @@ function Login() {
     dispatch(userActions.loginDB(logins))
   }
 
+  const naverLogin = () => {
+    console.log('test')
+    dispatch(userActions.naverDB())
+  }
+
   //kakao 나중에 따로 파일 빼기
   const REST_API_KEY = '6c9c16d27b420108ed23421696dfba3b'
   const REDIRECT_URI = 'https://d191gfhy5yq8br.cloudfront.net/main'
@@ -100,6 +105,7 @@ function Login() {
               <Image size="80" margin="0 10px 0 0" src={kakao} />
             </a>
             <NaverLogin />
+            <button onClick={naverLogin}>로그인</button>
           </Grid>
         </Grid>
       </Container>

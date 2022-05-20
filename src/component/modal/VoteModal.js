@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import ModalPortal from './ModalPortal'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import '../video.css'
+import '../../styles/video.css'
 import { actionCreators as gameActions } from '../../redux/modules/game'
 
 const VoteModal = ({ onClose }) => {

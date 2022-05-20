@@ -14,7 +14,7 @@ import JobModal from '../component/modal/JobModal'
 import ExitBtn from '../component/buttons/ExitBtn'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import '../component/video.css'
+import '../styles/video.css'
 
 function GameRoom(props) {
   const dispatch = useDispatch()
