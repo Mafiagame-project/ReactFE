@@ -11,6 +11,7 @@ const EXIT_SOCKET = 'EXIT_SOCKET'
 const CURR_ID = 'CURR_ID'
 const EXIT_ID = 'EXIT_ID'
 const PROFILE_IDX = 'PROFILE_IDX'
+const RECORD = 'RECORD'
 
 
 const currentSocketId = createAction(CURR_SOCKET, (memberSocket) => ({ memberSocket }))
@@ -18,12 +19,38 @@ const exitSocketId = createAction(EXIT_SOCKET, (memberSocket) => ({ memberSocket
 const currentUserId = createAction(CURR_ID, (memberId) => ({ memberId }))
 const exitUserId = createAction(EXIT_ID, (memberId) => ({ memberId }))
 const callProfileIdx = createAction(PROFILE_IDX, (num) => ({num}))
+const callGameRecord = createAction(RECORD, (win, lose) => ({win, lose}))
 
 
 const initialState = {
    socketId : [],
    memberId : [],
    idx : null,
+   win : null,
+   lose : null,
+  }
+
+  const callPlayerRecord = () => {
+    return async function(dispatch){
+      await axios
+      ({
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        url: 'https://sparta-dongsun.shop/user/gameRecord',
+      })
+      .then(response => {
+        const win = response.data?.userWin
+        const lose = response.data?.userLose
+        console.log(response)
+        dispatch(callGameRecord(win, lose))
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    }
   }
 
   const callUserProfile = () => {
@@ -41,6 +68,8 @@ const initialState = {
               dispatch(callProfileIdx(response.data?.profile))
           })
           .catch((error) => {
+            alert('로그아웃 후 다시 로그인을 해주세요')
+            window.location.reload();
               console.log(error)
           })
       }
@@ -63,7 +92,8 @@ const initialState = {
           
         })
         .catch((err) => {
-          console.log('errrrrr', err)
+          alert('일시적 오류로 인해 아이콘 변경에 실패했습니다')
+          history.replace('/edituser')
         })
     }
   }
@@ -94,6 +124,11 @@ export default handleActions(
             produce(state, (draft) => {
                 draft.idx = action.payload.num
             }),
+        [RECORD]: (state, action) =>
+            produce(state, (draft) => {
+                draft.win = action.payload.win
+                draft.lose = action.payload.lose
+            }),
       
     },
     initialState,
@@ -106,7 +141,9 @@ export default handleActions(
       exitUserId,
       changeProfiles,
       callUserProfile,
-      callProfileIdx
+      callProfileIdx,
+      callPlayerRecord,
+      callGameRecord
   }
   
   export { actionCreators }

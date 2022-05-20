@@ -16,7 +16,7 @@ const VoteModal = ({ onClose }) => {
   const killed = useSelector((state) => state.game.killed)
   const chance = useSelector((state) => state.game.chance)
   const memberId = useSelector((state) => state.member.memberId)
-  const currentId = localStorage.getItem('userId')
+  const currentId = localStorage.getItem('userNick')
 
   const is_killed = (e) => {
     console.log(e.target.value)
@@ -76,6 +76,7 @@ const VoteModal = ({ onClose }) => {
   const active = (clickedId, clicker, time) => {
     let clickerJob = clicker.playerJob
     let clickerId = clicker.player
+    console.log(clickedId, currentId, clicker )
     if (currentId == clickedId) {
       actionAlert(1)
       return
@@ -84,11 +85,11 @@ const VoteModal = ({ onClose }) => {
       killed.forEach((id) => {
         if(clickerId == id){
           actionAlert(3)
-          return onClose()
+          return
         }
         if(clickedId == id){
           actionAlert(2)
-          return onClose()
+          return
         } else {
           socket.emit('vote', { clickerJob, clickerId, clickedId })
           if (clickerJob == 'police' && time == true) {
@@ -98,7 +99,7 @@ const VoteModal = ({ onClose }) => {
           } else if (clickerJob == 'reporter' && time == true){
             if(chance == true){
               actionAlert(4)
-              return onClose()
+              return
             }
           } 
           return onClose()

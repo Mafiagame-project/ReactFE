@@ -25,7 +25,7 @@ function GameRoom(props) {
   const [isOpen, setIsOpen] = useState(false)
   const [getNotice, setNotice] = useState(false)
   const [darkMode, setDarkMode] = useState(false)
-
+  
   useEffect(() => {
     socket.on('isNight', (value) => {
       console.log('...', value)
@@ -33,7 +33,7 @@ function GameRoom(props) {
       dispatch(gameActions.dayCount())
     })
   }, [])
-
+  
   const dayOrNight = (time) => {
     if (time == true) {
       setDarkMode(true)

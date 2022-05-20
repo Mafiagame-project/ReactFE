@@ -13,21 +13,26 @@ import 마피양 from '../assets/image/character/profile.jpg'
 import 기자 from '../assets/image/character/양_기자.png'
 import 경찰 from '../assets/image/character/경찰.png'
 import 의사 from '../assets/image/character/의사_양.png'
+import axios from 'axios'
 
 function Header(props) {
   const socket = useSelector((state) => state.game.socket)
   const profileIdx = useSelector((state) => state.member.idx)
+  const recordWin = useSelector(state => state.member.win)
+  const recordLose = useSelector(state => state.member.lose)
   const pictures = [마피양, 기자, 경찰, 의사]
   const dispatch = useDispatch()
   const userNick = localStorage.getItem('userNick')
   const [getFriend, setFriend] = React.useState(false)
   const [isOpen, setIsOpen] = React.useState(false)
-
+  let location = window.location.href
+  const where = location.includes('gameroom')
   const handleLogOut = () => {
     dispatch(userActions.logOutDB())
   }
 
   React.useEffect(() => {
+    dispatch(memberActions.callPlayerRecord())
     dispatch(memberActions.callUserProfile())
   }, [])
   return (
@@ -52,15 +57,24 @@ function Header(props) {
                   {userNick}
                 </Text>
                 <Text margin="0px" color="#fff">
-                  0승 25패
+                  {recordWin}승 {recordLose}패
                 </Text>
-                <Text
-                  margin="0px"
-                  color="#aaa"
-                  _onClick={() => history.push('/edituser')}
-                >
-                  수정하기
-                </Text>
+                {
+                  where == true
+                    ? <Text
+                      margin="0px"
+                      color="#aaa"
+                      _onClick={() => alert('현재 위치에서는 불가능합니다')}
+                    >수정하기</Text>
+                    : <Text
+                      margin="0px"
+                      color="#aaa"
+                      _onClick={() => history.push('/edituser')}
+                    >
+                      수정하기
+                    </Text>
+                }
+                
               </Grid>
             </Grid>
           </Grid>
@@ -83,12 +97,21 @@ function Header(props) {
                 Friends
               </Text>
             </Grid>
-            <Grid center margin="0 10px" _onClick={handleLogOut}>
-              <Icons src={LogoutIcon} />
-              <Text margin="0" color="#fff" size="12px">
-                LogOut
-              </Text>
-            </Grid>
+            {
+              where == true
+                ? <Grid center margin="0 10px" _onClick={()=>alert('현재 위치에서는 불가능합니다')}>
+                    <Icons src={LogoutIcon} />
+                    <Text margin="0" color="#fff" size="12px">
+                      LogOut
+                    </Text>
+                  </Grid>
+                : <Grid center margin="0 10px" _onClick={handleLogOut}>
+                    <Icons src={LogoutIcon} />
+                    <Text margin="0" color="#fff" size="12px">
+                      LogOut
+                    </Text>
+                  </Grid>
+            }
           </Grid>
         </Rightside>
       </Container>

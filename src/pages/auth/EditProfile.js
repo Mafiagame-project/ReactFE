@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import Header from '../../component/Header'
 import { history } from '../../redux/configureStore'
 import { Text, Grid, DotButton, Image, Input } from '../../element/index'
@@ -10,12 +10,40 @@ import 기자 from '../../assets/image/character/양_기자.png'
 import 경찰 from '../../assets/image/character/경찰.png'
 import 의사 from '../../assets/image/character/의사_양.png'
 import { useSelector } from 'react-redux'
+import axios from 'axios'
 
 const EditProfile = () => {
   const userId = localStorage.getItem('userId')
   const [isOpen, setIsOpen] = React.useState(false)
   const profileIdx = useSelector(state => state.member.idx)
   const pictures = [마피양, 기자, 경찰, 의사]
+  const nickName = useRef();
+
+  const changeNick = () => {
+    const changeNick = nickName.current.value
+    if (changeNick.length > 10) {
+      return
+    } else {
+      axios
+        ({
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+          data: { changeNick },
+          url: 'https://sparta-dongsun.shop/user/changeNick',
+        })
+        .then(response => {
+          console.log(response)
+          alert('변경이 완료되었습니다')
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+
+  }
   return (
     <>
       <Background>
@@ -28,7 +56,7 @@ const EditProfile = () => {
                 <Image small size="140" src={edit} classNmae="icon" />
               </Overlay>
             </ImgOverlay>
-            <Input auth placeholder="변경할 닉네임" />
+            <TitleInput ref={nickName} auth placeholder="변경할 닉네임" />
           </Grid>
           <Grid isFlex_center>
             <DotButton
@@ -39,7 +67,7 @@ const EditProfile = () => {
             <DotButton
               black01
               text="저장"
-              _onClick={() => history.push('/gamemain')}
+              _onClick={() => {history.push('/'); changeNick()}}
             />
           </Grid>
         </Container>
@@ -101,5 +129,19 @@ const Container = styled.div`
   width: 100%;
   position: relative;
 `
-
+const TitleInput = styled.input`
+  width: 80%;
+  height: 35px;
+  padding: 10px;
+  font-size:24px;
+  background-color: #f6f6f6;
+  border: 1px solid #c4c4c4;
+  &:focus {
+    outline: none;
+  }
+  &::-webkit-input-placeholder {
+    color: #c4c4c4;
+    text-align: center;
+  }
+`
 export default EditProfile

@@ -15,7 +15,7 @@ function Main(props) {
   let socket = useSelector((state) => state.game.socket)
   const [isOpen, setIsOpen] = React.useState(false)
   const dispatch = useDispatch()
-
+  
   React.useEffect(() => {
     try {
       socket.on('roomList', (rooms) => {
