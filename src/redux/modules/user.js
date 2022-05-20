@@ -389,7 +389,7 @@ const deleteFriendDB = (id) => {
       )
       .then((res) => {
         console.log(res)
-        dispatch(deleteFriend({ userId: id }))
+        dispatch(deleteFriend(id))
       })
       .catch((err) => {
         console.log('err', err)
@@ -423,11 +423,14 @@ export default handleActions(
       }),
     [ADD_FRIEND]: (state, action) =>
       produce(state, (draft) => {
-        draft.friendList.unshift(action.payload.list)
+        draft.friendList.push(action.payload.list)
       }),
     [DELETE_FRIEND]: (state, action) =>
       produce(state, (draft) => {
-        draft.friendList.shift(action.payload.list)
+        let list = draft.friendList.filter(
+          (e) => e.userId !== action.payload.list,
+        )
+        draft.friendList = [...list]
       }),
   },
   initialState,
