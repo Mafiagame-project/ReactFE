@@ -1,7 +1,7 @@
 import React from 'react'
 import { history } from '../../redux/configureStore'
 import { useDispatch } from 'react-redux'
-import { Input, Grid, Text, DotButton } from '../../element/index'
+import { Input, Grid, Text, DotButton, Button } from '../../element/index'
 import styled from 'styled-components'
 import { actionCreators as userActions } from '../../redux/modules/user'
 import { useFormik } from 'formik'
@@ -33,6 +33,16 @@ function SignUp() {
     onSubmit: (values) => dispatch(userActions.signupDB(values)),
   })
 
+  const doubleIdCheck = () => {
+    dispatch(userActions.idCheck(formik.values.id))
+  }
+  const doubleNickCheck = () => {
+    dispatch(userActions.nickCheck(formik.values.nick))
+  }
+  const doubleEmailCheck = () => {
+    dispatch(userActions.emailCheck(formik.values.email))
+  }
+
   return (
     <>
       <Container>
@@ -49,6 +59,7 @@ function SignUp() {
               _onChange={formik.handleChange}
               placeholder="아이디"
             />
+            <DotButton text="중복확인" _onClick={doubleIdCheck} />
             <Text margin="0px 3px" color="red">
               {formik.touched.id ? formik.errors.id : ''}
             </Text>
@@ -60,6 +71,7 @@ function SignUp() {
               _onChange={formik.handleChange}
               placeholder="이메일"
             />
+            <DotButton text="중복확인" _onClick={doubleEmailCheck} />
             <Text margin="0px 3px" color="red">
               {formik.touched.email ? formik.errors.email : ''}
             </Text>
@@ -71,6 +83,7 @@ function SignUp() {
               _onChange={formik.handleChange}
               placeholder="닉네임"
             />
+            <DotButton text="중복확인" _onClick={doubleNickCheck} />
             <Text margin="0px 3px" color="red">
               {formik.touched.nick ? formik.errors.nick : ''}
             </Text>

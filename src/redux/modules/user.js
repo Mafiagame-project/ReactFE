@@ -93,6 +93,75 @@ const signupDB = (dic) => {
   }
 }
 
+const idCheck = (id) => {
+  console.log(id)
+  return async function (dispatch, useState, { history }) {
+    await axios
+      .post(
+        `${BASE_URL}/user/idCheck`,
+        JSON.stringify({
+          idCheck: id,
+        }),
+        {
+          headers: { 'Content-Type': `application/json` },
+        },
+      )
+      .then((res) => {
+        console.log(res)
+        window.alert('사용할 수 있는 아이디입니다!')
+      })
+      .catch((err) => {
+        window.alert('이미 사용중인 아이디입니다!')
+      })
+  }
+}
+
+const emailCheck = (email) => {
+  console.log(email)
+  return async function (dispatch, useState, { history }) {
+    await axios
+      .post(
+        `${BASE_URL}/user/emailCheck`,
+        JSON.stringify({
+          emailCheck: email,
+        }),
+        {
+          headers: { 'Content-Type': `application/json` },
+        },
+      )
+      .then((res) => {
+        console.log(res)
+        window.alert('사용할 수 있는 이메일입니다!')
+      })
+      .catch((err) => {
+        window.alert('이미 사용중인 이메일입니다!')
+      })
+  }
+}
+
+const nickCheck = (nick) => {
+  console.log(nick)
+  return async function (dispatch, useState, { history }) {
+    await axios
+      .post(
+        `${BASE_URL}/user/userNickCheck`,
+        JSON.stringify({
+          userNickCheck: nick,
+        }),
+        {
+          headers: { 'Content-Type': `application/json` },
+        },
+      )
+      .then((res) => {
+        console.log(res)
+        window.alert('사용할 수 있는 닉네임입니다!')
+      })
+      .catch((err) => {
+        window.alert('이미 사용중인 닉네임입니다!')
+      })
+  }
+}
+
 const isLoginDB = () => {
   return async function (dispatch, getState, { history }) {
     await axios({
@@ -183,7 +252,7 @@ const naverLogin = (code, state) => {
   console.log(code, state)
   return async function (dispatch, getState, { history }) {
     await axios
-      .get(`${BASE_URL}/naverLogin/main?code=${code}&state=${state}`)
+      .get(`${BASE_URL}/naverLogin/main/code=${code}&state=${state}`)
       .then((res) => {
         console.log(res)
       })
@@ -345,5 +414,8 @@ const actionCreators = {
   changePwDB,
   getFriendDB,
   addFriendDB,
+  idCheck,
+  emailCheck,
+  nickCheck,
 }
 export { actionCreators }

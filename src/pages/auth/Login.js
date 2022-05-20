@@ -36,7 +36,9 @@ function Login() {
   const NAVER_CLIENT_ID = '9WNFXnar7frmNNTQmP4N'
   const NAVER_CALLBACK_URI = 'http://localhost:3000/naverLogin/main'
 
-  const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${NAVER_CALLBACK_URI}&state=login`
+  const state = Math.random().toString(36).substring(2, 11)
+
+  const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${NAVER_CALLBACK_URI}&state=${state}`
 
   return (
     <>

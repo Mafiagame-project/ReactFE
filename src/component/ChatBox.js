@@ -39,7 +39,7 @@ const ChatBox = ({ socket, currentTime }) => {
     <Grid padding="5vh 0 0 0" center width="">
       <Timer />
       <ChatContainer>
-        {currentTime && endGame == null && playerJob.playerJob !== 'mafia' ? (
+        {currentTime && endGame == null && playerJob?.playerJob !== 'mafia' ? (
           <Block>
             <div className="block_bg"></div>
             <img src={lock} alt="밤이라서 채팅금지" />

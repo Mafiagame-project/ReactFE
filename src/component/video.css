@@ -43,6 +43,12 @@
   margin: 20px auto;
 }
 
+.die {
+  opacity: 0.5;
+  color: red;
+  border: 2px solid red;
+}
+
 .toasted {
   font-size: 40px;
   margin-top: 200px;
@@ -56,16 +62,16 @@
   height: 200px;
   text-align: center;
 }
-.toast-host-out{
+.toast-host-out {
   background: black !important;
-  color:orange;
+  color: orange;
   font-size: 25px;
   margin-top: 200px;
   width: 450px;
   height: 200px;
   text-align: center;
 }
-.toast-start-alarm{
+.toast-start-alarm {
   width: 550px;
   height: 100px;
   font-size: 40px;

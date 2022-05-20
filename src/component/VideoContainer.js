@@ -1,18 +1,19 @@
 import React from 'react'
 import Peer from 'peerjs'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import StartBtn from './buttons/StartBtn'
 import cage from '../assets/icons/test.png'
-//이름이 안떠,,,
+
 const VideoContainer = () => {
+  const dispatch = useDispatch()
   const socket = useSelector((state) => state.game.socket)
-  const [cameraOn, setCameraOn] = React.useState(true)
+  let killed = useSelector((state) => state.game.killed)
+  const [videoOn, setVideoOn] = React.useState(true)
   const [display, setDisplay] = React.useState(false)
   const videoWrap = React.useRef('')
   const videoGrid = React.useRef('')
   const videoBack = React.useRef('')
-  // const myVideo = document.createElement('video')
   const myVideo = React.useRef()
   let allStream = React.useRef()
   myVideo.muted = true
@@ -24,6 +25,34 @@ const VideoContainer = () => {
   let myStream = null
   let userNick = localStorage.getItem('userNick')
   let UserNick = localStorage.getItem('userNick')
+
+  const VideoHandler = () => {
+    myVideo.current.srcObject
+      .getVideoTracks()
+      .forEach((track) => (track.enabled = !track.enabled))
+    if (videoOn) {
+      setVideoOn(false)
+    } else {
+      setVideoOn(true)
+    }
+  }
+
+  if (killed === null) {
+    killed = []
+  }
+
+  let nickBox = document.getElementsByClassName('fl')
+  console.log(nickBox)
+  console.log(killed)
+
+  for (let i = 0; i < nickBox.length; i++) {
+    for (let e = 0; e < killed.length; e++) {
+      if (nickBox[i].innerText === killed[e]) {
+        nickBox[i].classList.add('die')
+        console.log(nickBox)
+      }
+    }
+  }
 
   React.useEffect(() => {
     const myPeer = new Peer()
@@ -165,11 +194,7 @@ const VideoContainer = () => {
                 setDisplay(!display)
               }}
             ></div>
-            {/* <button
-                cameraOn={cameraOn}
-                display={display}
-                handleCamera={handleCamera}
-              /> */}
+            <button onClick={VideoHandler}>온오프</button>
             <div className="userview_name fl">
               <p>{userNick}</p>
             </div>

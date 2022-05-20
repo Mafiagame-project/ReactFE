@@ -10,8 +10,6 @@ const VoteBtn = () => {
   let killed = useSelector((state) => state.game.killed)
   const currentNick = localStorage.getItem('userNick')
 
-  console.log(killed)
-
   const toggleOpen = () => {
     if (killed == null) {
       killed = []

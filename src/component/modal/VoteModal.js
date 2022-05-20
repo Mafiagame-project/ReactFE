@@ -18,13 +18,11 @@ const VoteModal = ({ onClose }) => {
   const memberId = useSelector((state) => state.member.memberId)
   const currentNick = localStorage.getItem('userNick')
 
-  console.log(killed)
-  console.log(memberId)
-
   if (killed == null) {
     killed = []
   }
 
+  console.log(killed)
   let saveArray = memberId.filter((x) => !killed.includes(x))
   console.log(saveArray)
 
