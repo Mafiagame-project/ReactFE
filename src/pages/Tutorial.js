@@ -12,63 +12,67 @@ import 튜토리얼4 from '../assets/image/tutorial/튜토리얼4.png'
 import 돌아가기 from '../assets/icons/black/돌아가기.png'
 import { history } from "../redux/configureStore";
 
-function Tutorial(){
-    
-    return(
+function Tutorial() {
+
+    return (
         <>
-            <Grid flex_column width='100vw' height='80vh' margin='0 0 0 -5%'>
+            <Grid flex_column width='100vw' height='74vh' margin='-1% 0 0 0'>
                 <Grid width='80%' height='100%'>
                     <Grid width='100%' height='100%'>
                         <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
                             <SwiperSlide>
                                 <Content>
-                                    <Grid isFlex_center height='100px' width='100%'>
-                                        <Text size='30px'>
-                                            시간이 낮으로 바뀌면 밤중에 각 참가자들이 진행했던 행동들이
-                                            사진과 같이 출력됩니다. <br/>중요한 정보들이 담겨 있으니
-                                            놓치지 마세요!
-                                        </Text>
-                                    </Grid>
-                                    <Grid isFlex_center height='85%' width='100%'>
-                                        <ImgBox1 />
-                                    </Grid>
-                                </Content>
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <Content>
-                                    <Grid isFlex_center height='100px' width='100%'>
-                                        <Text size='30px'>
-                                            게임이 시작되면 직업이 부여됩니다.
-                                            각 직업에 맞는 능력을 사용해 게임을 승리로 이끌어보세요!
-                                        </Text>
-                                    </Grid>
-                                    <Grid isFlex_center height='85%' width='100%'>
-                                        <ImgBox2 />
+                                    <Grid isFlex_center height='100%' width='100%'>
+                                        <ImgBox4>
+                                            <Explain>
+                                                <Text size='30px'>
+                                                    게임룸에 입장하게 되면 참가자들과 화상으로 혹은 채팅으로 대화하며 플레이할 수 있습니다!
+                                                </Text>
+                                            </Explain>
+                                        </ImgBox4>
                                     </Grid>
                                 </Content>
                             </SwiperSlide>
                             <SwiperSlide>
                                 <Content>
-                                    <Grid isFlex_center height='100px' width='100%'>
-                                        <Text size='30px'>
-                                            밤이 되면 각자 직업에 맞는 능력을 사용할 수 있습니다. <br/>밤에는
-                                            마피아를 제외한 다른 직업은 채팅을 사용할 수 없습니다!
-                                        </Text>
-                                    </Grid>
-                                    <Grid isFlex_center height='85%' width='100%'>
-                                        <ImgBox3 />
+                                    <Grid isFlex_center height='100%' width='100%'>
+                                        <ImgBox2>
+                                            <Explain>
+                                                <Text size='30px'>
+                                                    게임이 시작되면 직업이 부여됩니다.<br />
+                                                    각 직업에 맞는 능력을 사용해 게임을 승리로 이끌어보세요!
+                                                </Text>
+                                            </Explain>
+                                        </ImgBox2>
                                     </Grid>
                                 </Content>
                             </SwiperSlide>
                             <SwiperSlide>
                                 <Content>
-                                    <Grid isFlex_center height='100px' width='100%'>
-                                        <Text size='30px'>
-                                            게임룸에 입장하게 되면 참가자들과 화상으로 혹은 채팅으로 대화하며 플레이할 수 있습니다!
-                                        </Text>
+                                    <Grid isFlex_center height='100%' width='100%'>
+                                        <ImgBox3>
+                                            <Explain>
+                                                <Text size='30px'>
+                                                    밤이 되면 각자 직업에 맞는 능력을 사용할 수 있습니다. <br />밤에는
+                                                    마피아를 제외한 다른 직업은 채팅을 사용할 수 없습니다!
+                                                </Text>
+                                            </Explain>
+                                        </ImgBox3>
                                     </Grid>
-                                    <Grid isFlex_center height='85%' width='100%'>
-                                        <ImgBox4 />
+                                </Content>
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <Content>
+                                    <Grid isFlex_center height='100%' width='100%'>
+                                        <ImgBox1>
+                                            <Explain>
+                                                <Text size='30px'>
+                                                    시간이 낮으로 바뀌면 밤중에 각 참가자들이 진행했던 행동들이
+                                                    사진과 같이 출력됩니다. <br />중요한 정보들이 담겨 있으니
+                                                    놓치지 마세요!
+                                                </Text>
+                                            </Explain>
+                                        </ImgBox1>
                                     </Grid>
                                 </Content>
                             </SwiperSlide>
@@ -80,10 +84,23 @@ function Tutorial(){
     )
 }
 
+
+
 const Explain = styled.div`
-    width:20%;
-    height:100%;
-    padding:20px;
+position:absolute;
+bottom:50px;
+left:10%;
+width: 80%;
+height: 110px;
+padding:20px;
+display: flex;
+flex-direction: column; 
+justify-content: center; 
+background: #FFFFFF;
+border: 2px solid #000000;
+box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.25);
+border-radius: 15px;
+
 `
 const Content = styled.div`
     width:100%;

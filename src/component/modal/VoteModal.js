@@ -92,11 +92,11 @@ const VoteModal = ({ onClose }) => {
       killed.forEach((id) => {
         if (clickerId == id) {
           actionAlert(3)
-          return onClose()
+          return
         }
         if (clickedId == id) {
           actionAlert(2)
-          return onClose()
+          return
         } else {
           socket.emit('vote', { clickerJob, clickerId, clickedId })
           if (clickerJob == 'police' && time == true) {
@@ -106,7 +106,7 @@ const VoteModal = ({ onClose }) => {
           } else if (clickerJob == 'reporter' && time == true) {
             if (chance == true) {
               actionAlert(4)
-              return onClose()
+              return
             }
           }
           return onClose()

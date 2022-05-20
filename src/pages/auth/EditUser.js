@@ -11,7 +11,9 @@ import { useSelector } from 'react-redux'
 
 const EditUser = () => {
   const userId = localStorage.getItem('userId')
-  const profileIdx = useSelector(state => state.member.idx)
+  const profileIdx = useSelector((state) => state.member.idx)
+  const recordWin = useSelector((state) => state.member.win)
+  const recordLose = useSelector((state) => state.member.lose)
   const pictures = [마피양, 기자, 경찰, 의사]
   return (
     <>
@@ -22,7 +24,9 @@ const EditUser = () => {
             <Image size="140" src={pictures[profileIdx]} />
             <Grid isStart margin="0 0 0 40px">
               <Text size="25px">{userId}</Text>
-              <Text size="20px">99승 99패</Text>
+              <Text size="20px">
+                {recordWin}승 {recordLose}패
+              </Text>
             </Grid>
           </Grid>
           <Grid center>

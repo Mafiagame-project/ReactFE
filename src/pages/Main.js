@@ -9,6 +9,7 @@ import TutorialBanner from '../component/TutorialBanner'
 import CreateRoomModal from '../component/modal/CreateRoomModal'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
+import { actionCreators as userAction } from '../redux/modules/user'
 
 function Main(props) {
   const history = useHistory()

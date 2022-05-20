@@ -1,13 +1,14 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { DotButton } from '../../element/index'
 import VoteModal from '../modal/VoteModal'
-import { useSelector } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 const VoteBtn = () => {
   const [voteOpen, setVoteOpen] = React.useState(false)
   let killed = useSelector((state) => state.game.killed)
+  const dayCount = useSelector((state) => state.game.cnt)
   const currentNick = localStorage.getItem('userNick')
 
   const toggleOpen = () => {
@@ -28,8 +29,9 @@ const VoteBtn = () => {
 
   return (
     <>
-      {/* 첫번째 낮일 때 투표 막기.... */}
-      <DotButton white01 text="투표하기" _onClick={toggleOpen} />
+      {dayCount > 0 ? (
+        <DotButton white01 text="투표하기" _onClick={toggleOpen}></DotButton>
+      ) : null}
       {voteOpen && <VoteModal onClose={() => setVoteOpen(false)} />}
     </>
   )

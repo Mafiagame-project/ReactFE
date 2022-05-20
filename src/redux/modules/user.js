@@ -258,7 +258,15 @@ const naverLogin = (code, state) => {
     await axios
       .get(`${BASE_URL}/naverLogin/main?code=${code}&state=${state}`)
       .then((res) => {
-        console.log(res)
+        console.log(res.data)
+        const userId = res.data.naverId
+        const userNick = res.data.naverNick
+        const accessToken = res.data.token
+        localStorage.setItem('token', accessToken)
+        localStorage.setItem('userId', userId)
+        localStorage.setItem('userNick', userNick)
+        dispatch(logIn(accessToken, userId, userNick))
+        history.push('/')
       })
       .catch((err) => {
         console.log('errr', err)
@@ -273,6 +281,14 @@ const naverDB = () => {
       .get(`https://cors-anywhere.herokuapp.com/${BASE_URL}/naverLogin`)
       .then((res) => {
         console.log(res.data)
+        const userId = res.data.naverId
+        const userNick = res.data.naverNick
+        const accessToken = res.data.token
+        localStorage.setItem('token', accessToken)
+        localStorage.setItem('userId', userId)
+        localStorage.setItem('userNick', userNick)
+        dispatch(logIn(accessToken, userId, userNick))
+        history.push('/')
       })
       .catch((err) => {
         console.log('errr', err)

@@ -11,7 +11,7 @@ const ExitBtn = (props) => {
   if (night) {
     return (
       <>
-        <Grid center width="65px" margin="3vw" position="absolute">
+        <Grid _cursor center width="65px" margin="3vw" position="absolute">
           <img
             src={exitWhite}
             onClick={() => {
@@ -28,7 +28,7 @@ const ExitBtn = (props) => {
   }
   return (
     <>
-      <Grid center width="65px" margin="3vw" position="absolute">
+      <Grid _cursor center width="65px" margin="3vw" position="absolute">
         <img
           src={exit}
           onClick={() => {

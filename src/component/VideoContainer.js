@@ -3,13 +3,14 @@ import Peer from 'peerjs'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import StartBtn from './buttons/StartBtn'
-import cage from '../assets/icons/test.png'
+import CameraBtn from './buttons/CameraBtn'
 
 const VideoContainer = () => {
   const dispatch = useDispatch()
   const socket = useSelector((state) => state.game.socket)
   let killed = useSelector((state) => state.game.killed)
-  const [videoOn, setVideoOn] = React.useState(true)
+  let nowKilled = useSelector((state) => state.game.resultNoti)
+  const [cameraOn, setCameraOn] = React.useState(true)
   const [display, setDisplay] = React.useState(false)
   const videoWrap = React.useRef('')
   const videoGrid = React.useRef('')
@@ -26,28 +27,39 @@ const VideoContainer = () => {
   let userNick = localStorage.getItem('userNick')
   let UserNick = localStorage.getItem('userNick')
 
+  //카메라 온오프
   const VideoHandler = () => {
-    myVideo.current.srcObject
-      .getVideoTracks()
-      .forEach((track) => (track.enabled = !track.enabled))
-    if (videoOn) {
-      setVideoOn(false)
+    if (cameraOn) {
+      myVideo.current.srcObject
+        .getVideoTracks()
+        .forEach((track) => (track.enabled = false))
+      setCameraOn(false)
+      let src = document.querySelector('.video_non_src')
+      src.style.display = 'block'
     } else {
-      setVideoOn(true)
+      myVideo.current.srcObject
+        .getVideoTracks()
+        .forEach((track) => (track.enabled = true))
+      setCameraOn(true)
+      let src = document.querySelector('.video_non_src')
+      src.style.display = 'none'
     }
   }
-
+  console.log(nowKilled)
+  //죽은 사람 표기
   if (killed === null) {
     killed = []
   }
-
   let nickBox = document.getElementsByClassName('fl')
   console.log(nickBox)
   console.log(killed)
 
   for (let i = 0; i < nickBox.length; i++) {
     for (let e = 0; e < killed.length; e++) {
-      if (nickBox[i].innerText === killed[e]) {
+      if (
+        nickBox[i].innerText === killed[e] ||
+        nickBox[i].innerText === nowKilled
+      ) {
         nickBox[i].classList.add('die')
         console.log(nickBox)
       }
@@ -178,6 +190,13 @@ const VideoContainer = () => {
       <Container>
         <div className="video_container" ref={videoWrap}>
           <div className="video_grid" ref={videoGrid}>
+            <div
+              className="video_non_src"
+              onMouseOver={() => {
+                videoBack.current.style.display = 'block'
+                setDisplay(!display)
+              }}
+            ></div>
             <video
               ref={myVideo}
               className="myvideo"
@@ -194,7 +213,11 @@ const VideoContainer = () => {
                 setDisplay(!display)
               }}
             ></div>
-            <button onClick={VideoHandler}>온오프</button>
+            <CameraBtn
+              cameraOn={cameraOn}
+              display={display}
+              VideoHandler={VideoHandler}
+            />
             <div className="userview_name fl">
               <p>{userNick}</p>
             </div>

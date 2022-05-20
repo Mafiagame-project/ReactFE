@@ -29,7 +29,7 @@ const StartBtn = ({ socket }) => {
         socket.emit('startGame')
         dispatch(gameActions.noticeEndGame(null))
         setStart(true)
-        startBgm.play()
+        // startBgm.play()
       } else {
         startGameNoti(2)
       }

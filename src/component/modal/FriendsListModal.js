@@ -3,6 +3,7 @@ import ModalPortal from './ModalPortal'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionCreators as userActions } from '../../redux/modules/user'
 import { Grid, Text, Button, Input, Image } from '../../element/index'
+import FriendList from '../FriendList'
 import styled from 'styled-components'
 import closeIcon from '../../assets/icons/black/닫기.png'
 import pattern01 from '../../assets/image/pattern/01.png'
@@ -10,7 +11,6 @@ import pattern01 from '../../assets/image/pattern/01.png'
 const FriendlistModal = ({ onClose }) => {
   const dispatch = useDispatch()
   const [addFriend, setAddFriend] = React.useState('')
-  const [openBtn, setOpenBtn] = React.useState(false)
   const [clickedId, setClickedId] = React.useState()
   const userId = localStorage.getItem('userId')
   const friendList = useSelector((state) => state?.user?.friendList)
@@ -24,21 +24,15 @@ const FriendlistModal = ({ onClose }) => {
     dispatch(userActions.getFriendDB())
   }, [])
 
-  const showBtn = () => {
-    setOpenBtn(!openBtn)
-  }
   const onChangeFriend = (e) => {
     setAddFriend(e.target.value)
   }
 
   const addFriendBtn = () => {
     dispatch(userActions.addFriendDB(addFriend))
+    setAddFriend('')
   }
 
-  const deleteBtn = () => {
-    console.log('dd')
-    dispatch(userActions.deleteFriendDB(clickedId))
-  }
   return (
     <>
       <ModalPortal>
@@ -57,51 +51,34 @@ const FriendlistModal = ({ onClose }) => {
                   style={{ float: 'right' }}
                 />
               </Grid>
-              <Input
-                placeholder="아이디/이메일을 입력하세요"
-                type="text"
-                width="80%"
-                margin="4vh"
-                padding="1vh"
-                value={addFriend}
-                _onChange={onChangeFriend}
-                _onKeyDown={addFriendBtn}
-              />
-              {/* <Button _onClick={addFriendBtn}>추가</Button> */}
+              <Text>내 친구 리스트</Text>
+              <Grid>
+                <Input
+                  placeholder="아이디/이메일을 입력하세요"
+                  type="text"
+                  width="80%"
+                  margin="4vh"
+                  padding="1vh"
+                  value={addFriend}
+                  _onChange={onChangeFriend}
+                  _onKeyDown={addFriendBtn}
+                />
+              </Grid>
             </Grid>
             <Grid>
               {friendList?.length > 0 ? (
                 friendList.map((e, i) => {
-                  return (
-                    <FriendList onClick={showBtn} key={i}>
-                      <Grid is_flex margin="20px">
-                        <Image size="80" />
-                        <Grid>
-                          <input
-                            type="radio"
-                            value={e.userId}
-                            onChange={clicked}
-                          />
-                          <Text margin="0px 20px">{e.userId}</Text>
-                        </Grid>
-                      </Grid>
-                    </FriendList>
-                  )
+                  return <FriendList key={i} userId={e.userId} />
                 })
               ) : (
                 <TextBox>
-                  <Text margin="20px" size="20px">
+                  <Text margin="20px" size="25px" color="#fff">
                     텅텅 🥺...
                     <br />
                     아직 친구가 없어요!
                   </Text>
                 </TextBox>
               )}
-              {openBtn ? (
-                <Grid isFlex_end width="40%">
-                  <DeleteBtn onClick={deleteBtn}>삭제</DeleteBtn>
-                </Grid>
-              ) : null}
             </Grid>
           </Content>
         </Background>
@@ -110,20 +87,6 @@ const FriendlistModal = ({ onClose }) => {
   )
 }
 
-const FriendList = styled.div`
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  margin: 10px 20px;
-`
-const DeleteBtn = styled.div`
-  text-align: center;
-  height: 110px;
-  display: flex;
-  align-items: center;
-  color: #fff;
-  background-color: #aaa;
-`
 const Background = styled.div`
   position: fixed;
   top: 0;
@@ -156,9 +119,8 @@ const Content = styled.div`
 
 const TextBox = styled.div`
   text-align: center;
-  width: 80%;
-  background-color: #fff;
   padding: 4vw;
+  color: #fff;
 `
 
 export default FriendlistModal

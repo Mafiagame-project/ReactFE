@@ -100,8 +100,9 @@ function Introduce() {
                       height="100%"
                       _onlick={toggleBtn}
                     >
-                      <Grid center height="10%">
-                        <Text color="white">MAFIYANG</Text>
+                      <Img src={e.img}/>
+                      <Grid isFlex_center height="20%" bg='black'>
+                        <Text size='24px' color="white">{e.title}</Text>
                       </Grid>
                     </Grid>
                   </Card>

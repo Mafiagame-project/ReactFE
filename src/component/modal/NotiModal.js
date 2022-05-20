@@ -76,6 +76,13 @@ function NotiModal() {
                         >
                           사진
                         </div>
+                        {
+                          voteResult == '아무도 안 죽음'
+                          ? <Text bold size='32px'>아무도 죽지 않았습니다</Text>
+                          : <Text bold size="32px">
+                            {voteResult}가 잡혔습니다
+                            </Text>
+                        }
                         <Text bold size="32px">
                           {voteResult}가 잡혔습니다
                         </Text>
@@ -208,7 +215,7 @@ function NotiModal() {
                                   피해자 {voteResult}
                                 </Text>
                               </Grid>
-                              <Text>과연 피해자 ...을 잔혹하게</Text>
+                              <Text>과연 피해자 {voteResult} 잔혹하게</Text>
                               <Text>죽인 마피아는 누구인가?</Text>
                             </>
                           ) : null}
@@ -220,7 +227,7 @@ function NotiModal() {
                               <Grid isFlex_center>
                                 <Victim></Victim>
                                 <Rectangle84>
-                                  <Text>의사선생님이 살려줬음!</Text>
+                                  <Text>의사선생님이 살려줬어요!</Text>
                                 </Rectangle84>
                               </Grid>
                               <Text size="32px" bold>
