@@ -13,7 +13,7 @@ const ChatBox = ({ socket, currentTime }) => {
   const [getWrite, setWrite] = React.useState([])
   const currentId = localStorage.getItem('userNick')
   const playerJob = useSelector((state) => state.game.job)
-  const endGame = useSelector(state => state.game.endGameNoti)
+  const endGame = useSelector((state) => state.game.endGameNoti)
 
   const send = () => {
     // 채팅을 보낼 때 호출되는 함수
@@ -83,7 +83,7 @@ const ChatContainer = styled.div`
   height: 70vh;
   width: 32%;
   margin: 0 auto;
-  min-width: 400px;
+  min-width: 24vw;
   box-shadow: 0px 4px 35px 4px rgba(162, 162, 162, 0.25);
   box-sizing: border-box;
   background-color: #f6f6f6;

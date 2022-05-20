@@ -1,5 +1,5 @@
 .video_container {
-  height: 82%;
+  height: 85%;
   box-sizing: border-box;
   width: 100%;
   display: flex;
@@ -8,11 +8,12 @@
 }
 
 .video_grid {
-  width: 27%;
+  width: 22%;
   text-align: center;
   position: relative;
   height: calc(50% - 12.5px);
   margin-left: 2%;
+  margin-bottom: 3%;
 }
 /* &:nth-child(3n + 1) {
         margin-left: 0px;
@@ -22,8 +23,8 @@
       } */
 
 .video_box {
-  width: 180px;
-  height: 180px;
+  width: 10.5vw;
+  height: 10.5vw;
   border-radius: 70%;
   object-fit: cover;
   position: relative;
@@ -33,14 +34,14 @@
 .fl {
   background-color: #000;
   color: #fff;
-  height: 50px;
+  height: 5vh;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 23px;
-  width: 180px;
+  width: 10vw;
   border: 2px solid #61ff00;
-  margin: 20px auto;
+  margin: 0.3vw auto;
 }
 
 .die {

@@ -220,7 +220,7 @@ function addVideoStream(video, stream) {
 
 const Container = styled.div`
   width: 62%;
-  padding: 15vh 0 0 15vh;
+  padding: 9vh 0 0 12vh;
 `
 
 export default VideoContainer
