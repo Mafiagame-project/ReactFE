@@ -45,7 +45,7 @@ const VideoContainer = () => {
       src.style.display = 'none'
     }
   }
-  console.log(nowKilled)
+
   //죽은 사람 표기
   if (killed === null) {
     killed = []
