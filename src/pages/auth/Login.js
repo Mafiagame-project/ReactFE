@@ -35,7 +35,7 @@ function Login() {
 
   //kakao 나중에 따로 파일 빼기
   const REST_API_KEY = '6c9c16d27b420108ed23421696dfba3b'
-  const REDIRECT_URI = 'https://d191gfhy5yq8br.cloudfront.net/main'
+  const REDIRECT_URI = 'http://localhost:3000/main'
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`
 
   const NAVER_CLIENT_ID = '9WNFXnar7frmNNTQmP4N'
