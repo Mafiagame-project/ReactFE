@@ -19,7 +19,6 @@ const StartBtn = ({ socket }) => {
   const currentId = localStorage.getItem('userNick')
   const [getStart, setStart] = React.useState(false)
 
-  const startBgm = new Audio(bgm)
 
   const startGame = () => {
     if (memberSocket.length < 4) {

@@ -15,6 +15,7 @@ import ExitBtn from '../component/buttons/ExitBtn'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import '../styles/video.css'
+import bgm from '../assets/sound/bgm/big_helmet.mp3'
 
 function GameRoom(props) {
   const dispatch = useDispatch()
@@ -26,6 +27,8 @@ function GameRoom(props) {
   const [getNotice, setNotice] = useState(false)
   const [darkMode, setDarkMode] = useState(false)
   
+  const startBgm = new Audio(bgm)
+
   useEffect(() => {
     socket.on('isNight', (value) => {
       console.log('...', value)
@@ -92,6 +95,15 @@ function GameRoom(props) {
       dispatch(gameActions.noticeEndGame(null))
     }
   }, [socket])
+  
+  useEffect(()=>{
+    console.log({endGame})
+    if(endGame !== null){
+      console.log('????')
+      startBgm.pause()
+      startBgm.currentTime = 0;
+    }
+  },[endGame])
 
   useEffect(() => {
     console.log(endGame)
@@ -106,9 +118,11 @@ function GameRoom(props) {
   }, [currentTime])
 
   useEffect(() => {
+    
     if (startCard) {
       setIsOpen(true)
       startAlarm()
+      startBgm.play()
       setTimeout(() => {
         setIsOpen(false)
         dispatch(gameActions.startCard(null))

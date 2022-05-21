@@ -10,14 +10,16 @@ import CreateRoomModal from '../component/modal/CreateRoomModal'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 import { actionCreators as userAction } from '../redux/modules/user'
+import bgm from '../assets/sound/bgm/big_helmet.mp3'
 
 function Main(props) {
   const history = useHistory()
   let socket = useSelector((state) => state.game.socket)
   const [isOpen, setIsOpen] = React.useState(false)
   const dispatch = useDispatch()
-
+  let startBgm = new Audio(bgm)
   React.useEffect(() => {
+    startBgm.pause()
     try {
       socket.on('roomList', (rooms) => {
         dispatch(roomActions.sendRoomList(rooms))

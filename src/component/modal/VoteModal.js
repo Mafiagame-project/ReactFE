@@ -55,9 +55,10 @@ const VoteModal = ({ onClose }) => {
 
   const actionAlert = (num) => {
     if (num === 1) {
+      console.log('본인선택2')
       toast.warning('본인을 선택할 수 없습니다', {
         position: toast.POSITION.TOP_LEFT,
-        className: 'toast-dup',
+        className: 'toast-duplication',
         autoClose: 2500,
       })
     } else if (num === 2) {
@@ -66,18 +67,20 @@ const VoteModal = ({ onClose }) => {
         className: 'toast-dup',
         autoClose: 2500,
       })
-      // } else if (num === 3) {
-      //   toast.warning('당신은 죽었기때문에 선택할 수 없습니다', {
-      //     position: toast.POSITION.TOP_LEFT,
-      //     className: 'toast-dup',
-      //     autoClose: 2500,
-      //   })
+      } else if (num === 3) {
+        toast.warning('당신은 죽었기때문에 선택할 수 없습니다', {
+          position: toast.POSITION.TOP_LEFT,
+          className: 'toast-dup',
+          autoClose: 2500,
+        })
     } else if (num === 4) {
       toast.warning('기회를 모두 사용하였습니다', {
         position: toast.POSITION.TOP_LEFT,
         className: 'toast-rep',
         autoClose: 2500,
       })
+    } else {
+      return
     }
   }
 
@@ -85,6 +88,7 @@ const VoteModal = ({ onClose }) => {
     let clickerJob = clicker.playerJob
     let clickerId = clicker.player
     if (currentNick == clickedId) {
+      console.log('본인선택1')
       actionAlert(1)
       return
     }

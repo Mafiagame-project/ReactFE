@@ -9,20 +9,30 @@ import { history } from '../redux/configureStore'
 
 function Introduce() {
   const [isOpen, setIsOpen] = React.useState(false)
-  const [getPage, setPage] = React.useState(0)
+  const [getPage, setPage] = React.useState(2)
+  const [getSelect, setSelect] = React.useState('');
 
   const [getShow, setShow] = React.useState(false)
   const [desc, setDesc] = React.useState()
+  const [win, setWin] = React.useState()
+  const [lose, setLose] = React.useState()
+  const [ability, setAbility] = React.useState()
   const toggleBtn = () => {
     setIsOpen(!isOpen)
   }
 
-  const seleted = (element, num) => {
+  const seleted = (element, num, bool) => {
     setDesc(element?.explain)
+    setAbility(element?.ability)
+    setWin(element?.win)
+    setLose(element?.lose)
+    element.info = true
     setShow(true)
     setTimeout(() => {
       setShow(false)
-    }, 3000)
+      setSelect('')
+      element.info = null
+    }, 5000)
   }
 
   const box2 = {
@@ -53,7 +63,7 @@ function Introduce() {
             <TutorialBox style={box2}>
               <Text
                 _onClick={() => {
-                  setPage(2)
+                  setPage(2);
                 }}
                 size="40px"
               >
@@ -76,7 +86,7 @@ function Introduce() {
         </Grid>
         <Grid height="50px"></Grid>
 
-        {getPage === 0 ? null : getPage === 1 ? (
+        {getPage === 1 ? (
           <Tutorial />
         ) : getPage === 2 ? (
           <CardBox>
@@ -84,13 +94,15 @@ function Introduce() {
               return (
                 <>
                   <Card
+                  style={{border:`${e.info == true ? '3px solid orange' : ''}`}}
                     key={idx}
                     onClick={() => {
-                      seleted(e, idx + 1)
+                      seleted(e, idx)
+                      
                     }}
                   >
-                    <Grid center height="10%">
-                      <Text color="white">MAFIYANG</Text>
+                    <Grid isFlex_center height="10%">
+                      <Text size='24px'  color="white">MAFIYANG</Text>
                     </Grid>
                     <Grid
                       flexColumn
@@ -116,7 +128,12 @@ function Introduce() {
           {getShow == false ? null : (
             <Grid isFlex_center margin="30px 0 0 0">
               <Explain>
-                <Text size="24px">{desc}</Text>
+                <br/>
+                <Text left size="24px">능력 : {ability}</Text>
+                <br/>
+                <Text left size="24px">승리조건 : {win}</Text>
+                <br/>
+                <Text left size="24px">패배조건 : {lose}</Text>
               </Explain>
             </Grid>
           )}
@@ -145,7 +162,7 @@ const Card = styled.div`
   min-width: 300px;
   height: 386px;
   background-color: black;
-  border: 1.5px solid black;
+  border: 3px solid black;
   border-radius: 30px 30px 0px 0px;
   margin-right: 20px;
   display: flex;
@@ -159,11 +176,14 @@ const Card = styled.div`
   &:hover {
     border: 5px solid black;
   }
+  &:click{
+    border: 5px solid orange;
+  }
 `
 
 const Explain = styled.div`
   width: 50%;
-  height: 86px;
+  height: 150px;
   background: #ffffff;
   border: 2px solid #000000;
   border-radius: 15px;
