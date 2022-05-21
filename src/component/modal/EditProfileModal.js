@@ -56,7 +56,6 @@ const EditProfileModal = ({ onClose }) => {
                         <PictureBox style={{border:`1px solid gray`}} onClick={()=>{setFile(idx); iconCheck(element)}}><Image src={element.name} /></PictureBox>
                       )
                     }
-                    
                   })
                 }
               </Grid>
