@@ -15,26 +15,25 @@ import axios from 'axios'
 const EditProfile = () => {
   const userId = localStorage.getItem('userId')
   const [isOpen, setIsOpen] = React.useState(false)
-  const profileIdx = useSelector(state => state.member.idx)
+  const profileIdx = useSelector((state) => state.member.idx)
   const pictures = [마피양, 기자, 경찰, 의사]
-  const nickName = useRef();
+  const nickName = useRef()
 
   const changeNick = () => {
     const changeNick = nickName.current.value
     if (changeNick.length > 10) {
       return
     } else {
-      axios
-        ({
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-          data: { changeNick },
-          url: 'https://sparta-dongsun.shop/user/changeNick',
-        })
-        .then(response => {
+      axios({
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        data: { changeNick },
+        url: 'https://sparta-dongsun.shop/user/changeNick',
+      })
+        .then((response) => {
           console.log(response)
           alert('변경이 완료되었습니다')
         })
@@ -42,16 +41,15 @@ const EditProfile = () => {
           console.log(error)
         })
     }
-
   }
   return (
     <>
       <Background>
         <Container>
           <Text size="70px">MAFIYANG</Text>
-          <Grid margin="40px auto 50px">
+          <Grid margin="40px auto 5px">
             <ImgOverlay onClick={() => setIsOpen(true)}>
-              <Image size="140" margin="0 auto 10px " src={pictures[profileIdx]}/>
+              <Image size="140" margin="30px auto" src={pictures[profileIdx]} />
               <Overlay className="event">
                 <Image small size="140" src={edit} classNmae="icon" />
               </Overlay>
@@ -67,7 +65,10 @@ const EditProfile = () => {
             <DotButton
               black01
               text="저장"
-              _onClick={() => {history.push('/'); changeNick()}}
+              _onClick={() => {
+                history.push('/')
+                changeNick()
+              }}
             />
           </Grid>
         </Container>
@@ -130,10 +131,10 @@ const Container = styled.div`
   position: relative;
 `
 const TitleInput = styled.input`
-  width: 80%;
+  width: 65%;
   height: 35px;
   padding: 10px;
-  font-size:24px;
+  font-size: 24px;
   background-color: #f6f6f6;
   border: 1px solid #c4c4c4;
   &:focus {

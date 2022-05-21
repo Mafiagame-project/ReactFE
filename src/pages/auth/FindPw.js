@@ -31,79 +31,90 @@ const FindPw = () => {
   }
 
   return (
-    <Container>
-      <Grid flex_column>
-        <Text>비밀번호 찾기</Text>
-        <Input
-          auth
-          id="id"
-          value={findPw.id}
-          _onChange={handleChange}
-          placeholder="아이디"
-        />
-        <Input
-          auth
-          id="email"
-          value={findPw.email}
-          _onChange={handleChange}
-          placeholder="이메일"
-        />
-        <Grid margin="15px 0">
-          <DotButton black03 text="비밀번호 찾기" _onClick={handleFindPw} />
-        </Grid>
-      </Grid>
-      {/* 인증 전송 후 보이는 페이지 따로 페이지를 뺄까 고민,, */}
-      {findSubmit ? (
+    <div className="align_back">
+      <Container>
+        <Text size="25px" margin="13px 7px">
+          비밀번호 찾기
+        </Text>
         <Grid flex_column>
           <Input
             auth
             id="id"
-            value={findPw.changeId}
+            value={findPw.id}
             _onChange={handleChange}
             placeholder="아이디"
           />
           <Input
             auth
             id="email"
-            value={findPw.changeEmail}
+            value={findPw.email}
             _onChange={handleChange}
             placeholder="이메일"
           />
-          <Input
-            auth
-            id="getpw"
-            value={findPw.getPw}
-            type="password"
-            _onChange={handleChange}
-            placeholder="인증 비밀번호"
-          />
-          <Input
-            auth
-            id="newPw"
-            type="password"
-            value={findPw.newPw}
-            _onChange={handleChange}
-            placeholder="새 비밀번호"
-          />
-          <Input
-            auth
-            id="newPwCheck"
-            type="password"
-            value={findPw.newPwCheck}
-            _onChange={handleChange}
-            placeholder="새 비밀번호 확인"
-          />
           <Grid margin="15px 0">
-            <DotButton black03 text="변경 확인" _onClick={handleChangePw} />
+            <DotButton black03 text="비밀번호 찾기" _onClick={handleFindPw} />
           </Grid>
         </Grid>
-      ) : null}
-    </Container>
+        {/* 인증 전송 후 보이는 페이지 따로 페이지를 뺄까 고민,, */}
+        {findSubmit ? (
+          <Grid flex_column>
+            <Input
+              auth
+              id="id"
+              value={findPw.changeId}
+              _onChange={handleChange}
+              placeholder="아이디"
+            />
+            <Input
+              auth
+              id="email"
+              value={findPw.changeEmail}
+              _onChange={handleChange}
+              placeholder="이메일"
+            />
+            <Input
+              auth
+              id="getpw"
+              value={findPw.getPw}
+              type="password"
+              _onChange={handleChange}
+              placeholder="인증 비밀번호"
+            />
+            <Input
+              auth
+              id="newPw"
+              type="password"
+              value={findPw.newPw}
+              _onChange={handleChange}
+              placeholder="새 비밀번호"
+            />
+            <Input
+              auth
+              id="newPwCheck"
+              type="password"
+              value={findPw.newPwCheck}
+              _onChange={handleChange}
+              placeholder="새 비밀번호 확인"
+            />
+            <Grid margin="15px 0">
+              <DotButton black03 text="변경 확인" _onClick={handleChangePw} />
+            </Grid>
+          </Grid>
+        ) : null}
+      </Container>
+    </div>
   )
 }
 
 const Container = styled.div`
-  margin: 100px auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+  overflow: scroll;
 `
 
 export default FindPw

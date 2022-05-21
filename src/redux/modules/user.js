@@ -47,10 +47,12 @@ const loginDB = (dic) => {
         if (res.data.token) {
           const accessToken = res.data.token
           const userId = res.data.userId
+          const userNick = res.data.userNick
 
           localStorage.setItem('token', accessToken)
           localStorage.setItem('userId', userId)
-          dispatch(logIn(accessToken, userId))
+          localStorage.setItem('userNick', userNick)
+          dispatch(logIn(accessToken, userId, userNick))
           history.replace('./')
         }
       })
@@ -213,6 +215,7 @@ const findPwDB = (dic) => {
       })
       .catch((err) => {
         console.log('err', err)
+        alert('등록되지 않은 이메일 또는 아이디입니다!')
       })
   }
 }
@@ -295,29 +298,6 @@ const naverDB = () => {
       })
   }
 }
-
-// const userData = await axios.get('https://openapi.naver.com/v1/nid/me', {
-//   headers: {
-//     Authorization: `Bearer ${token}`,
-//   },
-// })
-
-//naver Login2
-// const naverLogin = (token) => {
-//   console.log(token)
-//   return async function (dispatch, getState, { history }) {
-//     await axios({
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Authorization: `Bearer ${token}`,
-//       },
-//       method: 'get',
-//       url: `${BASE_URL}/naverLogin`,
-//     }).then((res) => {
-//       console.log(res)
-//     })
-//   }
-// }
 
 //kakao login
 const kakaoLogin = (code) => {
@@ -434,6 +414,7 @@ export default handleActions(
       produce(state, (draft) => {
         draft.userId = action.payload.userId
         draft.token = action.payload.token
+        draft.userNick = action.payload.userNick
         draft.is_login = true
       }),
     [SIGN_UP]: (state, action) => produce(state, (draft) => {}),

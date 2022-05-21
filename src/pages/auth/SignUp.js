@@ -44,12 +44,12 @@ function SignUp() {
   }
 
   return (
-    <>
+    <div className="align_back">
       <Container>
+        <Text size="25px" margin="13px 7px">
+          회원가입
+        </Text>
         <Grid flex_column>
-          <Text size="20px" bold>
-            회원가입
-          </Text>
           <Form onSubmit={formik.handleSubmit}>
             <Input
               auth
@@ -125,13 +125,19 @@ function SignUp() {
           </Form>
         </Grid>
       </Container>
-    </>
+    </div>
   )
 }
 
 const Container = styled.div`
-  margin: 100px auto;
-  width: 400px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+  overflow: scroll;
 `
 
 const Form = styled.form`

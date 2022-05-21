@@ -68,7 +68,7 @@ const Rooms = (props) => {
 
   return (
     <>
-      <Grid>
+      <Grid width="90%">
         <Grid padding="30px">
           <Grid is_flex height="10%" padding="10px">
             <Title>

@@ -54,9 +54,8 @@ function Main(props) {
 }
 
 const Container = styled.div`
-  max-width: 1400px;
   width: 100%;
-  margin: 30px auto;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;

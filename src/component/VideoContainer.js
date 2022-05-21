@@ -1,12 +1,11 @@
 import React from 'react'
 import Peer from 'peerjs'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import StartBtn from './buttons/StartBtn'
 import CameraBtn from './buttons/CameraBtn'
 
 const VideoContainer = () => {
-  const dispatch = useDispatch()
   const socket = useSelector((state) => state.game.socket)
   let killed = useSelector((state) => state.game.killed)
   let nowKilled = useSelector((state) => state.game.resultNoti)
@@ -16,7 +15,6 @@ const VideoContainer = () => {
   const videoGrid = React.useRef('')
   const videoBack = React.useRef('')
   const myVideo = React.useRef()
-  let allStream = React.useRef()
   myVideo.muted = true
 
   let peersNick
@@ -51,8 +49,6 @@ const VideoContainer = () => {
     killed = []
   }
   let nickBox = document.getElementsByClassName('fl')
-  console.log(nickBox)
-  console.log(killed)
 
   for (let i = 0; i < nickBox.length; i++) {
     for (let e = 0; e < killed.length; e++) {
@@ -61,7 +57,6 @@ const VideoContainer = () => {
         nickBox[i].innerText === nowKilled
       ) {
         nickBox[i].classList.add('die')
-        console.log(nickBox)
       }
     }
   }
@@ -81,14 +76,10 @@ const VideoContainer = () => {
         addVideoStream(myVideo.current, stream)
         myVideo.current.classList.add('video_box')
         videoGrid.current.prepend(myVideo.current)
-        allStream.current = stream
-
-        console.log(myPeer)
 
         //내 스트림을 받고 실행합니다.
         if (myPeer?._id == null) {
           myPeer.on('open', (peerId) => {
-            console.log(peerId)
             myPeerId = peerId
             socket.emit('peerJoinRoom', myPeerId, userNick, streamId)
           })
@@ -121,7 +112,6 @@ const VideoContainer = () => {
         //상대의 닉네임 받기
         myPeer?.on('connection', (dataConnection) => {
           peersNick = dataConnection.metadata
-          console.log(peersNick)
           let peerNick = document.createElement('p')
           peerNick.innerText = peersNick
           const newNickBox = document.querySelector('.newuser_nick', 'fl')

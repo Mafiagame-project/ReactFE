@@ -12,6 +12,8 @@ export default [
     explain:
       '마피양 게임의 가장 기본적인 직업군이다.다른 양들과 함께 양인 척하는 늑대를 잡아 마피양 마을의 평화를 지켜야 한다. 특별한 능력은 없다.',
     img: citizenImg,
+    shadow:
+      'rgb(204 219 232) 3px 3px 5px 0px inset, rgb(255 255 255 / 50%) -3px 0px 5px 1px inset',
   },
   {
     id: 2,
@@ -20,6 +22,8 @@ export default [
     explain:
       '마피양 마을에서 양인 척하며 양들을 잡아먹는 늑대이다. 마피아는 밤마다 양을 한 마리씩 잡아먹을 수 있다.',
     img: mafiaImg,
+    shadow:
+      'rgb(247 5 57) 3px 3px 5px 0px inset, rgb(247 5 290 / 50%) -3px 0px 5px 1px inset',
   },
   {
     id: 3,
@@ -28,6 +32,8 @@ export default [
     explain:
       '마피양 마을에서 병원을 운영하는 의사 양이다. 시민 양들과 함께 늑대를 잡는 것이 목표이다. 의사 양은 밤마다 본인을 제외한 다른 사람들을 살릴 수 있다.',
     img: doctorImg,
+    shadow:
+      'rgb(1 235 9) 3px 3px 5px 0px inset, rgb(19 235 255 / 50%) -3px 0px 5px 1px inset',
   },
   {
     id: 4,
@@ -36,6 +42,8 @@ export default [
     explain:
       '마피양 마을을 지키는 경찰 양이다. 시민 양들과 함께 늑대를 잡는 것이 목표이다. 경찰 양은 밤마다 누가 마피아인지 아닌지 정체를 탐색할 수 있다.',
     img: policeImg,
+    shadow:
+      'rgb(0 192 214) 3px 3px 5px 0px inset, rgb(209 192 214 / 50%) -3px 0px 5px 1px inset',
   },
   {
     id: 5,
@@ -44,5 +52,7 @@ export default [
     explain:
       '마피양 마을에 수상한 일이 벌어진 것을 보고 취재하러 온 기자 양이다. 기자는 한 게임에 딱 한 번 능력을 사용하여 선택한 양의 직업을 모두에게 밝힐 수 있다.',
     img: reporterImg,
+    shadow:
+      'rgb(246 208 12) 3px 3px 5px 0px inset, rgb(203 103 245 / 50%) -3px 0px 5px 1px inset',
   },
 ]

@@ -5,20 +5,12 @@ import io from 'socket.io-client'
 import { actionCreators as gameActions } from '../redux/modules/game'
 import { actionCreators as roomActions } from '../redux/modules/room'
 import { actionCreators as memberActions } from '../redux/modules/member'
-import { actionCreators as userAction } from '../redux/modules/user'
-import { useEffect } from 'react'
 import styled from 'styled-components'
-import bgm from '../assets/sound/bgm/big_helmet.mp3'
 
 function Loading() {
   const dispatch = useDispatch()
   const history = useHistory()
   const token = localStorage.getItem('token')
-  const startBgm = new Audio(bgm)
-
-  useEffect(() => {
-    dispatch(userAction.isLoginDB())
-  }, [])
 
   const entrance = () => {
     history.push('/gamemain')
@@ -57,23 +49,22 @@ function Loading() {
     })
 
     socket.on('dayVoteResult', (value) => {
-      console.log(value)
+      console.log('투표결과', value)
       dispatch(gameActions.playerWhoKilled(value.diedPeopleArr)) // 죽은 전체명단
       dispatch(gameActions.noticeResult(value.id)) // 방금 죽은사람
     })
 
     socket.on('ready', (value) => {
-      console.log(value)
+      console.log('레디', value)
       dispatch(gameActions.readyCheck(value)) // 게임시작 누르고 오는거라 필요없는듯?
     })
 
     socket.on('readyPeople', (currentReady) => {
-      console.log(currentReady)
+      console.log('레디', currentReady)
       dispatch(roomActions.roomReady(currentReady)) // 레디한사람 전체 배열
     })
 
     socket.on('nightVoteResult', (value) => {
-      console.log(value)
       dispatch(gameActions.playerWhoKilled(value.diedPeopleArr))
       dispatch(gameActions.noticeResult(value.died[0]))
       dispatch(gameActions.playerWhoSurvived(value.saved[0]))
@@ -81,8 +72,6 @@ function Loading() {
 
     socket.on('endGame', (data) => {
       // 게임이 끝났을 때 노티
-      // startBgm.pause()
-      console.log(data)
       dispatch(gameActions.noticeEndGame(data?.msg))
       dispatch(roomActions.startCheck(null))
     })
@@ -97,9 +86,11 @@ function Loading() {
   }
 
   return (
-    <>
+    <div className="align_back">
       <Container>
-        <Text size="80px">MAFIYANG</Text>
+        <Text margin="30px 0" size="90px">
+          MAFIYANG
+        </Text>
 
         {token ? (
           <DotButton
@@ -128,12 +119,21 @@ function Loading() {
           </>
         )}
       </Container>
-    </>
+    </div>
   )
 }
 
 const Container = styled.div`
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
-  margin-top: 200px;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+  width: 100%;
+  position: relative;
+  overflow: scroll;
 `
 export default Loading

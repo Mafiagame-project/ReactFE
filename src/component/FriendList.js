@@ -13,7 +13,6 @@ const FriendList = (props) => {
   }
 
   const deleteBtn = () => {
-    console.log(props.userId)
     if (
       window.confirm(`${props.userId}님을 친구에서 정말 삭제하시겠어요?`) ==
       true

@@ -35,7 +35,7 @@ body {
 
 .dark-mode {
   width: 100%;
-  height: 100vh;
+  height: 91vh;
   transition-duration: 0.3s;
 
   background: rgb(0, 0, 0);
@@ -45,6 +45,17 @@ body {
     rgba(7, 7, 8, 0.676908263305322) 43%,
     rgba(0, 0, 0, 0.469625350140056) 98%
   );
+}
+
+.align_back {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 100;
 }
 
 .swiper {
