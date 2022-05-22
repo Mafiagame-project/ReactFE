@@ -1,14 +1,14 @@
 import React from 'react'
 import { history } from '../redux/configureStore'
 import { Grid, Text, DotButton } from '../element/index'
-// import bannerGif from '../assets/image/game/배너.gif'
+import bannerGif from '../assets/image/game/배너.gif'
 import banner from '../assets/image/game/메인_배너.png'
 import styled from 'styled-components'
 
 const TutorialBanner = () => {
   return (
     <Container>
-      <Banner src={banner} />
+      <Banner src={bannerGif} />
 
       <Box>
         <Text margin="5px" size="60px">
