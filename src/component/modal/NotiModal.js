@@ -3,8 +3,12 @@ import styled from 'styled-components'
 import { Grid, Button, Text, Image } from '../../element/index'
 import 늑대 from '../../assets/image/character/늑대_.png'
 import 피해자 from '../../assets/image/character/양_시민.png'
-import 신문 from '../../assets/image/noti/기사_하단이미지.png'
+import deadSheep from '../../assets/image/noti/피해양.png'
+import angel from '../../assets/image/noti/마양천.png'
+import who from '../../assets/image/noti/의문늑대.png'
+import 신문 from '../../assets/image/noti/기사_하단이미지(피그마판형).png'
 import 모자이크 from '../../assets/image/noti/양_피그마판형.png'
+import point from '../../assets/image/noti/source/living_point.png'
 import { useEffect, useState } from 'react'
 import { actionCreators as gameActions } from '../../redux/modules/game'
 
@@ -76,13 +80,15 @@ function NotiModal() {
                         >
                           사진
                         </div>
-                        {
-                          voteResult == '아무도 안 죽음'
-                          ? <Text bold size='32px'>아무도 죽지 않았습니다</Text>
-                          : <Text bold size="32px">
+                        {voteResult == '아무도 안 죽음' ? (
+                          <Text bold size="32px">
+                            아무도 죽지 않았습니다
+                          </Text>
+                        ) : (
+                          <Text bold size="32px">
                             {voteResult}가 잡혔습니다
-                            </Text>
-                        }
+                          </Text>
+                        )}
                         <Text bold size="32px">
                           {voteResult}가 잡혔습니다
                         </Text>
@@ -104,12 +110,12 @@ function NotiModal() {
                   <Noti>
                     <Grid is_flex height="10%">
                       <Grid is_flex borderBottom margin="10px">
-                        <Text size="30px">MAFIYANG</Text>
-                        <Text size="30px">마피양 일보</Text>
+                        <Text size="2vw">MAFIYANG</Text>
+                        <Text size="2.6vw">마피양 일보</Text>
                       </Grid>
                       <Grid is_flex borderBottom margin="10px">
-                        <Text size="30px">MAFIYANG</Text>
-                        <Text size="30px">2</Text>
+                        <Text size="2vw">MAFIYANG</Text>
+                        <Text size="2vw">2</Text>
                       </Grid>
                     </Grid>
                     <Grid is_flex height="100%">
@@ -123,15 +129,15 @@ function NotiModal() {
                               <Frame94>
                                 <Frame45></Frame45>
                                 <Grid>
-                                  <Text color="white" size="32px">
+                                  <Text color="white" size="2.1vw">
                                     {reportNoti?.clickerId}
                                   </Text>
                                   {reportNoti?.clickerJob === 'mafia' ? (
-                                    <Text color="#61FF00" size="32px">
+                                    <Text color="#61FF00" size="2.1vw">
                                       마피아
                                     </Text>
                                   ) : reportNoti?.clickerJob === 'police' ? (
-                                    <Text color="#61FF00" size="32px">
+                                    <Text color="#61FF00" size="2.1vw">
                                       경찰
                                     </Text>
                                   ) : reportNoti?.clickerJob === 'doctor' ? (
@@ -147,7 +153,7 @@ function NotiModal() {
                                       시민
                                     </Text>
                                   ) : null}
-                                  <Text color="white" size="20px">
+                                  <Text color="white" size="1.7vw">
                                     인것으로 밝혀져... 충격...
                                   </Text>
                                 </Grid>
@@ -157,9 +163,11 @@ function NotiModal() {
                             <>
                               <Grid isFlex_center height="100%" width="100%">
                                 <Grid>
-                                  <Text size="30px" left>
-                                    유명 배우 ○○○ 과거에 양아치였지만 지금은
-                                    아니야...
+                                  <Text size="1.2vw" left>
+                                    유명 배우 ○○○ <br />
+                                    과거에 양아치였지만
+                                    <br />
+                                    지금은 아니야...
                                   </Text>
                                   <Grid borderLeft margin="4vh 0" width="90%">
                                     <Text margin="0 0 0 5px" left>
@@ -182,12 +190,12 @@ function NotiModal() {
                           <Grid height="100%">
                             <Frame63 />
                           </Grid>
-                          <Grid height="100%" padding="5px">
+                          <Grid margin="0 0 0 1vw" height="100%" padding="5px">
                             <Grid height="20%" borderBottom>
                               <Text>리빙 포인트</Text>
                               <Text>행복한 양의 비결은 바로 풀 뜯어먹기!</Text>
                             </Grid>
-                            <Text margin="30px 0 30px 0" left>
+                            <Text margin="2.1vw 0" left>
                               오늘 하루도 풀 뜯어먹느라 고생한 당신만을 위해
                               최고의 풀뜯개를 소개합니다. 멋진 양이라면 집에
                               풀뜯개 쯤은 필수로 구비해둬야 한다는 사실을 알고
@@ -206,12 +214,12 @@ function NotiModal() {
                       </Grid>
                       <Grid height="90%" center>
                         <Grid height="50%">
-                          <Text size="32px">마피양 마을에 발견된 사체...</Text>
+                          <Text size="2.1vw">마피양 마을에 발견된 사체...</Text>
                           {voteResult ? (
                             <>
                               <Grid isFlex_center>
                                 <Victim></Victim>
-                                <Text size="32px" bold>
+                                <Text size="2.1vw" bold>
                                   피해자 {voteResult}
                                 </Text>
                               </Grid>
@@ -221,7 +229,7 @@ function NotiModal() {
                           ) : null}
                         </Grid>
                         <Grid height="40%">
-                          <Text size="32px">마피양 마을의 천사</Text>
+                          <Text size="2.1vw">마피양 마을의 천사</Text>
                           {survivedNoti ? (
                             <>
                               <Grid isFlex_center>
@@ -248,11 +256,20 @@ function NotiModal() {
     </>
   )
 }
+const Frame02 = styled.div`
+  background: url(${angel}), #c4c4c4;
+  width: 29vw;
+  height: 22vh;
+  background-size: cover;
+  border-radius: 2.1vw;
+  border: 1px solid black;
+`
+
 const Frame72 = styled.div`
   box-sizing: border-box;
-  width: 90%;
-  height: 80%;
-  margin-top: 50px;
+  width: 12vw;
+  height: 28vh;
+  margin-top: 1.7vw;
   background: url(${모자이크}), #c4c4c4;
   background-size: cover;
 `
@@ -284,8 +301,8 @@ const Rectangle84 = styled.div`
 `
 const Frame63 = styled.div`
   box-sizing: border-box;
-  width: 90%;
-  height: 90%;
+  width: 21vw;
+  height: 28vh;
   background: url(${신문}), #c4c4c4;
   background-size: cover;
 `
@@ -329,8 +346,8 @@ const Modalblack = styled.div`
 
 const Noti = styled.div`
   background: white;
-  max-width: 1330px;
-  height: 865px;
+  max-width: 62vw;
+  height: 82vh;
   padding: 40px;
   box-sizing: border-box;
   border-radius: 20px;
@@ -341,9 +358,9 @@ const Noti = styled.div`
   justify-content: center;
   z-index: 999;
   position: relative;
-  transition: all 2s;
-  animation: fadein 3s;
-  -webkit-animation: fadein 3s;
+  // transition: all 2s;
+  // animation: fadein 3s;
+  // -webkit-animation: fadein 3s;
 `
 
 const VoteNoti = styled.div`
