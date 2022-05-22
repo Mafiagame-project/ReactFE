@@ -16,10 +16,20 @@ const EditProfileModal = ({ onClose }) => {
   const [getFile, setFile] = React.useState(null);
   const token = localStorage.getItem('token')
 
-  const pictures = [마피양, 기자, 경찰, 의사]
+  const [pictures, setPictures] = React.useState( [
+    {name : 마피양, info : ''},
+    {name : 기자, info : ''},
+    {name : 경찰, info : ''},
+    {name : 의사, info: ''}
+  ])
 
   const changeProfile = (pictureIdx, token) => {
     dispatch(memberActions.changeProfiles(pictureIdx, token));
+  }
+
+  const iconCheck = (element) => {
+    console.log(element)
+    element.info = 'orange'
   }
   return (
     <>
@@ -36,9 +46,16 @@ const EditProfileModal = ({ onClose }) => {
               <Grid is_flex width='100%'>
                 {
                   pictures.map((element, idx) => {
-                    return(
-                      <PictureBox onClick={()=>{setFile(idx)}}><Image src={element} /></PictureBox>
-                    )
+                    if(element.info.includes('orange')){
+                      element.info = ''
+                      return(
+                        <PictureBox style={{border:`3px solid orange`}} onClick={()=>{setFile(idx); iconCheck(element)}}><Image src={element.name} /></PictureBox>
+                      )
+                    } else {
+                      return(
+                        <PictureBox style={{border:`1px solid gray`}} onClick={()=>{setFile(idx); iconCheck(element)}}><Image src={element.name} /></PictureBox>
+                      )
+                    }
                   })
                 }
               </Grid>

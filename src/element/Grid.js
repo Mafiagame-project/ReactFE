@@ -37,6 +37,12 @@ Grid.defaultProps = {
   _cursor: false,
   br: '',
   position: false,
+  top: false,
+  right: false,
+  left: false,
+  bottom: false,
+  display: false,
+  justify_item: false,
 }
 
 const GridBox = styled.div`
@@ -44,6 +50,12 @@ const GridBox = styled.div`
   height: ${(props) => props.height};
   overflow:${(props) => props.overflow};
   position:${(props) => props.position};
+  top:${(props) => props.top};
+  left:${(props) => props.left};
+  right:${(props) => props.right};
+  bottom:${(props) => props.bottom};
+  display:${(props) => props.display};
+  justify-items: ${(props) => props.justify_item};
   box-sizing: border-box;
   ${(props) =>
     props.border ? `border: 2px solid black; border-radius: 10px;` : ''}

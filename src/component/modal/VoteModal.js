@@ -55,9 +55,10 @@ const VoteModal = ({ onClose }) => {
 
   const actionAlert = (num) => {
     if (num === 1) {
+      console.log('본인선택2')
       toast.warning('본인을 선택할 수 없습니다', {
         position: toast.POSITION.TOP_LEFT,
-        className: 'toast-dup',
+        className: 'toast-duplication',
         autoClose: 2500,
       })
     } else if (num === 2) {
@@ -66,25 +67,29 @@ const VoteModal = ({ onClose }) => {
         className: 'toast-dup',
         autoClose: 2500,
       })
-      // } else if (num === 3) {
-      //   toast.warning('당신은 죽었기때문에 선택할 수 없습니다', {
-      //     position: toast.POSITION.TOP_LEFT,
-      //     className: 'toast-dup',
-      //     autoClose: 2500,
-      //   })
+      } else if (num === 3) {
+        toast.warning('당신은 죽었기때문에 선택할 수 없습니다', {
+          position: toast.POSITION.TOP_LEFT,
+          className: 'toast-dup',
+          autoClose: 2500,
+        })
     } else if (num === 4) {
       toast.warning('기회를 모두 사용하였습니다', {
         position: toast.POSITION.TOP_LEFT,
         className: 'toast-rep',
         autoClose: 2500,
       })
+    } else {
+      return
     }
   }
 
   const active = (clickedId, clicker, time) => {
+    console.log('클릭한다')
     let clickerJob = clicker.playerJob
     let clickerId = clicker.player
     if (currentNick == clickedId) {
+      console.log('본인선택1')
       actionAlert(1)
       return
     }
@@ -134,6 +139,7 @@ const VoteModal = ({ onClose }) => {
 
   return (
     <>
+    <button onClick={()=>{actionAlert(1)}}>ㅇㅏㄹ라ㄹ랄랄랄라</button>
       {saveArray ? (
         <ModalPortal>
           <Background>
@@ -158,7 +164,6 @@ const VoteModal = ({ onClose }) => {
                     )
                   })}
                 </VoteBox>
-                <ToastContainer />
                 <Text color="#fff" size="25px">
                   {clickedId}님을 선택하시겠습니까?
                 </Text>

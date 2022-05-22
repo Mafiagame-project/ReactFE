@@ -15,6 +15,7 @@ import ExitBtn from '../component/buttons/ExitBtn'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import '../styles/video.css'
+import bgm from '../assets/sound/bgm/big_helmet.mp3'
 
 function GameRoom(props) {
   const dispatch = useDispatch()
@@ -25,6 +26,8 @@ function GameRoom(props) {
   const [isOpen, setIsOpen] = useState(false)
   const [getNotice, setNotice] = useState(false)
   const [darkMode, setDarkMode] = useState(false)
+
+  const startBgm = new Audio(bgm)
 
   useEffect(() => {
     socket.on('isNight', (value) => {
@@ -49,14 +52,6 @@ function GameRoom(props) {
         autoClose: 3000,
       })
     }
-  }
-
-  const startAlarm = () => {
-    toast.success('게임이 시작되었습니다. 이야기를 나눠보세요!', {
-      position: toast.POSITION.TOP_LEFT,
-      className: 'toast-start-alarm',
-      autoClose: 3000,
-    })
   }
 
   useEffect(() => {
@@ -93,6 +88,15 @@ function GameRoom(props) {
   }, [socket])
 
   useEffect(() => {
+    console.log({ endGame })
+    if (endGame !== null) {
+      console.log('????')
+      startBgm.pause()
+      startBgm.currentTime = 0
+    }
+  }, [endGame])
+
+  useEffect(() => {
     console.log(endGame)
     if (endGame == null) {
       console.log(endGame)
@@ -103,17 +107,6 @@ function GameRoom(props) {
       }
     }
   }, [currentTime])
-
-  useEffect(() => {
-    if (startCard) {
-      setIsOpen(true)
-      startAlarm()
-      setTimeout(() => {
-        setIsOpen(false)
-        dispatch(gameActions.startCard(null))
-      }, 3000)
-    }
-  }, [startCard])
 
   return (
     <>

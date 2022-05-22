@@ -138,6 +138,15 @@
   font-weight: 500 !important;
   margin-right: 400px;
 }
+.toast-duplication {
+  width: 850px;
+  height: 100px;
+  font-size: 40px;
+  background-color: white !important;
+  color: black;
+  font-weight: 500 !important;
+  margin-right: 400px;
+}
 
 .toast-rep {
   width: 600px;
@@ -146,4 +155,8 @@
   background-color: white !important;
   color: black;
   font-weight: 500 !important;
+}
+
+.line {
+  border: 3px solid orange;
 }

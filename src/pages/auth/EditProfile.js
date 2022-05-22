@@ -5,14 +5,16 @@ import { Text, Grid, DotButton, Image, Input } from '../../element/index'
 import styled from 'styled-components'
 import edit from '../../assets/icons/white/edit_w.png'
 import EditProfileModal from '../../component/modal/EditProfileModal'
+import { actionCreators as memberActions } from '../../redux/modules/member'
 import 마피양 from '../../assets/image/character/profile.jpg'
 import 기자 from '../../assets/image/character/양_기자.png'
 import 경찰 from '../../assets/image/character/경찰.png'
 import 의사 from '../../assets/image/character/의사_양.png'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 
 const EditProfile = () => {
+  const dispatch = useDispatch()
   const userId = localStorage.getItem('userId')
   const [isOpen, setIsOpen] = React.useState(false)
   const profileIdx = useSelector((state) => state.member.idx)
@@ -36,6 +38,7 @@ const EditProfile = () => {
         .then((response) => {
           console.log(response)
           alert('변경이 완료되었습니다')
+          dispatch(memberActions.changeNick(response.data?.userNick))
         })
         .catch((error) => {
           console.log(error)
@@ -66,7 +69,7 @@ const EditProfile = () => {
               black01
               text="저장"
               _onClick={() => {
-                history.push('/')
+                history.push('/gamemain')
                 changeNick()
               }}
             />

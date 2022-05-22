@@ -20,6 +20,7 @@ function Header(props) {
   const profileIdx = useSelector((state) => state.member.idx)
   const recordWin = useSelector((state) => state.member.win)
   const recordLose = useSelector((state) => state.member.lose)
+  const changeNick = useSelector((state) => state.member.nickName)
   const pictures = [마피양, 기자, 경찰, 의사]
   const dispatch = useDispatch()
   const userNick = localStorage.getItem('userNick')
@@ -30,7 +31,7 @@ function Header(props) {
   const handleLogOut = () => {
     dispatch(userActions.logOutDB())
   }
-
+  console.log(changeNick)
   React.useEffect(() => {
     dispatch(memberActions.callPlayerRecord())
     dispatch(memberActions.callUserProfile())
@@ -53,9 +54,15 @@ function Header(props) {
             <Grid isFlex_start>
               <Image size={50} src={pictures[profileIdx]} />
               <Grid margin="0 22px" className="headerText" width="100px">
-                <Text margin="0px" color="#fff">
-                  {userNick}
-                </Text>
+                {changeNick == null ? (
+                  <Text margin="0px" color="#fff">
+                    {userNick}
+                  </Text>
+                ) : (
+                  <Text margin="0px" color="#fff">
+                    {changeNick}
+                  </Text>
+                )}
                 <Text margin="0px" color="#fff">
                   {recordWin}승 {recordLose}패
                 </Text>

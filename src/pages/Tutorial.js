@@ -25,7 +25,7 @@ function Tutorial() {
                                     <Grid isFlex_center height='100%' width='100%'>
                                         <ImgBox4>
                                             <Explain>
-                                                <Text size='30px'>
+                                                <Text size='22px'>
                                                     게임룸에 입장하게 되면 참가자들과 화상으로 혹은 채팅으로 대화하며 플레이할 수 있습니다!
                                                 </Text>
                                             </Explain>
@@ -38,7 +38,7 @@ function Tutorial() {
                                     <Grid isFlex_center height='100%' width='100%'>
                                         <ImgBox2>
                                             <Explain>
-                                                <Text size='30px'>
+                                                <Text size='22px'>
                                                     게임이 시작되면 직업이 부여됩니다.<br />
                                                     각 직업에 맞는 능력을 사용해 게임을 승리로 이끌어보세요!
                                                 </Text>
@@ -52,7 +52,7 @@ function Tutorial() {
                                     <Grid isFlex_center height='100%' width='100%'>
                                         <ImgBox3>
                                             <Explain>
-                                                <Text size='30px'>
+                                                <Text size='22px'>
                                                     밤이 되면 각자 직업에 맞는 능력을 사용할 수 있습니다. <br />밤에는
                                                     마피아를 제외한 다른 직업은 채팅을 사용할 수 없습니다!
                                                 </Text>
@@ -66,7 +66,7 @@ function Tutorial() {
                                     <Grid isFlex_center height='100%' width='100%'>
                                         <ImgBox1>
                                             <Explain>
-                                                <Text size='30px'>
+                                                <Text size='22px'>
                                                     시간이 낮으로 바뀌면 밤중에 각 참가자들이 진행했던 행동들이
                                                     사진과 같이 출력됩니다. <br />중요한 정보들이 담겨 있으니
                                                     놓치지 마세요!
