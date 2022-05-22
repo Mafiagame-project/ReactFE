@@ -203,7 +203,7 @@ const Content = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 999;
-  height: 65vh;
+  height: 68vh;
   max-width: 48vw;
   width: 100%;
   background-color: #fff;

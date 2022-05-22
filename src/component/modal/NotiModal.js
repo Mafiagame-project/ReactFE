@@ -55,7 +55,12 @@ function NotiModal() {
             <Modalblack>
               <VoteNoti>
                 <Text size="2vw">게임 결과</Text>
-                <img src={CitizenWin} alt="win" style={{ width: '18vw' }} />
+                {endGameNoti === '마피아가 승리하였습니다.' ? (
+                  <img src={mafiaWin} alt="win" style={{ width: '18vw' }} />
+                ) : (
+                  <img src={CitizenWin} alt="win" style={{ width: '18vw' }} />
+                )}
+
                 <Text bold size="2vw">
                   {endGameNoti}
                 </Text>
