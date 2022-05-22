@@ -6,7 +6,8 @@ import { Grid, Text, Button, Input, Image } from '../../element/index'
 import FriendList from '../FriendList'
 import styled from 'styled-components'
 import closeIcon from '../../assets/icons/black/닫기.png'
-import pattern01 from '../../assets/image/pattern/01.png'
+import pattern01 from '../../assets/image/pattern/01_opacity.png'
+import noFriend from '../../assets/image/noti/no_friend.png'
 
 const FriendlistModal = ({ onClose }) => {
   const dispatch = useDispatch()
@@ -51,7 +52,7 @@ const FriendlistModal = ({ onClose }) => {
                   style={{ float: 'right' }}
                 />
               </Grid>
-              <Text>내 친구 리스트</Text>
+              <Text size="20px">내 친구 리스트</Text>
               <Grid>
                 <Input
                   placeholder="아이디/이메일을 입력하세요"
@@ -72,11 +73,7 @@ const FriendlistModal = ({ onClose }) => {
                 })
               ) : (
                 <TextBox>
-                  <Text margin="20px" size="25px" color="#fff">
-                    텅텅 🥺...
-                    <br />
-                    아직 친구가 없어요!
-                  </Text>
+                  <img src={noFriend} />
                 </TextBox>
               )}
             </Grid>

@@ -152,6 +152,7 @@ const RoomBox = styled.div`
 `
 
 const Room = styled.div`
+  cursor: pointer;
   min-width: 305px;
   height: 332px;
   background-color: black;

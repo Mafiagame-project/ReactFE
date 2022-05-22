@@ -31,6 +31,7 @@ Grid.defaultProps = {
   column: false,
   flex_column: false,
   flexColumn: false,
+  flexColumn_end: false,
   isFlex_start: false,
   isFlex_center: false,
   isFlex_end: false,
@@ -84,6 +85,10 @@ const GridBox = styled.div`
          props.flexColumn
            ? `display: flex; flex-direction: column; justify-content: space-between; align-items: center;`
            : null};
+           ${(props) =>
+             props.flexColumn_end
+               ? `display: flex; flex-direction: column; justify-content: end; align-items: center;`
+               : null};
     ${(props) =>
       props.isFlex_start
         ? `display: flex; align-items: center; justify-content: start;`

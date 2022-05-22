@@ -2,29 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Text = (props) => {
-  const {
-    bold,
-    color,
-    size,
-    children,
-    margin,
-    font,
-    _onClick,
-    center,
-    left,
-    right,
-  } = props
+  const { children, _onClick, ...styles } = props
 
-  const styles = {
-    bold: bold,
-    color: color,
-    size: size,
-    margin: margin,
-    font: font,
-    center: center,
-    left: left,
-    right: right,
-  }
   return (
     <P {...styles} onClick={_onClick}>
       {children}
@@ -42,6 +21,7 @@ Text.defaultProps = {
   center: false,
   left: false,
   right: false,
+  _cursor: false,
   _onClick: () => {},
 }
 
@@ -54,6 +34,7 @@ const P = styled.p`
   ${(props) => (props.center ? `text-align:center;` : '')}
   ${(props) => (props.left ? `text-align:left;` : '')}
   ${(props) => (props.right ? `text-align:right;` : '')}
+  ${(props) => (props._cursor ? `cursor: pointer;` : null)};
 `
 
 export default Text

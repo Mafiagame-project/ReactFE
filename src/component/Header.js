@@ -45,7 +45,7 @@ function Header(props) {
             socket.disconnect()
           }}
         >
-          <Text size="30px" color="#fff">
+          <Text size="30px" color="#fff" _cursor>
             MAFIYANG
           </Text>
         </Grid>
@@ -68,6 +68,7 @@ function Header(props) {
                 </Text>
                 {where == true ? (
                   <Text
+                    _cursor
                     margin="0px"
                     color="#aaa"
                     _onClick={() => alert('현재 위치에서는 불가능합니다')}
@@ -76,6 +77,7 @@ function Header(props) {
                   </Text>
                 ) : (
                   <Text
+                    _cursor
                     margin="0px"
                     color="#aaa"
                     _onClick={() => history.push('/edituser')}
@@ -87,13 +89,14 @@ function Header(props) {
             </Grid>
           </Grid>
           <Grid is_flex>
-            <Grid center margin="0 10px">
+            <Grid center margin="0 10px" _cursor>
               <Icons src={soundIcon} />
               <Text margin="0" color="#fff" size="12px">
                 sound
               </Text>
             </Grid>
             <Grid
+              _cursor
               center
               margin="0 10px"
               _onClick={() => {
@@ -107,6 +110,7 @@ function Header(props) {
             </Grid>
             {where == true ? (
               <Grid
+                _cursor
                 center
                 margin="0 10px"
                 _onClick={() => alert('현재 위치에서는 불가능합니다')}
@@ -117,7 +121,7 @@ function Header(props) {
                 </Text>
               </Grid>
             ) : (
-              <Grid center margin="0 10px" _onClick={handleLogOut}>
+              <Grid _cursor center margin="0 10px" _onClick={handleLogOut}>
                 <Icons src={LogoutIcon} />
                 <Text margin="0" color="#fff" size="12px">
                   LogOut
@@ -127,8 +131,6 @@ function Header(props) {
           </Grid>
         </Rightside>
       </Container>
-      {/* 친구 목록 모달 부분입니다 */}
-
       {isOpen && (
         <FriendsListModal onClose={() => setIsOpen(false)}></FriendsListModal>
       )}

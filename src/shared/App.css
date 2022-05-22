@@ -58,6 +58,12 @@ body {
   z-index: 100;
 }
 
+.loading {
+  background-color: #fff;
+  background-image: url(../assets/image/pattern/background.png);
+  background-size: cover;
+}
+
 .swiper {
   width: 80%;
   height: 100%;

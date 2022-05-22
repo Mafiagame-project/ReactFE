@@ -86,7 +86,7 @@ function Loading() {
   }
 
   return (
-    <div className="align_back">
+    <div className="align_back loading">
       <Container>
         <Text margin="30px 0" size="90px">
           MAFIYANG
@@ -125,7 +125,7 @@ function Loading() {
 
 const Container = styled.div`
   position: fixed;
-  top: 40%;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
@@ -134,6 +134,5 @@ const Container = styled.div`
   z-index: 99;
   width: 100%;
   position: relative;
-  overflow: scroll;
 `
 export default Loading

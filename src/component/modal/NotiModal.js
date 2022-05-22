@@ -4,6 +4,7 @@ import { Grid, Button, Text, Image } from '../../element/index'
 import 늑대 from '../../assets/image/character/늑대_.png'
 import 피해자 from '../../assets/image/character/양_시민.png'
 import deadSheep from '../../assets/image/noti/기사_피해자양.gif'
+import dayvote from '../../assets/image/character/양_behind.png'
 import angel from '../../assets/image/noti/source/back-under.jpg'
 import ballon from '../../assets/image/noti/source/말풍선(그림자).png'
 import who from '../../assets/image/noti/의문늑대.png'
@@ -53,10 +54,10 @@ function NotiModal() {
           {endGameNoti ? ( // 게임이 끝났냐 안끝났냐
             <Modalblack>
               <VoteNoti>
-                <Text size="40px">게임 결과</Text>
-                <img src={CitizenWin} alt="win" style={{ width: '7.8vw' }} />
-                <Text bold size="25px">
-                  {endGameNoti} 시민이 승리하였습니다
+                <Text size="2vw">게임 결과</Text>
+                <img src={CitizenWin} alt="win" style={{ width: '18vw' }} />
+                <Text bold size="2vw">
+                  {endGameNoti}
                 </Text>
               </VoteNoti>
             </Modalblack>
@@ -67,36 +68,31 @@ function NotiModal() {
                   {voteResult ? ( // 아무도 안 죽음 (?)을 아무도 죽지않았습니다로 출력하게!
                     <Modalblack>
                       <VoteNoti>
-                        <Text size="40px">낮 투표결과 </Text>
-                        <div
+                        <Text size="3vw">낮 투표결과 </Text>
+                        <img
+                          src={dayvote}
                           style={{
-                            border: '1px solid black',
-                            width: '150px',
-                            height: '150px',
-                            margin: '30px auto',
+                            width: '8vw',
+                            margin: '2vw 0',
                           }}
-                        >
-                          사진
-                        </div>
+                        />
+
                         {voteResult == '아무도 안 죽음' ? (
-                          <Text bold size="32px">
+                          <Text bold size="2.5vw">
                             아무도 죽지 않았습니다
                           </Text>
                         ) : (
-                          <Text bold size="32px">
+                          <Text bold size="2vw">
                             {voteResult}가 잡혔습니다
                           </Text>
                         )}
-                        <Text bold size="32px">
-                          {voteResult}가 잡혔습니다
-                        </Text>
                       </VoteNoti>
                     </Modalblack>
                   ) : (
                     <Modalblack>
                       <VoteNoti>
-                        <Text size="32px">낮 투표결과</Text>
-                        <Text bold size="32px">
+                        <Text size="2.5vw">낮 투표결과</Text>
+                        <Text size="2vw" margin="4vw">
                           아무도 죽지 않았습니다
                         </Text>
                       </VoteNoti>
@@ -264,7 +260,7 @@ function NotiModal() {
 
                       <Grid width="50%" height="90%" flexColumn center>
                         <Grid height="50%">
-                          {!voteResult ? (
+                          {voteResult ? (
                             <>
                               <Grid
                                 bg="#000"
@@ -466,7 +462,7 @@ const Modalblack = styled.div`
   height: 100%;
   width: 100%;
   z-index: 100;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.85);
 `
 
 const Noti = styled.div`
