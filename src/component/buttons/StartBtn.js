@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Grid, DotButton } from '../../element/index'
 import { useDispatch, useSelector } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify'
@@ -15,10 +15,11 @@ const StartBtn = ({ socket }) => {
   const memberSocket = useSelector((state) => state.member.socketId)
   const members = useSelector((state) => state.member.memberId)
   const startCheck = useSelector((state) => state.room.check)
+  const startCard = useSelector((state) => state.game.card)
   const endGame = useSelector((state) => state.game.endGameNoti)
   const currentId = localStorage.getItem('userNick')
   const [getStart, setStart] = React.useState(false)
-
+  let startBgm = new Audio(bgm)
 
   const startGame = () => {
     if (memberSocket.length < 4) {
@@ -34,6 +35,27 @@ const StartBtn = ({ socket }) => {
       }
     }
   }
+
+  const startAlarm = () => {
+    toast.success('게임이 시작되었습니다. 이야기를 나눠보세요!', {
+      position: toast.POSITION.TOP_LEFT,
+      className: 'toast-start-alarm',
+      autoClose: 3000,
+    })
+  }
+  useEffect(() => {
+    if (startCard) {
+      startAlarm()
+      // startBgm.play()
+      setTimeout(() => {
+        dispatch(gameActions.startCard(null))
+      }, 3000)
+    }
+    if(endGame !== null){
+      console.log(endGame)
+      // startBgm.pause()
+    }
+  }, [startCard, endGame])
 
   React.useEffect(() => {
     let check = members?.includes(roomInfo?.userId)

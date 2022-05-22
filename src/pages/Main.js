@@ -17,9 +17,8 @@ function Main(props) {
   let socket = useSelector((state) => state.game.socket)
   const [isOpen, setIsOpen] = React.useState(false)
   const dispatch = useDispatch()
-  let startBgm = new Audio(bgm)
+  
   React.useEffect(() => {
-    startBgm.pause()
     try {
       socket.on('roomList', (rooms) => {
         dispatch(roomActions.sendRoomList(rooms))
@@ -29,6 +28,7 @@ function Main(props) {
       window.location = '/'
       socket.disconnect()
     }
+    
   }, [socket])
 
   return (

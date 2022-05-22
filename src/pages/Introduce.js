@@ -28,11 +28,11 @@ function Introduce() {
     setLose(element?.lose)
     element.info = true
     setShow(true)
-    setTimeout(() => {
-      setShow(false)
-      setSelect('')
-      element.info = null
-    }, 5000)
+    // setTimeout(() => {
+    //   setShow(false)
+    //   setSelect('')
+    //   element.info = null
+    // }, 5000)
   }
 
   const box2 = {
@@ -57,7 +57,7 @@ function Introduce() {
         src={돌아가기}
       />
 
-      <Grid center flexColumn padding="50px">
+      <Grid center flexColumn padding="50px" >
         <Grid is_flex width="50%" height="55px">
           <Grid isFlex_center height="60px" width="40%">
             <TutorialBox style={box2}>
@@ -75,7 +75,7 @@ function Introduce() {
             <TutorialBox style={box1}>
               <Text
                 _onClick={() => {
-                  setPage(1)
+                  setPage(1); setShow(false)
                 }}
                 size="40px"
               >
@@ -91,36 +91,64 @@ function Introduce() {
         ) : getPage === 2 ? (
           <CardBox>
             {data.map((e, idx) => {
-              return (
-                <>
-                  <Card
-                  style={{border:`${e.info == true ? '3px solid orange' : ''}`}}
-                    key={idx}
-                    onClick={() => {
-                      seleted(e, idx)
-                      
-                    }}
-                  >
-                    <Grid isFlex_center height="10%">
-                      <Text size='24px'  color="white">MAFIYANG</Text>
-                    </Grid>
-                    <Grid
-                      flexColumn
-                      padding="20px 60px 20px 60px"
-                      center
-                      bg="white"
-                      height="100%"
-                      _onlick={toggleBtn}
+              if(e.info == true){
+                e.info = false
+                return (
+                  <>
+                    <Card
+                      key={idx}
+                      onClick={() => {
+                        seleted(e, idx)
+                        
+                      }}
                     >
-                      <Img src={e.img}/>
-                      <Grid isFlex_center height="20%" bg='black'>
-                        <Text size='24px' color="white">{e.title}</Text>
+                      <Grid isFlex_center height="10%">
+                        <Text size='24px'  color="white">MAFIYANG</Text>
                       </Grid>
-                    </Grid>
-                  </Card>
-                  {/* <Grid>{e.explain}</Grid> */}
-                </>
-              )
+                      <Grid
+                        flexColumn
+                        padding="20px 60px 20px 60px"
+                        center
+                        bg="white"
+                        height="100%"
+                        _onlick={toggleBtn}
+                      >
+                        <Img src={e.img}/>
+                        <Grid isFlex_center height="20%" bg='black'>
+                          <Text size='24px' color="white">{e.title}</Text>
+                        </Grid>
+                      </Grid>
+                    </Card>
+                  </>
+                )
+              } else {
+                return (
+                  <>
+                    <Card
+                      key={idx}
+                      onClick={() => {
+                        seleted(e, idx)
+                      }}
+                    >
+                      <Grid isFlex_center height="10%">
+                        <Text size='24px'  color="white">MAFIYANG</Text>
+                      </Grid>
+                      <Grid flexColumn
+                        padding="20px 60px 20px 60px"
+                        center
+                        bg="gray"
+                        height="100%"
+                        _onlick={toggleBtn}
+                      >
+                        <Img src={e.img}/>
+                        <Grid isFlex_center height="20%" bg='black'>
+                          <Text size='24px' color="white">{e.title}</Text>
+                        </Grid>
+                      </Grid>
+                    </Card>
+                  </>
+                )
+              }
             })}
           </CardBox>
         ) : null}
@@ -138,8 +166,6 @@ function Introduce() {
             </Grid>
           )}
         </>
-
-        {/* <Grid margin="20px 0 0 0" padding="30px" height="40%"></Grid> */}
       </Grid>
     </>
   )
@@ -147,6 +173,7 @@ function Introduce() {
 
 const Img = styled.img`
   width: 150px;
+  height: 175px;
 `
 const CardBox = styled.div`
   width: 80%;
@@ -190,5 +217,6 @@ const Explain = styled.div`
   padding: 20px;
 `
 const TutorialBox = styled.div``
+
 
 export default Introduce

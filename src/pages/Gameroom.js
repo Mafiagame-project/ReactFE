@@ -55,14 +55,6 @@ function GameRoom(props) {
     }
   }
 
-  const startAlarm = () => {
-    toast.success('게임이 시작되었습니다. 이야기를 나눠보세요!', {
-      position: toast.POSITION.TOP_LEFT,
-      className: 'toast-start-alarm',
-      autoClose: 3000,
-    })
-  }
-
   useEffect(() => {
     let unlisten = history.listen((location) => {
       // 브라우저 뒤로가기 버튼(나가기) 누를때 호출
@@ -117,18 +109,7 @@ function GameRoom(props) {
     }
   }, [currentTime])
 
-  useEffect(() => {
-    
-    if (startCard) {
-      setIsOpen(true)
-      startAlarm()
-      startBgm.play()
-      setTimeout(() => {
-        setIsOpen(false)
-        dispatch(gameActions.startCard(null))
-      }, 3000)
-    }
-  }, [startCard])
+  
 
   return (
     <>

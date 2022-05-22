@@ -85,6 +85,7 @@ const VoteModal = ({ onClose }) => {
   }
 
   const active = (clickedId, clicker, time) => {
+    console.log('클릭한다')
     let clickerJob = clicker.playerJob
     let clickerId = clicker.player
     if (currentNick == clickedId) {
@@ -138,6 +139,7 @@ const VoteModal = ({ onClose }) => {
 
   return (
     <>
+    <button onClick={()=>{actionAlert(1)}}>ㅇㅏㄹ라ㄹ랄랄랄라</button>
       {saveArray ? (
         <ModalPortal>
           <Background>
@@ -162,7 +164,6 @@ const VoteModal = ({ onClose }) => {
                     )
                   })}
                 </VoteBox>
-                <ToastContainer />
                 <Text color="#fff" size="25px">
                   {clickedId}님을 선택하시겠습니까?
                 </Text>
