@@ -106,7 +106,7 @@ function Introduce() {
                         height="100%"
                         _onlick={toggleBtn}
                       >
-                        <Img src={e.img} />
+                        <Img src={e.gif} />
                         <Grid
                           isFlex_center
                           height="12%"
