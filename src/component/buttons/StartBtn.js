@@ -76,7 +76,7 @@ const StartBtn = ({ socket }) => {
           result += e + ' '
         }
       })
-      toast.info(`[${result}] 참가자들이 준비하지 않았습니다`, {
+      toast.info(`참가자들이 준비하지 않았습니다 [${result}] `, {
         position: toast.POSITION.TOP_CENTER,
         className: 'toast-startPeople',
         autoClose: 2000,

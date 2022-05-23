@@ -15,7 +15,6 @@ import Introduce from '../pages/Introduce'
 import EditUser from '../pages/auth/EditUser'
 import EditProfile from '../pages/auth/EditProfile'
 import Tutorial from '../pages/Tutorial'
-import { actionCreators as userAction } from '../redux/modules/user'
 import { useDispatch } from 'react-redux'
 
 function App() {

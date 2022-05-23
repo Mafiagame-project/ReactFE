@@ -68,7 +68,7 @@ const Rooms = (props) => {
 
   return (
     <>
-      <Grid>
+      <Grid width="90%">
         <Grid padding="30px">
           <Grid is_flex height="10%" padding="10px">
             <Title>
@@ -152,6 +152,7 @@ const RoomBox = styled.div`
 `
 
 const Room = styled.div`
+  cursor: pointer;
   min-width: 305px;
   height: 332px;
   background-color: black;

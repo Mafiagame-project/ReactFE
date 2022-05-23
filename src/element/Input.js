@@ -136,17 +136,17 @@ Input.defaultProps = {
 }
 
 const RadioBox = styled.div`
-margin: 50px 30px;
 position: relative;
 justify-content: center;
 display: flex;
 align-items; center;
 flex-direction: column;
+right: 15%;
 `
 
 const RadioLabel = styled.label`
   > p {
-    position: relative;
+    position: absolute;
     display: inline-block;
     color: #fff;
     font-size: 25px;
@@ -158,7 +158,6 @@ const Img = styled.img`
   position: absolute;
   width: 80px;
   top: -90px;
-  left: 125px;
   transition-duration: 0.5s;
   transform: rotate(0);
   z-index: 10;
@@ -169,7 +168,6 @@ opacity: 0;
   position: absolute;
   width: 90px;
   top: -130px;
-  left: 121px;
   transition-duration: 0.5s;
   transform: rotate(0);
   z-index: 20;

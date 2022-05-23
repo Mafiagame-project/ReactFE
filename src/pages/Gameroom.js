@@ -26,17 +26,16 @@ function GameRoom(props) {
   const [isOpen, setIsOpen] = useState(false)
   const [getNotice, setNotice] = useState(false)
   const [darkMode, setDarkMode] = useState(false)
-  
+
   const startBgm = new Audio(bgm)
 
   useEffect(() => {
     socket.on('isNight', (value) => {
-      console.log('...', value)
       dispatch(gameActions.dayAndNight(value))
       dispatch(gameActions.dayCount())
     })
   }, [])
-  
+
   const dayOrNight = (time) => {
     if (time == true) {
       setDarkMode(true)
@@ -114,8 +113,6 @@ function GameRoom(props) {
       }
     }
   }, [currentTime])
-
-  
 
   return (
     <>

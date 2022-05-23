@@ -48,7 +48,7 @@ const Chatword = styled.div`
 const OneChat = styled.div`
   width: 100%;
   height: 50px;
-  margin-top: ${(props) => (props.isMe ? '10px' : '32px')};
+  margin-top: ${(props) => (props.isMe ? '10px' : '22px')};
   text-align: ${(props) => (props.isMe ? 'right' : 'left')};
 `
 export default Chatdiv

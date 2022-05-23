@@ -67,12 +67,12 @@ const VoteModal = ({ onClose }) => {
         className: 'toast-dup',
         autoClose: 2500,
       })
-      } else if (num === 3) {
-        toast.warning('당신은 죽었기때문에 선택할 수 없습니다', {
-          position: toast.POSITION.TOP_LEFT,
-          className: 'toast-dup',
-          autoClose: 2500,
-        })
+    } else if (num === 3) {
+      toast.warning('당신은 죽었기때문에 선택할 수 없습니다', {
+        position: toast.POSITION.TOP_LEFT,
+        className: 'toast-dup',
+        autoClose: 2500,
+      })
     } else if (num === 4) {
       toast.warning('기회를 모두 사용하였습니다', {
         position: toast.POSITION.TOP_LEFT,
@@ -139,7 +139,13 @@ const VoteModal = ({ onClose }) => {
 
   return (
     <>
-    <button onClick={()=>{actionAlert(1)}}>ㅇㅏㄹ라ㄹ랄랄랄라</button>
+      <button
+        onClick={() => {
+          actionAlert(1)
+        }}
+      >
+        ㅇㅏㄹ라ㄹ랄랄랄라
+      </button>
       {saveArray ? (
         <ModalPortal>
           <Background>
@@ -151,6 +157,14 @@ const VoteModal = ({ onClose }) => {
                   우리에 가둘 양을 선택해 주세요
                 </Text>
                 <VoteBox>
+                  <Input
+                    dayRadio
+                    text="이범규"
+                    value="test"
+                    _name="vote"
+                    _onChange={is_killed}
+                  />
+
                   {saveArray?.map((e, i) => {
                     return (
                       <Input
@@ -288,9 +302,10 @@ const Container = styled.div`
 const VoteBox = styled.div`
   text-align: center;
   display: grid;
+  grid-gap: 3vw 0;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   max-width: 800px;
-  margin: 100px auto;
+  margin: 13vw auto 9vw;
 `
 
 export default VoteModal

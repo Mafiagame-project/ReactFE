@@ -29,8 +29,8 @@ function Timer(props) {
     <>
       <div
         style={{
-          fontSize: '52px',
-          marginBottom: '20px',
+          fontSize: '2.5vw',
+          marginBottom: '1vw',
           color: `${currentTime == true ? 'white' : 'black'}`,
         }}
       >

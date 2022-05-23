@@ -6,11 +6,12 @@ import data from '../shared/introduce'
 import Tutorial from './Tutorial'
 import 돌아가기 from '../assets/icons/black/돌아가기.png'
 import { history } from '../redux/configureStore'
+import title from '../assets/button/튜토리얼_타이틀선택배경.png'
 
 function Introduce() {
   const [isOpen, setIsOpen] = React.useState(false)
   const [getPage, setPage] = React.useState(2)
-  const [getSelect, setSelect] = React.useState('');
+  const [getSelect, setSelect] = React.useState('')
 
   const [getShow, setShow] = React.useState(false)
   const [desc, setDesc] = React.useState()
@@ -36,14 +37,11 @@ function Introduce() {
   }
 
   const box2 = {
-    borderRadius: '10px',
-    padding: '10px',
-    border: `${getPage == 2 ? '3px solid black' : 'none'}`,
+    // padding: '19px',
+    opacity: `${getPage == 2 ? 1 : 0.4}`,
   }
   const box1 = {
-    borderRadius: '10px',
-    padding: '10px',
-    border: `${getPage == 1 ? '3px solid black' : 'none'}`,
+    opacity: `${getPage == 1 ? 1 : 0.4}`,
   }
 
   return (
@@ -53,45 +51,39 @@ function Introduce() {
         onClick={() => {
           history.replace('/gamemain')
         }}
-        style={{ position: 'absolute', margin: '15px' }}
+        style={{ position: 'absolute', margin: '4vw' }}
         src={돌아가기}
       />
 
-      <Grid center flexColumn padding="50px" >
-        <Grid is_flex width="50%" height="55px">
-          <Grid isFlex_center height="60px" width="40%">
-            <TutorialBox style={box2}>
-              <Text
-                _onClick={() => {
-                  setPage(2);
-                }}
-                size="40px"
-              >
-                역할 튜토리얼
-              </Text>
-            </TutorialBox>
-          </Grid>
-          <Grid isFlex_center height="60px" width="40%">
-            <TutorialBox style={box1}>
-              <Text
-                _onClick={() => {
-                  setPage(1); setShow(false)
-                }}
-                size="40px"
-              >
-                게임 튜토리얼
-              </Text>
-            </TutorialBox>
-          </Grid>
+      <Grid center flexColumn padding="2.5vw" margin="1vw 0">
+        <Grid isFlex_center height="60px" width="40%">
+          <TutorialBox
+            style={box2}
+            onClick={() => {
+              setPage(2)
+            }}
+          >
+            <img src={title} />
+            <TitleText>역할 튜토리얼</TitleText>
+          </TutorialBox>
+          <TutorialBox
+            style={box1}
+            onClick={() => {
+              setPage(1)
+              setShow(false)
+            }}
+          >
+            <img src={title} />
+            <TitleText>게임 튜토리얼</TitleText>
+          </TutorialBox>
         </Grid>
-        <Grid height="50px"></Grid>
 
         {getPage === 1 ? (
           <Tutorial />
         ) : getPage === 2 ? (
           <CardBox>
             {data.map((e, idx) => {
-              if(e.info == true){
+              if (e.info == true) {
                 e.info = false
                 return (
                   <>
@@ -99,23 +91,31 @@ function Introduce() {
                       key={idx}
                       onClick={() => {
                         seleted(e, idx)
-                        
                       }}
                     >
                       <Grid isFlex_center height="10%">
-                        <Text size='24px'  color="white">MAFIYANG</Text>
+                        <Text size="18px" color="white">
+                          MAFIYANG
+                        </Text>
                       </Grid>
                       <Grid
-                        flexColumn
+                        flexColumn_end
                         padding="20px 60px 20px 60px"
                         center
                         bg="white"
                         height="100%"
                         _onlick={toggleBtn}
                       >
-                        <Img src={e.img}/>
-                        <Grid isFlex_center height="20%" bg='black'>
-                          <Text size='24px' color="white">{e.title}</Text>
+                        <Img src={e.gif} />
+                        <Grid
+                          isFlex_center
+                          height="12%"
+                          bg="black"
+                          margin="2vw 0 1.3vw"
+                        >
+                          <Text size="24px" color="white">
+                            {e.title}
+                          </Text>
                         </Grid>
                       </Grid>
                     </Card>
@@ -124,28 +124,38 @@ function Introduce() {
               } else {
                 return (
                   <>
-                    <Card
+                    <NonCard
                       key={idx}
                       onClick={() => {
                         seleted(e, idx)
                       }}
                     >
-                      <Grid isFlex_center height="15%">
-                        <Text size='24px'  color="white">MAFIYANG</Text>
+                      <Grid isFlex_center height="10%">
+                        <Text size="18px" color="white">
+                          MAFIYANG
+                        </Text>
                       </Grid>
-                      <Grid flexColumn
-                        padding="40px 60px 20px 60px"
+                      <Grid
+                        flexColumn_end
+                        padding="20px 60px 20px 60px"
                         center
-                        bg="gray"
                         height="100%"
+                        bg="#fff"
                         _onlick={toggleBtn}
                       >
-                        <Img src={e.img}/>
-                        <Grid isFlex_center height="20%" bg='black'>
-                          <Text size='24px' color="white">{e.title}</Text>
+                        <Img src={e.img} />
+                        <Grid
+                          isFlex_center
+                          height="12%"
+                          bg="black"
+                          margin="2vw 0 1.3vw"
+                        >
+                          <Text size="24px" color="white">
+                            {e.title}
+                          </Text>
                         </Grid>
                       </Grid>
-                    </Card>
+                    </NonCard>
                   </>
                 )
               }
@@ -156,11 +166,17 @@ function Introduce() {
           {getShow == false ? null : (
             <Grid isFlex_center margin="30px 0 0 0">
               <Explain>
-                <Text left size="24px">능력 : {ability}</Text>
-                <br/>
-                <Text left size="24px">승리조건 : {win}</Text>
-                <br/>
-                <Text left size="24px">패배조건 : {lose}</Text>
+                <Text left size="21px" margin="0.3vw 0">
+                  <span style={{ fontWeight: 'bold' }}>능력</span> : {ability}
+                </Text>
+
+                <Text left size="21px" margin="0.3vw 0">
+                  <span style={{ fontWeight: 'bold' }}>승리조건</span> : {win}
+                </Text>
+
+                <Text left size="21px" margin="0.3vw 0">
+                  <span style={{ fontWeight: 'bold' }}>패배조건</span> : {lose}
+                </Text>
               </Explain>
             </Grid>
           )}
@@ -172,17 +188,17 @@ function Introduce() {
 
 const Img = styled.img`
   width: 150px;
-  height: 175px;
 `
 const CardBox = styled.div`
   width: 80%;
-  margin: 0 auto;
+  margin: 3vw auto 1vw;
   overflow-x: scroll;
   display: flex;
   flex-direction: columns;
 `
 
 const Card = styled.div`
+  cursor: pointer;
   box-sizing: border-box;
   width: 300px;
   min-width: 300px;
@@ -202,20 +218,70 @@ const Card = styled.div`
   &:hover {
     border: 5px solid black;
   }
-  &:click{
+  &:click {
+    border: 5px solid orange;
+  }
+`
+
+const NonCard = styled.div`
+  cursor: pointer;
+  box-sizing: border-box;
+  opacity: 0.4;
+  width: 300px;
+  min-width: 300px;
+  height: 386px;
+  background-color: black;
+  border: 3px solid black;
+  border-radius: 30px 30px 0px 0px;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  @media screen and (max-width: 600px) {
+    min-height: 200px;
+    margin-bottom: 20px;
+  }
+  &:hover {
+    border: 5px solid black;
+  }
+  &:click {
     border: 5px solid orange;
   }
 `
 
 const Explain = styled.div`
+<<<<<<< HEAD
   width: 60%;
   height: 100px;
   background: #ffffff;
   border: 2px solid #000000;
   border-radius: 15px;
   padding: 40px 80px 40px 80px;
+=======
+  background: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 15px;
+  padding: 1.5vw;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 `
-const TutorialBox = styled.div``
+const TutorialBox = styled.div`
+  cursor: pointer;
+  position: relative;
+  text-align: center;
+  margin: 10px;
+>>>>>>> ce50ed048983d18d0b2171d0d171b08f8191f66c
+`
 
+const TitleText = styled.div`
+  color: #000;
+  width: 100%;
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  font-size: 29px;
+  transform: translate(-50%, -50%);
+`
 
 export default Introduce

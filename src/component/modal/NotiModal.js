@@ -3,8 +3,18 @@ import styled from 'styled-components'
 import { Grid, Button, Text, Image } from '../../element/index'
 import 늑대 from '../../assets/image/character/늑대_.png'
 import 피해자 from '../../assets/image/character/양_시민.png'
-import 신문 from '../../assets/image/noti/기사_하단이미지.png'
+import deadSheep from '../../assets/image/noti/기사_피해자양.gif'
+import dayvote from '../../assets/image/character/양_behind.png'
+import angel from '../../assets/image/noti/source/back-under.jpg'
+import ballon from '../../assets/image/noti/source/말풍선(그림자).png'
+import who from '../../assets/image/noti/의문늑대.png'
+import 신문 from '../../assets/image/noti/기사_하단이미지(피그마판형).png'
 import 모자이크 from '../../assets/image/noti/양_피그마판형.png'
+import head from '../../assets/image/noti/속보.png'
+import ad from '../../assets/image/noti/source/ad.jpg'
+import point from '../../assets/image/noti/source/living_point.png'
+import mafiaWin from '../../assets/image/noti/늑대_승리.gif'
+import CitizenWin from '../../assets/image/noti/시민_승리.gif'
 import { useEffect, useState } from 'react'
 import { actionCreators as gameActions } from '../../redux/modules/game'
 import bgm from '../../assets/sound/bgm/big_helmet.mp3'
@@ -18,7 +28,7 @@ function NotiModal() {
   const reportNoti = useSelector((state) => state.game.repNoti)
   const dayCount = useSelector((state) => state.game.cnt)
   const [getNotice, setNotice] = useState(false)
-  const startBgm = new Audio(bgm)
+
   const printNoti = () => {
     setNotice(true)
     setTimeout(() => {
@@ -38,23 +48,19 @@ function NotiModal() {
 
   return (
     <>
-      {getNotice === true ? (
+      {getNotice ? (
         <>
           {endGameNoti ? ( // 게임이 끝났냐 안끝났냐
             <Modalblack>
               <VoteNoti>
-                <Text size="40px">게임 결과</Text>
-                <div
-                  style={{
-                    border: '1px solid black',
-                    width: '150px',
-                    height: '150px',
-                    margin: '30px auto',
-                  }}
-                >
-                  사진
-                </div>
-                <Text bold size="25px">
+                <Text size="2vw">게임 결과</Text>
+                {endGameNoti === '마피아가 승리하였습니다.' ? (
+                  <img src={mafiaWin} alt="win" style={{ width: '18vw' }} />
+                ) : (
+                  <img src={CitizenWin} alt="win" style={{ width: '18vw' }} />
+                )}
+
+                <Text bold size="2vw">
                   {endGameNoti}
                 </Text>
               </VoteNoti>
@@ -66,34 +72,31 @@ function NotiModal() {
                   {voteResult ? ( // 아무도 안 죽음 (?)을 아무도 죽지않았습니다로 출력하게!
                     <Modalblack>
                       <VoteNoti>
-                        <Text size="40px">낮 투표결과 </Text>
-                        <div
+                        <Text size="3vw">낮 투표결과 </Text>
+                        <img
+                          src={dayvote}
                           style={{
-                            border: '1px solid black',
-                            width: '150px',
-                            height: '150px',
-                            margin: '30px auto',
+                            width: '8vw',
+                            margin: '2vw 0',
                           }}
-                        >
-                          사진
-                        </div>
-                        {
-                          voteResult == '아무도 안 죽음'
-                          ? <Text bold size='32px'>아무도 죽지 않았습니다</Text>
-                          : <Text bold size="32px">
+                        />
+
+                        {voteResult == '아무도 안 죽음' ? (
+                          <Text bold size="2.5vw">
+                            아무도 죽지 않았습니다
+                          </Text>
+                        ) : (
+                          <Text bold size="2vw">
                             {voteResult}가 잡혔습니다
-                            </Text>
-                        }
-                        <Text bold size="32px">
-                          {voteResult}가 잡혔습니다
-                        </Text>
+                          </Text>
+                        )}
                       </VoteNoti>
                     </Modalblack>
                   ) : (
                     <Modalblack>
                       <VoteNoti>
-                        <Text size="32px">낮 투표결과</Text>
-                        <Text bold size="32px">
+                        <Text size="2.5vw">낮 투표결과</Text>
+                        <Text size="2vw" margin="4vw">
                           아무도 죽지 않았습니다
                         </Text>
                       </VoteNoti>
@@ -105,74 +108,122 @@ function NotiModal() {
                   <Noti>
                     <Grid is_flex height="10%">
                       <Grid is_flex borderBottom margin="10px">
-                        <Text size="30px">MAFIYANG</Text>
-                        <Text size="30px">마피양 일보</Text>
+                        <Text size="1.8vw">MAFIYANG</Text>
+                        <Text size="2.1vw">마피양 일보</Text>
                       </Grid>
                       <Grid is_flex borderBottom margin="10px">
-                        <Text size="30px">MAFIYANG</Text>
-                        <Text size="30px">2</Text>
+                        <Text size="1.8vw">MAFIYANG</Text>
+                        <Text size="1.8vw">2</Text>
                       </Grid>
                     </Grid>
+
                     <Grid is_flex height="100%">
-                      <Grid center height="100%">
+                      <Grid width="50%" center height="100%">
                         <Grid height="50%">
                           {reportNoti ? (
                             <>
-                              <BreakingHead>
-                                <Text>속보!</Text>
-                              </BreakingHead>
                               <Frame94>
-                                <Frame45></Frame45>
-                                <Grid>
-                                  <Text color="white" size="32px">
-                                    {reportNoti?.clickerId}
-                                  </Text>
-                                  {reportNoti?.clickerJob === 'mafia' ? (
-                                    <Text color="#61FF00" size="32px">
-                                      마피아
+                                <Grid
+                                  is_flex
+                                  position="absolute"
+                                  top="30%"
+                                  left="5%"
+                                >
+                                  <Frame45 />
+                                  <Grid width="60%" isStart>
+                                    <Text color="white" size="1.9vw">
+                                      test99 {reportNoti?.clickerId}는..?!
                                     </Text>
-                                  ) : reportNoti?.clickerJob === 'police' ? (
-                                    <Text color="#61FF00" size="32px">
-                                      경찰
+                                    {reportNoti?.clickerJob === 'mafia' ? (
+                                      <Text
+                                        padding="0 3vw"
+                                        margin="0.6vw"
+                                        color="#61FF00"
+                                        size="2.2vw"
+                                      >
+                                        마피아
+                                      </Text>
+                                    ) : reportNoti?.clickerJob === 'police' ? (
+                                      <Text
+                                        padding="0 3vw"
+                                        margin="0.6vw"
+                                        color="#61FF00"
+                                        size="2.2vw"
+                                      >
+                                        경찰
+                                      </Text>
+                                    ) : reportNoti?.clickerJob === 'doctor' ? (
+                                      <Text
+                                        padding="0 3vw"
+                                        margin="0.6vw"
+                                        color="#61FF00"
+                                        size="2.2vw"
+                                      >
+                                        의사
+                                      </Text>
+                                    ) : reportNoti?.clickerJob ===
+                                      'reporter' ? (
+                                      <Text
+                                        padding="0 3vw"
+                                        margin="0.6vw"
+                                        color="#61FF00"
+                                        size="2.2vw"
+                                      >
+                                        기자
+                                      </Text>
+                                    ) : reportNoti?.clickerJob === 'citizen' ? (
+                                      <Text
+                                        padding="0 3vw"
+                                        margin="0.6vw"
+                                        color="#61FF00"
+                                        size="2.2vw"
+                                      >
+                                        시민
+                                      </Text>
+                                    ) : null}
+                                    <Text color="white" size="1.5vw ">
+                                      ...인것으로 밝혀져
                                     </Text>
-                                  ) : reportNoti?.clickerJob === 'doctor' ? (
-                                    <Text color="#61FF00" size="32px">
-                                      의사
+                                    <Text
+                                      color="#fff"
+                                      size="1vw"
+                                      margin="0.2vw 0 0"
+                                    >
+                                      누리꾼 경악... 일동 충격...
                                     </Text>
-                                  ) : reportNoti?.clickerJob === 'reporter' ? (
-                                    <Text color="#61FF00" size="32px">
-                                      기자
-                                    </Text>
-                                  ) : reportNoti?.clickerJob === 'citizen' ? (
-                                    <Text color="#61FF00" size="32px">
-                                      시민
-                                    </Text>
-                                  ) : null}
-                                  <Text color="white" size="20px">
-                                    인것으로 밝혀져... 충격...
-                                  </Text>
+                                  </Grid>
                                 </Grid>
                               </Frame94>
                             </>
                           ) : (
                             <>
                               <Grid isFlex_center height="100%" width="100%">
-                                <Grid>
-                                  <Text size="30px" left>
-                                    유명 배우 ○○○ 과거에 양아치였지만 지금은
-                                    아니야...
+                                <Grid margin="0 1vw 0">
+                                  <Text size="1.5vw" left>
+                                    유명 배우 ○○○, <br />
+                                    과거에 양아치였지만
+                                    <br />
+                                    지금은 아니야...
                                   </Text>
                                   <Grid borderLeft margin="4vh 0" width="90%">
-                                    <Text margin="0 0 0 5px" left>
+                                    <Text size="0.8vw" margin="0 0 0 5px" left>
                                       ○○○은 지난 기자회견에서 과거에
                                       양아치였다는 의혹에 대해 인정하며 '비록
                                       비뚤어진 과거지만 지금은 양아치가 아닌
                                       양치기로서의 행보를 기대해 달라'라는
                                       입장을 표명했다.
                                     </Text>
-                                  </Grid>
+                                  </Grid>{' '}
+                                  <Text size="0.6vw" right margin="0 2vw 0 0">
+                                    기자 맴매 ... meammea@mafiyang.com
+                                  </Text>
                                 </Grid>
-                                <Grid width="100%" height="100%">
+                                <Grid
+                                  width="100%"
+                                  height="100%"
+                                  display="grid"
+                                  justify_item="end"
+                                >
                                   <Frame72 />
                                 </Grid>
                               </Grid>
@@ -180,15 +231,20 @@ function NotiModal() {
                           )}
                         </Grid>
                         <Grid isFlex_center height="40%" width="95%">
-                          <Grid height="100%">
+                          <Grid width="21vw">
                             <Frame63 />
+                            <Text size="0.4vw" margin="0.4vw 0 0" right>
+                              풀을 뜯어먹는 평화로운 마피양 시민
+                            </Text>
                           </Grid>
-                          <Grid height="100%" padding="5px">
-                            <Grid height="20%" borderBottom>
-                              <Text>리빙 포인트</Text>
-                              <Text>행복한 양의 비결은 바로 풀 뜯어먹기!</Text>
+                          <Grid padding="5px" margin="0 0 0 1vw">
+                            <Grid height="24%" borderBottom>
+                              <img src={point} style={{ width: '6vw' }} />
+                              <Text bold margin="0.5vw">
+                                행복한 양의 비결은 풀 뜯어먹기!
+                              </Text>
                             </Grid>
-                            <Text margin="30px 0 30px 0" left>
+                            <Text size="0.8vw" margin="0.5vw 0 3.4vw 0" left>
                               오늘 하루도 풀 뜯어먹느라 고생한 당신만을 위해
                               최고의 풀뜯개를 소개합니다. 멋진 양이라면 집에
                               풀뜯개 쯤은 필수로 구비해둬야 한다는 사실을 알고
@@ -198,42 +254,134 @@ function NotiModal() {
                               뜯어먹는 양이 될 수 있다!
                             </Text>
                             <Grid height="7%" borderBottom>
-                              <Text left>
+                              <Text size="0.6vw" right margin="0 0 0.4vw">
                                 기자 음매애... eemmae@mafiyang.com
                               </Text>
                             </Grid>
                           </Grid>
                         </Grid>
                       </Grid>
-                      <Grid height="90%" center>
+
+                      <Grid width="50%" height="90%" flexColumn center>
                         <Grid height="50%">
-                          <Text size="32px">마피양 마을에 발견된 사체...</Text>
                           {voteResult ? (
                             <>
-                              <Grid isFlex_center>
-                                <Victim></Victim>
-                                <Text size="32px" bold>
-                                  피해자 {voteResult}
+                              <Grid
+                                bg="#000"
+                                margin="0 3vw"
+                                padding="0.6vw"
+                                width=""
+                              >
+                                <Text color="#fff" size="1.3vw">
+                                  마피양 마을에 발견된 사체...
                                 </Text>
                               </Grid>
-                              <Text>과연 피해자 {voteResult} 잔혹하게</Text>
-                              <Text>죽인 마피아는 누구인가?</Text>
+
+                              <Grid>
+                                <Text size="0.9vw" margin="2vw 0 0">
+                                  <span
+                                    style={{
+                                      fontSize: '1.6vw',
+                                      marginRight: '1vw',
+                                    }}
+                                  >
+                                    "
+                                  </span>
+                                  과연 피해자
+                                  <span style={{ color: '#950000' }}>
+                                    {voteResult}
+                                  </span>
+                                  양을 잔혹하게
+                                  <span
+                                    style={{
+                                      fontSize: '1.6vw',
+                                      marginLeft: '1vw',
+                                    }}
+                                  >
+                                    "
+                                  </span>
+                                  <br />
+                                  죽인 마피아는 누구인가?
+                                </Text>
+                              </Grid>
+                              <Grid isFlex_center>
+                                <Grid width="40%">
+                                  <img
+                                    src={deadSheep}
+                                    alt="dead"
+                                    style={{
+                                      width: '5vw',
+                                      margin: '3vh 0 1vh',
+                                    }}
+                                  />
+                                  <Text size="1.3vw" bold>
+                                    피해자{' '}
+                                    <span style={{ color: '#950000' }}>
+                                      {voteResult}
+                                    </span>
+                                    양
+                                  </Text>
+                                </Grid>
+                                <img
+                                  src={who}
+                                  alt="mafia"
+                                  style={{ width: '6vw' }}
+                                />
+                              </Grid>
                             </>
                           ) : null}
                         </Grid>
+
                         <Grid height="40%">
-                          <Text size="32px">마피양 마을의 천사</Text>
+                          <img
+                            src={ad}
+                            style={{ width: '15vw', margin: '3vw' }}
+                          />
                           {survivedNoti ? (
                             <>
-                              <Grid isFlex_center>
-                                <Victim></Victim>
-                                <Rectangle84>
-                                  <Text>의사선생님이 살려줬어요!</Text>
-                                </Rectangle84>
-                              </Grid>
-                              <Text size="32px" bold>
-                                생존자 {survivedNoti}
-                              </Text>
+                              <AngelNoti>
+                                <Grid
+                                  bg="#fff"
+                                  margin="0 3vw"
+                                  padding="0.6vw"
+                                  width=""
+                                  position="absolute"
+                                  top="0.3vw"
+                                  right="14%"
+                                >
+                                  <Text size="1.3vw">마피양 마을의 천사!</Text>
+                                </Grid>
+                                <img
+                                  src={ballon}
+                                  style={{
+                                    width: '12vw',
+                                    position: 'absolute',
+                                    top: '35%',
+                                    left: '10%',
+                                  }}
+                                />
+                                <Grid
+                                  position="absolute"
+                                  top="5vw"
+                                  right="3vw"
+                                  width="9vw"
+                                >
+                                  <img
+                                    src={피해자}
+                                    style={{
+                                      width: '3vw',
+                                    }}
+                                  />
+                                  <Text bold>
+                                    생존자
+                                    <span style={{ color: '#61ff00' }}>
+                                      {survivedNoti}
+                                    </span>
+                                    양
+                                  </Text>
+                                </Grid>
+                                <Frame02 />
+                              </AngelNoti>
                             </>
                           ) : null}
                         </Grid>
@@ -249,23 +397,31 @@ function NotiModal() {
     </>
   )
 }
+const Frame02 = styled.div`
+  background: url(${angel}), #c4c4c4;
+  width: 29vw;
+  height: 22vh;
+  background-size: cover;
+  border-radius: 2.1vw;
+  border: 1px solid black;
+`
+
 const Frame72 = styled.div`
   box-sizing: border-box;
-  width: 90%;
-  height: 80%;
-  margin-top: 50px;
+  width: 12vw;
+  height: 28vh;
+  margin-top: 1.7vw;
   background: url(${모자이크}), #c4c4c4;
   background-size: cover;
 `
 
 const Frame94 = styled.div`
-  width: 80%;
-  height: 215px;
-  background: #000000;
-  border: 15px dashed #e30000;
-  padding: 20px;
-  display: flex;
-  float: left;
+  background: url(${head});
+  width: 29vw;
+  height: 32vh;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: relative;
 `
 const Victim = styled.div`
   width: 100px;
@@ -285,35 +441,20 @@ const Rectangle84 = styled.div`
 `
 const Frame63 = styled.div`
   box-sizing: border-box;
-  width: 90%;
-  height: 90%;
+  height: 28vh;
   background: url(${신문}), #c4c4c4;
   background-size: cover;
 `
 
 const Frame45 = styled.div`
   box-sizing: border-box;
-  width: 200px;
-  height: 200px;
+  width: 8vw;
+  height: 8vw;
   background: url(${늑대}), #c4c4c4;
   background-size: cover;
-  border: 5px solid #ffffff;
+  border: 0.3vw solid #ffffff;
   border-radius: 729.927px;
-`
-
-const BreakingHead = styled.div`
-  box-sizing: border-box;
-  margin-top: 30px;
-  width: 165px;
-  height: 70px;
-  background: #e30000;
-  border: 5px solid #000000;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 35px;
-  line-height: 0px;
-  text-align: center;
-  color: #ffffff;
+  margin: 0 1vw;
 `
 
 const Modalblack = styled.div`
@@ -325,13 +466,13 @@ const Modalblack = styled.div`
   height: 100%;
   width: 100%;
   z-index: 100;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.85);
 `
 
 const Noti = styled.div`
   background: white;
-  max-width: 1330px;
-  height: 865px;
+  max-width: 62vw;
+  height: 82vh;
   padding: 40px;
   box-sizing: border-box;
   border-radius: 20px;
@@ -342,16 +483,15 @@ const Noti = styled.div`
   justify-content: center;
   z-index: 999;
   position: relative;
-  transition: all 2s;
-  animation: fadein 3s;
-  -webkit-animation: fadein 3s;
+  // transition: all 2s;
+  // animation: fadein 3s;
+  // -webkit-animation: fadein 3s;
 `
 
 const VoteNoti = styled.div`
   background: white;
-  max-width: 500px;
-  height: 370px;
-  padding: 50px;
+  max-width: 36vw;
+  padding: 3vw;
   box-sizing: border-box;
   border-radius: 20px;
   position: fixed;
@@ -362,6 +502,10 @@ const VoteNoti = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 999;
+  position: relative;
+`
+
+const AngelNoti = styled.div`
   position: relative;
 `
 

@@ -13,6 +13,7 @@ const JobModal = () => {
   const [getJob, setJob] = useState()
   const [getDesc, setDesc] = useState()
   const [getImg, setImg] = useState()
+  const [getShadow, setShadow] = useState()
 
   useEffect(() => {
     if (startCard) {
@@ -20,7 +21,8 @@ const JobModal = () => {
         if (player == element.name) {
           setJob(element.title)
           setDesc(element.explain)
-          setImg(element.img)
+          setImg(element.gif)
+          setShadow(element.shadow)
         }
       })
       setTimeout(() => {
@@ -38,20 +40,11 @@ const JobModal = () => {
               당신의 직업은...
             </Text>
             <Contents>
-              <div
-                style={{
-                  width: '100%',
-                  height: '10%',
-                  marginTop: '-25px',
-                  paddingTop: '12px',
-                  borderRadius: '40px 40px 0 0',
-                  background: 'black',
-                }}
-              >
+              <Header getShadow={getShadow}>
                 <Text color="white" size="24px">
                   MAFIYANG
                 </Text>
-              </div>
+              </Header>
               <Grid height="15%" />
               <Grid height="50%">
                 <img style={{ width: '150px', height: '150px' }} src={getImg} />
@@ -70,6 +63,15 @@ const JobModal = () => {
     </>
   )
 }
+const Header = styled.div`
+  width: 100%;
+  height: 10%;
+  margin-top: -25px;
+  padding-top: 12px;
+  border-radius: 40px 40px 0 0;
+  background: black;
+  box-shadow: ${(props) => props.getShadow};
+`
 
 const Contents = styled.div`
   background: white;

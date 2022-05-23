@@ -44,94 +44,94 @@ function SignUp() {
   }
 
   return (
-    <>
-      <Container>
-        <Grid flex_column>
-          <Text size="20px" bold>
-            회원가입
+    <Container>
+      <Text size="25px" margin="13px 0">
+        회원가입
+      </Text>
+      <Grid flex_column>
+        <Form onSubmit={formik.handleSubmit}>
+          <Input
+            auth
+            id="id"
+            value={formik.values.id}
+            autoComplete="off"
+            _onChange={formik.handleChange}
+            placeholder="아이디"
+          />
+          <DotButton text="중복확인" _onClick={doubleIdCheck} />
+          <Text margin="0px 3px" color="red">
+            {formik.touched.id ? formik.errors.id : ''}
           </Text>
-          <Form onSubmit={formik.handleSubmit}>
-            <Input
-              auth
-              id="id"
-              value={formik.values.id}
-              autoComplete="off"
-              _onChange={formik.handleChange}
-              placeholder="아이디"
+          <Input
+            auth
+            id="email"
+            autoComplete="off"
+            value={formik.values.email}
+            _onChange={formik.handleChange}
+            placeholder="이메일"
+          />
+          <DotButton text="중복확인" _onClick={doubleEmailCheck} />
+          <Text margin="0px 3px" color="red">
+            {formik.touched.email ? formik.errors.email : ''}
+          </Text>
+          <Input
+            auth
+            id="nick"
+            autoComplete="off"
+            value={formik.values.nick}
+            _onChange={formik.handleChange}
+            placeholder="닉네임"
+          />
+          <DotButton text="중복확인" _onClick={doubleNickCheck} />
+          <Text margin="0px 3px" color="red">
+            {formik.touched.nick ? formik.errors.nick : ''}
+          </Text>
+          <Input
+            auth
+            id="pw"
+            value={formik.values.pw}
+            autoComplete="off"
+            type="password"
+            _onChange={formik.handleChange}
+            placeholder="비밀번호"
+          />
+          <Text margin="0px 3px" color="red">
+            {formik.touched.pw ? formik.errors.pw : ''}
+          </Text>
+          <Input
+            auth
+            id="pwCheck"
+            value={formik.values.pwCheck}
+            autoComplete="off"
+            type="password"
+            _onChange={formik.handleChange}
+            placeholder="비밀번호 확인"
+          />
+          <Text margin="0px 3px" color="red">
+            {formik.touched.pwCheck ? formik.errors.pwCheck : ''}
+          </Text>
+          <Grid is_flex margin="30px 0 0">
+            <DotButton
+              white01
+              text="취소"
+              _onClick={() => {
+                history.push('/login')
+              }}
             />
-            <DotButton text="중복확인" _onClick={doubleIdCheck} />
-            <Text margin="0px 3px" color="red">
-              {formik.touched.id ? formik.errors.id : ''}
-            </Text>
-            <Input
-              auth
-              id="email"
-              autoComplete="off"
-              value={formik.values.email}
-              _onChange={formik.handleChange}
-              placeholder="이메일"
-            />
-            <DotButton text="중복확인" _onClick={doubleEmailCheck} />
-            <Text margin="0px 3px" color="red">
-              {formik.touched.email ? formik.errors.email : ''}
-            </Text>
-            <Input
-              auth
-              id="nick"
-              autoComplete="off"
-              value={formik.values.nick}
-              _onChange={formik.handleChange}
-              placeholder="닉네임"
-            />
-            <DotButton text="중복확인" _onClick={doubleNickCheck} />
-            <Text margin="0px 3px" color="red">
-              {formik.touched.nick ? formik.errors.nick : ''}
-            </Text>
-            <Input
-              auth
-              id="pw"
-              value={formik.values.pw}
-              autoComplete="off"
-              type="password"
-              _onChange={formik.handleChange}
-              placeholder="비밀번호"
-            />
-            <Text margin="0px 3px" color="red">
-              {formik.touched.pw ? formik.errors.pw : ''}
-            </Text>
-            <Input
-              auth
-              id="pwCheck"
-              value={formik.values.pwCheck}
-              autoComplete="off"
-              type="password"
-              _onChange={formik.handleChange}
-              placeholder="비밀번호 확인"
-            />
-            <Text margin="0px 3px" color="red">
-              {formik.touched.pwCheck ? formik.errors.pwCheck : ''}
-            </Text>
-            <Grid is_flex margin="30px 0 0">
-              <DotButton
-                white01
-                text="취소"
-                _onClick={() => {
-                  history.push('/login')
-                }}
-              />
 
-              <DotButton test01 _type="submit" />
-            </Grid>
-          </Form>
-        </Grid>
-      </Container>
-    </>
+            <DotButton test01 _type="submit" />
+          </Grid>
+        </Form>
+      </Grid>
+    </Container>
   )
 }
 
 const Container = styled.div`
-  margin: 100px auto;
-  width: 400px;
+  align-items: center;
+  justify-content: center;
+  max-width: 356px;
+  margin: 80px auto;
 `
 
 const Form = styled.form`

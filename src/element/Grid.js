@@ -31,12 +31,19 @@ Grid.defaultProps = {
   column: false,
   flex_column: false,
   flexColumn: false,
+  flexColumn_end: false,
   isFlex_start: false,
   isFlex_center: false,
   isFlex_end: false,
   _cursor: false,
   br: '',
   position: false,
+  top: false,
+  right: false,
+  left: false,
+  bottom: false,
+  display: false,
+  justify_item: false,
 }
 
 const GridBox = styled.div`
@@ -44,6 +51,12 @@ const GridBox = styled.div`
   height: ${(props) => props.height};
   overflow:${(props) => props.overflow};
   position:${(props) => props.position};
+  top:${(props) => props.top};
+  left:${(props) => props.left};
+  right:${(props) => props.right};
+  bottom:${(props) => props.bottom};
+  display:${(props) => props.display};
+  justify-items: ${(props) => props.justify_item};
   box-sizing: border-box;
   ${(props) =>
     props.border ? `border: 2px solid black; border-radius: 10px;` : ''}
@@ -72,6 +85,10 @@ const GridBox = styled.div`
          props.flexColumn
            ? `display: flex; flex-direction: column; justify-content: space-between; align-items: center;`
            : null};
+           ${(props) =>
+             props.flexColumn_end
+               ? `display: flex; flex-direction: column; justify-content: end; align-items: center;`
+               : null};
     ${(props) =>
       props.isFlex_start
         ? `display: flex; align-items: center; justify-content: start;`
