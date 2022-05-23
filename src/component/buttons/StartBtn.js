@@ -36,26 +36,7 @@ const StartBtn = ({ socket }) => {
     }
   }
 
-  const startAlarm = () => {
-    toast.success('게임이 시작되었습니다. 이야기를 나눠보세요!', {
-      position: toast.POSITION.TOP_LEFT,
-      className: 'toast-start-alarm',
-      autoClose: 3000,
-    })
-  }
-  useEffect(() => {
-    if (startCard) {
-      startAlarm()
-      // startBgm.play()
-      setTimeout(() => {
-        dispatch(gameActions.startCard(null))
-      }, 3000)
-    }
-    if(endGame !== null){
-      console.log(endGame)
-      // startBgm.pause()
-    }
-  }, [startCard, endGame])
+  
 
   React.useEffect(() => {
     let check = members?.includes(roomInfo?.userId)
@@ -79,7 +60,7 @@ const StartBtn = ({ socket }) => {
       autoClose: 1000,
     })
   }
-
+  
   const startGameNoti = (count) => {
     if (count === 1) {
       toast.info('게임시작을 위해서 최소 4명이상이 필요합니다', {
@@ -88,7 +69,14 @@ const StartBtn = ({ socket }) => {
         autoClose: 2000,
       })
     } else {
-      toast.info('아직 준비를 하지 않은 참가자가 있습니다!', {
+      let withOutHost = members.filter(nick => nick !== roomInfo?.userId)
+      let result = ''
+      withOutHost.forEach((e, idx) => {
+        if (e !== currentReady[idx]) {
+          result += e + ' '
+        }
+      })
+      toast.info(`[${result}] 참가자들이 준비하지 않았습니다`, {
         position: toast.POSITION.TOP_CENTER,
         className: 'toast-startPeople',
         autoClose: 2000,

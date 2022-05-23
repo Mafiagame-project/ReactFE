@@ -7,6 +7,7 @@ import 신문 from '../../assets/image/noti/기사_하단이미지.png'
 import 모자이크 from '../../assets/image/noti/양_피그마판형.png'
 import { useEffect, useState } from 'react'
 import { actionCreators as gameActions } from '../../redux/modules/game'
+import bgm from '../../assets/sound/bgm/big_helmet.mp3'
 
 function NotiModal() {
   const dispatch = useDispatch()
@@ -17,7 +18,7 @@ function NotiModal() {
   const reportNoti = useSelector((state) => state.game.repNoti)
   const dayCount = useSelector((state) => state.game.cnt)
   const [getNotice, setNotice] = useState(false)
-
+  const startBgm = new Audio(bgm)
   const printNoti = () => {
     setNotice(true)
     setTimeout(() => {
@@ -34,6 +35,10 @@ function NotiModal() {
       printNoti()
     }
   }, [dayCount])
+
+  useEffect(()=>{
+      startBgm.pause()
+  },[endGameNoti])
 
   return (
     <>

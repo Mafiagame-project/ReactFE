@@ -130,11 +130,11 @@ function Introduce() {
                         seleted(e, idx)
                       }}
                     >
-                      <Grid isFlex_center height="10%">
+                      <Grid isFlex_center height="15%">
                         <Text size='24px'  color="white">MAFIYANG</Text>
                       </Grid>
                       <Grid flexColumn
-                        padding="20px 60px 20px 60px"
+                        padding="40px 60px 20px 60px"
                         center
                         bg="gray"
                         height="100%"
@@ -156,7 +156,6 @@ function Introduce() {
           {getShow == false ? null : (
             <Grid isFlex_center margin="30px 0 0 0">
               <Explain>
-                <br/>
                 <Text left size="24px">능력 : {ability}</Text>
                 <br/>
                 <Text left size="24px">승리조건 : {win}</Text>
@@ -209,12 +208,12 @@ const Card = styled.div`
 `
 
 const Explain = styled.div`
-  width: 50%;
-  height: 150px;
+  width: 60%;
+  height: 100px;
   background: #ffffff;
   border: 2px solid #000000;
   border-radius: 15px;
-  padding: 20px;
+  padding: 40px 80px 40px 80px;
 `
 const TutorialBox = styled.div``
 

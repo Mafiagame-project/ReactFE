@@ -87,20 +87,26 @@ function GameRoom(props) {
       dispatch(gameActions.noticeEndGame(null))
     }
   }, [socket])
-  
-  useEffect(()=>{
-    console.log({endGame})
-    if(endGame !== null){
-      console.log('????')
-      startBgm.pause()
-      startBgm.currentTime = 0;
+
+  const startAlarm = () => {
+    toast.success('게임이 시작되었습니다. 이야기를 나눠보세요!', {
+      position: toast.POSITION.TOP_LEFT,
+      className: 'toast-start-alarm',
+      autoClose: 3000,
+    })
+  }
+  useEffect(() => {
+    if (startCard) {
+      startAlarm()
+      startBgm.play()
+      setTimeout(() => {
+        dispatch(gameActions.startCard(null))
+      }, 3000)
     }
-  },[endGame])
+  }, [startCard])
 
   useEffect(() => {
-    console.log(endGame)
     if (endGame == null) {
-      console.log(endGame)
       if (currentTime === false) {
         dayOrNight(false)
       } else if (currentTime === true) {
