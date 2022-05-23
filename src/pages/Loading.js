@@ -19,15 +19,15 @@ function Loading() {
   const startBgm = new Audio(bgm)
   startBgm.loop = true
 
-  // useEffect(()=>{
+  // useEffect(() => {
   //   const safariSearch = window.navigator.userAgent.toLowerCase()
   //   const safari = safariSearch.indexOf('safari')
   //   const chrome = safariSearch.indexOf('chrome')
-  //   if(safari > 1 && chrome == -1 ){
+  //   if (safari > 1 && chrome == -1) {
   //     alert('죄송합니다 Safari 브라우저는 지원하지 않습니다')
   //     window.location = '/'
   //   }
-  // },[])
+  // }, [])
   const entrance = () => {
     click.play()
     history.push('/gamemain')
