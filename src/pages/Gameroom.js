@@ -27,8 +27,6 @@ function GameRoom(props) {
   const [getNotice, setNotice] = useState(false)
   const [darkMode, setDarkMode] = useState(false)
 
-  const startBgm = new Audio(bgm)
-
   useEffect(() => {
     socket.on('isNight', (value) => {
       dispatch(gameActions.dayAndNight(value))
@@ -84,6 +82,7 @@ function GameRoom(props) {
       dispatch(gameActions.playerWhoSurvived(null))
       dispatch(gameActions.dayAndNight(null))
       dispatch(gameActions.noticeEndGame(null))
+      dispatch(gameActions.checkIsMafia(null))
     }
   }, [socket])
 
@@ -97,7 +96,6 @@ function GameRoom(props) {
   useEffect(() => {
     if (startCard) {
       startAlarm()
-      // startBgm.play()
       setTimeout(() => {
         dispatch(gameActions.startCard(null))
       }, 3000)

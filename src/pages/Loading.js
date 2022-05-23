@@ -6,12 +6,24 @@ import { actionCreators as gameActions } from '../redux/modules/game'
 import { actionCreators as roomActions } from '../redux/modules/room'
 import { actionCreators as memberActions } from '../redux/modules/member'
 import styled from 'styled-components'
+import { useEffect } from 'react'
+import bgm from '../assets/sound/bgm/big_helmet.mp3'
 
 function Loading() {
   const dispatch = useDispatch()
   const history = useHistory()
   const token = localStorage.getItem('token')
+  const startBgm = new Audio(bgm)
 
+  // useEffect(()=>{
+  //   const safariSearch = window.navigator.userAgent.toLowerCase()
+  //   const safari = safariSearch.indexOf('safari')
+  //   const chrome = safariSearch.indexOf('chrome')
+  //   if(safari > 1 && chrome == -1 ){
+  //     alert('죄송합니다 Safari 브라우저는 지원하지 않습니다')
+  //     window.location = '/'
+  //   }
+  // },[])
   const entrance = () => {
     history.push('/gamemain')
     const socket = io.connect('https://sparta-dongsun.shop')
@@ -46,10 +58,12 @@ function Loading() {
       dispatch(gameActions.playerJob({ player, playerJob }))
       dispatch(gameActions.startCard(true))
       dispatch(roomActions.startCheck(true))
+      startBgm.play()
     })
 
     socket.on('dayVoteResult', (value) => {
       console.log('투표결과', value)
+      dispatch(gameActions.checkIsMafia(value.isMafia))
       dispatch(gameActions.playerWhoKilled(value.diedPeopleArr)) // 죽은 전체명단
       dispatch(gameActions.noticeResult(value.id)) // 방금 죽은사람
     })
@@ -74,6 +88,7 @@ function Loading() {
       // 게임이 끝났을 때 노티
       dispatch(gameActions.noticeEndGame(data?.msg))
       dispatch(roomActions.startCheck(null))
+      startBgm.load();
     })
 
     socket?.on('reporterOver', () => {
