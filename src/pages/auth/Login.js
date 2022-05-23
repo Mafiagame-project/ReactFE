@@ -7,12 +7,14 @@ import styled from 'styled-components'
 import kakao from '../../assets/icons/social/kakao.png'
 import naver from '../../assets/icons/social/naver.png'
 import pop from '../../assets/sound/effect/pop02.mp3'
+import denied from '../../assets/sound/effect/denied02.mp3'
 
 function Login() {
   const dispatch = useDispatch()
   const [logins, setLogins] = React.useState({})
   const [submitted, setSubmitted] = React.useState(false)
   const click = new Audio(pop)
+  const alertBg = new Audio(denied)
 
   const handleChange = (e) => {
     const id = e.target.id
@@ -22,6 +24,7 @@ function Login() {
 
   const handleLogin = () => {
     if (!logins.id || !logins.pw) {
+      alertBg.play()
       setSubmitted(true)
       alert('빈칸을 채워주세요!')
       return

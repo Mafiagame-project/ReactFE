@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router-dom'
-import { Grid, Text, Button, DotButton } from '../element/index'
-import { useDispatch, useSelector } from 'react-redux'
+import { Text, DotButton } from '../element/index'
+import { useDispatch } from 'react-redux'
 import io from 'socket.io-client'
 import { actionCreators as gameActions } from '../redux/modules/game'
 import { actionCreators as roomActions } from '../redux/modules/room'
@@ -109,20 +109,16 @@ function Loading() {
               black03
               text="로그인"
               _onClick={() => {
-                {
-                  history.push('/login')
-                  click.play()
-                }
+                history.push('/login')
+                click.play()
               }}
             />
             <DotButton
               white03
               text="회원가입"
               _onClick={() => {
-                {
-                  history.push('/signup')
-                  click.play()
-                }
+                history.push('/signup')
+                click.play()
               }}
             />
           </>

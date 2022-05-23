@@ -26,6 +26,7 @@ const Input = (props) => {
     text,
     display,
     color,
+    auth_width,
   } = props
 
   const styles = {
@@ -35,6 +36,7 @@ const Input = (props) => {
     height: height,
     width: width,
     bg: bg,
+    auth_width: auth_width,
   }
 
   const labelStyle = { display, color, size }
@@ -130,6 +132,7 @@ Input.defaultProps = {
   value: '',
   bg: '',
   text: '',
+  auth_width: false,
   autoComplete: 'off',
   _onChange: () => {},
   _onKeyDown: () => {},
@@ -197,6 +200,8 @@ const AuthInput = styled.input`
   margin: 4px;
   padding: 8px;
   width: 332px;
+  ${(props) =>
+    props.auth_width ? `width: ${props.auth_width};` : `width: 332px`};
   ${(props) =>
     props.bg ? `background-color: ${props.bg};` : `background-color: #F6F6F6`};
   height: 48px;

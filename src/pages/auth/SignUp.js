@@ -4,13 +4,15 @@ import { useDispatch } from 'react-redux'
 import { Input, Grid, Text, DotButton, Button } from '../../element/index'
 import styled from 'styled-components'
 import { actionCreators as userActions } from '../../redux/modules/user'
-import { useFormik } from 'formik'
+import { FormikConsumer, useFormik } from 'formik'
 import * as yup from 'yup'
 import { idVal, emailVal, nickVal, pwVal } from '../../shared/Validation'
+import pop from '../../assets/sound/effect/pop02.mp3'
+import edit from '../../assets/icons/black/edit_b.png'
 
 function SignUp() {
   const dispatch = useDispatch()
-
+  const click = new Audio(pop)
   //formik의 formprops 역할을 해주는 데이터
   const formik = useFormik({
     initialValues: {
@@ -34,13 +36,29 @@ function SignUp() {
   })
 
   const doubleIdCheck = () => {
-    dispatch(userActions.idCheck(formik.values.id))
+    if (formik.values.id === '') {
+      alert('아이디를 입력하세요!')
+      return
+    } else {
+      dispatch(userActions.idCheck(formik.values.id))
+    }
   }
+
   const doubleNickCheck = () => {
-    dispatch(userActions.nickCheck(formik.values.nick))
+    if (formik.values.nick === '') {
+      alert('닉네임을 입력하세요!')
+      return
+    } else {
+      dispatch(userActions.nickCheck(formik.values.nick))
+    }
   }
   const doubleEmailCheck = () => {
-    dispatch(userActions.emailCheck(formik.values.email))
+    if (formik.values.email === '') {
+      alert('이메일을 입력하세요!')
+      return
+    } else {
+      dispatch(userActions.emailCheck(formik.values.email))
+    }
   }
 
   return (
@@ -48,47 +66,54 @@ function SignUp() {
       <Text size="25px" margin="13px 0">
         회원가입
       </Text>
-      <Grid flex_column>
+      <Grid>
         <Form onSubmit={formik.handleSubmit}>
-          <Input
-            auth
-            id="id"
-            value={formik.values.id}
-            autoComplete="off"
-            _onChange={formik.handleChange}
-            placeholder="아이디"
-          />
-          <DotButton text="중복확인" _onClick={doubleIdCheck} />
+          <Grid is_flex>
+            <Input
+              auth
+              id="id"
+              value={formik.values.id}
+              autoComplete="off"
+              _onChange={formik.handleChange}
+              placeholder="아이디"
+            />
+            <img src={edit} alt="중복확인" onClick={doubleIdCheck} />
+          </Grid>
           <Text margin="0px 3px" color="red">
             {formik.touched.id ? formik.errors.id : ''}
           </Text>
-          <Input
-            auth
-            id="email"
-            autoComplete="off"
-            value={formik.values.email}
-            _onChange={formik.handleChange}
-            placeholder="이메일"
-          />
-          <DotButton text="중복확인" _onClick={doubleEmailCheck} />
+          <Grid is_flex>
+            <Input
+              auth
+              id="email"
+              autoComplete="off"
+              value={formik.values.email}
+              _onChange={formik.handleChange}
+              placeholder="이메일"
+            />
+            <img src={edit} alt="중복확인" onClick={doubleEmailCheck} />
+          </Grid>
           <Text margin="0px 3px" color="red">
             {formik.touched.email ? formik.errors.email : ''}
           </Text>
-          <Input
-            auth
-            id="nick"
-            autoComplete="off"
-            value={formik.values.nick}
-            _onChange={formik.handleChange}
-            placeholder="닉네임"
-          />
-          <DotButton text="중복확인" _onClick={doubleNickCheck} />
+          <Grid is_flex>
+            <Input
+              auth
+              id="nick"
+              autoComplete="off"
+              value={formik.values.nick}
+              _onChange={formik.handleChange}
+              placeholder="닉네임"
+            />
+            <img src={edit} alt="중복확인" onClick={doubleNickCheck} />
+          </Grid>
           <Text margin="0px 3px" color="red">
             {formik.touched.nick ? formik.errors.nick : ''}
           </Text>
           <Input
             auth
             id="pw"
+            auth_width="318px"
             value={formik.values.pw}
             autoComplete="off"
             type="password"
@@ -104,22 +129,24 @@ function SignUp() {
             value={formik.values.pwCheck}
             autoComplete="off"
             type="password"
+            auth_width="318px"
             _onChange={formik.handleChange}
             placeholder="비밀번호 확인"
           />
           <Text margin="0px 3px" color="red">
             {formik.touched.pwCheck ? formik.errors.pwCheck : ''}
           </Text>
-          <Grid is_flex margin="30px 0 0">
+          <Grid isFlex_center margin="20px 0 0" width="84%">
             <DotButton
               white01
               text="취소"
               _onClick={() => {
+                click.play()
                 history.push('/login')
               }}
             />
 
-            <DotButton test01 _type="submit" />
+            <DotButton test01 _type="submit" _onClick={() => click.play()} />
           </Grid>
         </Form>
       </Grid>
@@ -130,7 +157,7 @@ function SignUp() {
 const Container = styled.div`
   align-items: center;
   justify-content: center;
-  max-width: 356px;
+  max-width: 400px;
   margin: 80px auto;
 `
 

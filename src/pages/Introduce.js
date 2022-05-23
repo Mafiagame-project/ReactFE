@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '../component/Header'
-import { Grid, Text, DotButton } from '../element/index'
+import { Grid, Text } from '../element/index'
 import styled from 'styled-components'
 import data from '../shared/introduce'
 import Tutorial from './Tutorial'
@@ -13,7 +13,6 @@ function Introduce() {
   const [isOpen, setIsOpen] = React.useState(false)
   const [getPage, setPage] = React.useState(2)
   const [getSelect, setSelect] = React.useState('')
-
   const [getShow, setShow] = React.useState(false)
   const [desc, setDesc] = React.useState()
   const [win, setWin] = React.useState()
@@ -42,10 +41,10 @@ function Introduce() {
 
   const box2 = {
     // padding: '19px',
-    opacity: `${getPage == 2 ? 1 : 0.4}`,
+    opacity: `${getPage === 2 ? 1 : 0.4}`,
   }
   const box1 = {
-    opacity: `${getPage == 1 ? 1 : 0.4}`,
+    opacity: `${getPage === 1 ? 1 : 0.4}`,
   }
 
   return (
@@ -53,11 +52,10 @@ function Introduce() {
       <Header />
       <img
         onClick={() => {
-          {
-            history.replace('/gamemain')
-            click.play()
-          }
+          history.replace('/gamemain')
+          click.play()
         }}
+        alt="돌아가기"
         style={{ position: 'absolute', margin: '4vw' }}
         src={돌아가기}
       />
@@ -71,7 +69,7 @@ function Introduce() {
               click.play()
             }}
           >
-            <img src={title} />
+            <img src={title} alt="타이틀" />
             <TitleText>역할 튜토리얼</TitleText>
           </TutorialBox>
           <TutorialBox
@@ -82,7 +80,7 @@ function Introduce() {
               click.play()
             }}
           >
-            <img src={title} />
+            <img src={title} alt="타이틀" />
             <TitleText>게임 튜토리얼</TitleText>
           </TutorialBox>
         </Grid>
@@ -92,7 +90,7 @@ function Introduce() {
         ) : getPage === 2 ? (
           <CardBox>
             {data.map((e, idx) => {
-              if (e.info == true) {
+              if (e.info === true) {
                 e.info = false
                 return (
                   <>
@@ -172,7 +170,7 @@ function Introduce() {
           </CardBox>
         ) : null}
         <>
-          {getShow == false ? null : (
+          {getShow === false ? null : (
             <Grid isFlex_center margin="30px 0 0 0">
               <Explain>
                 <Text left size="21px" margin="0.3vw 0">
@@ -260,14 +258,6 @@ const NonCard = styled.div`
 `
 
 const Explain = styled.div`
-<<<<<<< HEAD
-  width: 60%;
-  height: 100px;
-  background: #ffffff;
-  border: 2px solid #000000;
-  border-radius: 15px;
-  padding: 40px 80px 40px 80px;
-=======
   background: #ffffff;
   border: 2px solid #000000;
   border-radius: 15px;
@@ -279,7 +269,6 @@ const TutorialBox = styled.div`
   position: relative;
   text-align: center;
   margin: 10px;
->>>>>>> ce50ed048983d18d0b2171d0d171b08f8191f66c
 `
 
 const TitleText = styled.div`
