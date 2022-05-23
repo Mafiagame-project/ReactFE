@@ -98,7 +98,7 @@ function GameRoom(props) {
   useEffect(() => {
     if (startCard) {
       startAlarm()
-      startBgm.play()
+      // startBgm.play()
       setTimeout(() => {
         dispatch(gameActions.startCard(null))
       }, 3000)

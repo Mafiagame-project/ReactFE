@@ -36,10 +36,6 @@ function NotiModal() {
     }
   }, [dayCount])
 
-  useEffect(()=>{
-      startBgm.pause()
-  },[endGameNoti])
-
   return (
     <>
       {getNotice === true ? (
