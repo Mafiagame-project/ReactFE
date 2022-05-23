@@ -79,8 +79,8 @@ const Rooms = (props) => {
   return (
     <>
       <Grid width="90%">
-        <Grid padding="30px">
-          <Grid is_flex height="10%" padding="10px">
+        <Grid padding="30px 0">
+          <Grid is_flex height="10%" padding="10px" margin="0 1vw">
             <Title>
               <Text size="25px">방 전체 목록</Text>
             </Title>
@@ -88,60 +88,52 @@ const Rooms = (props) => {
               <img src={reload} alt="새로고침" />
             </Grid>
           </Grid>
-
-          <Grid is_flex>
-            <Survey
-              onClick={() => {
-                window.open('https://forms.gle/eKMdCZFPJWKKcdVW6')
-              }}
-            ></Survey>
-            <RoomBox>
-              {RoomList.map((room, i) => {
-                return (
-                  <Room
-                    key={i}
-                    onClick={() => {
-                      entrance(room)
-                    }}
+          <RoomBox>
+            {RoomList.map((room, i) => {
+              return (
+                <Room
+                  key={i}
+                  onClick={() => {
+                    entrance(room)
+                  }}
+                >
+                  <Grid center height="10%">
+                    <Text margin="0.4vh 0" color="white">
+                      MAFIYANG
+                    </Text>
+                  </Grid>
+                  <Grid
+                    padding="50px 60px 20px"
+                    center
+                    bg="white"
+                    height="100%"
+                    flexColumn
                   >
-                    <Grid center height="10%">
-                      <Text margin="0.4vh 0" color="white">
-                        MAFIYANG
-                      </Text>
-                    </Grid>
-                    <Grid
-                      padding="50px 60px 20px"
-                      center
-                      bg="white"
-                      height="100%"
-                      flexColumn
-                    >
-                      <Text size="30px" bold>
-                        {room.roomTitle}
-                      </Text>
-                      <Grid>
-                        <Text size="18px">방장 : {room.userId}</Text>
+                    <Text size="30px" bold>
+                      {room.roomTitle}
+                    </Text>
+                    <Grid>
+                      <Text size="18px">방장 : {room.userId}</Text>
 
-                        <Grid
-                          width=""
-                          isFlex_center
-                          center
-                          bg="black"
-                          border
-                          margin="10px 30px"
-                        >
-                          <img src={sheep} alt="양" style={{ width: '28px' }} />
-                          <Text color="#fff" size="22px" margin="13px">
-                            {room.currentPeople.length}/{room.roomPeople}
-                          </Text>
-                        </Grid>
+                      <Grid
+                        width=""
+                        isFlex_center
+                        center
+                        bg="black"
+                        border
+                        margin="10px 30px"
+                      >
+                        <img src={sheep} alt="양" style={{ width: '28px' }} />
+                        <Text color="#fff" size="22px" margin="13px">
+                          {room.currentPeople.length}/{room.roomPeople}
+                        </Text>
                       </Grid>
                     </Grid>
-                  </Room>
-                )
-              })}
-            </RoomBox>
-          </Grid>
+                  </Grid>
+                </Room>
+              )
+            })}
+          </RoomBox>
         </Grid>
       </Grid>
     </>
@@ -156,14 +148,6 @@ const Title = styled.div`
   width: 200px;
   padding: 0.6vw;
   margin: 0 0 1vh;
-`
-const Survey = styled.div`
-  width: 20%;
-  height: 350px;
-  background-image: url(${설문});
-  background-size: cover;
-  background-position: center;
-  margin-top: -30px;
 `
 
 const RoomBox = styled.div`

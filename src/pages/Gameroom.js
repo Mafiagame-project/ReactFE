@@ -30,7 +30,7 @@ function GameRoom(props) {
   const [soundOn, setSoundOn] = useState(false)
 
   const startBgm = new Audio(bgm)
-  const nightBgm = new Audio(nightBg)
+  // const nightBgm = new Audio(nightBg)
   const morningBgm = new Audio(morningBg)
   const winBgm = new Audio(win)
 
@@ -131,7 +131,6 @@ function GameRoom(props) {
         morningBgm.play()
         dayOrNight(false)
       } else if (currentTime === true && endGame === null) {
-        nightBgm.play()
         dayOrNight(true)
       }
     }

@@ -10,6 +10,7 @@ import CreateRoomModal from '../component/modal/CreateRoomModal'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 import pop from '../assets/sound/effect/pop02.mp3'
+import Banner from '../component/SurveyBadge'
 
 function Main(props) {
   const history = useHistory()
@@ -35,7 +36,10 @@ function Main(props) {
       <Header />
       <Container>
         <TutorialBanner />
-        <Rooms />
+        <Grid is_flex>
+          <Banner />
+          <Rooms />
+        </Grid>
         <Grid isFlex_center>
           <DotButton
             black02

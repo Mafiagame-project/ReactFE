@@ -4,8 +4,8 @@ import { Grid, Text, Image, Input, DotButton } from '../../element/index'
 import { actionCreators as userActions } from '../../redux/modules/user'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import kakao from '../../assets/icons/social/kakao.png'
-import naver from '../../assets/icons/social/naver.png'
+import kakao from '../../assets/icons/social/kakaoLogin.png'
+import naver from '../../assets/icons/social/naverLogin.png'
 import pop from '../../assets/sound/effect/pop02.mp3'
 import denied from '../../assets/sound/effect/denied02.mp3'
 import logo from '../../assets/logo/기본값.png'
@@ -104,10 +104,10 @@ function Login() {
           </Text>
           <Grid isFlex_center margin="1vw 0">
             <a href={KAKAO_AUTH_URL}>
-              <Image size="80" margin="0 10px 0 0" src={kakao} />
+              <img src={kakao} alt="카카오" style={{ margin: '0 0.3vw' }} />
             </a>
             <a href={NAVER_AUTH_URL}>
-              <Image size="80" margin="0 10px 0 0" src={naver} />
+              <img src={naver} alt="네이버" style={{ margin: '0 0.3vw' }} />
             </a>
           </Grid>
         </Grid>

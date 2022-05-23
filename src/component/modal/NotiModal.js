@@ -27,7 +27,6 @@ function NotiModal() {
   const currentTime = useSelector((state) => state.game.night)
   const reportNoti = useSelector((state) => state.game.repNoti)
   const dayCount = useSelector((state) => state.game.cnt)
-  const votedJob = useSelector((state) => state.game.votedJob)
   const [getNotice, setNotice] = useState(false)
 
   const printNoti = () => {
@@ -46,7 +45,7 @@ function NotiModal() {
       printNoti()
     }
   }, [dayCount])
-  console.log(votedJob)
+
   return (
     <>
       {getNotice ? (
@@ -87,17 +86,9 @@ function NotiModal() {
                             아무도 죽지 않았습니다
                           </Text>
                         ) : (
-                          <>
-                            {votedJob === true ? (
-                              <Text bold size="2vw">
-                                마피아 {voteResult} 가 잡혔습니다
-                              </Text>
-                            ) : (
-                              <Text bold size="2vw">
-                                {voteResult}가 잡혔습니다
-                              </Text>
-                            )}
-                          </>
+                          <Text bold size="2vw">
+                            {voteResult}가 잡혔습니다
+                          </Text>
                         )}
                       </VoteNoti>
                     </Modalblack>
@@ -210,9 +201,7 @@ function NotiModal() {
                                 <Grid margin="0 1vw 0">
                                   <Text size="1.5vw" left>
                                     유명 배우 ○○○, <br />
-                                    과거에 양아치였지만
-                                    <br />
-                                    지금은 아니야...
+                                    과거에 양아치였지만 지금은 아니야...
                                   </Text>
                                   <Grid borderLeft margin="4vh 0" width="90%">
                                     <Text size="0.8vw" margin="0 0 0 5px" left>
@@ -258,8 +247,8 @@ function NotiModal() {
                               </Text>
                             </Grid>
                             <Text size="0.8vw" margin="0.5vw 0 3.4vw 0" left>
-                              오늘 하루도 풀 뜯어 먹느라 고생한 당신만을 위해
-                              최고의 풀 뜯개를 소개합니다. 멋진 양이라면 집에
+                              오늘 하루도 풀 뜯어먹느라 고생한 당신만을 위해
+                              최고의 풀뜯개를 소개합니다. 멋진 양이라면 집에
                               풀뜯개 쯤은 필수로 구비해둬야 한다는 사실을 알고
                               계시나요?
                               <br />
@@ -344,63 +333,63 @@ function NotiModal() {
                             </>
                           ) : null}
                         </Grid>
-
-                        <Grid height="40%">
-                          <img
-                            src={ad}
-                            style={{ width: '15vw', margin: '3vw' }}
-                            alt="광고"
-                          />
-                          {survivedNoti ? (
-                            <>
-                              <AngelNoti>
-                                <Grid
-                                  bg="#fff"
-                                  margin="0 3vw"
-                                  padding="0.6vw"
-                                  width=""
-                                  position="absolute"
-                                  top="0.3vw"
-                                  right="14%"
-                                >
-                                  <Text size="1.3vw">마피양 마을의 천사!</Text>
-                                </Grid>
+                        {survivedNoti ? (
+                          <>
+                            <AngelNoti>
+                              <Grid
+                                bg="#fff"
+                                margin="0 3vw"
+                                padding="0.6vw"
+                                width=""
+                                position="absolute"
+                                top="0.3vw"
+                                right="14%"
+                              >
+                                <Text size="1.3vw">마피양 마을의 천사!</Text>
+                              </Grid>
+                              <img
+                                src={ballon}
+                                style={{
+                                  width: '12vw',
+                                  position: 'absolute',
+                                  top: '35%',
+                                  left: '10%',
+                                }}
+                                alt="말풍선"
+                              />
+                              <Grid
+                                position="absolute"
+                                top="5vw"
+                                right="3vw"
+                                width="9vw"
+                              >
                                 <img
-                                  src={ballon}
+                                  src={피해자}
                                   style={{
-                                    width: '12vw',
-                                    position: 'absolute',
-                                    top: '35%',
-                                    left: '10%',
+                                    width: '3vw',
                                   }}
-                                  alt="말풍선"
+                                  alt="피해자"
                                 />
-                                <Grid
-                                  position="absolute"
-                                  top="5vw"
-                                  right="3vw"
-                                  width="9vw"
-                                >
-                                  <img
-                                    src={피해자}
-                                    style={{
-                                      width: '3vw',
-                                    }}
-                                    alt="피해자"
-                                  />
-                                  <Text bold>
-                                    생존자
-                                    <span style={{ color: '#61ff00' }}>
-                                      {survivedNoti}
-                                    </span>
-                                    양
-                                  </Text>
-                                </Grid>
-                                <Frame02 />
-                              </AngelNoti>
-                            </>
-                          ) : null}
-                        </Grid>
+                                <Text bold>
+                                  생존자
+                                  <span style={{ color: '#61ff00' }}>
+                                    {survivedNoti}
+                                  </span>
+                                  양
+                                </Text>
+                              </Grid>
+                              <Frame02 />
+                            </AngelNoti>
+                          </>
+                        ) : (
+                          <Grid height="40%">
+                            <img
+                              src={ad}
+                              style={{ width: '15vw', margin: '3vw' }}
+                              alt="광고"
+                            />{' '}
+                          </Grid>
+                        )}
                       </Grid>
                     </Grid>
                   </Noti>
@@ -508,6 +497,7 @@ const VoteNoti = styled.div`
 
 const AngelNoti = styled.div`
   position: relative;
+  padding: 0 0 1vw 2vw;
 `
 
 export default NotiModal
