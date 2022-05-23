@@ -14,6 +14,7 @@ function Loading() {
   const history = useHistory()
   const token = localStorage.getItem('token')
   const startBgm = new Audio(bgm)
+  startBgm.loop = true;
 
   // useEffect(()=>{
   //   const safariSearch = window.navigator.userAgent.toLowerCase()
@@ -58,6 +59,7 @@ function Loading() {
       dispatch(gameActions.playerJob({ player, playerJob }))
       dispatch(gameActions.startCard(true))
       dispatch(roomActions.startCheck(true))
+      startBgm.volume = 0.5;
       startBgm.play()
     })
 
@@ -88,7 +90,8 @@ function Loading() {
       // 게임이 끝났을 때 노티
       dispatch(gameActions.noticeEndGame(data?.msg))
       dispatch(roomActions.startCheck(null))
-      startBgm.load();
+      startBgm.pause();
+      startBgm.currentTime = 0;
     })
 
     socket?.on('reporterOver', () => {

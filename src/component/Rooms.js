@@ -7,6 +7,8 @@ import { Grid, Text, Button } from '../element/index'
 import styled from 'styled-components'
 import sheep from '../assets/image/character/양_시민.png'
 import reload from '../assets/icons/black/새로고침.png'
+import 설문 from '../assets/image/tutorial/설문.png'
+import { Link } from 'react-router-dom'
 
 const Rooms = (props) => {
   const dispatch = useDispatch()
@@ -78,6 +80,9 @@ const Rooms = (props) => {
               <img src={reload} />
             </Grid>
           </Grid>
+
+          <Grid is_flex>
+          <Survey onClick={()=>{window.open('https://forms.gle/eKMdCZFPJWKKcdVW6')}}></Survey>
           <RoomBox>
             {RoomList.map((room, i) => {
               return (
@@ -124,6 +129,7 @@ const Rooms = (props) => {
               )
             })}
           </RoomBox>
+          </Grid>
         </Grid>
       </Grid>
     </>
@@ -138,6 +144,14 @@ const Title = styled.div`
   width: 200px;
   padding: 0.6vw;
   margin: 0 0 1vh;
+`
+const Survey = styled.div`
+  width:20%;
+  height:350px;
+  background-image: url(${설문});
+  background-size: cover;
+  background-position: center;
+  margin-top:-30px;
 `
 
 const RoomBox = styled.div`
@@ -154,7 +168,7 @@ const RoomBox = styled.div`
 const Room = styled.div`
   cursor: pointer;
   min-width: 305px;
-  height: 332px;
+  height: 350px;
   background-color: black;
   border: 4px solid black;
   border-radius: 20px 20px 0px 0px;
@@ -164,6 +178,7 @@ const Room = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-left:20px;
   @media screen and (max-width: 600px) {
     min-height: 200px;
     margin-bottom: 20px;
