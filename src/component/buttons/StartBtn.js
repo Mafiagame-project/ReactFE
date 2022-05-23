@@ -52,11 +52,19 @@ const StartBtn = ({ socket }) => {
         dispatch(gameActions.startCard(null))
       }, 3000)
     }
+  }, [startCard])
+
+  useEffect(()=>{
     if (endGame !== null) {
-      console.log(endGame)
-      // startBgm.pause()
+        setTimeout(() => {
+        whenGameOff()
+        setTimeout(() => {
+          history.replace('/gamemain')
+        }, 5000)
+      }, 5000)
+
     }
-  }, [startCard, endGame])
+  },[endGame])
 
   React.useEffect(() => {
     let check = members?.includes(roomInfo?.userId)
@@ -78,6 +86,13 @@ const StartBtn = ({ socket }) => {
       position: toast.POSITION.TOP_CENTER,
       className: 'toast-host-out',
       autoClose: 1000,
+    })
+  }
+  const whenGameOff = () => {
+    toast.warning('게임이 종료되었습니다! 메인으로 이동합니다', {
+      position: toast.POSITION.TOP_CENTER,
+      className: 'toast-host-out',
+      autoClose: 4000,
     })
   }
 

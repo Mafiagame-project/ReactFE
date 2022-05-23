@@ -37,7 +37,6 @@ function Header(props) {
     click.play()
     dispatch(userActions.logOutDB())
   }
-  console.log(changeNick)
 
   React.useEffect(() => {
     dispatch(memberActions.callPlayerRecord())

@@ -47,7 +47,6 @@ const initialState = {
       .then(response => {
         const win = response.data?.userWin
         const lose = response.data?.userLose
-        console.log(response)
         dispatch(callGameRecord(win, lose))
       })
       .catch((error) => {
@@ -73,13 +72,11 @@ const initialState = {
           .catch((error) => {
             alert('로그아웃 후 다시 로그인을 해주세요')
             window.location.reload();
-              console.log(error)
           })
       }
   }
 
   const changeProfiles = (profile, token) => {
-      console.log(token, profile)
     return async function (dispatch, getState, { history }) {
       await axios({
         method: 'POST',

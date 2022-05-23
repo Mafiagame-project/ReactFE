@@ -39,7 +39,6 @@ const EditProfile = () => {
         url: 'https://sparta-dongsun.shop/user/changeNick',
       })
         .then((response) => {
-          console.log(response)
           alert('변경이 완료되었습니다')
           localStorage.getItem('userNick', response.data.userNick)
           dispatch(memberActions.changeNick(response.data?.userNick))

@@ -23,16 +23,10 @@ const VoteModal = ({ onClose }) => {
 
   console.log(killed)
   let saveArray = memberId.filter((x) => !killed.includes(x))
-  console.log(saveArray)
 
   const is_killed = (e) => {
-    console.log(e.target.value)
     setClickedId(e.target.value)
   }
-  // console.log(clickedId)
-  // console.log(memberId)
-  // console.log(playerJob)
-  // console.log(is_night)
 
   const policePointed = (pointed, isMafia) => {
     if (isMafia === true) {
@@ -54,7 +48,6 @@ const VoteModal = ({ onClose }) => {
 
   const actionAlert = (num) => {
     if (num === 1) {
-      console.log('본인선택2')
       toast.warning('본인을 선택할 수 없습니다', {
         position: toast.POSITION.TOP_LEFT,
         className: 'toast-duplication',
@@ -84,11 +77,10 @@ const VoteModal = ({ onClose }) => {
   }
 
   const active = (clickedId, clicker, time) => {
-    console.log('클릭한다')
+    console.log(killed)
     let clickerJob = clicker.playerJob
     let clickerId = clicker.player
     if (currentNick === clickedId) {
-      console.log('본인선택1')
       actionAlert(1)
       return
     }

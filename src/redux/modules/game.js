@@ -6,6 +6,7 @@ const SEND_PEERID = 'SEND_PEERID'
 const ROOM_NOTI = 'ROOM_NOTI'
 const JOB_NOTI = 'JOB_NOTI'
 const RESULT_NOTI = 'RESULT_NOTI'
+const RESULT_NOTI2 = 'RESULT_NOTI2'
 const COP_NOTI = 'COP_NOTI'
 const REP_NOTI = 'REP_NOTI'
 const ENDGAME_NOTI = 'ENDGAME_NOTI'
@@ -26,6 +27,7 @@ const noticeEnterOut = createAction(ROOM_NOTI, (noti) => ({ noti }))
 // 들어오고 나가고의 알림 없다면 삭제
 const noticeJob = createAction(JOB_NOTI, (noti) => ({ noti }))
 const noticeResult = createAction(RESULT_NOTI, (noti) => ({ noti }))
+const noticeResultNight = createAction(RESULT_NOTI2, (noti) => ({noti}))
 const noticeCop = createAction(COP_NOTI, (noti) => ({ noti }))
 const noticeRep = createAction(REP_NOTI, (noti) => ({ noti }))
 const noticeEndGame = createAction(ENDGAME_NOTI, (noti) => ({ noti }))
@@ -46,6 +48,7 @@ const initialState = {
   enterOutNoti: null,
   jobNoti: null,
   resultNoti: null,
+  resultNight : null,
   copNoti: null,
   repNoti: null,
   endGameNoti: null,
@@ -82,6 +85,10 @@ export default handleActions(
     [RESULT_NOTI]: (state, action) =>
       produce(state, (draft) => {
         draft.resultNoti = action.payload.noti
+      }),
+    [RESULT_NOTI2]: (state, action) =>
+      produce(state, (draft) => {
+        draft.resultNight = action.payload.noti
       }),
     [COP_NOTI]: (state, action) =>
       produce(state, (draft) => {
@@ -158,6 +165,7 @@ const actionCreators = {
   copSelected,
   noticeJob,
   noticeResult,
+  noticeResultNight,
   noticeCop,
   noticeEndGame,
   startCard,

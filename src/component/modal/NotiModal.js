@@ -22,11 +22,13 @@ import bgm from '../../assets/sound/bgm/big_helmet.mp3'
 function NotiModal() {
   const dispatch = useDispatch()
   const voteResult = useSelector((state) => state.game.resultNoti)
+  const nightResult = useSelector((state) => state.game.resultNight)
   const endGameNoti = useSelector((state) => state.game.endGameNoti)
   const survivedNoti = useSelector((state) => state.game.survived)
   const currentTime = useSelector((state) => state.game.night)
   const reportNoti = useSelector((state) => state.game.repNoti)
   const dayCount = useSelector((state) => state.game.cnt)
+  const votedJob = useSelector((state) => state.game.votedJob)
   const [getNotice, setNotice] = useState(false)
 
   const printNoti = () => {
@@ -38,14 +40,12 @@ function NotiModal() {
   }
 
   useEffect(() => {
-    console.log(dayCount)
     if (dayCount < 2) {
       return
     } else {
       printNoti()
     }
   }, [dayCount])
-
   return (
     <>
       {getNotice ? (
@@ -69,7 +69,7 @@ function NotiModal() {
             <>
               {currentTime ? ( // 밤이면 낮의 결과가 출력
                 <>
-                  {voteResult ? ( // 아무도 안 죽음 (?)을 아무도 죽지않았습니다로 출력하게!
+                  {voteResult !== null ? ( // 아무도 안 죽음 (?)을 아무도 죽지않았습니다로 출력하게!
                     <Modalblack>
                       <VoteNoti>
                         <Text size="3vw">낮 투표결과 </Text>
@@ -80,16 +80,17 @@ function NotiModal() {
                             margin: '2vw 0',
                           }}
                         />
-
-                        {voteResult === '아무도 안 죽음' ? (
-                          <Text bold size="2.5vw">
-                            아무도 죽지 않았습니다
-                          </Text>
-                        ) : (
-                          <Text bold size="2vw">
-                            {voteResult}가 잡혔습니다
-                          </Text>
-                        )}
+                        <>
+                          {votedJob === true ? (
+                            <Text bold size="2vw">
+                              마피아 {voteResult} 가 잡혔습니다
+                            </Text>
+                          ) : (
+                            <Text bold size="2vw">
+                              {voteResult}가 잡혔습니다
+                            </Text>
+                          )}
+                        </>
                       </VoteNoti>
                     </Modalblack>
                   ) : (
@@ -266,7 +267,7 @@ function NotiModal() {
 
                       <Grid width="50%" height="90%" flexColumn center>
                         <Grid height="50%">
-                          {voteResult ? (
+                          {nightResult ? (
                             <>
                               <Grid
                                 bg="#000"
@@ -291,7 +292,7 @@ function NotiModal() {
                                   </span>
                                   과연 피해자
                                   <span style={{ color: '#950000' }}>
-                                    {voteResult}
+                                    {nightResult}
                                   </span>
                                   양을 잔혹하게
                                   <span
@@ -319,7 +320,7 @@ function NotiModal() {
                                   <Text size="1.3vw" bold>
                                     피해자{' '}
                                     <span style={{ color: '#950000' }}>
-                                      {voteResult}
+                                      {nightResult}
                                     </span>
                                     양
                                   </Text>
