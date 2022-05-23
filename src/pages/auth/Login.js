@@ -8,6 +8,7 @@ import kakao from '../../assets/icons/social/kakao.png'
 import naver from '../../assets/icons/social/naver.png'
 import pop from '../../assets/sound/effect/pop02.mp3'
 import denied from '../../assets/sound/effect/denied02.mp3'
+import logo from '../../assets/logo/기본값.png'
 
 function Login() {
   const dispatch = useDispatch()
@@ -35,11 +36,11 @@ function Login() {
 
   //kakao 나중에 따로 파일 빼기
   const REST_API_KEY = '6c9c16d27b420108ed23421696dfba3b'
-  const REDIRECT_URI = 'https://d191gfhy5yq8br.cloudfront.net/main'
+  const REDIRECT_URI = 'https://www.mafiyang.com/main'
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`
 
   const NAVER_CLIENT_ID = '9WNFXnar7frmNNTQmP4N'
-  const NAVER_CALLBACK_URI = 'http://localhost:3000/naverLogin/main'
+  const NAVER_CALLBACK_URI = 'https://www.mafiyang.com/naverLogin/main'
 
   const state = Math.random().toString(36).substring(2, 11)
 
@@ -49,9 +50,11 @@ function Login() {
     <div className="align_back">
       <Container>
         <Grid center>
-          <Text margin="0 0 20px" size="70px">
-            MAFIYANG
-          </Text>
+          <img
+            src={logo}
+            alt="로고"
+            style={{ width: '350px', margin: '1vw 0' }}
+          />
         </Grid>
         <Grid flex_column>
           <Input

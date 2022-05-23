@@ -99,12 +99,12 @@ const CreateRoomModal = ({ onClose, socket }) => {
             style={{ float: 'right' }}
           />
 
-          <Text size="50px" margin="70px 0 30px" center>
+          <Text size="3vw" margin="5vw 0 1vw" center>
             새로운 방 만들기
           </Text>
 
           <FormBox>
-            <Grid margin="40px 0 ">
+            <Grid margin="2.5vw 0 ">
               <Text margin="0.9vh 0" size="1.37em">
                 방 제목
               </Text>
@@ -114,8 +114,8 @@ const CreateRoomModal = ({ onClose, socket }) => {
               />
             </Grid>
 
-            <Grid margin="40px 0 ">
-              <Text margin="10px 0" size="22px">
+            <Grid margin="2.5vw 0 ">
+              <Text margin="0.3vw 0" size="1.37em">
                 인원 수
               </Text>
               <ImageSlider
@@ -131,8 +131,8 @@ const CreateRoomModal = ({ onClose, socket }) => {
               />
             </Grid>
 
-            <Grid margin="40px 0 ">
-              <Text margin="10px 0" size="22px">
+            <Grid margin="2.5vw 0 ">
+              <Text margin="0.3vw 0" size="1.37em">
                 시크릿 설정
               </Text>
               <Grid is_flex height="4vh">
@@ -211,8 +211,8 @@ const Content = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 999;
-  height: 68vh;
-  max-width: 48vw;
+  height: 75vh;
+  max-width: 52vw;
   width: 100%;
   background-color: #fff;
   position: relative;

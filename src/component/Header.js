@@ -15,6 +15,7 @@ import 경찰 from '../assets/image/character/경찰.png'
 import 의사 from '../assets/image/character/의사_양.png'
 import pop from '../assets/sound/effect/pop02.mp3'
 import denied from '../assets/sound/effect/denied02.mp3'
+import logo from '../assets/logo/메인페이지.png'
 
 function Header(props) {
   const socket = useSelector((state) => state.game.socket)
@@ -47,14 +48,13 @@ function Header(props) {
     <>
       <Container>
         <Grid
+          _cursor
           _onClick={() => {
             history.push('/')
             socket.disconnect()
           }}
         >
-          <Text size="30px" color="#fff" _cursor>
-            MAFIYANG
-          </Text>
+          <img src={logo} alt="로고" />
         </Grid>
         <Rightside>
           <Grid flex_column>

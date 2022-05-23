@@ -7,6 +7,7 @@ import { actionCreators as roomActions } from '../redux/modules/room'
 import { actionCreators as memberActions } from '../redux/modules/member'
 import styled from 'styled-components'
 import pop from '../assets/sound/effect/pop.wav'
+import logo from '../assets/logo/기본값.png'
 
 function Loading() {
   const dispatch = useDispatch()
@@ -91,10 +92,7 @@ function Loading() {
   return (
     <div className="align_back loading">
       <Container>
-        <Text margin="30px 0" size="90px">
-          MAFIYANG
-        </Text>
-
+        <img src={logo} alt="로고" style={{ margin: '1vw 0' }} />
         {token ? (
           <DotButton
             black03
