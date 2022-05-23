@@ -18,7 +18,6 @@ const FriendlistModal = ({ onClose }) => {
   const click = new Audio(pop)
 
   const clicked = (e) => {
-    console.log(e.target.value)
     setClickedId(e.target.value)
   }
 

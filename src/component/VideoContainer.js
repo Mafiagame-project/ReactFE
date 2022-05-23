@@ -64,7 +64,8 @@ const VideoContainer = () => {
   React.useEffect(() => {
     const myPeer = new Peer()
     myPeer.nick = UserNick
-
+    
+    if(navigator.mediaDevices){
     navigator.mediaDevices
       .getUserMedia({
         video: true,
@@ -84,13 +85,11 @@ const VideoContainer = () => {
             socket.emit('peerJoinRoom', myPeerId, userNick, streamId)
           })
         } else {
-          console.log(myPeer._id)
           socket.emit('peerJoinRoom', myPeer._id, userNick, streamId)
         }
 
         //새로 들어온 피어는 기존의 피어에게 콜을 받습니다.
         myPeer?.on('call', (call) => {
-          console.log('콜 찍히니?')
           call.answer(stream)
           const videoBox = document.createElement('div')
           videoBox.classList.add('video_grid')
@@ -120,7 +119,6 @@ const VideoContainer = () => {
 
         // 기존에 있던 피어는 새 피어가 room에 입장 시 커넥션을 받습니다.
         socket?.on('user-connected', (userId, userNick, streamId) => {
-          console.log(userId, streamId, userNick)
 
           if (videoWrap.current) {
             const call = myPeer.call(userId, myStream)
@@ -151,6 +149,11 @@ const VideoContainer = () => {
       .catch((err) => {
         console.log('err', err)
       })
+    } else {
+      alert('비디오 및 오디오 환경을 확인해주세요!')
+      socket.emit('leaveRoom')
+      window.location = '/'
+    }
 
     //피어가 방을 나갈 때
     socket.on('user-disconnected', (userId, userNick, streamId) => {
@@ -158,7 +161,6 @@ const VideoContainer = () => {
       // const video_box = document.querySelectorAll('video_box')
       // const nick_box = document.querySelectorAll('userview_name')
       let removeVideo
-      console.log('나감')
 
       for (let i = 0; i < video.length; i++) {
         if (video[i].srcObject.id === streamId) {
@@ -220,9 +222,7 @@ const VideoContainer = () => {
 }
 
 function addVideoStream(video, stream) {
-  console.log(stream)
   video.srcObject = stream
-  console.log(video)
   video.addEventListener('loadedmetadata', () => {
     video.play()
   })

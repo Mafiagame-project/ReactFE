@@ -41,11 +41,8 @@ function GameRoom(props) {
   }
 
   useEffect(() => {
-    console.log({ endGame })
     if (endGame !== null) {
       winBgm.play()
-      console.log('????')
-      // startBgm.currentTime = 0
       setSoundOn(false)
     }
   }, [endGame])
@@ -106,24 +103,9 @@ function GameRoom(props) {
       dispatch(gameActions.dayAndNight(null))
       dispatch(gameActions.noticeEndGame(null))
       dispatch(gameActions.checkIsMafia(null))
+      dispatch(gameActions.noticeResultNight(null))
     }
   }, [socket])
-
-  const startAlarm = () => {
-    toast.success('게임이 시작되었습니다. 이야기를 나눠보세요!', {
-      position: toast.POSITION.TOP_LEFT,
-      className: 'toast-start-alarm',
-      autoClose: 3000,
-    })
-  }
-  useEffect(() => {
-    if (startCard) {
-      startAlarm()
-      setTimeout(() => {
-        dispatch(gameActions.startCard(null))
-      }, 3000)
-    }
-  }, [startCard])
 
   useEffect(() => {
     if (endGame == null) {

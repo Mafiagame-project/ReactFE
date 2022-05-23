@@ -31,7 +31,6 @@ const EditProfileModal = ({ onClose }) => {
 
   const iconCheck = (element) => {
     click.play()
-    console.log(element)
     element.info = 'orange'
   }
   return (
