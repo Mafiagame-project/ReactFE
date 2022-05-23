@@ -260,6 +260,14 @@ const NonCard = styled.div`
 `
 
 const Explain = styled.div`
+<<<<<<< HEAD
+  width: 60%;
+  height: 100px;
+  background: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 15px;
+  padding: 40px 80px 40px 80px;
+=======
   background: #ffffff;
   border: 2px solid #000000;
   border-radius: 15px;
@@ -271,6 +279,7 @@ const TutorialBox = styled.div`
   position: relative;
   text-align: center;
   margin: 10px;
+>>>>>>> ce50ed048983d18d0b2171d0d171b08f8191f66c
 `
 
 const TitleText = styled.div`

@@ -108,6 +108,13 @@ function GameRoom(props) {
     }
   }, [socket])
 
+  const startAlarm = () => {
+    toast.success('게임이 시작되었습니다. 이야기를 나눠보세요!', {
+      position: toast.POSITION.TOP_LEFT,
+      className: 'toast-start-alarm',
+      autoClose: 3000,
+    })
+  }
   useEffect(() => {
     console.log(endGame)
     if (endGame === null) {

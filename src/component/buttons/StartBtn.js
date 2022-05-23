@@ -89,7 +89,14 @@ const StartBtn = ({ socket }) => {
         autoClose: 2000,
       })
     } else {
-      toast.info('아직 준비를 하지 않은 참가자가 있습니다!', {
+      let withOutHost = members.filter((nick) => nick !== roomInfo?.userId)
+      let result = ''
+      withOutHost.forEach((e, idx) => {
+        if (e !== currentReady[idx]) {
+          result += e + ' '
+        }
+      })
+      toast.info(`참가자들이 준비하지 않았습니다 [${result}] `, {
         position: toast.POSITION.TOP_CENTER,
         className: 'toast-startPeople',
         autoClose: 2000,

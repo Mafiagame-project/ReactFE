@@ -17,6 +17,7 @@ import mafiaWin from '../../assets/image/noti/늑대_승리.gif'
 import CitizenWin from '../../assets/image/noti/시민_승리.gif'
 import { useEffect, useState } from 'react'
 import { actionCreators as gameActions } from '../../redux/modules/game'
+import bgm from '../../assets/sound/bgm/big_helmet.mp3'
 
 function NotiModal() {
   const dispatch = useDispatch()
@@ -27,8 +28,6 @@ function NotiModal() {
   const reportNoti = useSelector((state) => state.game.repNoti)
   const dayCount = useSelector((state) => state.game.cnt)
   const [getNotice, setNotice] = useState(false)
-
-  console.log(endGameNoti)
 
   const printNoti = () => {
     setNotice(true)
@@ -238,7 +237,7 @@ function NotiModal() {
                               풀을 뜯어먹는 평화로운 마피양 시민
                             </Text>
                           </Grid>
-                          <Grid padding="5px" margin="5px" margin="0 0 0 1vw">
+                          <Grid padding="5px" margin="0 0 0 1vw">
                             <Grid height="24%" borderBottom>
                               <img
                                 src={point}
