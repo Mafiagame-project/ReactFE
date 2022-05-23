@@ -27,6 +27,7 @@ function NotiModal() {
   const currentTime = useSelector((state) => state.game.night)
   const reportNoti = useSelector((state) => state.game.repNoti)
   const dayCount = useSelector((state) => state.game.cnt)
+  const votedJob = useSelector((state) => state.game.votedJob)
   const [getNotice, setNotice] = useState(false)
 
   const printNoti = () => {
@@ -45,7 +46,7 @@ function NotiModal() {
       printNoti()
     }
   }, [dayCount])
-
+  console.log(votedJob)
   return (
     <>
       {getNotice ? (
@@ -86,9 +87,17 @@ function NotiModal() {
                             아무도 죽지 않았습니다
                           </Text>
                         ) : (
-                          <Text bold size="2vw">
-                            {voteResult}가 잡혔습니다
-                          </Text>
+                          <>
+                            {votedJob === true ? (
+                              <Text bold size="2vw">
+                                마피아 {voteResult} 가 잡혔습니다
+                              </Text>
+                            ) : (
+                              <Text bold size="2vw">
+                                {voteResult}가 잡혔습니다
+                              </Text>
+                            )}
+                          </>
                         )}
                       </VoteNoti>
                     </Modalblack>

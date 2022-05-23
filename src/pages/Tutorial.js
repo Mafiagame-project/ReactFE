@@ -9,6 +9,7 @@ import 튜토리얼1 from '../assets/image/tutorial/튜토리얼1.png'
 import 튜토리얼2 from '../assets/image/tutorial/튜토리얼2.png'
 import 튜토리얼3 from '../assets/image/tutorial/튜토리얼3.png'
 import 튜토리얼4 from '../assets/image/tutorial/튜토리얼4.png'
+import 튜토리얼5 from '../assets/image/tutorial/튜토리얼5.png'
 import 돌아가기 from '../assets/icons/black/돌아가기.png'
 import { history } from '../redux/configureStore'
 
@@ -83,6 +84,20 @@ function Tutorial() {
                   </Grid>
                 </Content>
               </SwiperSlide>
+              <SwiperSlide>
+                <Content>
+                  <Grid isFlex_center height="100%" width="100%">
+                    <ImgBox5>
+                      <Explain>
+                        <Text size="22px">
+                          게임이 종료되었습니다! 새롭게 방을 만들어서 
+                          게임을 진행해보세요!<br />
+                        </Text>
+                      </Explain>
+                    </ImgBox5>
+                  </Grid>
+                </Content>
+              </SwiperSlide>
             </Swiper>
           </Grid>
         </Grid>
@@ -139,6 +154,14 @@ const ImgBox4 = styled.div`
   width: 100%;
   height: 100%;
   background-image: url(${튜토리얼4});
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+`
+const ImgBox5 = styled.div`
+  width: 100%;
+  height: 100%;
+  background-image: url(${튜토리얼5});
   background-size: cover;
   background-position: center;
   border-radius: 20px;

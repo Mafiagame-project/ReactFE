@@ -9,6 +9,8 @@ import sheep from '../assets/image/character/양_시민.png'
 import reload from '../assets/icons/black/새로고침.png'
 import pop from '../assets/sound/effect/pop.wav'
 import pop02 from '../assets/sound/effect/pop02.mp3'
+import 설문 from '../assets/image/tutorial/설문.png'
+import { Link } from 'react-router-dom'
 
 const Rooms = (props) => {
   const dispatch = useDispatch()
@@ -86,52 +88,60 @@ const Rooms = (props) => {
               <img src={reload} alt="새로고침" />
             </Grid>
           </Grid>
-          <RoomBox>
-            {RoomList.map((room, i) => {
-              return (
-                <Room
-                  key={i}
-                  onClick={() => {
-                    entrance(room)
-                  }}
-                >
-                  <Grid center height="10%">
-                    <Text margin="0.4vh 0" color="white">
-                      MAFIYANG
-                    </Text>
-                  </Grid>
-                  <Grid
-                    padding="50px 60px 20px"
-                    center
-                    bg="white"
-                    height="100%"
-                    flexColumn
-                  >
-                    <Text size="30px" bold>
-                      {room.roomTitle}
-                    </Text>
-                    <Grid>
-                      <Text size="18px">방장 : {room.userId}</Text>
 
-                      <Grid
-                        width=""
-                        isFlex_center
-                        center
-                        bg="black"
-                        border
-                        margin="10px 30px"
-                      >
-                        <img src={sheep} alt="양" style={{ width: '28px' }} />
-                        <Text color="#fff" size="22px" margin="13px">
-                          {room.currentPeople.length}/{room.roomPeople}
-                        </Text>
+          <Grid is_flex>
+            <Survey
+              onClick={() => {
+                window.open('https://forms.gle/eKMdCZFPJWKKcdVW6')
+              }}
+            ></Survey>
+            <RoomBox>
+              {RoomList.map((room, i) => {
+                return (
+                  <Room
+                    key={i}
+                    onClick={() => {
+                      entrance(room)
+                    }}
+                  >
+                    <Grid center height="10%">
+                      <Text margin="0.4vh 0" color="white">
+                        MAFIYANG
+                      </Text>
+                    </Grid>
+                    <Grid
+                      padding="50px 60px 20px"
+                      center
+                      bg="white"
+                      height="100%"
+                      flexColumn
+                    >
+                      <Text size="30px" bold>
+                        {room.roomTitle}
+                      </Text>
+                      <Grid>
+                        <Text size="18px">방장 : {room.userId}</Text>
+
+                        <Grid
+                          width=""
+                          isFlex_center
+                          center
+                          bg="black"
+                          border
+                          margin="10px 30px"
+                        >
+                          <img src={sheep} alt="양" style={{ width: '28px' }} />
+                          <Text color="#fff" size="22px" margin="13px">
+                            {room.currentPeople.length}/{room.roomPeople}
+                          </Text>
+                        </Grid>
                       </Grid>
                     </Grid>
-                  </Grid>
-                </Room>
-              )
-            })}
-          </RoomBox>
+                  </Room>
+                )
+              })}
+            </RoomBox>
+          </Grid>
         </Grid>
       </Grid>
     </>
@@ -146,6 +156,14 @@ const Title = styled.div`
   width: 200px;
   padding: 0.6vw;
   margin: 0 0 1vh;
+`
+const Survey = styled.div`
+  width: 20%;
+  height: 350px;
+  background-image: url(${설문});
+  background-size: cover;
+  background-position: center;
+  margin-top: -30px;
 `
 
 const RoomBox = styled.div`
@@ -162,7 +180,7 @@ const RoomBox = styled.div`
 const Room = styled.div`
   cursor: pointer;
   min-width: 305px;
-  height: 332px;
+  height: 350px;
   background-color: black;
   border: 4px solid black;
   border-radius: 20px 20px 0px 0px;
@@ -172,6 +190,7 @@ const Room = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-left: 20px;
   @media screen and (max-width: 600px) {
     min-height: 200px;
     margin-bottom: 20px;

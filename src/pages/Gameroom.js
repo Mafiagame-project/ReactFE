@@ -105,6 +105,7 @@ function GameRoom(props) {
       dispatch(gameActions.playerWhoSurvived(null))
       dispatch(gameActions.dayAndNight(null))
       dispatch(gameActions.noticeEndGame(null))
+      dispatch(gameActions.checkIsMafia(null))
     }
   }, [socket])
 
@@ -116,10 +117,17 @@ function GameRoom(props) {
     })
   }
   useEffect(() => {
-    console.log(endGame)
-    if (endGame === null) {
-      console.log(endGame)
-      if (currentTime === false && endGame === null) {
+    if (startCard) {
+      startAlarm()
+      setTimeout(() => {
+        dispatch(gameActions.startCard(null))
+      }, 3000)
+    }
+  }, [startCard])
+
+  useEffect(() => {
+    if (endGame == null) {
+      if (currentTime === false) {
         morningBgm.play()
         dayOrNight(false)
       } else if (currentTime === true && endGame === null) {
