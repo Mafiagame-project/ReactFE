@@ -4,17 +4,20 @@ import { useDispatch } from 'react-redux'
 import { actionCreators as userActions } from '../redux/modules/user'
 import styled from 'styled-components'
 import deleteIcon from '../assets/icons/white/쓰레기통.png'
+import denied from '../assets/sound/effect/denied02.mp3'
 
 const FriendList = (props) => {
   const dispatch = useDispatch()
   const [openBtn, setOpenBtn] = React.useState(false)
+  const deleteBgm = new Audio(denied)
   const showBtn = () => {
     setOpenBtn(!openBtn)
   }
 
   const deleteBtn = () => {
+    deleteBgm.play()
     if (
-      window.confirm(`${props.userId}님을 친구에서 정말 삭제하시겠어요?`) ==
+      window.confirm(`${props.userId}님을 친구에서 정말 삭제하시겠어요?`) ===
       true
     ) {
       dispatch(userActions.deleteFriendDB(props.userId))

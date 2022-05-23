@@ -1,9 +1,7 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 
 function Chatdiv({ getWrite, currentId, e }) {
-  const copNoti = useSelector((state) => state.game.copNoti)
   const chatRef = React.useRef(null)
   const id = e.data.id
 

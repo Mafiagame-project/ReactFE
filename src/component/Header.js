@@ -13,7 +13,8 @@ import 마피양 from '../assets/image/character/profile.jpg'
 import 기자 from '../assets/image/character/양_기자.png'
 import 경찰 from '../assets/image/character/경찰.png'
 import 의사 from '../assets/image/character/의사_양.png'
-import axios from 'axios'
+import pop from '../assets/sound/effect/pop02.mp3'
+import denied from '../assets/sound/effect/denied02.mp3'
 
 function Header(props) {
   const socket = useSelector((state) => state.game.socket)
@@ -28,14 +29,20 @@ function Header(props) {
   const [soundOn, setSoundOn] = React.useState(false)
   let location = window.location.href
   const where = location.includes('gameroom')
+  const click = new Audio(pop)
+  const alertBgm = new Audio(denied)
+
   const handleLogOut = () => {
+    click.play()
     dispatch(userActions.logOutDB())
   }
   console.log(changeNick)
+
   React.useEffect(() => {
     dispatch(memberActions.callPlayerRecord())
     dispatch(memberActions.callUserProfile())
   }, [])
+
   return (
     <>
       <Container>
@@ -66,12 +73,15 @@ function Header(props) {
                 <Text margin="0px" color="#fff">
                   {recordWin}승 {recordLose}패
                 </Text>
-                {where == true ? (
+                {where === true ? (
                   <Text
                     _cursor
                     margin="0px"
                     color="#aaa"
-                    _onClick={() => alert('현재 위치에서는 불가능합니다')}
+                    _onClick={() => {
+                      alert('현재 위치에서는 불가능합니다')
+                      alertBgm.play()
+                    }}
                   >
                     수정하기
                   </Text>
@@ -80,7 +90,10 @@ function Header(props) {
                     _cursor
                     margin="0px"
                     color="#aaa"
-                    _onClick={() => history.push('/edituser')}
+                    _onClick={() => {
+                      history.push('/edituser')
+                      click.play()
+                    }}
                   >
                     수정하기
                   </Text>
@@ -100,7 +113,10 @@ function Header(props) {
               center
               margin="0 10px"
               _onClick={() => {
-                setIsOpen(true)
+                {
+                  setIsOpen(true)
+                  click.play()
+                }
               }}
             >
               <Icons src={friendIcon} />
@@ -108,12 +124,15 @@ function Header(props) {
                 Friends
               </Text>
             </Grid>
-            {where == true ? (
+            {where === true ? (
               <Grid
                 _cursor
                 center
                 margin="0 10px"
-                _onClick={() => alert('현재 위치에서는 불가능합니다')}
+                _onClick={() => {
+                  alert('현재 위치에서는 불가능합니다')
+                  alertBgm.play()
+                }}
               >
                 <Icons src={LogoutIcon} />
                 <Text margin="0" color="#fff" size="12px">

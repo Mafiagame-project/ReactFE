@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-import { actionCreators as gameActions } from '../redux/modules/game'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import io from 'socket.io-client'
 
 function Timer(props) {
@@ -31,7 +30,7 @@ function Timer(props) {
         style={{
           fontSize: '2.5vw',
           marginBottom: '1vw',
-          color: `${currentTime == true ? 'white' : 'black'}`,
+          color: `${currentTime === true ? 'white' : 'black'}`,
         }}
       >
         {minutes} : {seconds}

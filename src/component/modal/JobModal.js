@@ -21,7 +21,7 @@ const JobModal = () => {
         if (player == element.name) {
           setJob(element.title)
           setDesc(element.explain)
-          setImg(element.gif)
+          setImg(element.img)
           setShadow(element.shadow)
         }
       })

@@ -6,12 +6,13 @@ import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import kakao from '../../assets/icons/social/kakao.png'
 import naver from '../../assets/icons/social/naver.png'
+import pop from '../../assets/sound/effect/pop02.mp3'
 
 function Login() {
   const dispatch = useDispatch()
-
   const [logins, setLogins] = React.useState({})
   const [submitted, setSubmitted] = React.useState(false)
+  const click = new Audio(pop)
 
   const handleChange = (e) => {
     const id = e.target.id
@@ -25,12 +26,8 @@ function Login() {
       alert('빈칸을 채워주세요!')
       return
     }
+    click.play()
     dispatch(userActions.loginDB(logins))
-  }
-
-  const naverLogin = () => {
-    console.log('test')
-    dispatch(userActions.naverDB())
   }
 
   //kakao 나중에 따로 파일 빼기

@@ -6,7 +6,6 @@ import ModalPortal from './ModalPortal'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import '../../styles/video.css'
-import { actionCreators as gameActions } from '../../redux/modules/game'
 
 const VoteModal = ({ onClose }) => {
   const [clickedId, setClickedId] = React.useState()
@@ -88,28 +87,28 @@ const VoteModal = ({ onClose }) => {
     console.log('클릭한다')
     let clickerJob = clicker.playerJob
     let clickerId = clicker.player
-    if (currentNick == clickedId) {
+    if (currentNick === clickedId) {
       console.log('본인선택1')
       actionAlert(1)
       return
     }
     if (killed?.length > 0) {
       killed.forEach((id) => {
-        if (clickerId == id) {
+        if (clickerId === id) {
           actionAlert(3)
           return
         }
-        if (clickedId == id) {
+        if (clickedId === id) {
           actionAlert(2)
           return
         } else {
           socket.emit('vote', { clickerJob, clickerId, clickedId })
-          if (clickerJob == 'police' && time == true) {
+          if (clickerJob === 'police' && time === true) {
             socket.on('police', (selected) => {
               policePointed(clickedId, selected)
             })
-          } else if (clickerJob == 'reporter' && time == true) {
-            if (chance == true) {
+          } else if (clickerJob === 'reporter' && time === true) {
+            if (chance === true) {
               actionAlert(4)
               return
             }
@@ -119,12 +118,12 @@ const VoteModal = ({ onClose }) => {
       })
     } else {
       socket.emit('vote', { clickerJob, clickerId, clickedId })
-      if (clickerJob == 'police' && time == true) {
+      if (clickerJob === 'police' && time === true) {
         socket.on('police', (selected) => {
           policePointed(clickedId, selected)
         })
-      } else if (clickerJob == 'reporter' && time == true) {
-        if (chance == true) {
+      } else if (clickerJob === 'reporter' && time === true) {
+        if (chance === true) {
           actionAlert(4)
           return onClose()
         }
@@ -157,14 +156,6 @@ const VoteModal = ({ onClose }) => {
                   우리에 가둘 양을 선택해 주세요
                 </Text>
                 <VoteBox>
-                  <Input
-                    dayRadio
-                    text="이범규"
-                    value="test"
-                    _name="vote"
-                    _onChange={is_killed}
-                  />
-
                   {saveArray?.map((e, i) => {
                     return (
                       <Input
@@ -302,10 +293,10 @@ const Container = styled.div`
 const VoteBox = styled.div`
   text-align: center;
   display: grid;
-  grid-gap: 3vw 0;
+  grid-gap: 10vw 0;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   max-width: 800px;
-  margin: 13vw auto 9vw;
+  margin: 9vw auto 6vw;
 `
 
 export default VoteModal

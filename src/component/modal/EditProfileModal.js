@@ -9,12 +9,14 @@ import 기자 from '../../assets/image/character/profile/profile04.jpeg'
 import 경찰 from '../../assets/image/character/profile/profile03.png'
 import 의사 from '../../assets/image/character/profile/profile05.png'
 import 시민 from '../../assets/image/character/profile/profile06.jpeg'
+import pop from '../../assets/sound/effect/pop02.mp3'
 import { useDispatch } from 'react-redux'
 
 const EditProfileModal = ({ onClose }) => {
   const dispatch = useDispatch()
   const [getFile, setFile] = React.useState(null)
   const token = localStorage.getItem('token')
+  const click = new Audio(pop)
 
   const [pictures, setPictures] = React.useState([
     { name: 마피양, info: '' },
@@ -28,6 +30,7 @@ const EditProfileModal = ({ onClose }) => {
   }
 
   const iconCheck = (element) => {
+    click.play()
     console.log(element)
     element.info = 'orange'
   }
@@ -85,6 +88,7 @@ const EditProfileModal = ({ onClose }) => {
                     changeProfile(getFile, token)
                     e.stopPropagation()
                     onClose()
+                    click.play()
                   }}
                   black01
                   text="저장"
@@ -126,8 +130,8 @@ const Content = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 999;
-  height: 42vh;
-  max-width: 40vw;
+  height: 52vh;
+  max-width: 48vw;
   width: 100%;
   background-color: #fff;
   position: relative;

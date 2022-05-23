@@ -1,16 +1,15 @@
 import React from 'react'
-import Peer from 'peerjs'
 import ModalPortal from './ModalPortal'
 import { Grid, Text, Input, DotButton } from '../../element/index'
 import { actionCreators as roomActions } from '../../redux/modules/room'
-import { actionCreators as gameActions } from '../../redux/modules/game'
-import { history } from '../../redux/configureStore'
 import { useDispatch } from 'react-redux'
 import { Slider } from '@mui/material'
 import styled from 'styled-components'
 import closeIcon from '../../assets/icons/black/닫기.png'
 import { withStyles } from '@mui/styles'
 import sheep from '../../assets/image/character/양_시민.png'
+import pop from '../../assets/sound/effect/pop.wav'
+import pop02 from '../../assets/sound/effect/pop02.mp3'
 
 const ImageSlider = withStyles({
   thumb: {
@@ -47,6 +46,9 @@ const CreateRoomModal = ({ onClose, socket }) => {
   const people = React.useRef()
   const pwd = React.useRef()
 
+  const click = new Audio(pop)
+  const click02 = new Audio(pop02)
+
   React.useEffect(() => {}, [socket])
   const createRoom = () => {
     let roomTitle = title.current.value
@@ -56,12 +58,14 @@ const CreateRoomModal = ({ onClose, socket }) => {
       roomPeople = 5
     }
 
-    if (getOpen == true) {
+    if (getOpen === true) {
       // 비공개방일때
       roomPwd = pwd.current.value
       socket.emit('createRoom', { roomTitle, roomPeople, roomPwd })
+      click.play()
     } else {
       // 공개방일때
+      click.play()
       socket.emit('createRoom', { roomTitle, roomPeople })
     }
     socket.emit('roomList')
@@ -87,7 +91,11 @@ const CreateRoomModal = ({ onClose, socket }) => {
         <Content onClick={(e) => e.stopPropagation()}>
           <img
             src={closeIcon}
-            onClick={() => onClose()}
+            alt="나가기"
+            onClick={() => {
+              onClose()
+              click02.play()
+            }}
             style={{ float: 'right' }}
           />
 

@@ -42,7 +42,7 @@ Grid.defaultProps = {
   right: false,
   left: false,
   bottom: false,
-  display: false,
+  isDisplay: false,
   justify_item: false,
 }
 
@@ -55,7 +55,7 @@ const GridBox = styled.div`
   left:${(props) => props.left};
   right:${(props) => props.right};
   bottom:${(props) => props.bottom};
-  display:${(props) => props.display};
+  display:${(props) => props.isDisplay};
   justify-items: ${(props) => props.justify_item};
   box-sizing: border-box;
   ${(props) =>

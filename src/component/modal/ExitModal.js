@@ -4,15 +4,19 @@ import ModalPortal from './ModalPortal'
 import { actionCreators as gameActions } from '../../redux/modules/game'
 import { actionCreators as roomActions } from '../../redux/modules/room'
 import { useDispatch, useSelector } from 'react-redux'
-import { Grid, Text, DotButton, Input, Image } from '../../element/index'
+import { Grid, Text, DotButton } from '../../element/index'
 import styled from 'styled-components'
+import question from '../../assets/image/noti/question.png'
+import pop02 from '../../assets/sound/effect/pop02.mp3'
 
 const ExitModal = ({ onClose }) => {
   const dispatch = useDispatch()
-  const socket = useSelector((state) => state.game.socket)
+  const click = new Audio(pop02)
+
   const exitRoom = () => {
     // 방에서 나가기 버튼을 누를때 호출
     // socket.emit('leaveRoom')
+    click.play()
     history.replace('/gamemain')
     dispatch(gameActions.noticeResult(null))
     dispatch(gameActions.playerWhoSurvived(null))
@@ -33,11 +37,22 @@ const ExitModal = ({ onClose }) => {
           }}
         >
           <Content onClick={(e) => e.stopPropagation()}>
-            <Grid padding="30px" height="100%" flex_column>
-              <Text> 정말 나가시겠어요?? </Text>
-              <Grid marign="40px 0 0">
+            <Grid padding="20px" height="100%" flexColumn_end>
+              <Text size="25px" margin="0 0 3vw">
+                {' '}
+                정말 나가시겠어요??{' '}
+              </Text>
+              <img src={question} alt="나가기" />
+              <Grid isFlex_center margin="20px 0 10px">
+                <DotButton
+                  white01
+                  text="아니용"
+                  _onClick={() => {
+                    click.play()
+                    onClose()
+                  }}
+                />
                 <DotButton black01 text="나가기" _onClick={exitRoom} />
-                <DotButton white01 text="아니용" _onClick={() => onClose()} />
               </Grid>
             </Grid>
           </Content>
@@ -68,8 +83,8 @@ const Content = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 999;
-  height: 400px;
-  max-width: 300px;
+  height: 430px;
+  max-width: 430px;
   width: 100%;
   background-color: #eee;
   position: relative;

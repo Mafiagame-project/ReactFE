@@ -2,19 +2,20 @@ import React from 'react'
 import ModalPortal from './ModalPortal'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionCreators as userActions } from '../../redux/modules/user'
-import { Grid, Text, Button, Input, Image } from '../../element/index'
+import { Grid, Text, Input } from '../../element/index'
 import FriendList from '../FriendList'
 import styled from 'styled-components'
 import closeIcon from '../../assets/icons/black/닫기.png'
 import pattern01 from '../../assets/image/pattern/01_opacity.png'
 import noFriend from '../../assets/image/noti/no_friend.png'
+import pop from '../../assets/sound/effect/pop02.mp3'
 
 const FriendlistModal = ({ onClose }) => {
   const dispatch = useDispatch()
   const [addFriend, setAddFriend] = React.useState('')
   const [clickedId, setClickedId] = React.useState()
-  const userId = localStorage.getItem('userId')
   const friendList = useSelector((state) => state?.user?.friendList)
+  const click = new Audio(pop)
 
   const clicked = (e) => {
     console.log(e.target.value)
@@ -30,6 +31,7 @@ const FriendlistModal = ({ onClose }) => {
   }
 
   const addFriendBtn = () => {
+    click.play()
     dispatch(userActions.addFriendDB(addFriend))
     setAddFriend('')
   }
@@ -48,6 +50,7 @@ const FriendlistModal = ({ onClose }) => {
               <Grid>
                 <img
                   src={closeIcon}
+                  alt="닫기"
                   onClick={() => onClose()}
                   style={{ float: 'right' }}
                 />
@@ -73,7 +76,7 @@ const FriendlistModal = ({ onClose }) => {
                 })
               ) : (
                 <TextBox>
-                  <img src={noFriend} />
+                  <img src={noFriend} alt="친구없음" />
                 </TextBox>
               )}
             </Grid>

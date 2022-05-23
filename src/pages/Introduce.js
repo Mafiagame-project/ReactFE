@@ -7,6 +7,7 @@ import Tutorial from './Tutorial'
 import 돌아가기 from '../assets/icons/black/돌아가기.png'
 import { history } from '../redux/configureStore'
 import title from '../assets/button/튜토리얼_타이틀선택배경.png'
+import pop02 from '../assets/sound/effect/pop02.mp3'
 
 function Introduce() {
   const [isOpen, setIsOpen] = React.useState(false)
@@ -18,11 +19,14 @@ function Introduce() {
   const [win, setWin] = React.useState()
   const [lose, setLose] = React.useState()
   const [ability, setAbility] = React.useState()
+  const click = new Audio(pop02)
+
   const toggleBtn = () => {
     setIsOpen(!isOpen)
   }
 
   const seleted = (element, num, bool) => {
+    click.play()
     setDesc(element?.explain)
     setAbility(element?.ability)
     setWin(element?.win)
@@ -49,7 +53,10 @@ function Introduce() {
       <Header />
       <img
         onClick={() => {
-          history.replace('/gamemain')
+          {
+            history.replace('/gamemain')
+            click.play()
+          }
         }}
         style={{ position: 'absolute', margin: '4vw' }}
         src={돌아가기}
@@ -61,6 +68,7 @@ function Introduce() {
             style={box2}
             onClick={() => {
               setPage(2)
+              click.play()
             }}
           >
             <img src={title} />
@@ -71,6 +79,7 @@ function Introduce() {
             onClick={() => {
               setPage(1)
               setShow(false)
+              click.play()
             }}
           >
             <img src={title} />

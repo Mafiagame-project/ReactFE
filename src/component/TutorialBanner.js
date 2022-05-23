@@ -1,17 +1,19 @@
 import React from 'react'
 import { history } from '../redux/configureStore'
-import { Grid, Text, DotButton } from '../element/index'
+import { Text, DotButton } from '../element/index'
 import bannerGif from '../assets/image/game/배너.gif'
 import banner from '../assets/image/game/메인_배너.png'
 import styled from 'styled-components'
+import pop02 from '../assets/sound/effect/pop02.mp3'
 
 const TutorialBanner = () => {
+  const click = new Audio(pop02)
+
   return (
     <Container>
       <Banner src={bannerGif} />
-
       <Box>
-        <Text margin="5px" size="60px">
+        <Text margin="5px" size="3vw">
           MAFIYANG
         </Text>
         <P>
@@ -25,7 +27,10 @@ const TutorialBanner = () => {
         </P>
         <DotButton
           text="보러가기"
-          _onClick={() => history.push('/introduce')}
+          _onClick={() => {
+            history.push('/introduce')
+            click.play()
+          }}
         />
       </Box>
     </Container>
@@ -46,7 +51,7 @@ const Box = styled.div`
 `
 const P = styled.p`
   color: #61ff00;
-  font-size: 22px;
+  font-size: 1.8vw;
   text-shadow: 2px 2px black, 2px 2px black, 2px 2px black, 2px -1px black;
 `
 

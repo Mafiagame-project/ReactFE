@@ -10,6 +10,7 @@ import 마피양 from '../../assets/image/character/profile.jpg'
 import 기자 from '../../assets/image/character/양_기자.png'
 import 경찰 from '../../assets/image/character/경찰.png'
 import 의사 from '../../assets/image/character/의사_양.png'
+import pop from '../../assets/sound/effect/pop02.mp3'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 
@@ -20,6 +21,8 @@ const EditProfile = () => {
   const profileIdx = useSelector((state) => state.member.idx)
   const pictures = [마피양, 기자, 경찰, 의사]
   const nickName = useRef()
+
+  const click = new Audio(pop)
 
   const changeNick = () => {
     const changeNick = nickName.current.value
@@ -38,6 +41,7 @@ const EditProfile = () => {
         .then((response) => {
           console.log(response)
           alert('변경이 완료되었습니다')
+          localStorage.getItem('userNick', response.data.userNick)
           dispatch(memberActions.changeNick(response.data?.userNick))
         })
         .catch((error) => {
@@ -51,7 +55,12 @@ const EditProfile = () => {
         <Container>
           <Text size="70px">MAFIYANG</Text>
           <Grid margin="40px auto 5px">
-            <ImgOverlay onClick={() => setIsOpen(true)}>
+            <ImgOverlay
+              onClick={() => {
+                setIsOpen(true)
+                click.play()
+              }}
+            >
               <Image size="140" margin="30px auto" src={pictures[profileIdx]} />
               <Overlay className="event">
                 <Image small size="140" src={edit} classNmae="icon" />
@@ -63,7 +72,10 @@ const EditProfile = () => {
             <DotButton
               white01
               text="취소"
-              _onClick={() => history.push('/gamemain')}
+              _onClick={() => {
+                history.push('/gamemain')
+                click.play()
+              }}
             />
             <DotButton
               black01
@@ -71,6 +83,7 @@ const EditProfile = () => {
               _onClick={() => {
                 history.push('/gamemain')
                 changeNick()
+                click.play()
               }}
             />
           </Grid>

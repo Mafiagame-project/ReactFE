@@ -16,18 +16,39 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import '../styles/video.css'
 import bgm from '../assets/sound/bgm/big_helmet.mp3'
+import nightBg from '../assets/sound/effect/nightiscome.mp3'
+import morningBg from '../assets/sound/effect/morning.mp3'
+import win from '../assets/sound/effect/win.mp3'
 
 function GameRoom(props) {
   const dispatch = useDispatch()
   const socket = useSelector((state) => state.game.socket)
   const currentTime = useSelector((state) => state.game.night)
-  const startCard = useSelector((state) => state.game.card)
   const endGame = useSelector((state) => state.game.endGameNoti)
-  const [isOpen, setIsOpen] = useState(false)
-  const [getNotice, setNotice] = useState(false)
+  const startCard = useSelector((state) => state.game.card)
   const [darkMode, setDarkMode] = useState(false)
+  const [soundOn, setSoundOn] = useState(false)
 
   const startBgm = new Audio(bgm)
+  const nightBgm = new Audio(nightBg)
+  const morningBgm = new Audio(morningBg)
+  const winBgm = new Audio(win)
+
+  if (soundOn) {
+    startBgm.play()
+  } else {
+    startBgm.pause()
+  }
+
+  useEffect(() => {
+    console.log({ endGame })
+    if (endGame !== null) {
+      winBgm.play()
+      console.log('????')
+      // startBgm.currentTime = 0
+      setSoundOn(false)
+    }
+  }, [endGame])
 
   useEffect(() => {
     socket.on('isNight', (value) => {
@@ -88,21 +109,14 @@ function GameRoom(props) {
   }, [socket])
 
   useEffect(() => {
-    console.log({ endGame })
-    if (endGame !== null) {
-      console.log('????')
-      startBgm.pause()
-      startBgm.currentTime = 0
-    }
-  }, [endGame])
-
-  useEffect(() => {
     console.log(endGame)
-    if (endGame == null) {
+    if (endGame === null) {
       console.log(endGame)
-      if (currentTime === false) {
+      if (currentTime === false && endGame === null) {
+        morningBgm.play()
         dayOrNight(false)
-      } else if (currentTime === true) {
+      } else if (currentTime === true && endGame === null) {
+        nightBgm.play()
         dayOrNight(true)
       }
     }

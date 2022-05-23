@@ -7,6 +7,7 @@ import 마피양 from '../../assets/image/character/profile.jpg'
 import 기자 from '../../assets/image/character/양_기자.png'
 import 경찰 from '../../assets/image/character/경찰.png'
 import 의사 from '../../assets/image/character/의사_양.png'
+import pop from '../../assets/sound/effect/pop02.mp3'
 import { useSelector } from 'react-redux'
 
 const EditUser = () => {
@@ -15,6 +16,9 @@ const EditUser = () => {
   const recordWin = useSelector((state) => state.member.win)
   const recordLose = useSelector((state) => state.member.lose)
   const pictures = [마피양, 기자, 경찰, 의사]
+
+  const click = new Audio(pop)
+
   return (
     <>
       <Background>
@@ -33,7 +37,10 @@ const EditUser = () => {
             <DotButton
               black03
               text="프로필 변경"
-              _onClick={() => history.push('/editprofile')}
+              _onClick={() => {
+                history.push('/editprofile')
+                click.play()
+              }}
             />
           </Grid>
         </Container>

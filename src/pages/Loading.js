@@ -6,13 +6,16 @@ import { actionCreators as gameActions } from '../redux/modules/game'
 import { actionCreators as roomActions } from '../redux/modules/room'
 import { actionCreators as memberActions } from '../redux/modules/member'
 import styled from 'styled-components'
+import pop from '../assets/sound/effect/pop.wav'
 
 function Loading() {
   const dispatch = useDispatch()
   const history = useHistory()
   const token = localStorage.getItem('token')
+  const click = new Audio(pop)
 
   const entrance = () => {
+    click.play()
     history.push('/gamemain')
     const socket = io.connect('https://sparta-dongsun.shop')
     dispatch(gameActions.sendSocket(socket))
@@ -106,14 +109,20 @@ function Loading() {
               black03
               text="로그인"
               _onClick={() => {
-                history.push('/login')
+                {
+                  history.push('/login')
+                  click.play()
+                }
               }}
             />
             <DotButton
               white03
               text="회원가입"
               _onClick={() => {
-                history.push('/signup')
+                {
+                  history.push('/signup')
+                  click.play()
+                }
               }}
             />
           </>

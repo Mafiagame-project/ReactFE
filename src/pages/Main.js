@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Grid, Text, DotButton } from '../element/index'
+import { Grid, DotButton } from '../element/index'
 import { useDispatch } from 'react-redux'
 import { actionCreators as roomActions } from '../redux/modules/room'
 import Header from '../component/Header'
@@ -9,14 +9,14 @@ import TutorialBanner from '../component/TutorialBanner'
 import CreateRoomModal from '../component/modal/CreateRoomModal'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
-import { actionCreators as userAction } from '../redux/modules/user'
-import bgm from '../assets/sound/bgm/big_helmet.mp3'
+import pop from '../assets/sound/effect/pop02.mp3'
 
 function Main(props) {
   const history = useHistory()
   let socket = useSelector((state) => state.game.socket)
   const [isOpen, setIsOpen] = React.useState(false)
   const dispatch = useDispatch()
+  const click = new Audio(pop)
 
   React.useEffect(() => {
     try {
@@ -43,6 +43,7 @@ function Main(props) {
             text="방 만들기"
             _onClick={() => {
               setIsOpen(true)
+              click.play()
             }}
           />
         </Grid>

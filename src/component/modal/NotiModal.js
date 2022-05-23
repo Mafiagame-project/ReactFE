@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { Grid, Button, Text, Image } from '../../element/index'
+import { Grid, Text } from '../../element/index'
 import 늑대 from '../../assets/image/character/늑대_.png'
 import 피해자 from '../../assets/image/character/양_시민.png'
 import deadSheep from '../../assets/image/noti/기사_피해자양.gif'
@@ -82,7 +82,7 @@ function NotiModal() {
                           }}
                         />
 
-                        {voteResult == '아무도 안 죽음' ? (
+                        {voteResult === '아무도 안 죽음' ? (
                           <Text bold size="2.5vw">
                             아무도 죽지 않았습니다
                           </Text>
@@ -222,7 +222,7 @@ function NotiModal() {
                                 <Grid
                                   width="100%"
                                   height="100%"
-                                  display="grid"
+                                  isDisplay="grid"
                                   justify_item="end"
                                 >
                                   <Frame72 />
@@ -240,7 +240,11 @@ function NotiModal() {
                           </Grid>
                           <Grid padding="5px" margin="5px" margin="0 0 0 1vw">
                             <Grid height="24%" borderBottom>
-                              <img src={point} style={{ width: '6vw' }} />
+                              <img
+                                src={point}
+                                style={{ width: '6vw' }}
+                                alt="리빙포인트"
+                              />
                               <Text bold margin="0.5vw">
                                 행복한 양의 비결은 풀 뜯어먹기!
                               </Text>
@@ -337,6 +341,7 @@ function NotiModal() {
                           <img
                             src={ad}
                             style={{ width: '15vw', margin: '3vw' }}
+                            alt="광고"
                           />
                           {survivedNoti ? (
                             <>
@@ -360,6 +365,7 @@ function NotiModal() {
                                     top: '35%',
                                     left: '10%',
                                   }}
+                                  alt="말풍선"
                                 />
                                 <Grid
                                   position="absolute"
@@ -372,6 +378,7 @@ function NotiModal() {
                                     style={{
                                       width: '3vw',
                                     }}
+                                    alt="피해자"
                                   />
                                   <Text bold>
                                     생존자
@@ -424,22 +431,7 @@ const Frame94 = styled.div`
   background-size: contain;
   position: relative;
 `
-const Victim = styled.div`
-  width: 100px;
-  height: 100px;
-  background: url(${피해자});
-  background-size: cover;
-  margin: 15px;
-`
-const Rectangle84 = styled.div`
-  box-sizing: border-box;
-  width: 217.5px;
-  height: 113px;
-  left: 285.5px;
-  top: 680px;
-  background: #f7f7f7;
-  border: 1px solid #000000;
-`
+
 const Frame63 = styled.div`
   box-sizing: border-box;
   height: 28vh;
