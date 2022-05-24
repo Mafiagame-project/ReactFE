@@ -305,8 +305,8 @@ const naverLogin = (code, state) => {
 //kakao login
 const kakaoLogin = (code) => {
   return async function (dispatch, getState, { history }) {
-    apis
-      .kakaoCode(code)
+    await axios
+      .get(`${BASE_URL}/main?code=${code}`)
       .then((res) => {
         console.log(res.data)
         const accessToken = res.data.token
