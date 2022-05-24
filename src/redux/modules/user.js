@@ -313,27 +313,6 @@ const naverLogin = (code, state) => {
   }
 }
 
-//naver Login
-const naverDB = () => {
-  return async function (dispatch, getState, { history }) {
-    await axios
-      .get(`https://cors-anywhere.herokuapp.com/${BASE_URL}/naverLogin`)
-      .then((res) => {
-        const userId = res.data.naverId
-        const userNick = res.data.naverNick
-        const accessToken = res.data.token
-        localStorage.setItem('token', accessToken)
-        localStorage.setItem('userId', userId)
-        localStorage.setItem('userNick', userNick)
-        dispatch(logIn(accessToken, userId, userNick))
-        history.push('/')
-      })
-      .catch((err) => {
-        console.log('errr', err)
-      })
-  }
-}
-
 //kakao login
 const kakaoLogin = (code) => {
   return async function (dispatch, getState, { history }) {
@@ -518,7 +497,6 @@ const actionCreators = {
   emailCheck,
   nickCheck,
   deleteFriendDB,
-  naverDB,
   changeNickDB,
 }
 export { actionCreators }

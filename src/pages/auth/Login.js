@@ -40,7 +40,7 @@ function Login() {
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`
 
   const NAVER_CLIENT_ID = '9WNFXnar7frmNNTQmP4N'
-  const NAVER_CALLBACK_URI = 'https://mafiyang.com/main'
+  const NAVER_CALLBACK_URI = 'https://mafiyang.com/naverLogin/main'
 
   const state = Math.random().toString(36).substring(2, 11)
 
