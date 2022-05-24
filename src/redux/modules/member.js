@@ -74,7 +74,6 @@ const initialState = {
             window.localStorage.removeItem('token')
             window.localStorage.removeItem('userId')
             window.localStorage.removeItem('userNick')
-            window.location.reload();
           })
       }
   }

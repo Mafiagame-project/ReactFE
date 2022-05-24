@@ -19,7 +19,7 @@ function Main(props) {
   const [isOpen, setIsOpen] = React.useState(false)
   const dispatch = useDispatch()
   const click = new Audio(pop)
-
+  
   React.useEffect(() => {
     try {
       socket.on('roomList', (rooms) => {
