@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { actionCreators as gameActions } from '../redux/modules/game'
 import { actionCreators as roomActions } from '../redux/modules/room'
 import { actionCreators as memberActions } from '../redux/modules/member'
+import { actionCreators as userActions } from '../redux/modules/user'
 import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../redux/configureStore'
 import Header from '../component/Header'
@@ -33,6 +34,10 @@ function GameRoom(props) {
   // const nightBgm = new Audio(nightBg)
   const morningBgm = new Audio(morningBg)
   const winBgm = new Audio(win)
+
+  window.onbeforeunload = function () {
+    return dispatch(userActions.logOutDB())
+};
 
   if (soundOn) {
     startBgm.play()

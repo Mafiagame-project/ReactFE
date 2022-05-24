@@ -52,18 +52,50 @@ function NotiModal() {
         <>
           {endGameNoti ? ( // 게임이 끝났냐 안끝났냐
             <Modalblack>
-              <VoteNoti>
-                <Text size="2vw">게임 결과</Text>
-                {endGameNoti === '마피아가 승리하였습니다.' ? (
-                  <img src={mafiaWin} alt="win" style={{ width: '18vw' }} />
-                ) : (
-                  <img src={CitizenWin} alt="win" style={{ width: '18vw' }} />
-                )}
-
-                <Text bold size="2vw">
-                  {endGameNoti}
-                </Text>
-              </VoteNoti>
+              {
+                currentTime
+                  ? <VoteNoti>
+                    <Text size="2vw">게임 결과</Text>
+                    {endGameNoti === '마피아가 승리하였습니다.' ? (
+                      <img src={mafiaWin} alt="win" style={{ width: '18vw' }} />
+                    ) : (
+                      <img src={CitizenWin} alt="win" style={{ width: '18vw' }} />
+                    )}
+                      <>
+                          {votedJob === true ? (
+                            <Text bold size="2vw">
+                              마피아 {voteResult}가 잡혔습니다
+                            </Text>
+                          ) : (
+                            <Text bold size="2vw">
+                              시민 {voteResult}가 잡혔습니다
+                            </Text>
+                          )}
+                        </>
+                    <Text bold size="2vw">
+                      {endGameNoti}
+                    </Text>
+                  </VoteNoti>
+                  : <VoteNoti>
+                    <Text size="2vw">게임 결과</Text>
+                    {endGameNoti === '마피아가 승리하였습니다.' ? (
+                      <img src={mafiaWin} alt="win" style={{ width: '18vw' }} />
+                    ) : (
+                      <img src={CitizenWin} alt="win" style={{ width: '18vw' }} />
+                    )}
+                    <>
+                    {
+                      nightResult
+                      ? <Text size='2vw'>마피아가 {nightResult}양을 잡아먹었습니다</Text>
+                      : null
+                    }
+                    </>
+                    <Text bold size="2vw">
+                      {endGameNoti}
+                    </Text>
+                  </VoteNoti>
+              }
+             
             </Modalblack>
           ) : (
             <>

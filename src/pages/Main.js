@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { Grid, DotButton } from '../element/index'
 import { useDispatch } from 'react-redux'
 import { actionCreators as roomActions } from '../redux/modules/room'
+import { actionCreators as userActions } from '../redux/modules/user'
 import Header from '../component/Header'
 import Rooms from '../component/Rooms'
 import TutorialBanner from '../component/TutorialBanner'
@@ -30,6 +31,10 @@ function Main(props) {
       socket.disconnect()
     }
   }, [socket])
+
+  window.onbeforeunload = function () {
+    return dispatch(userActions.logOutDB())
+};
 
   return (
     <>

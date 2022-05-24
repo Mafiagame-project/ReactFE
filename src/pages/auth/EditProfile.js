@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import edit from '../../assets/icons/white/edit_w.png'
 import EditProfileModal from '../../component/modal/EditProfileModal'
 import { actionCreators as memberActions } from '../../redux/modules/member'
+import { actionCreators as userActions } from '../../redux/modules/user'
 import 마피양 from '../../assets/image/character/profile.jpg'
 import 기자 from '../../assets/image/character/양_기자.png'
 import 경찰 from '../../assets/image/character/경찰.png'
@@ -23,6 +24,9 @@ const EditProfile = () => {
   const nickName = useRef()
 
   const click = new Audio(pop)
+  window.onbeforeunload = function () {
+    return dispatch(userActions.logOutDB())
+};
 
   const changeNick = () => {
     const changeNick = nickName.current.value

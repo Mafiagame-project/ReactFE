@@ -325,10 +325,25 @@ const kakaoLogin = (code) => {
 
 const logOutDB = (user) => {
   return async function (dispatch, getState, { history }) {
-    localStorage.removeItem('token', 'userId')
-    dispatch(logOut(user))
-    alert('로그아웃 되었습니다')
-    history.replace('/login')
+    await axios({
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      method: 'GET',
+      url: `${BASE_URL}/user/logout`,
+    })
+    .then(res => {
+      console.log(res)
+      console.log('?????')
+      localStorage.removeItem('token', 'userId')
+      dispatch(logOut(user))
+      alert('로그아웃 되었습니다')
+      history.replace('/login')
+    })
+    .catch(err => {
+      console.log(err)
+    })
   }
 }
 const addFriendDB = (friendUserId) => {

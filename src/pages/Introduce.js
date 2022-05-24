@@ -8,8 +8,11 @@ import 돌아가기 from '../assets/icons/black/돌아가기.png'
 import { history } from '../redux/configureStore'
 import title from '../assets/button/튜토리얼_타이틀선택배경.png'
 import pop02 from '../assets/sound/effect/pop02.mp3'
+import { actionCreators as userActions } from '../redux/modules/user'
+import { useDispatch } from 'react-redux'
 
 function Introduce() {
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = React.useState(false)
   const [getPage, setPage] = React.useState(2)
   const [getSelect, setSelect] = React.useState('')
@@ -20,6 +23,9 @@ function Introduce() {
   const [ability, setAbility] = React.useState()
   const click = new Audio(pop02)
 
+  window.onbeforeunload = function () {
+    return dispatch(userActions.logOutDB())
+};
   const toggleBtn = () => {
     setIsOpen(!isOpen)
   }

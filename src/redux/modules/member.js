@@ -71,6 +71,9 @@ const initialState = {
           })
           .catch((error) => {
             alert('로그아웃 후 다시 로그인을 해주세요')
+            window.localStorage.removeItem('token')
+            window.localStorage.removeItem('userId')
+            window.localStorage.removeItem('userNick')
             window.location.reload();
           })
       }
