@@ -13,6 +13,7 @@ import 경찰 from '../../assets/image/character/경찰.png'
 import 의사 from '../../assets/image/character/의사_양.png'
 import pop from '../../assets/sound/effect/pop02.mp3'
 import { useDispatch, useSelector } from 'react-redux'
+import edit_b from '../../assets/icons/black/edit_b.png'
 import axios from 'axios'
 
 const EditProfile = () => {
@@ -26,9 +27,19 @@ const EditProfile = () => {
   const click = new Audio(pop)
   window.onbeforeunload = function () {
     return dispatch(userActions.logOutDB())
-};
+  }
 
-  const changeNick = () => {
+  const doubleNickCheck = () => {
+    const changeNick = nickName.current.value
+    if (changeNick === '') {
+      alert('닉네임을 입력하세요!')
+      return
+    } else {
+      dispatch(userActions.nickCheck(changeNick))
+    }
+  }
+
+  const changeNickHandler = () => {
     const changeNick = nickName.current.value
     if (changeNick.length > 10) {
       return
@@ -48,6 +59,7 @@ const EditProfile = () => {
           dispatch(memberActions.changeNick(response.data?.userNick))
         })
         .catch((error) => {
+          alert('이미 가입된 닉네임입니다!')
           console.log(error)
         })
     }
@@ -69,7 +81,10 @@ const EditProfile = () => {
                 <Image small size="140" src={edit} classNmae="icon" />
               </Overlay>
             </ImgOverlay>
-            <TitleInput ref={nickName} auth placeholder="변경할 닉네임" />
+            <Grid is_flex>
+              <TitleInput ref={nickName} auth placeholder="변경할 닉네임" />
+              <img src={edit_b} alt="중복확인" onClick={doubleNickCheck} />
+            </Grid>
           </Grid>
           <Grid isFlex_center>
             <DotButton
@@ -85,7 +100,7 @@ const EditProfile = () => {
               text="저장"
               _onClick={() => {
                 history.push('/gamemain')
-                changeNick()
+                changeNickHandler()
                 click.play()
               }}
             />

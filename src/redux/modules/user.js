@@ -283,7 +283,6 @@ const naverDB = () => {
     await axios
       .get(`https://cors-anywhere.herokuapp.com/${BASE_URL}/naverLogin`)
       .then((res) => {
-        console.log(res.data)
         const userId = res.data.naverId
         const userNick = res.data.naverNick
         const accessToken = res.data.token
@@ -301,7 +300,6 @@ const naverDB = () => {
 
 //kakao login
 const kakaoLogin = (code) => {
-  console.log(code)
   return async function (dispatch, getState, { history }) {
     await axios
       .get(`${BASE_URL}/main?code=${code}`)
@@ -333,17 +331,17 @@ const logOutDB = (user) => {
       method: 'GET',
       url: `${BASE_URL}/user/logout`,
     })
-    .then(res => {
-      console.log(res)
-      console.log('?????')
-      localStorage.removeItem('token', 'userId')
-      dispatch(logOut(user))
-      alert('로그아웃 되었습니다')
-      history.replace('/login')
-    })
-    .catch(err => {
-      console.log(err)
-    })
+      .then((res) => {
+        console.log(res)
+        console.log('?????')
+        localStorage.removeItem('token', 'userId')
+        dispatch(logOut(user))
+        alert('로그아웃 되었습니다')
+        history.replace('/login')
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 }
 const addFriendDB = (friendUserId) => {
