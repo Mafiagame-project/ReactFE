@@ -18,7 +18,6 @@ import axios from 'axios'
 
 const EditProfile = () => {
   const dispatch = useDispatch()
-  const userId = localStorage.getItem('userId')
   const [isOpen, setIsOpen] = React.useState(false)
   const profileIdx = useSelector((state) => state.member.idx)
   const pictures = [마피양, 기자, 경찰, 의사]

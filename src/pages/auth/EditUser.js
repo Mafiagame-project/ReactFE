@@ -10,10 +10,10 @@ import pop from '../../assets/sound/effect/pop02.mp3'
 import { useSelector } from 'react-redux'
 
 const EditUser = () => {
-  const userId = localStorage.getItem('userId')
   const profileIdx = useSelector((state) => state.member.idx)
   const recordWin = useSelector((state) => state.member.win)
   const recordLose = useSelector((state) => state.member.lose)
+  const userNick = useSelector((state) => state.user.userNick)
   const pictures = [마피양, 기자, 경찰, 의사]
 
   const click = new Audio(pop)
@@ -26,7 +26,7 @@ const EditUser = () => {
           <Grid isFlex_center width="300px" margin="50px auto">
             <Image size="140" src={pictures[profileIdx]} />
             <Grid isStart margin="0 0 0 40px">
-              <Text size="25px">{userId}</Text>
+              <Text size="25px">{userNick}</Text>
               <Text size="20px">
                 {recordWin}승 {recordLose}패
               </Text>

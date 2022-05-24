@@ -3,24 +3,30 @@ import './App.css'
 import { ConnectedRouter } from 'connected-react-router'
 import { Route } from 'react-router-dom'
 import { history } from '../redux/configureStore'
-import Login from '../pages/auth/Login'
-import SignUp from '../pages/auth/SignUp'
-import FindPw from '../pages/auth/FindPw'
-import Main from '../pages/Main'
-import Gameroom from '../pages/Gameroom'
+import {
+  Login,
+  SignUp,
+  FindPw,
+  Main,
+  Gameroom,
+  Loading,
+  Introduce,
+  EditUser,
+  EditProfile,
+  Tutorial,
+  MobilePage,
+} from '../pages'
 import KakaoLogin from './KakaoLogin'
 import NaverLogin from './NaverLogin'
-import Loading from '../pages/Loading'
-import Introduce from '../pages/Introduce'
-import EditUser from '../pages/auth/EditUser'
-import EditProfile from '../pages/auth/EditProfile'
-import Tutorial from '../pages/Tutorial'
-import { useDispatch } from 'react-redux'
+import { useMediaQuery } from 'react-responsive'
 
 function App() {
-  const dispatch = useDispatch()
-
-  return (
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
+  return isMobile ? (
+    <>
+      <MobilePage />
+    </>
+  ) : (
     <>
       <ConnectedRouter history={history}>
         <Route exact path="/" component={Loading} />

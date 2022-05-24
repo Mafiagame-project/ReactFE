@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { Grid, Text } from '../../element/index'
 import { actionCreators as gameActions } from '../../redux/modules/game'
 import data from '../../shared/introduce'
-import 양 from '../../assets/image/character/양_시민.png'
 
 const JobModal = () => {
   const dispatch = useDispatch()
@@ -20,6 +19,7 @@ const JobModal = () => {
     if (startCard) {
       data.forEach((element) => {
         if (player == element.name) {
+          setShadow(element.shadow)
           setJob(element.title)
           setDesc(element.explain)
           setImg(element.img)
@@ -28,7 +28,7 @@ const JobModal = () => {
       })
       setTimeout(() => {
         dispatch(gameActions.startCard(null))
-      }, 6000)
+      }, 8000)
     }
   }, [startCard])
 

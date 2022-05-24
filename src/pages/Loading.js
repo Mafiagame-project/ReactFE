@@ -28,6 +28,7 @@ function Loading() {
   //     window.location = '/'
   //   }
   // }, [])
+
   const entrance = () => {
     click.play()
     history.push('/gamemain')
@@ -64,7 +65,7 @@ function Loading() {
       dispatch(gameActions.startCard(true))
       dispatch(roomActions.startCheck(true))
       startBgm.volume = 0.5
-      // startBgm.play()
+      startBgm.play()
     })
 
     socket.on('dayVoteResult', (value) => {
@@ -94,6 +95,7 @@ function Loading() {
       dispatch(gameActions.noticeEndGame(data?.msg))
       dispatch(roomActions.startCheck(null))
       startBgm.currentTime = 0
+      startBgm.pause()
     })
 
     socket?.on('reporterOver', () => {
