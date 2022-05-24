@@ -6,8 +6,8 @@ import { produce } from 'immer'
 import axios from 'axios'
 import { Api } from '../../shared/api'
 
-const BASE_URL = 'https://nhseung.shop'
-// const BASE_URL = 'https://sparta-dongsun.shop'
+// const BASE_URL = 'https://nhseung.shop'
+const BASE_URL = 'https://sparta-dongsun.shop'
 
 //Action
 const LOG_IN = 'LOG_IN'
