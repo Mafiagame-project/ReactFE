@@ -44,24 +44,7 @@ const EditProfile = () => {
     if (changeNick.length > 10) {
       return
     } else {
-      axios({
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-        data: { changeNick },
-        url: 'https://sparta-dongsun.shop/user/changeNick',
-      })
-        .then((response) => {
-          alert('변경이 완료되었습니다')
-          localStorage.getItem('userNick', response.data.userNick)
-          dispatch(memberActions.changeNick(response.data?.userNick))
-        })
-        .catch((error) => {
-          alert('이미 가입된 닉네임입니다!')
-          console.log(error)
-        })
+      dispatch(userActions.changeNickDB(changeNick))
     }
   }
   return (
@@ -81,7 +64,7 @@ const EditProfile = () => {
                 <Image small size="140" src={edit} classNmae="icon" />
               </Overlay>
             </ImgOverlay>
-            <Grid is_flex>
+            <Grid isFlex_center>
               <TitleInput ref={nickName} auth placeholder="변경할 닉네임" />
               <img src={edit_b} alt="중복확인" onClick={doubleNickCheck} />
             </Grid>
@@ -99,7 +82,6 @@ const EditProfile = () => {
               black01
               text="저장"
               _onClick={() => {
-                history.push('/gamemain')
                 changeNickHandler()
                 click.play()
               }}

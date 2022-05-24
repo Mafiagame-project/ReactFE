@@ -6,8 +6,8 @@ import { produce } from 'immer'
 import axios from 'axios'
 import { Api } from '../../shared/api'
 
-// const BASE_URL = 'https://nhseung.shop'
-const BASE_URL = 'https://sparta-dongsun.shop'
+const BASE_URL = 'https://nhseung.shop'
+// const BASE_URL = 'https://sparta-dongsun.shop'
 
 //Action
 const LOG_IN = 'LOG_IN'
@@ -17,14 +17,23 @@ const SET_USER = 'SET_USER'
 const GET_FRIEND = 'GET_FRIEND'
 const ADD_FRIEND = 'ADD_FRIEND'
 const DELETE_FRIEND = 'DELETE_FRIEND'
+const CHANGE_NICK = 'CHANGE_NICK'
+
 //Action Creators
-const logIn = createAction(LOG_IN, (token, user) => ({ token, user }))
+const logIn = createAction(LOG_IN, (token, userId, userNick) => ({
+  token,
+  userId,
+  userNick,
+}))
 const signUp = createAction(SIGN_UP, (user) => ({ user }))
 const logOut = createAction(LOG_OUT, (user) => ({ user }))
 const setUser = createAction(SET_USER, (user) => ({ user }))
 const getFriend = createAction(GET_FRIEND, (list) => ({ list }))
 const addFriend = createAction(ADD_FRIEND, (list) => ({ list }))
 const deleteFriend = createAction(DELETE_FRIEND, (list) => ({ list }))
+const changeNickname = createAction(CHANGE_NICK, (userNick) => ({
+  userNick,
+}))
 
 //initialState
 const initialState = {
@@ -254,6 +263,33 @@ const changePwDB = (dic) => {
   }
 }
 
+const changeNickDB = (changeNick) => {
+  console.log(changeNick)
+  return async function (dispatch, getState, { history }) {
+    axios({
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      data: { changeNick },
+      url: `${BASE_URL}/user/changeNick`,
+    })
+      .then((response) => {
+        alert('변경이 완료되었습니다')
+        console.log(response.data.userNick)
+        const userNick = response.data.userNick
+        localStorage.getItem('userNick', userNick)
+        dispatch(changeNickname(userNick))
+        history.push('/gamemain')
+      })
+      .catch((error) => {
+        alert('이미 가입된 닉네임입니다!')
+        console.log(error)
+      })
+  }
+}
+
 //naver Login
 const naverLogin = (code, state) => {
   console.log(code, state)
@@ -425,6 +461,7 @@ export default handleActions(
   {
     [LOG_IN]: (state, action) =>
       produce(state, (draft) => {
+        console.log(action.payload)
         draft.userId = action.payload.userId
         draft.token = action.payload.token
         draft.userNick = action.payload.userNick
@@ -458,6 +495,10 @@ export default handleActions(
         )
         draft.friendList = [...list]
       }),
+    [CHANGE_NICK]: (state, action) =>
+      produce(state, (draft) => {
+        draft.userNick = action.payload.userNick
+      }),
   },
   initialState,
 )
@@ -478,5 +519,6 @@ const actionCreators = {
   nickCheck,
   deleteFriendDB,
   naverDB,
+  changeNickDB,
 }
 export { actionCreators }

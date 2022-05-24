@@ -22,10 +22,10 @@ function Header(props) {
   const profileIdx = useSelector((state) => state.member.idx)
   const recordWin = useSelector((state) => state.member.win)
   const recordLose = useSelector((state) => state.member.lose)
-  const changeNick = useSelector((state) => state.member.nickName)
+  const userNick = useSelector((state) => state.user.userNick)
   const pictures = [마피양, 기자, 경찰, 의사]
   const dispatch = useDispatch()
-  const userNick = localStorage.getItem('userNick')
+  const UserNick = localStorage.getItem('userNick')
   const [isOpen, setIsOpen] = React.useState(false)
   const [soundOn, setSoundOn] = React.useState(false)
   let location = window.location.href
@@ -60,15 +60,9 @@ function Header(props) {
             <Grid isFlex_start>
               <Image size={50} src={pictures[profileIdx]} />
               <Grid margin="0 22px" className="headerText" width="100px">
-                {changeNick == null ? (
-                  <Text margin="0px" color="#fff">
-                    {userNick}
-                  </Text>
-                ) : (
-                  <Text margin="0px" color="#fff">
-                    {changeNick}
-                  </Text>
-                )}
+                <Text margin="0px" color="#fff">
+                  {userNick}
+                </Text>
                 <Text margin="0px" color="#fff">
                   {recordWin}승 {recordLose}패
                 </Text>
