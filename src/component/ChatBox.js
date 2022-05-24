@@ -18,6 +18,9 @@ const ChatBox = ({ socket, currentTime }) => {
   const send = () => {
     // 채팅을 보낼 때 호출되는 함수
     let chatData = chatting.current.value
+    if (chatData === '') {
+      return null
+    }
     socket.emit('msg', chatData)
     chatting.current.value = ''
   }
@@ -36,7 +39,7 @@ const ChatBox = ({ socket, currentTime }) => {
   }, [socket])
 
   return (
-    <Grid padding="5vh 0 0 0" center width="">
+    <Grid padding="5vh 0 0 0" center width="25%" margin="0 5vw 0 2vw">
       <Timer />
       <ChatContainer>
         {currentTime && endGame == null && playerJob?.playerJob !== 'mafia' ? (
@@ -81,8 +84,6 @@ const ChatBox = ({ socket, currentTime }) => {
 const ChatContainer = styled.div`
   position: relative;
   height: 70vh;
-  width: 32%;
-  margin: 0 auto;
   min-width: 24vw;
   box-shadow: 0px 4px 35px 4px rgba(162, 162, 162, 0.25);
   box-sizing: border-box;
