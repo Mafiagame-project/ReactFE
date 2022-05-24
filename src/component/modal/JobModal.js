@@ -27,7 +27,7 @@ const JobModal = () => {
       })
       setTimeout(() => {
         dispatch(gameActions.startCard(null))
-      }, 4000)
+      }, 6000)
     }
   }, [startCard])
 
