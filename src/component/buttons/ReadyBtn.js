@@ -1,20 +1,19 @@
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { DotButton } from '../../element/index'
-import pop02 from '../../assets/sound/effect/pop02.mp3'
+import { clickSF } from '../../element/Sound'
 
 function ReadyBtn() {
   const socket = useSelector((state) => state.game.socket)
   const [getReady, setReady] = useState(false)
-  const click = new Audio(pop02)
 
   const readyGame = () => {
     if (getReady === false) {
-      click.play()
+      clickSF.play()
       socket.emit('ready', true)
       socket.off('ready')
     } else {
-      click.play()
+      clickSF.play()
       socket.emit('ready', false)
       socket.off('ready')
     }

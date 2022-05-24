@@ -4,6 +4,7 @@ import { DotButton } from '../../element/index'
 import VoteModal from '../modal/VoteModal'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { clickSF, deniedSF } from '../../element/Sound'
 
 const VoteBtn = () => {
   const [voteOpen, setVoteOpen] = React.useState(false)
@@ -16,6 +17,7 @@ const VoteBtn = () => {
       killed = []
     }
     if (killed?.includes(currentNick)) {
+      deniedSF.play()
       setVoteOpen(false)
       toast.warning('당신은 죽었기때문에 선택할 수 없습니다', {
         position: toast.POSITION.TOP_LEFT,
@@ -23,6 +25,7 @@ const VoteBtn = () => {
         autoClose: 2500,
       })
     } else {
+      clickSF.play()
       setVoteOpen(true)
     }
   }

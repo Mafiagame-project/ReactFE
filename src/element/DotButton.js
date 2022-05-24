@@ -31,7 +31,7 @@ const DotButton = (props) => {
     return (
       <>
         <ButtonBox onClick={_onClick}>
-          <img src={blackBtn01} />
+          <img src={blackBtn01} alt="btn" />
           <button style={{ display: 'none ' }} />
           <WhiteText>{text}</WhiteText>
         </ButtonBox>
@@ -43,7 +43,7 @@ const DotButton = (props) => {
     return (
       <>
         <ButtonBox onClick={_onClick}>
-          <img src={blackBtn02} />
+          <img src={blackBtn02} alt="btn" />
           <button style={{ display: 'none' }} />
           <WhiteText>{text}</WhiteText>
         </ButtonBox>
@@ -54,7 +54,7 @@ const DotButton = (props) => {
     return (
       <>
         <ButtonBox onClick={_onClick}>
-          <img src={blackBtn03} />
+          <img src={blackBtn03} alt="btn" />
           <button style={{ display: 'none' }} />
           <WhiteText>{text}</WhiteText>
         </ButtonBox>
@@ -65,7 +65,7 @@ const DotButton = (props) => {
     return (
       <>
         <ButtonBox onClick={_onClick}>
-          <img src={blackBtn04} />
+          <img src={blackBtn04} alt="btn" />
           <button style={{ display: 'none' }} />
           <WhiteText>{text}</WhiteText>
         </ButtonBox>
@@ -77,7 +77,7 @@ const DotButton = (props) => {
     return (
       <>
         <ButtonBox onClick={_onClick}>
-          <img src={whiteBtn01} />
+          <img src={whiteBtn01} alt="btn" />
           <button style={{ display: 'none' }} />
           <BlackText>{text}</BlackText>
         </ButtonBox>
@@ -88,7 +88,7 @@ const DotButton = (props) => {
     return (
       <>
         <ButtonBox onClick={_onClick}>
-          <img src={whiteBtn02} />
+          <img src={whiteBtn02} alt="btn" />
           <button style={{ display: 'none' }} />
           <BlackText>{text}</BlackText>
         </ButtonBox>
@@ -99,7 +99,7 @@ const DotButton = (props) => {
     return (
       <>
         <ButtonBox onClick={_onClick}>
-          <img src={whiteBtn03} />
+          <img src={whiteBtn03} alt="btn" />
           <button style={{ display: 'none' }} />
           <BlackText>{text}</BlackText>
         </ButtonBox>
@@ -110,7 +110,7 @@ const DotButton = (props) => {
     return (
       <>
         <ButtonBox onClick={_onClick}>
-          <img src={whiteBtn04} />
+          <img src={whiteBtn04} alt="btn" />
           <button style={{ display: 'none' }} />
           <BlackText>{text}</BlackText>
         </ButtonBox>
@@ -122,7 +122,7 @@ const DotButton = (props) => {
     return (
       <>
         <TestButton type={_type}>
-          <img src={signupBtn} />
+          <img src={signupBtn} alt="btn" />
         </TestButton>
       </>
     )
@@ -131,7 +131,7 @@ const DotButton = (props) => {
   return (
     <>
       <ButtonBox onClick={_onClick}>
-        <img src={twoBtn} />
+        <img src={twoBtn} alt="btn" />
         <button type={_type} style={{ display: 'none', width: '140px' }} />
         <TwoBlackText>{text}</TwoBlackText>
       </ButtonBox>

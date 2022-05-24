@@ -1,11 +1,12 @@
 //kakao
-const REST_API_KEY = '6c9c16d27b420108ed23421696dfba3b'
-const REDIRECT_URI = 'https://www.mafiyang.com/main'
+const REST_API_KEY = process.env.REACT_APP_REST_API_KEY
+
+const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI
 export const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`
 
 //naver
-const NAVER_CLIENT_ID = '9WNFXnar7frmNNTQmP4N'
-const NAVER_CALLBACK_URI = 'http://localhost:3000/naverLogin/main'
+const NAVER_CLIENT_ID = process.env.REACT_APP_NAVER_CLIENT_ID
+const NAVER_CALLBACK_URI = process.env.REACT_APP_NAVER_CALLBACK_URI
 
 const state = Math.random().toString(36).substring(2, 11)
 

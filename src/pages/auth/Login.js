@@ -1,22 +1,19 @@
 import React from 'react'
 import { history } from '../../redux/configureStore'
-import { Grid, Text, Image, Input, DotButton } from '../../element/index'
+import { Grid, Text, Input, DotButton } from '../../element/index'
 import { actionCreators as userActions } from '../../redux/modules/user'
 import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from '../../shared/OAuth'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import kakao from '../../assets/icons/social/kakaoLogin.png'
 import naver from '../../assets/icons/social/naverLogin.png'
-import pop from '../../assets/sound/effect/pop02.mp3'
-import denied from '../../assets/sound/effect/denied02.mp3'
 import logo from '../../assets/logo/기본값.png'
+import { clickSF, deniedSF } from '../../element/Sound'
 
 function Login() {
   const dispatch = useDispatch()
   const [logins, setLogins] = React.useState({})
   const [submitted, setSubmitted] = React.useState(false)
-  const click = new Audio(pop)
-  const alertBg = new Audio(denied)
 
   const handleChange = (e) => {
     const id = e.target.id
@@ -26,12 +23,12 @@ function Login() {
 
   const handleLogin = () => {
     if (!logins.id || !logins.pw) {
-      alertBg.play()
+      deniedSF.play()
       setSubmitted(true)
       alert('빈칸을 채워주세요!')
       return
     }
-    click.play()
+    clickSF.play()
     dispatch(userActions.loginDB(logins))
   }
 

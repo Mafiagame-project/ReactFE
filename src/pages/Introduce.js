@@ -7,31 +7,29 @@ import Tutorial from './Tutorial'
 import 돌아가기 from '../assets/icons/black/돌아가기.png'
 import { history } from '../redux/configureStore'
 import title from '../assets/button/튜토리얼_타이틀선택배경.png'
-import pop02 from '../assets/sound/effect/pop02.mp3'
+import { clickSF } from '../element/Sound'
 import { actionCreators as userActions } from '../redux/modules/user'
 import { useDispatch } from 'react-redux'
 
 function Introduce() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const [isOpen, setIsOpen] = React.useState(false)
   const [getPage, setPage] = React.useState(2)
-  const [getSelect, setSelect] = React.useState('')
   const [getShow, setShow] = React.useState(false)
   const [desc, setDesc] = React.useState()
   const [win, setWin] = React.useState()
   const [lose, setLose] = React.useState()
   const [ability, setAbility] = React.useState()
-  const click = new Audio(pop02)
 
   window.onbeforeunload = function () {
     return dispatch(userActions.logOutDB())
-};
+  }
   const toggleBtn = () => {
     setIsOpen(!isOpen)
   }
 
   const seleted = (element, num, bool) => {
-    click.play()
+    clickSF.play()
     setDesc(element?.explain)
     setAbility(element?.ability)
     setWin(element?.win)
@@ -59,7 +57,7 @@ function Introduce() {
       <img
         onClick={() => {
           history.replace('/gamemain')
-          click.play()
+          clickSF.play()
         }}
         alt="돌아가기"
         style={{ position: 'absolute', margin: '4vw' }}
@@ -72,7 +70,7 @@ function Introduce() {
             style={box2}
             onClick={() => {
               setPage(2)
-              click.play()
+              clickSF.play()
             }}
           >
             <img src={title} alt="타이틀" />
@@ -83,7 +81,7 @@ function Introduce() {
             onClick={() => {
               setPage(1)
               setShow(false)
-              click.play()
+              clickSF.play()
             }}
           >
             <img src={title} alt="타이틀" />

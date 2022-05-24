@@ -4,11 +4,11 @@ import { produce } from 'immer'
 
 //Axios
 import axios from 'axios'
-// import { Api } from '../../shared/api'
+import { apis } from '../../shared/api'
 
-// const BASE_URL = 'https://nhseung.shop'
-const BASE_URL = 'https://sparta-dongsun.shop'
+const BASE_URL = process.env.REACT_APP_BASE_URL
 
+console.log(BASE_URL)
 //Action
 const LOG_IN = 'LOG_IN'
 const LOG_OUT = 'LOG_OUT'
@@ -107,6 +107,7 @@ const signupDB = (dic) => {
 
 const idCheck = (id) => {
   return async function (dispatch, useState, { history }) {
+    apis.checkId(id)
     await axios
       .post(
         `${BASE_URL}/user/idCheck`,
@@ -282,8 +283,8 @@ const changeNickDB = (changeNick) => {
 const naverLogin = (code, state) => {
   console.log(code, state)
   return async function (dispatch, getState, { history }) {
-    await axios
-      .get(`${BASE_URL}/naverLogin/main?code=${code}&state=${state}`)
+    apis
+      .naverCode(code, state)
       .then((res) => {
         console.log(res.data)
         const userId = res.data.naverId
@@ -304,8 +305,8 @@ const naverLogin = (code, state) => {
 //kakao login
 const kakaoLogin = (code) => {
   return async function (dispatch, getState, { history }) {
-    await axios
-      .get(`${BASE_URL}/main?code=${code}`)
+    apis
+      .kakaoCode(code)
       .then((res) => {
         console.log(res.data)
         const accessToken = res.data.token
@@ -316,24 +317,18 @@ const kakaoLogin = (code) => {
         localStorage.setItem('userId', userId)
         localStorage.setItem('userNick', userNick)
         dispatch(logIn(accessToken, userId, userNick))
-        history.push('/')
+        history.replace('/')
       })
       .catch((err) => {
-        console.log('에러에러', err)
+        console.log('카카오에러에러', err)
       })
   }
 }
 
 const logOutDB = (user) => {
   return async function (dispatch, getState, { history }) {
-    await axios({
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-      method: 'GET',
-      url: `${BASE_URL}/user/logout`,
-    })
+    apis
+      .logOut(user)
       .then((res) => {
         console.log(res)
         console.log('?????')

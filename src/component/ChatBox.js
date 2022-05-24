@@ -1,7 +1,7 @@
 import React from 'react'
 import Chatdiv from './Chatdiv'
 import Timer from './Timer'
-import { Grid, Text, Button } from '../element/index'
+import { Grid } from '../element/index'
 import lock from '../assets/icons/white/자물쇠(백).png'
 
 import styled from 'styled-components'
@@ -26,7 +26,7 @@ const ChatBox = ({ socket, currentTime }) => {
   }
 
   const onKeyPress = (e) => {
-    if (e.key == 'Enter') {
+    if (e.key === 'Enter') {
       send()
     }
   }

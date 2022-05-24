@@ -3,12 +3,11 @@ import { Grid, Text } from '../../element/index'
 import ExitModal from '../modal/ExitModal'
 import exit from '../../assets/icons/black/exit_game.png'
 import exitWhite from '../../assets/icons/white/exit.png'
-import exitsound from '../../assets/sound/effect/denied02.mp3'
+import { deniedSF } from '../../element/Sound'
 
 const ExitBtn = (props) => {
   const [exitOpen, setExitOpen] = React.useState(false)
   const { night } = props
-  const exitBg = new Audio(exitsound)
 
   if (night) {
     return (
@@ -18,7 +17,7 @@ const ExitBtn = (props) => {
             src={exitWhite}
             alt="나가기"
             onClick={() => {
-              exitBg.play()
+              deniedSF.play()
               setExitOpen(true)
             }}
           />
@@ -37,7 +36,7 @@ const ExitBtn = (props) => {
           src={exit}
           alt="나가기"
           onClick={() => {
-            exitBg.play()
+            deniedSF.play()
             setExitOpen(true)
           }}
         />

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import badge from '../assets/image/설문배너.png'
+import badge from '../assets/image/page/설문배너.png'
 
 const SurveyBadge = () => {
   return (

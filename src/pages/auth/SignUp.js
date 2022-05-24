@@ -7,12 +7,12 @@ import { actionCreators as userActions } from '../../redux/modules/user'
 import { FormikConsumer, useFormik } from 'formik'
 import * as yup from 'yup'
 import { idVal, emailVal, nickVal, pwVal } from '../../shared/Validation'
-import pop from '../../assets/sound/effect/pop02.mp3'
+import { clickSF, deniedSF, accessSF } from '../../element/Sound'
 import edit from '../../assets/icons/black/edit_b.png'
 
 function SignUp() {
   const dispatch = useDispatch()
-  const click = new Audio(pop)
+
   //formik의 formprops 역할을 해주는 데이터
   const formik = useFormik({
     initialValues: {
@@ -37,26 +37,35 @@ function SignUp() {
 
   const doubleIdCheck = () => {
     if (formik.values.id === '') {
+      deniedSF.play()
       alert('아이디를 입력하세요!')
+
       return
     } else {
+      clickSF.play()
       dispatch(userActions.idCheck(formik.values.id))
     }
   }
 
   const doubleNickCheck = () => {
     if (formik.values.nick === '') {
+      deniedSF.play()
       alert('닉네임을 입력하세요!')
+
       return
     } else {
+      clickSF.play()
       dispatch(userActions.nickCheck(formik.values.nick))
     }
   }
   const doubleEmailCheck = () => {
     if (formik.values.email === '') {
+      deniedSF.play()
       alert('이메일을 입력하세요!')
+
       return
     } else {
+      clickSF.play()
       dispatch(userActions.emailCheck(formik.values.email))
     }
   }
@@ -141,12 +150,12 @@ function SignUp() {
               white01
               text="취소"
               _onClick={() => {
-                click.play()
+                clickSF.play()
                 history.push('/login')
               }}
             />
 
-            <DotButton test01 _type="submit" _onClick={() => click.play()} />
+            <DotButton test01 _type="submit" _onClick={() => clickSF.play()} />
           </Grid>
         </Form>
       </Grid>

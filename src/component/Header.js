@@ -7,14 +7,12 @@ import { actionCreators as userActions } from '../redux/modules/user'
 import { actionCreators as memberActions } from '../redux/modules/member'
 import FriendsListModal from './modal/FriendsListModal'
 import friendIcon from '../assets/icons/white/친구(백).png'
-import soundIcon from '../assets/icons/white/소리(백).png'
 import LogoutIcon from '../assets/icons/white/로그아웃(백).png'
-import 마피양 from '../assets/image/character/profile.jpg'
-import 기자 from '../assets/image/character/양_기자.png'
-import 경찰 from '../assets/image/character/경찰.png'
-import 의사 from '../assets/image/character/의사_양.png'
-import pop from '../assets/sound/effect/pop02.mp3'
-import denied from '../assets/sound/effect/denied02.mp3'
+import 마피양 from '../assets/image/character/profile/profile01.jpg'
+import 기자 from '../assets/image/character/profile/profile04.jpeg'
+import 경찰 from '../assets/image/character/profile/profile03.png'
+import 의사 from '../assets/image/character/profile/profile05.png'
+import { clickSF, deniedSF } from '../element/Sound'
 import logo from '../assets/logo/메인페이지.png'
 
 function Header(props) {
@@ -27,14 +25,11 @@ function Header(props) {
   const dispatch = useDispatch()
   const UserNick = localStorage.getItem('userNick')
   const [isOpen, setIsOpen] = React.useState(false)
-  const [soundOn, setSoundOn] = React.useState(false)
   let location = window.location.href
   const where = location.includes('gameroom')
-  const click = new Audio(pop)
-  const alertBgm = new Audio(denied)
 
   const handleLogOut = () => {
-    click.play()
+    clickSF.play()
     dispatch(userActions.logOutDB())
   }
 
@@ -59,7 +54,7 @@ function Header(props) {
           <Grid flex_column>
             <Grid isFlex_start>
               <Image size={50} src={pictures[profileIdx]} />
-              <Grid margin="0 22px" className="headerText" width="100px">
+              <Grid margin="0 22px" width="100px">
                 {!userNick ? (
                   <Text margin="0px" color="#fff">
                     {UserNick}
@@ -80,7 +75,7 @@ function Header(props) {
                     color="#aaa"
                     _onClick={() => {
                       alert('현재 위치에서는 불가능합니다')
-                      alertBgm.play()
+                      deniedSF.play()
                     }}
                   >
                     수정하기
@@ -92,7 +87,7 @@ function Header(props) {
                     color="#aaa"
                     _onClick={() => {
                       history.push('/edituser')
-                      click.play()
+                      clickSF.play()
                     }}
                   >
                     수정하기
@@ -102,21 +97,13 @@ function Header(props) {
             </Grid>
           </Grid>
           <Grid is_flex>
-            <Grid center margin="0 10px" _cursor>
-              <Icons src={soundIcon} />
-              <Text margin="0" color="#fff" size="12px">
-                Sound
-              </Text>
-            </Grid>
             <Grid
               _cursor
               center
               margin="0 10px"
               _onClick={() => {
-                {
-                  setIsOpen(true)
-                  click.play()
-                }
+                setIsOpen(true)
+                clickSF.play()
               }}
             >
               <Icons src={friendIcon} />
@@ -131,7 +118,7 @@ function Header(props) {
                 margin="0 10px"
                 _onClick={() => {
                   alert('현재 위치에서는 불가능합니다')
-                  alertBgm.play()
+                  deniedSF.play()
                 }}
               >
                 <Icons src={LogoutIcon} />
@@ -182,7 +169,7 @@ const Icons = styled.img`
 `
 
 const Rightside = styled.div`
-  width: 35vw;
+  width: 24vw;
   height: 100%;
   display: flex;
   align-items: center;

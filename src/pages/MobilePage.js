@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import mobileimg from '../assets/image/mobile.jpg'
+import mobileimg from '../assets/image/page/mobile.jpg'
 
 const MobilePage = () => {
   return (

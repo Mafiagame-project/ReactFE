@@ -7,40 +7,37 @@ import { Grid, Text } from '../element/index'
 import styled from 'styled-components'
 import sheep from '../assets/image/character/양_시민.png'
 import reload from '../assets/icons/black/새로고침.png'
-import pop from '../assets/sound/effect/pop.wav'
-import pop02 from '../assets/sound/effect/pop02.mp3'
-import 설문 from '../assets/image/tutorial/설문.png'
-import { Link } from 'react-router-dom'
-
+import { clickSF, accessSF, deniedSF } from '../element/Sound'
 const Rooms = (props) => {
   const dispatch = useDispatch()
   const RoomList = useSelector((state) => state.room.rooms)
   const socket = useSelector((state) => state.game.socket)
   const currentId = localStorage.getItem('userNick')
 
-  const click = new Audio(pop)
-  const click02 = new Audio(pop02)
-
   const entrance = (roomInfo) => {
     let roomId = roomInfo.roomId
     // 방에 입장시 생기는 이벤트
     if (roomInfo.start === true) {
       alert('게임이 시작되었습니다')
+      deniedSF.play()
       return
     } else {
       if (roomInfo.currentPeople.length >= parseInt(roomInfo.roomPeople)) {
+        deniedSF.play()
         alert('정원이 꽉찼습니다')
         return
       } else {
         if (roomInfo.password) {
+          clickSF.play()
           let pwdInput = prompt('비밀번호를 입력해주세요')
           if (pwdInput === parseInt(roomInfo.password)) {
             history.push(`/gameroom/${roomId}`)
             dispatch(gameActions.sendSocket(socket))
             dispatch(roomActions.currentRoom(roomInfo))
             socket.emit('joinRoom', roomId)
-            click.play()
+            accessSF.play()
           } else {
+            deniedSF.play()
             alert('비밀번호가 틀림 ㅋ')
             return null
           }
@@ -49,14 +46,14 @@ const Rooms = (props) => {
           dispatch(gameActions.sendSocket(socket))
           dispatch(roomActions.currentRoom(roomInfo))
           socket.emit('joinRoom', roomId)
-          click.play()
+          accessSF.play()
         }
       }
     }
   }
 
   const roomReload = () => {
-    click02.play()
+    clickSF.play()
     socket.emit('roomList')
   }
   React.useEffect(() => {

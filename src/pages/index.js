@@ -4,6 +4,7 @@ import Introduce from './Introduce'
 import Gameroom from './Gameroom'
 import MobilePage from './MobilePage'
 import Tutorial from './Tutorial'
+import NotFound from './NotFound'
 import EditUser from './auth/EditUser'
 import EditProfile from './auth/EditProfile'
 import FindPw from './auth/FindPw'
@@ -22,4 +23,5 @@ export {
   FindPw,
   Login,
   SignUp,
+  NotFound,
 }

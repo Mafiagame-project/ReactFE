@@ -6,7 +6,7 @@ import 마피양 from '../../assets/image/character/profile.jpg'
 import 기자 from '../../assets/image/character/양_기자.png'
 import 경찰 from '../../assets/image/character/경찰.png'
 import 의사 from '../../assets/image/character/의사_양.png'
-import pop from '../../assets/sound/effect/pop02.mp3'
+import { clickSF } from '../../element/Sound'
 import { useSelector } from 'react-redux'
 
 const EditUser = () => {
@@ -15,8 +15,6 @@ const EditUser = () => {
   const recordLose = useSelector((state) => state.member.lose)
   const userNick = useSelector((state) => state.user.userNick)
   const pictures = [마피양, 기자, 경찰, 의사]
-
-  const click = new Audio(pop)
 
   return (
     <>
@@ -38,7 +36,7 @@ const EditUser = () => {
               text="프로필 변경"
               _onClick={() => {
                 history.push('/editprofile')
-                click.play()
+                clickSF.play()
               }}
             />
           </Grid>

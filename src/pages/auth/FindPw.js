@@ -2,6 +2,7 @@ import React from 'react'
 import { Input, Grid, DotButton, Text } from '../../element/index'
 import { useDispatch } from 'react-redux'
 import { actionCreators as userActions } from '../../redux/modules/user'
+import { clickSF, deniedSF } from '../../element/Sound'
 import styled from 'styled-components'
 
 const FindPw = () => {
@@ -19,14 +20,17 @@ const FindPw = () => {
   const handleFindPw = () => {
     if (!findPw.email || !findPw.id) {
       setSubmitted(true)
+      deniedSF.play()
       alert('빈칸을 채워주세요!')
       return
     }
+    clickSF.play()
     setFindSubmit(true)
     dispatch(userActions.findPwDB(findPw))
   }
 
   const handleChangePw = () => {
+    clickSF.play()
     dispatch(userActions.changePwDB(findPw))
   }
 

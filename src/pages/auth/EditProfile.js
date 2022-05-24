@@ -1,20 +1,17 @@
 import React, { useRef } from 'react'
-import Header from '../../component/Header'
 import { history } from '../../redux/configureStore'
-import { Text, Grid, DotButton, Image, Input } from '../../element/index'
+import { Text, Grid, DotButton, Image } from '../../element/index'
 import styled from 'styled-components'
 import edit from '../../assets/icons/white/edit_w.png'
 import EditProfileModal from '../../component/modal/EditProfileModal'
-import { actionCreators as memberActions } from '../../redux/modules/member'
 import { actionCreators as userActions } from '../../redux/modules/user'
 import 마피양 from '../../assets/image/character/profile.jpg'
 import 기자 from '../../assets/image/character/양_기자.png'
 import 경찰 from '../../assets/image/character/경찰.png'
 import 의사 from '../../assets/image/character/의사_양.png'
-import pop from '../../assets/sound/effect/pop02.mp3'
+import { clickSF, deniedSF } from '../../element/Sound'
 import { useDispatch, useSelector } from 'react-redux'
 import edit_b from '../../assets/icons/black/edit_b.png'
-import axios from 'axios'
 
 const EditProfile = () => {
   const dispatch = useDispatch()
@@ -23,7 +20,6 @@ const EditProfile = () => {
   const pictures = [마피양, 기자, 경찰, 의사]
   const nickName = useRef()
 
-  const click = new Audio(pop)
   window.onbeforeunload = function () {
     return dispatch(userActions.logOutDB())
   }
@@ -31,9 +27,11 @@ const EditProfile = () => {
   const doubleNickCheck = () => {
     const changeNick = nickName.current.value
     if (changeNick === '') {
+      deniedSF.play()
       alert('닉네임을 입력하세요!')
       return
     } else {
+      clickSF.play()
       dispatch(userActions.nickCheck(changeNick))
     }
   }
@@ -55,7 +53,7 @@ const EditProfile = () => {
             <ImgOverlay
               onClick={() => {
                 setIsOpen(true)
-                click.play()
+                clickSF.play()
               }}
             >
               <Image size="140" margin="30px auto" src={pictures[profileIdx]} />
@@ -74,7 +72,7 @@ const EditProfile = () => {
               text="취소"
               _onClick={() => {
                 history.push('/gamemain')
-                click.play()
+                clickSF.play()
               }}
             />
             <DotButton
@@ -82,7 +80,7 @@ const EditProfile = () => {
               text="저장"
               _onClick={() => {
                 changeNickHandler()
-                click.play()
+                clickSF.play()
               }}
             />
           </Grid>

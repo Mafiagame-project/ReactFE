@@ -2,7 +2,7 @@ import React from 'react'
 import { history } from '../redux/configureStore'
 import { Text, DotButton } from '../element/index'
 import bannerGif from '../assets/image/game/배너.gif'
-import banner from '../assets/image/game/메인_배너.png'
+// import banner from '../assets/image/game/메인_배너.png'
 import styled from 'styled-components'
 import pop02 from '../assets/sound/effect/pop02.mp3'
 

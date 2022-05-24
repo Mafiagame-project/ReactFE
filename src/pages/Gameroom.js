@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { Grid } from '../element/index'
 import { useEffect, useState } from 'react'
 import { actionCreators as gameActions } from '../redux/modules/game'
 import { actionCreators as roomActions } from '../redux/modules/room'
@@ -16,10 +15,7 @@ import ExitBtn from '../component/buttons/ExitBtn'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import '../styles/video.css'
-import bgm from '../assets/sound/bgm/big_helmet.mp3'
-import nightBg from '../assets/sound/effect/nightiscome.mp3'
-import morningBg from '../assets/sound/effect/morning.mp3'
-import win from '../assets/sound/effect/win.mp3'
+import { winSF, morningSF } from '../element/Sound'
 
 function GameRoom(props) {
   const dispatch = useDispatch()
@@ -27,28 +23,15 @@ function GameRoom(props) {
   const currentTime = useSelector((state) => state.game.night)
   const endGame = useSelector((state) => state.game.endGameNoti)
   const startCard = useSelector((state) => state.game.card)
-  const [darkMode, setDarkMode] = useState(false)
-  const [soundOn, setSoundOn] = useState(false)
-
-  const startBgm = new Audio(bgm)
-  // const nightBgm = new Audio(nightBg)
-  const morningBgm = new Audio(morningBg)
-  const winBgm = new Audio(win)
+  const [darkMode, setDarkMode] = useState(true)
 
   window.onbeforeunload = function () {
     return dispatch(userActions.logOutDB())
-};
-
-  if (soundOn) {
-    startBgm.play()
-  } else {
-    startBgm.pause()
   }
 
   useEffect(() => {
     if (endGame !== null) {
-      winBgm.play()
-      setSoundOn(false)
+      winSF.play()
     }
   }, [endGame])
 
@@ -115,7 +98,7 @@ function GameRoom(props) {
   useEffect(() => {
     if (endGame == null) {
       if (currentTime === false) {
-        morningBgm.play()
+        morningSF.play()
         dayOrNight(false)
       } else if (currentTime === true && endGame === null) {
         dayOrNight(true)

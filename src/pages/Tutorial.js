@@ -1,4 +1,3 @@
-import Header from '../component/Header'
 import { Grid, Text } from '../element/index'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper'
@@ -10,8 +9,6 @@ import 튜토리얼2 from '../assets/image/tutorial/튜토리얼2.png'
 import 튜토리얼3 from '../assets/image/tutorial/튜토리얼3.png'
 import 튜토리얼4 from '../assets/image/tutorial/튜토리얼4.png'
 import 튜토리얼5 from '../assets/image/tutorial/튜토리얼5.png'
-import 돌아가기 from '../assets/icons/black/돌아가기.png'
-import { history } from '../redux/configureStore'
 
 function Tutorial() {
   return (
@@ -90,8 +87,9 @@ function Tutorial() {
                     <ImgBox5>
                       <Explain>
                         <Text size="22px">
-                          게임이 종료되었습니다! 새롭게 방을 만들어서 
-                          게임을 진행해보세요!<br />
+                          게임이 종료되었습니다! 새롭게 방을 만들어서 게임을
+                          진행해보세요!
+                          <br />
                         </Text>
                       </Explain>
                     </ImgBox5>

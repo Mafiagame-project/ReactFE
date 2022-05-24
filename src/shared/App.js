@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import './App.css'
 import { ConnectedRouter } from 'connected-react-router'
 import { Route } from 'react-router-dom'
@@ -15,6 +15,7 @@ import {
   EditProfile,
   Tutorial,
   MobilePage,
+  NotFound,
 } from '../pages'
 import KakaoLogin from './KakaoLogin'
 import NaverLogin from './NaverLogin'
@@ -28,20 +29,23 @@ function App() {
     </>
   ) : (
     <>
-      <ConnectedRouter history={history}>
-        <Route exact path="/" component={Loading} />
-        <Route exact path="/gamemain" component={Main} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/signup" component={SignUp} />
-        <Route exact path="/findpw" component={FindPw} />
-        <Route exact path="/gameroom/:roomId" component={Gameroom} />
-        <Route exact path="/main" component={KakaoLogin} />
-        <Route exact path="/naverLogin/main" component={NaverLogin} />
-        <Route exact path="/introduce" component={Introduce} />
-        <Route exact path="/edituser" component={EditUser} />
-        <Route exact path="/editprofile" component={EditProfile} />
-        <Route exact path="/tutorial" component={Tutorial} />
-      </ConnectedRouter>
+      <Suspense fallback={<div>Loading...</div>}>
+        <ConnectedRouter history={history}>
+          <Route exact path="/" component={Loading} />
+          <Route exact path="/gamemain" component={Main} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/findpw" component={FindPw} />
+          <Route exact path="/gameroom/:roomId" component={Gameroom} />
+          <Route exact path="/main" component={KakaoLogin} />
+          <Route exact path="/naverLogin/main" component={NaverLogin} />
+          <Route exact path="/introduce" component={Introduce} />
+          <Route exact path="/edituser" component={EditUser} />
+          <Route exact path="/editprofile" component={EditProfile} />
+          <Route exact path="/tutorial" component={Tutorial} />
+          {/* <Route path="*" component={NotFound} /> */}
+        </ConnectedRouter>
+      </Suspense>
     </>
   )
 }

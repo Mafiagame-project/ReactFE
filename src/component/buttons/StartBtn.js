@@ -2,12 +2,11 @@ import React, { useEffect } from 'react'
 import { DotButton } from '../../element/index'
 import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../../redux/configureStore'
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import ReadyBtn from './ReadyBtn'
 import VoteBtn from './VoteBtn'
 import { actionCreators as gameActions } from '../../redux/modules/game'
-import pop from '../../assets/sound/effect/pop.wav'
-import pop03 from '../../assets/sound/effect/alert.mp3'
+import { alertSF } from '../../element/Sound'
 
 const StartBtn = ({ socket }) => {
   const dispatch = useDispatch()
@@ -20,14 +19,13 @@ const StartBtn = ({ socket }) => {
   const endGame = useSelector((state) => state.game.endGameNoti)
   const currentId = localStorage.getItem('userNick')
   const [getStart, setStart] = React.useState(false)
-  const startBg = new Audio(pop03)
 
   const startGame = () => {
     if (memberSocket.length < 4) {
       startGameNoti(1)
     } else {
       if (memberSocket.length - 1 === currentReady.length) {
-        startBg.play()
+        alertSF.play()
         socket.emit('startGame')
         dispatch(gameActions.noticeEndGame(null))
         setStart(true)
@@ -123,7 +121,7 @@ const StartBtn = ({ socket }) => {
         <>
           {!startCheck ? (
             <>
-              {roomInfo?.userId == currentId ? (
+              {roomInfo?.userId === currentId ? (
                 <DotButton
                   black01
                   text="시작하기"

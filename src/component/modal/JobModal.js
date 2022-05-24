@@ -18,7 +18,7 @@ const JobModal = () => {
   useEffect(() => {
     if (startCard) {
       data.forEach((element) => {
-        if (player == element.name) {
+        if (player === element.name) {
           setShadow(element.shadow)
           setJob(element.title)
           setDesc(element.explain)
@@ -34,7 +34,7 @@ const JobModal = () => {
 
   return (
     <>
-      {startCard == true ? (
+      {startCard === true ? (
         <Modalblack>
           <Noti>
             <Text color="white" size="30px" margin="0 0 7vh 0">
@@ -48,7 +48,11 @@ const JobModal = () => {
               </Header>
               <Grid height="15%" />
               <Grid height="50%">
-                <img style={{ width: '150px', height: '150px' }} src={getImg} />
+                <img
+                  style={{ width: '150px', height: '150px' }}
+                  src={getImg}
+                  alt="job"
+                />
               </Grid>
               <Grid isFlex_center height="15%">
                 <Grid width="200px" height="40px" bg="black">

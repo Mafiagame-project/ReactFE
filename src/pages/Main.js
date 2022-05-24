@@ -9,16 +9,13 @@ import Rooms from '../component/Rooms'
 import TutorialBanner from '../component/TutorialBanner'
 import CreateRoomModal from '../component/modal/CreateRoomModal'
 import styled from 'styled-components'
-import { useHistory } from 'react-router-dom'
-import pop from '../assets/sound/effect/pop02.mp3'
+import { clickSF } from '../element/Sound'
 import Banner from '../component/SurveyBadge'
 
 function Main(props) {
-  const history = useHistory()
   let socket = useSelector((state) => state.game.socket)
   const [isOpen, setIsOpen] = React.useState(false)
   const dispatch = useDispatch()
-  const click = new Audio(pop)
 
   React.useEffect(() => {
     try {
@@ -34,7 +31,7 @@ function Main(props) {
 
   window.onbeforeunload = function () {
     return dispatch(userActions.logOutDB())
-};
+  }
 
   return (
     <>
@@ -52,7 +49,7 @@ function Main(props) {
             text="방 만들기"
             _onClick={() => {
               setIsOpen(true)
-              click.play()
+              clickSF.play()
             }}
           />
         </Grid>

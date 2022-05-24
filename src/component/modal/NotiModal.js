@@ -18,7 +18,6 @@ import CitizenWin from '../../assets/image/noti/시민_승리.gif'
 import happy from '../../assets/image/noti/기사_공백.gif'
 import { useEffect, useState } from 'react'
 import { actionCreators as gameActions } from '../../redux/modules/game'
-import bgm from '../../assets/sound/bgm/big_helmet.mp3'
 
 function NotiModal() {
   const dispatch = useDispatch()
@@ -111,6 +110,7 @@ function NotiModal() {
                             width: '8vw',
                             margin: '2vw 0',
                           }}
+                          alt="vote"
                         />
                         <>
                           {votedJob === true ? (

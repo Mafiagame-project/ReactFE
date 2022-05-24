@@ -1,6 +1,6 @@
 import React from 'react'
 import ModalPortal from './ModalPortal'
-import { Grid, Text, Input, DotButton } from '../../element/index'
+import { Grid, Text, DotButton } from '../../element/index'
 import { actionCreators as roomActions } from '../../redux/modules/room'
 import { useDispatch } from 'react-redux'
 import { Slider } from '@mui/material'
@@ -77,8 +77,10 @@ const CreateRoomModal = ({ onClose, socket }) => {
     socket.on('roomList', (rooms) => {
       dispatch(roomActions.sendRoomList(rooms))
     })
-    return socket.off('createRoom')
-    socket.off('roomList')
+    return () => {
+      socket.off('createRoom')
+      socket.off('roomList')
+    }
   }
 
   const toggleSecret = () => {
