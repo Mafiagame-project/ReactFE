@@ -58,9 +58,6 @@ const StartBtn = ({ socket }) => {
     if (endGame !== null) {
         setTimeout(() => {
         whenGameOff()
-        setTimeout(() => {
-          history.replace('/gamemain')
-        }, 5000)
       }, 5000)
 
     }
@@ -89,10 +86,10 @@ const StartBtn = ({ socket }) => {
     })
   }
   const whenGameOff = () => {
-    toast.warning('게임이 종료되었습니다! 메인으로 이동합니다', {
+    toast.warning('게임이 종료되었습니다! 다시 게임을 진행하시려면 새로운 방을 만들어주세요!', {
       position: toast.POSITION.TOP_CENTER,
       className: 'toast-host-out',
-      autoClose: 4000,
+      autoClose: 10000,
     })
   }
 
