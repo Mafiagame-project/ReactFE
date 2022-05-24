@@ -30,7 +30,7 @@ function App() {
         <Route exact path="/findpw" component={FindPw} />
         <Route exact path="/gameroom/:roomId" component={Gameroom} />
         <Route exact path="/main" component={KakaoLogin} />
-        <Route exact path="/naverLogin/main" component={NaverLogin} />
+        <Route exact path="/main" component={NaverLogin} />
         <Route exact path="/introduce" component={Introduce} />
         <Route exact path="/edituser" component={EditUser} />
         <Route exact path="/editprofile" component={EditProfile} />

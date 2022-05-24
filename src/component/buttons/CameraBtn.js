@@ -29,8 +29,7 @@ const Btn = styled.div`
   background-color: #000;
   opacity: 0.7;
   img {
-    width: 28px;
-    height: 27px;
+    width: 3vw;
     position: absolute;
     top: 50%;
     left: 50%;

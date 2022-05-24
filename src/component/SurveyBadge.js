@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import badge from '../assets/banner.png'
+import badge from '../assets/image/설문배너.png'
 
 const SurveyBadge = () => {
   return (
@@ -13,7 +13,11 @@ const SurveyBadge = () => {
         <img
           src={badge}
           alt="badge"
-          style={{ width: '127px', borderRadius: '10px' }}
+          style={{
+            width: '175px',
+            borderRadius: '17px',
+            boxShadow: 'rgb(100 100 111 / 20%) 0px 7px 29px 0px',
+          }}
         />
       </Banner>
     </>
@@ -21,7 +25,6 @@ const SurveyBadge = () => {
 }
 
 const Banner = styled.div`
-  margin: 0 auto;
-  box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
+  margin: 0 0 0 20px;
 `
 export default SurveyBadge

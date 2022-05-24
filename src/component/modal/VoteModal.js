@@ -283,6 +283,7 @@ const Container = styled.div`
 `
 
 const VoteBox = styled.div`
+  margin: 3vw 0 1vw;
   text-align: center;
   display: grid;
   grid-gap: 10vw 0;

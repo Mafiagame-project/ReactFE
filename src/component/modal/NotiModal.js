@@ -15,6 +15,7 @@ import ad from '../../assets/image/noti/source/ad.jpg'
 import point from '../../assets/image/noti/source/living_point.png'
 import mafiaWin from '../../assets/image/noti/늑대_승리.gif'
 import CitizenWin from '../../assets/image/noti/시민_승리.gif'
+import happy from '../../assets/image/noti/기사_공백.gif'
 import { useEffect, useState } from 'react'
 import { actionCreators as gameActions } from '../../redux/modules/game'
 import bgm from '../../assets/sound/bgm/big_helmet.mp3'
@@ -52,50 +53,49 @@ function NotiModal() {
         <>
           {endGameNoti ? ( // 게임이 끝났냐 안끝났냐
             <Modalblack>
-              {
-                currentTime
-                  ? <VoteNoti>
-                    <Text size="2vw">게임 결과</Text>
-                    {endGameNoti === '마피아가 승리하였습니다.' ? (
-                      <img src={mafiaWin} alt="win" style={{ width: '18vw' }} />
+              {currentTime ? (
+                <VoteNoti>
+                  <Text size="2vw">게임 결과</Text>
+                  {endGameNoti === '마피아가 승리하였습니다.' ? (
+                    <img src={mafiaWin} alt="win" style={{ width: '18vw' }} />
+                  ) : (
+                    <img src={CitizenWin} alt="win" style={{ width: '18vw' }} />
+                  )}
+                  <>
+                    {votedJob === true ? (
+                      <Text bold size="2vw">
+                        마피아 {voteResult}가 잡혔습니다
+                      </Text>
                     ) : (
-                      <img src={CitizenWin} alt="win" style={{ width: '18vw' }} />
+                      <Text bold size="2vw">
+                        시민 {voteResult}가 잡혔습니다
+                      </Text>
                     )}
-                      <>
-                          {votedJob === true ? (
-                            <Text bold size="2vw">
-                              마피아 {voteResult}가 잡혔습니다
-                            </Text>
-                          ) : (
-                            <Text bold size="2vw">
-                              시민 {voteResult}가 잡혔습니다
-                            </Text>
-                          )}
-                        </>
-                    <Text bold size="2vw">
-                      {endGameNoti}
-                    </Text>
-                  </VoteNoti>
-                  : <VoteNoti>
-                    <Text size="2vw">게임 결과</Text>
-                    {endGameNoti === '마피아가 승리하였습니다.' ? (
-                      <img src={mafiaWin} alt="win" style={{ width: '18vw' }} />
-                    ) : (
-                      <img src={CitizenWin} alt="win" style={{ width: '18vw' }} />
-                    )}
-                    <>
-                    {
-                      nightResult
-                      ? <Text size='2vw'>마피아가 {nightResult}양을 잡아먹었습니다</Text>
-                      : null
-                    }
-                    </>
-                    <Text bold size="2vw">
-                      {endGameNoti}
-                    </Text>
-                  </VoteNoti>
-              }
-             
+                  </>
+                  <Text bold size="2vw">
+                    {endGameNoti}
+                  </Text>
+                </VoteNoti>
+              ) : (
+                <VoteNoti>
+                  <Text size="2vw">게임 결과</Text>
+                  {endGameNoti === '마피아가 승리하였습니다.' ? (
+                    <img src={mafiaWin} alt="win" style={{ width: '18vw' }} />
+                  ) : (
+                    <img src={CitizenWin} alt="win" style={{ width: '18vw' }} />
+                  )}
+                  <>
+                    {nightResult ? (
+                      <Text size="2vw">
+                        마피아가 {nightResult}양을 잡아먹었습니다
+                      </Text>
+                    ) : null}
+                  </>
+                  <Text bold size="2vw">
+                    {endGameNoti}
+                  </Text>
+                </VoteNoti>
+              )}
             </Modalblack>
           ) : (
             <>
@@ -364,7 +364,13 @@ function NotiModal() {
                                 />
                               </Grid>
                             </>
-                          ) : null}
+                          ) : (
+                            <img
+                              src={happy}
+                              alt="평화"
+                              style={{ width: '25vw', margin: '0 0 0 4vw' }}
+                            />
+                          )}
                         </Grid>
                         {survivedNoti ? (
                           <>
@@ -418,7 +424,7 @@ function NotiModal() {
                           <Grid height="40%">
                             <img
                               src={ad}
-                              style={{ width: '15vw', margin: '3vw' }}
+                              style={{ width: '12vw', margin: '5vw 0 0 1.5vw' }}
                               alt="광고"
                             />{' '}
                           </Grid>
