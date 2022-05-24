@@ -54,6 +54,11 @@ const CreateRoomModal = ({ onClose, socket }) => {
     let roomTitle = title.current.value
     let roomPeople = getPeople
     let roomPwd
+    if (roomTitle === '') {
+      alert('방 이름을 적어주세요!')
+      return
+    }
+
     if (!roomPeople) {
       roomPeople = 5
     }
@@ -62,7 +67,7 @@ const CreateRoomModal = ({ onClose, socket }) => {
       // 비공개방일때
       roomPwd = pwd.current.value
       socket.emit('createRoom', { roomTitle, roomPeople, roomPwd })
-      click.play()
+      return click.play()
     } else {
       // 공개방일때
       click.play()
