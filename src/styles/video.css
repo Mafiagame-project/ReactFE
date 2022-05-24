@@ -32,17 +32,6 @@
   transform: scaleX(-1);
 }
 
-.video_background {
-  width: 10.56vw;
-  height: 10.56vw;
-  position: absolute;
-  top: 0;
-  left: 11.2%;
-  border-radius: 50%;
-  background-color: #000;
-  opacity: 0.7;
-  display: none;
-}
 .video_non_src {
   width: 10.56vw;
   height: 10.56vw;

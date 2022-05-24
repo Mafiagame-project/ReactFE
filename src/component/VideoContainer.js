@@ -9,8 +9,10 @@ const VideoContainer = () => {
   const socket = useSelector((state) => state.game.socket)
   let killed = useSelector((state) => state.game.killed)
   let nowKilled = useSelector((state) => state.game.resultNoti)
+  const userNick = useSelector((state) => state.user.userNick)
+  const UserNick = useSelector((state) => state.user.userNick)
   const [cameraOn, setCameraOn] = React.useState(true)
-  const [display, setDisplay] = React.useState(false)
+  const [display, setDisplay] = React.useState(0)
   const videoWrap = React.useRef('')
   const videoGrid = React.useRef('')
   const videoBack = React.useRef('')
@@ -22,8 +24,6 @@ const VideoContainer = () => {
   let peerNickname = ''
   let myPeerId = ''
   let myStream = null
-  let userNick = localStorage.getItem('userNick')
-  let UserNick = localStorage.getItem('userNick')
 
   //카메라 온오프
   const VideoHandler = () => {
@@ -64,91 +64,92 @@ const VideoContainer = () => {
   React.useEffect(() => {
     const myPeer = new Peer()
     myPeer.nick = UserNick
-    
-    if(navigator.mediaDevices){
-    navigator.mediaDevices
-      .getUserMedia({
-        video: true,
-        audio: false,
-      })
-      .then((stream) => {
-        myStream = stream
-        let streamId = stream.id
-        addVideoStream(myVideo.current, stream)
-        myVideo.current.classList.add('video_box')
-        videoGrid.current.prepend(myVideo.current)
 
-        //내 스트림을 받고 실행합니다.
-        if (myPeer?._id == null) {
-          myPeer.on('open', (peerId) => {
-            myPeerId = peerId
-            socket.emit('peerJoinRoom', myPeerId, userNick, streamId)
-          })
-        } else {
-          socket.emit('peerJoinRoom', myPeer._id, userNick, streamId)
-        }
-
-        //새로 들어온 피어는 기존의 피어에게 콜을 받습니다.
-        myPeer?.on('call', (call) => {
-          call.answer(stream)
-          const videoBox = document.createElement('div')
-          videoBox.classList.add('video_grid')
-          const peerVideo = document.createElement('video')
-          peerVideo.classList.add('video_box')
-          const newNickBox = document.createElement('div')
-          newNickBox.classList.add('newuser_nick', 'fl')
-
-          videoBox.prepend(peerVideo)
-          videoBox.prepend(newNickBox)
-          videoWrap.current.prepend(videoBox)
-
-          call.on('stream', (userVideoStream) => {
-            addVideoStream(peerVideo, userVideoStream)
-            videoBox.prepend(peerVideo)
-          })
+    if (navigator.mediaDevices) {
+      navigator.mediaDevices
+        .getUserMedia({
+          video: true,
+          audio: false,
         })
+        .then((stream) => {
+          myStream = stream
+          let streamId = stream.id
+          addVideoStream(myVideo.current, stream)
+          myVideo.current.classList.add('video_box')
+          videoGrid.current.prepend(myVideo.current)
 
-        //상대의 닉네임 받기
-        myPeer?.on('connection', (dataConnection) => {
-          peersNick = dataConnection.metadata
-          let peerNick = document.createElement('p')
-          peerNick.innerText = peersNick
-          const newNickBox = document.querySelector('.newuser_nick', 'fl')
-          newNickBox.prepend(peerNick)
-        })
-
-        // 기존에 있던 피어는 새 피어가 room에 입장 시 커넥션을 받습니다.
-        socket?.on('user-connected', (userId, userNick, streamId) => {
-
-          if (videoWrap.current) {
-            const call = myPeer.call(userId, myStream)
-            const dataConnection = myPeer.connect(userId, {
-              metadata: UserNick,
+          //내 스트림을 받고 실행합니다.
+          if (myPeer?._id == null) {
+            myPeer.on('open', (peerId) => {
+              myPeerId = peerId
+              socket.emit('peerJoinRoom', myPeerId, userNick, streamId)
             })
+          } else {
+            socket.emit('peerJoinRoom', myPeer._id, userNick, streamId)
+          }
 
+          //새로 들어온 피어는 기존의 피어에게 콜을 받습니다.
+          myPeer?.on('call', (call) => {
+            call.answer(stream)
             const videoBox = document.createElement('div')
             videoBox.classList.add('video_grid')
-            const newVideo = document.createElement('video')
-            newVideo.classList.add('video_box')
-            const nickBox = document.createElement('div')
-            nickBox.classList.add('userview_name', 'fl')
-            let peerNick = document.createElement('p')
-            peerNick.innerText = userNick
-            nickBox.prepend(peerNick)
-            videoBox.prepend(newVideo)
-            videoBox.prepend(nickBox)
+            const peerVideo = document.createElement('video')
+            peerVideo.classList.add('video_box')
+            const newNickBox = document.createElement('div')
+            newNickBox.classList.add('newuser_nick', 'fl')
+
+            videoBox.prepend(peerVideo)
+            videoBox.prepend(newNickBox)
             videoWrap.current.prepend(videoBox)
 
-            call.on('stream', (newStream) => {
-              addVideoStream(newVideo, newStream)
-              videoBox.prepend(newVideo)
+            call.on('stream', (userVideoStream) => {
+              addVideoStream(peerVideo, userVideoStream)
+              videoBox.prepend(peerVideo)
             })
-          }
+          })
+
+          //상대의 닉네임 받기
+          myPeer?.on('connection', (dataConnection) => {
+            peersNick = dataConnection.metadata
+            let peerNick = document.createElement('p')
+            if (!peerNick.innerText) {
+              peerNick.innerText = peersNick
+              const newNickBox = document.querySelector('.newuser_nick', 'fl')
+              newNickBox.prepend(peerNick)
+            }
+          })
+
+          // 기존에 있던 피어는 새 피어가 room에 입장 시 커넥션을 받습니다.
+          socket?.on('user-connected', (userId, userNick, streamId) => {
+            if (videoWrap.current) {
+              const call = myPeer.call(userId, myStream)
+              const dataConnection = myPeer.connect(userId, {
+                metadata: UserNick,
+              })
+
+              const videoBox = document.createElement('div')
+              videoBox.classList.add('video_grid')
+              const newVideo = document.createElement('video')
+              newVideo.classList.add('video_box')
+              const nickBox = document.createElement('div')
+              nickBox.classList.add('userview_name', 'fl')
+              let peerNick = document.createElement('p')
+              peerNick.innerText = userNick
+              nickBox.prepend(peerNick)
+              videoBox.prepend(newVideo)
+              videoBox.prepend(nickBox)
+              videoWrap.current.prepend(videoBox)
+
+              call.on('stream', (newStream) => {
+                addVideoStream(newVideo, newStream)
+                videoBox.prepend(newVideo)
+              })
+            }
+          })
         })
-      })
-      .catch((err) => {
-        console.log('err', err)
-      })
+        .catch((err) => {
+          console.log('err', err)
+        })
     } else {
       alert('비디오 및 오디오 환경을 확인해주세요!')
       socket.emit('leaveRoom')
@@ -181,35 +182,29 @@ const VideoContainer = () => {
     <>
       <Container>
         <div className="video_container" ref={videoWrap}>
-          <div className="video_grid" ref={videoGrid}>
-            <div
-              className="video_non_src"
-              onMouseOver={() => {
-                videoBack.current.style.display = 'block'
-                setDisplay(!display)
-              }}
-            ></div>
-            <video
-              ref={myVideo}
-              className="myvideo"
-              onMouseOver={() => {
-                videoBack.current.style.display = 'block'
-                setDisplay(!display)
-              }}
-            ></video>
-            <div
-              className="video_background"
-              ref={videoBack}
-              onMouseOut={() => {
-                videoBack.current.style.display = 'none'
-                setDisplay(!display)
-              }}
-            ></div>
-            <CameraBtn
-              cameraOn={cameraOn}
-              display={display}
-              VideoHandler={VideoHandler}
-            />
+          <div
+            className="video_grid"
+            ref={videoGrid}
+            onMouseOver={() => {
+              setDisplay(1)
+            }}
+            onMouseOut={() => {
+              setDisplay(0)
+            }}
+          >
+            <div className="video_non_src"></div>
+            <video ref={myVideo} className="myvideo"></video>
+
+            {display ? (
+              <CameraBtn
+                cameraOn={cameraOn}
+                display={display}
+                VideoHandler={VideoHandler}
+                // onMouseOut={() => {
+                //   setDisplay(display === false)
+                // }}
+              />
+            ) : null}
             <div className="userview_name fl">
               <p>{userNick}</p>
             </div>

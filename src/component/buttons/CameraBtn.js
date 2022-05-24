@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import cameraOn from '../../assets/icons/black/camera_on.png'
-import cameraOff from '../../assets/icons/black/camera_off.png'
+import cameraOn from '../../assets/icons/white/camera_on.png'
+import cameraOff from '../../assets/icons/white/camera_off.png'
 
 const CameraBtn = (props) => {
   if (props.cameraOn) {
@@ -20,16 +20,14 @@ const CameraBtn = (props) => {
 }
 
 const Btn = styled.div`
-  cursor: pointer;
-  width: 25%;
-  height: 25%;
-  border-radius: 50%;
+  width: 10.56vw;
+  height: 10.56vw;
   position: absolute;
-  left: 50%;
-  bottom: 50%;
-  background-color: #aaa;
-  transform: translateX(-50%);
-  ${(props) => (props.display ? 'display: block' : 'display: none')};
+  top: 0;
+  left: 11.2%;
+  border-radius: 50%;
+  background-color: #000;
+  opacity: 0.7;
   img {
     width: 28px;
     height: 27px;
