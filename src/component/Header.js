@@ -60,9 +60,16 @@ function Header(props) {
             <Grid isFlex_start>
               <Image size={50} src={pictures[profileIdx]} />
               <Grid margin="0 22px" className="headerText" width="100px">
-                <Text margin="0px" color="#fff">
-                  {userNick}
-                </Text>
+                {!userNick ? (
+                  <Text margin="0px" color="#fff">
+                    {UserNick}
+                  </Text>
+                ) : (
+                  <Text margin="0px" color="#fff">
+                    {userNick}
+                  </Text>
+                )}
+
                 <Text margin="0px" color="#fff">
                   {recordWin}승 {recordLose}패
                 </Text>
@@ -98,7 +105,7 @@ function Header(props) {
             <Grid center margin="0 10px" _cursor>
               <Icons src={soundIcon} />
               <Text margin="0" color="#fff" size="12px">
-                sound
+                Sound
               </Text>
             </Grid>
             <Grid

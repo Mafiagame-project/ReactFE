@@ -2,6 +2,7 @@ import React from 'react'
 import { history } from '../../redux/configureStore'
 import { Grid, Text, Image, Input, DotButton } from '../../element/index'
 import { actionCreators as userActions } from '../../redux/modules/user'
+import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from '../../shared/OAuth'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import kakao from '../../assets/icons/social/kakaoLogin.png'
@@ -33,18 +34,6 @@ function Login() {
     click.play()
     dispatch(userActions.loginDB(logins))
   }
-
-  //kakao 나중에 따로 파일 빼기
-  const REST_API_KEY = '6c9c16d27b420108ed23421696dfba3b'
-  const REDIRECT_URI = 'https://www.mafiyang.com/main'
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`
-
-  const NAVER_CLIENT_ID = '9WNFXnar7frmNNTQmP4N'
-  const NAVER_CALLBACK_URI = 'https://mafiyang.com/naverLogin/main'
-
-  const state = Math.random().toString(36).substring(2, 11)
-
-  const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${NAVER_CALLBACK_URI}&state=${state}`
 
   return (
     <div className="align_back">

@@ -14,6 +14,7 @@ const JobModal = () => {
   const [getDesc, setDesc] = useState()
   const [getImg, setImg] = useState()
   const [getShadow, setShadow] = useState()
+  const [getRule, setRule] = useState()
 
   useEffect(() => {
     if (startCard) {
@@ -22,7 +23,7 @@ const JobModal = () => {
           setJob(element.title)
           setDesc(element.explain)
           setImg(element.img)
-          setShadow(element.shadow)
+          setRule(element.desc)
         }
       })
       setTimeout(() => {
@@ -41,7 +42,7 @@ const JobModal = () => {
             </Text>
             <Contents>
               <Header getShadow={getShadow}>
-                <Text color="white" size="24px">
+                <Text color="white" size="15px">
                   MAFIYANG
                 </Text>
               </Header>
@@ -57,6 +58,7 @@ const JobModal = () => {
                 </Grid>
               </Grid>
             </Contents>
+            <Desc>{getRule}</Desc>
           </Noti>
         </Modalblack>
       ) : null}
@@ -65,7 +67,7 @@ const JobModal = () => {
 }
 const Header = styled.div`
   width: 100%;
-  height: 10%;
+  height: 8%;
   margin-top: -25px;
   padding-top: 12px;
   border-radius: 40px 40px 0 0;
@@ -75,11 +77,22 @@ const Header = styled.div`
 
 const Contents = styled.div`
   background: white;
-  width: 330px;
-  height: 435px;
+  width: 300px;
+  height: 395px;
   box-sizing: border-box;
   border-radius: 40px 40px 0 0;
   margin: 0 auto;
+`
+
+const Desc = styled.div`
+  padding: 1.2vw;
+  background-color: #fff;
+  border: 1px solid black;
+  width: 400px;
+  border-radius: 1vw;
+  margin: 1vw auto 0;
+  font-size: 15px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 `
 
 const Modalblack = styled.div`

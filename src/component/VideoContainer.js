@@ -15,7 +15,6 @@ const VideoContainer = () => {
   const [display, setDisplay] = React.useState(0)
   const videoWrap = React.useRef('')
   const videoGrid = React.useRef('')
-  const videoBack = React.useRef('')
   const myVideo = React.useRef()
   myVideo.muted = true
 
@@ -43,6 +42,18 @@ const VideoContainer = () => {
       src.style.display = 'none'
     }
   }
+
+  // 오디오 온오프
+  // const AudioHandler = () => {
+  //   myVideo.current.srcObject
+  //     .getAudioTracks()
+  //     .forEach((track) => (track.enabled = !track.enabled));
+  //   if (audioOn) {
+  //     setAudioOn(false);
+  //   } else {
+  //     setAudioOn(true);
+  //   }
+  // };
 
   //죽은 사람 표기
   if (killed === null) {
@@ -116,6 +127,10 @@ const VideoContainer = () => {
               peerNick.innerText = peersNick
               const newNickBox = document.querySelector('.newuser_nick', 'fl')
               newNickBox.prepend(peerNick)
+            } else {
+              alert('통신 상태가 좋지 않아요! 재접속plz')
+              socket.emit('leaveRoom')
+              window.location = '/'
             }
           })
 

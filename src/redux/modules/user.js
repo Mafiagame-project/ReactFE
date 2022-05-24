@@ -4,7 +4,7 @@ import { produce } from 'immer'
 
 //Axios
 import axios from 'axios'
-import { Api } from '../../shared/api'
+// import { Api } from '../../shared/api'
 
 // const BASE_URL = 'https://nhseung.shop'
 const BASE_URL = 'https://sparta-dongsun.shop'
@@ -52,7 +52,6 @@ const loginDB = (dic) => {
         headers: { 'Content-Type': `application/json` },
       })
       .then((res) => {
-        console.log(res)
         if (res.data.token) {
           const accessToken = res.data.token
           const userId = res.data.userId
@@ -96,7 +95,6 @@ const signupDB = (dic) => {
         },
       )
       .then((res) => {
-        console.log(res.data)
         dispatch(signUp())
         history.replace('/login')
       })
@@ -108,7 +106,6 @@ const signupDB = (dic) => {
 }
 
 const idCheck = (id) => {
-  console.log(id)
   return async function (dispatch, useState, { history }) {
     await axios
       .post(
@@ -121,7 +118,6 @@ const idCheck = (id) => {
         },
       )
       .then((res) => {
-        console.log(res)
         window.alert('사용할 수 있는 아이디입니다!')
       })
       .catch((err) => {
@@ -131,7 +127,6 @@ const idCheck = (id) => {
 }
 
 const emailCheck = (email) => {
-  console.log(email)
   return async function (dispatch, useState, { history }) {
     await axios
       .post(
@@ -144,7 +139,6 @@ const emailCheck = (email) => {
         },
       )
       .then((res) => {
-        console.log(res)
         window.alert('사용할 수 있는 이메일입니다!')
       })
       .catch((err) => {
@@ -154,7 +148,6 @@ const emailCheck = (email) => {
 }
 
 const nickCheck = (nick) => {
-  console.log(nick)
   return async function (dispatch, useState, { history }) {
     await axios
       .post(
@@ -167,7 +160,6 @@ const nickCheck = (nick) => {
         },
       )
       .then((res) => {
-        console.log(res)
         window.alert('사용할 수 있는 닉네임입니다!')
       })
       .catch((err) => {
@@ -177,7 +169,6 @@ const nickCheck = (nick) => {
 }
 
 const isLoginDB = () => {
-  console.log(localStorage.getItem('token'))
   return async function (dispatch, getState, { history }) {
     await axios({
       headers: {
@@ -219,7 +210,6 @@ const findPwDB = (dic) => {
         },
       )
       .then((res) => {
-        console.log(res)
         alert('메일로 새 비밀번호가 전송되었습니다!')
       })
       .catch((err) => {
@@ -253,7 +243,6 @@ const changePwDB = (dic) => {
         },
       )
       .then((res) => {
-        console.log(res)
         alert('비밀번호가 변경되었습니다!')
         history.push('/login')
       })
@@ -264,7 +253,6 @@ const changePwDB = (dic) => {
 }
 
 const changeNickDB = (changeNick) => {
-  console.log(changeNick)
   return async function (dispatch, getState, { history }) {
     axios({
       method: 'POST',
@@ -360,7 +348,6 @@ const logOutDB = (user) => {
   }
 }
 const addFriendDB = (friendUserId) => {
-  console.log(friendUserId)
   return async function (dispatch, getState, { history }) {
     await axios
       .post(
@@ -376,8 +363,7 @@ const addFriendDB = (friendUserId) => {
         },
       )
       .then((res) => {
-        console.log(res)
-        if (res.data.msg == '친구추가 완료') {
+        if (res.data.msg === '친구추가 완료') {
           dispatch(addFriend({ userId: friendUserId }))
           window.alert('친구 등록 완료!')
         } else {
@@ -403,7 +389,6 @@ const getFriendDB = () => {
     })
       .then((res) => {
         let list = res.data.friendList
-        console.log(list)
         dispatch(getFriend(list))
       })
       .catch((err) => {
@@ -428,7 +413,6 @@ const deleteFriendDB = (id) => {
         },
       )
       .then((res) => {
-        console.log(res)
         dispatch(deleteFriend(id))
       })
       .catch((err) => {

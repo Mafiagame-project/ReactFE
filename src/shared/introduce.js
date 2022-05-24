@@ -25,6 +25,7 @@ export default [
       'rgb(204 219 232) 3px 3px 5px 0px inset, rgb(255 255 255 / 50%) -3px 0px 5px 1px inset',
     info: '',
     gif: citizenGif,
+    desc: '당신은 마피양 마을의 선량한 시민 양...! 풀 뜯어 먹는 것을 좋아해요',
   },
   {
     id: 2,
@@ -39,6 +40,8 @@ export default [
       'rgb(247 5 57) 3px 3px 5px 0px inset, rgb(247 5 290 / 50%) -3px 0px 5px 1px inset',
     info: '',
     gif: mafiaGif,
+    desc:
+      '당신은 마피양 마을에서 양인 척하는 늑대 마피양...! 밤마다 한 마리의 양을 잡아먹을 수 있어요.',
   },
   {
     id: 3,
@@ -55,6 +58,8 @@ export default [
       'rgb(1 235 9) 3px 3px 5px 0px inset, rgb(19 235 255 / 50%) -3px 0px 5px 1px inset',
     info: '',
     gif: doctorGif,
+    desc:
+      '당신은 마피양 마을의 선량한 의사...! 밤마다 본인을 제외한 다른 양을 살릴 수 있어요.',
   },
   {
     id: 4,
@@ -71,6 +76,8 @@ export default [
       'rgb(0 192 214) 3px 3px 5px 0px inset, rgb(209 192 214 / 50%) -3px 0px 5px 1px inset',
     info: '',
     gif: policeGif,
+    desc:
+      '당신은 마피양 마을을 지키는 경찰 양...! 밤마다 본인을 제외한 다른 양의 정체를 알아낼 수 있어요.',
   },
   {
     id: 5,
@@ -87,5 +94,7 @@ export default [
       'rgb(246 208 12) 3px 3px 5px 0px inset, rgb(203 103 245 / 50%) -3px 0px 5px 1px inset',
     info: '',
     gif: reporterGif,
+    desc:
+      '당신은 마피양 마을을 취재하러 온 기자 양...! 한 게임에 단 한 번 한 양의 직업을 모두에게 밝힐 수 있어요.',
   },
 ]

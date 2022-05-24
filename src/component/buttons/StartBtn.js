@@ -54,14 +54,13 @@ const StartBtn = ({ socket }) => {
     }
   }, [startCard])
 
-  useEffect(()=>{
+  useEffect(() => {
     if (endGame !== null) {
-        setTimeout(() => {
+      setTimeout(() => {
         whenGameOff()
       }, 5000)
-
     }
-  },[endGame])
+  }, [endGame])
 
   React.useEffect(() => {
     let check = members?.includes(roomInfo?.userId)
@@ -86,11 +85,14 @@ const StartBtn = ({ socket }) => {
     })
   }
   const whenGameOff = () => {
-    toast.warning('게임이 종료되었습니다! 다시 게임을 진행하시려면 새로운 방을 만들어주세요!', {
-      position: toast.POSITION.TOP_CENTER,
-      className: 'toast-host-out',
-      autoClose: 10000,
-    })
+    toast.warning(
+      '게임이 종료되었습니다! 다시 게임을 진행하시려면 새로운 방을 만들어주세요!',
+      {
+        position: toast.POSITION.TOP_CENTER,
+        className: 'toast-host-out',
+        autoClose: 10000,
+      },
+    )
   }
 
   const startGameNoti = (count) => {
@@ -117,23 +119,27 @@ const StartBtn = ({ socket }) => {
   }
   return (
     <>
-      {!startCheck ? (
+      {!endGame ? (
         <>
-          {roomInfo?.userId == currentId ? (
-            <DotButton
-              black01
-              text="시작하기"
-              _onClick={() => {
-                startGame()
-              }}
-            />
+          {!startCheck ? (
+            <>
+              {roomInfo?.userId == currentId ? (
+                <DotButton
+                  black01
+                  text="시작하기"
+                  _onClick={() => {
+                    startGame()
+                  }}
+                />
+              ) : (
+                <ReadyBtn />
+              )}
+            </>
           ) : (
-            <ReadyBtn />
-          )}
+            <VoteBtn />
+          )}{' '}
         </>
-      ) : (
-        <VoteBtn />
-      )}
+      ) : null}
     </>
   )
 }
