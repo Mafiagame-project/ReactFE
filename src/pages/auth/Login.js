@@ -5,7 +5,7 @@ import { actionCreators as userActions } from '../../redux/modules/user'
 import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from '../../shared/Oauth'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import kakao from '../../assets/icons/social/kakaoLogin.png'
+import kakao from '../../assets/icons/social/kakao_login_medium_wide.png'
 import naver from '../../assets/icons/social/naverLogin.png'
 import logo from '../../assets/logo/기본값.png'
 import { clickSF, deniedSF } from '../../element/Sound'
@@ -92,9 +92,9 @@ function Login() {
             <a href={KAKAO_AUTH_URL}>
               <img src={kakao} alt="카카오" style={{ margin: '0 0.3vw' }} />
             </a>
-            <a href={NAVER_AUTH_URL}>
+            {/* <a href={NAVER_AUTH_URL}>
               <img src={naver} alt="네이버" style={{ margin: '0 0.3vw' }} />
-            </a>
+            </a> */}
           </Grid>
         </Grid>
       </Container>

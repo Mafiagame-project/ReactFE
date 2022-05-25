@@ -17,6 +17,7 @@ import {
   MobilePage,
   NotFound,
 } from '../pages'
+import Information from '../pages/Information'
 import KakaoLogin from './KakaoLogin'
 import NaverLogin from './NaverLogin'
 import { useMediaQuery } from 'react-responsive'
@@ -43,6 +44,7 @@ function App() {
           <Route exact path="/edituser" component={EditUser} />
           <Route exact path="/editprofile" component={EditProfile} />
           <Route exact path="/tutorial" component={Tutorial} />
+          <Route exact path="/information" component={Information} />
           {/* <Route path="*" component={NotFound} /> */}
         </ConnectedRouter>
       </Suspense>

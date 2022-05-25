@@ -170,47 +170,16 @@ function Loading() {
               <Text size="18px">김지수</Text>
             </Grid>
           </Grid>
-          <Text siex="14px" color="#aaa">
+          <Text
+            siex="14px"
+            color="#aaa"
+            _onClick={() => {
+              history.push('/information')
+            }}
+          >
             개인정보보호 약관
           </Text>
         </Grid>
-        {/* <Grid height="30px" />
-        <Grid height="40px">
-          <Text bold size="24px">
-            Copyright @2022 MAFIYNG.All rights reserved.
-          </Text>
-        </Grid>
-        <Grid flexColumn width="100%" height="100px">
-          <Grid isFlex_center width="20%" height="100px">
-            <Grid width="33%" height="100%">
-              <Text margin="0 0 10px 0" bold size="24px">
-                BACK_END
-              </Text>
-              <Text margin="0 0 10px 0" size="20px">
-                김동선
-              </Text>
-              <Text size="20px">이현승</Text>
-            </Grid>
-            <Grid width="33%" height="100%">
-              <Text margin="0 0 10px 0" bold size="24px">
-                FRONT_END
-              </Text>
-              <Text margin="0 0 10px 0" size="20px">
-                김지나
-              </Text>
-              <Text size="20px">조찬익</Text>
-            </Grid>
-            <Grid width="33%" height="100%">
-              <Text margin="0 0 10px 0" bold size="24px">
-                DESINGER
-              </Text>
-              <Text size="20px">김지수</Text>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid height="10px" margin="20px 0 0 0">
-          <Text>개인정보보호 약관</Text>
-        </Grid> */}
       </Container>
     </div>
   )
