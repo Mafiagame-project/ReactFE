@@ -9,6 +9,7 @@ import 튜토리얼2 from '../assets/image/tutorial/튜토리얼2.png'
 import 튜토리얼3 from '../assets/image/tutorial/튜토리얼3.png'
 import 튜토리얼4 from '../assets/image/tutorial/튜토리얼4.png'
 import 튜토리얼5 from '../assets/image/tutorial/튜토리얼5.png'
+import 튜토리얼6 from '../assets/image/tutorial/역할설명.png'
 
 function Tutorial() {
   return (
@@ -21,6 +22,24 @@ function Tutorial() {
               modules={[Navigation]}
               className="mySwiper"
             >
+              <SwiperSlide>
+                <Content>
+                  <Grid isFlex_center height="100%" width="100%">
+                    <ImgBox6>
+                      <Explain2>
+                        <Text size='22px'>게임 인원 수 마다 직업의 수다 다릅니다!</Text>
+                          <Text margin='3px' left size='22px'>4명 : 시민 3 , 마피아 1 <br/></Text>
+                          <Text margin='3px' left size='22px'>5명 : 시민 2 , 의사 1 , 경찰 1 , 마피아 1<br/></Text>
+                          <Text margin='3px' left size='22px'>6명 : 시민 3 , 의사 1 , 경찰 1 , 마피아 1<br/></Text>
+                          <Text margin='3px' left size='22px'>7명 : 시민 3 , 의사 1 , 경찰 1 , 마피아 2<br/></Text>
+                          <Text margin='3px' left size='22px'>8명 : 시민 3 , 의사 1 , 경찰 1 , 기자 1, 마피아 2<br/></Text>
+                          <Text margin='3px' left size='22px'>9명 : 시민 4 , 의사 1 , 경찰 1 , 기자 1, 마피아 2<br/></Text>
+                          <Text margin='3px' left size='22px'>10명 : 시민 5 , 의사 1 , 경찰 1 , 기자 1, 마피아 2<br/></Text>
+                      </Explain2>
+                    </ImgBox6>
+                  </Grid>
+                </Content>
+              </SwiperSlide>
               <SwiperSlide>
                 <Content>
                   <Grid isFlex_center height="100%" width="100%">
@@ -119,6 +138,21 @@ const Explain = styled.div`
   box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
 `
+const Explain2 = styled.div`
+  position: absolute;
+  bottom: 50px;
+  left: 10%;
+  width: 80%;
+  height: 210px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #ffffff;
+  border: 2px solid #000000;
+  box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+`
 const Content = styled.div`
   width: 100%;
   height: 100%;
@@ -160,6 +194,14 @@ const ImgBox5 = styled.div`
   width: 100%;
   height: 100%;
   background-image: url(${튜토리얼5});
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+`
+const ImgBox6 = styled.div`
+  width: 100%;
+  height: 100%;
+  background-image: url(${튜토리얼6});
   background-size: cover;
   background-position: center;
   border-radius: 20px;
