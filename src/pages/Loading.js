@@ -173,7 +173,7 @@ function Loading() {
           </Grid>
         </Grid>
         <Grid height="10px" margin="20px 0 0 0">
-          <Text>개인정보보호 약관</Text>
+          <Text _onClick={()=>{history.push('/information')}}>개인정보보호 약관</Text>
         </Grid>
       </Container>
     </div>
