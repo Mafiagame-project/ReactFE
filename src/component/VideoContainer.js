@@ -16,7 +16,6 @@ const VideoContainer = () => {
   const videoWrap = React.useRef('')
   const videoGrid = React.useRef('')
   const myVideo = React.useRef()
-  myVideo.muted = true
 
   let peersNick
   let peerNick = ''
@@ -80,11 +79,13 @@ const VideoContainer = () => {
       navigator.mediaDevices
         .getUserMedia({
           video: true,
-          audio: false,
+          audio: true,
         })
         .then((stream) => {
           myStream = stream
           let streamId = stream.id
+          // window.localAudio.autoplay = true
+
           addVideoStream(myVideo.current, stream)
           myVideo.current.classList.add('video_box')
           videoGrid.current.prepend(myVideo.current)
@@ -208,7 +209,12 @@ const VideoContainer = () => {
             }}
           >
             <div className="video_non_src"></div>
-            <video ref={myVideo} className="myvideo"></video>
+            <video
+              ref={myVideo}
+              className="myvideo"
+              autoPlay
+              muted="true"
+            ></video>
 
             {display ? (
               <CameraBtn

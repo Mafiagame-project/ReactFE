@@ -143,7 +143,7 @@ const CreateRoomModal = ({ onClose, socket }) => {
                 시크릿 설정
               </Text>
               <Grid isFlex_start height="4vh">
-                <Grid is_flex>
+                <Grid fs isDisplay="flex">
                   <input
                     id="cb1"
                     type="checkbox"

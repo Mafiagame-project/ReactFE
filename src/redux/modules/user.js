@@ -8,7 +8,6 @@ import { apis } from '../../shared/api'
 
 const BASE_URL = process.env.REACT_APP_BASE_URL
 
-console.log(BASE_URL)
 //Action
 const LOG_IN = 'LOG_IN'
 const LOG_OUT = 'LOG_OUT'
@@ -66,7 +65,6 @@ const loginDB = (dic) => {
       })
       .catch((err) => {
         window.alert('아이디나 비밀번호를 확인해주세요!')
-        console.log('errrrrr', err)
       })
   }
 }
@@ -100,7 +98,6 @@ const signupDB = (dic) => {
       })
       .catch((err) => {
         window.alert('이미 가입된 아이디,닉네임 또는 이메일 입니다.')
-        console.log('errrrrr', err)
       })
   }
 }
@@ -214,7 +211,6 @@ const findPwDB = (dic) => {
         alert('메일로 새 비밀번호가 전송되었습니다!')
       })
       .catch((err) => {
-        console.log('err', err)
         alert('등록되지 않은 이메일 또는 아이디입니다!')
       })
   }
@@ -248,7 +244,7 @@ const changePwDB = (dic) => {
         history.push('/login')
       })
       .catch((err) => {
-        console.log('err', err)
+        alert('비밀번호 변경에 실패했습니다')
       })
   }
 }
@@ -266,7 +262,6 @@ const changeNickDB = (changeNick) => {
     })
       .then((response) => {
         alert('변경이 완료되었습니다')
-        console.log(response.data.userNick)
         const userNick = response.data.userNick
         localStorage.getItem('userNick', userNick)
         dispatch(changeNickname(userNick))
@@ -274,7 +269,6 @@ const changeNickDB = (changeNick) => {
       })
       .catch((error) => {
         alert('이미 가입된 닉네임입니다!')
-        console.log(error)
       })
   }
 }

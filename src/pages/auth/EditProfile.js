@@ -17,6 +17,7 @@ const EditProfile = () => {
   const dispatch = useDispatch()
   const [isOpen, setIsOpen] = React.useState(false)
   const profileIdx = useSelector((state) => state.member.idx)
+  const socket = useSelector((state) => state.game.socket)
   const pictures = [마피양, 기자, 경찰, 의사]
   const nickName = useRef()
 
@@ -39,8 +40,15 @@ const EditProfile = () => {
   const changeNickHandler = () => {
     const changeNick = nickName.current.value
     if (changeNick.length > 10) {
+      deniedSF.play()
+      alert('닉네임은 10자 이하로 작성해주세요!')
       return
+    }
+    if (changeNick === '') {
+      deniedSF.play()
+      alert('닉네임을 입력하세요!')
     } else {
+      socket.emit('main', changeNick)
       dispatch(userActions.changeNickDB(changeNick))
     }
   }
@@ -77,10 +85,9 @@ const EditProfile = () => {
             />
             <DotButton
               black01
-              text="저장"
+              text="닉네임저장"
               _onClick={() => {
                 changeNickHandler()
-                clickSF.play()
               }}
             />
           </Grid>

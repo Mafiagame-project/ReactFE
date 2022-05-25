@@ -74,8 +74,8 @@ function Header(props) {
                     margin="0px"
                     color="#aaa"
                     _onClick={() => {
-                      alert('현재 위치에서는 불가능합니다')
                       deniedSF.play()
+                      alert('현재 위치에서는 불가능합니다')
                     }}
                   >
                     수정하기
@@ -102,8 +102,8 @@ function Header(props) {
               center
               margin="0 10px"
               _onClick={() => {
-                setIsOpen(true)
                 clickSF.play()
+                setIsOpen(true)
               }}
             >
               <Icons src={friendIcon} />
@@ -117,8 +117,8 @@ function Header(props) {
                 center
                 margin="0 10px"
                 _onClick={() => {
-                  alert('현재 위치에서는 불가능합니다')
                   deniedSF.play()
+                  alert('현재 위치에서는 불가능합니다')
                 }}
               >
                 <Icons src={LogoutIcon} />

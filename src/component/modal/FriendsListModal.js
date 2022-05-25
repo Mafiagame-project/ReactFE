@@ -8,14 +8,14 @@ import styled from 'styled-components'
 import closeIcon from '../../assets/icons/black/닫기.png'
 import pattern01 from '../../assets/image/pattern/01_opacity.png'
 import noFriend from '../../assets/image/noti/no_friend.png'
-import pop from '../../assets/sound/effect/pop02.mp3'
+import { clickSF, deniedSF } from '../../element/Sound'
 
 const FriendlistModal = ({ onClose }) => {
   const dispatch = useDispatch()
   const [addFriend, setAddFriend] = React.useState('')
   const [clickedId, setClickedId] = React.useState()
   const friendList = useSelector((state) => state?.user?.friendList)
-  const click = new Audio(pop)
+  const userId = localStorage.getItem('userId')
 
   const clicked = (e) => {
     setClickedId(e.target.value)
@@ -30,9 +30,21 @@ const FriendlistModal = ({ onClose }) => {
   }
 
   const addFriendBtn = () => {
-    click.play()
-    dispatch(userActions.addFriendDB(addFriend))
-    setAddFriend('')
+    if (addFriend === '') {
+      deniedSF.play()
+      alert('친구 아이디를 적어주세요!')
+      return
+    }
+
+    if (userId === addFriend) {
+      deniedSF.play()
+      alert('본인 말고 다른 친구를 사귀어 보아요!')
+      return
+    } else {
+      clickSF.play()
+      dispatch(userActions.addFriendDB(addFriend))
+      setAddFriend('')
+    }
   }
 
   return (

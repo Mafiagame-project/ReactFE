@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import ReadyBtn from './ReadyBtn'
 import VoteBtn from './VoteBtn'
 import { actionCreators as gameActions } from '../../redux/modules/game'
-import { alertSF } from '../../element/Sound'
+import { alertSF, deniedSF } from '../../element/Sound'
 
 const StartBtn = ({ socket }) => {
   const dispatch = useDispatch()
@@ -22,6 +22,7 @@ const StartBtn = ({ socket }) => {
 
   const startGame = () => {
     if (memberSocket.length < 4) {
+      deniedSF.play()
       startGameNoti(1)
     } else {
       if (memberSocket.length - 1 === currentReady.length) {
@@ -30,6 +31,7 @@ const StartBtn = ({ socket }) => {
         dispatch(gameActions.noticeEndGame(null))
         setStart(true)
       } else {
+        deniedSF.play()
         startGameNoti(2)
       }
     }
@@ -45,7 +47,6 @@ const StartBtn = ({ socket }) => {
   useEffect(() => {
     if (startCard) {
       startAlarm()
-      // startBgm.play()
       setTimeout(() => {
         dispatch(gameActions.startCard(null))
       }, 3000)
@@ -76,6 +77,7 @@ const StartBtn = ({ socket }) => {
   }, [members])
 
   const whenHostOut = () => {
+    deniedSF.play()
     toast.warning('호스트가 방을 나갔습니다!', {
       position: toast.POSITION.TOP_CENTER,
       className: 'toast-host-out',
@@ -95,6 +97,7 @@ const StartBtn = ({ socket }) => {
 
   const startGameNoti = (count) => {
     if (count === 1) {
+      deniedSF.play()
       toast.info('게임시작을 위해서 최소 4명이상이 필요합니다', {
         position: toast.POSITION.TOP_CENTER,
         className: 'toast-startPeople',
@@ -108,6 +111,7 @@ const StartBtn = ({ socket }) => {
           result += e + ' '
         }
       })
+      deniedSF.play()
       toast.info(`참가자들이 준비하지 않았습니다 [${result}] `, {
         position: toast.POSITION.TOP_CENTER,
         className: 'toast-startPeople',

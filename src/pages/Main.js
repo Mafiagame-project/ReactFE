@@ -14,6 +14,7 @@ import Banner from '../component/SurveyBadge'
 
 function Main(props) {
   let socket = useSelector((state) => state.game.socket)
+  const userNick = useSelector((state) => state.user.userNick)
   const [isOpen, setIsOpen] = React.useState(false)
   const dispatch = useDispatch()
 
@@ -28,6 +29,10 @@ function Main(props) {
       socket.disconnect()
     }
   }, [socket])
+
+  React.useEffect(() => {
+    socket.emit('main', userNick)
+  }, [])
 
   window.onbeforeunload = function () {
     return dispatch(userActions.logOutDB())
