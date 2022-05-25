@@ -8,7 +8,7 @@ import { actionCreators as memberActions } from '../redux/modules/member'
 import styled, { keyframes } from 'styled-components'
 import pop from '../assets/sound/effect/pop.wav'
 import logo from '../assets/logo/기본값.png'
-import { clickSF, win02SF } from '../element/Sound'
+import { clickSF, win02SF, accessSF } from '../element/Sound'
 import bgm from '../assets/sound/bgm/big_helmet.mp3'
 function Loading() {
   const dispatch = useDispatch()
@@ -29,7 +29,7 @@ function Loading() {
   // }, [])
 
   const entrance = () => {
-    win02SF.play()
+    accessSF.play()
     history.push('/gamemain')
     const socket = io.connect('https://sparta-dongsun.shop')
     dispatch(gameActions.sendSocket(socket))
@@ -138,7 +138,43 @@ function Loading() {
             />
           </>
         )}
-        <Grid height="30px" />
+
+        <Grid margin="2vw 0 0">
+          <Text size="20px" bold>
+            {' '}
+            Copyright @2022 MAFIYNG.All rights reserved.
+          </Text>
+          <Grid isDisplay="flex" width="370px" margin="1vw auto">
+            <Grid flexColumn>
+              <Text bold size="20px" margin="0.3vw 0">
+                BACK_END
+              </Text>
+              <Text size="18px">김동선</Text>
+              <Text size="18px" margin="0.3vw 0">
+                이현승
+              </Text>
+            </Grid>
+            <Grid flexColumn>
+              <Text bold size="20px" margin="0.3vw 0">
+                FRONT_END
+              </Text>
+              <Text size="18px">김지나</Text>
+              <Text size="18px" margin="0.3vw 0">
+                조찬익
+              </Text>
+            </Grid>
+            <Grid fc>
+              <Text bold size="20px" margin="0.3vw 0">
+                DESINGER
+              </Text>
+              <Text size="18px">김지수</Text>
+            </Grid>
+          </Grid>
+          <Text siex="14px" color="#aaa">
+            개인정보보호 약관
+          </Text>
+        </Grid>
+        {/* <Grid height="30px" />
         <Grid height="40px">
           <Text bold size="24px">
             Copyright @2022 MAFIYNG.All rights reserved.
@@ -174,7 +210,7 @@ function Loading() {
         </Grid>
         <Grid height="10px" margin="20px 0 0 0">
           <Text>개인정보보호 약관</Text>
-        </Grid>
+        </Grid> */}
       </Container>
     </div>
   )

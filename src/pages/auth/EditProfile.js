@@ -11,7 +11,7 @@ import 경찰 from '../../assets/image/character/경찰.png'
 import 의사 from '../../assets/image/character/의사_양.png'
 import { clickSF, deniedSF } from '../../element/Sound'
 import { useDispatch, useSelector } from 'react-redux'
-import edit_b from '../../assets/icons/black/edit_b.png'
+import edit_b from '../../assets/icons/black/중복확인.png'
 
 const EditProfile = () => {
   const dispatch = useDispatch()
@@ -144,7 +144,7 @@ const Container = styled.div`
   position: relative;
 `
 const TitleInput = styled.input`
-  width: 65%;
+  width: 55%;
   height: 35px;
   padding: 10px;
   font-size: 24px;

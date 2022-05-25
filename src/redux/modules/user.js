@@ -283,8 +283,8 @@ const changeNickDB = (changeNick) => {
 const naverLogin = (code, state) => {
   console.log(code, state)
   return async function (dispatch, getState, { history }) {
-    apis
-      .naverCode(code, state)
+    await axios
+      .get(`${BASE_URL}/naverLogin/main?code=${code}&state=${state}`)
       .then((res) => {
         console.log(res.data)
         const userId = res.data.naverId
@@ -327,8 +327,14 @@ const kakaoLogin = (code) => {
 
 const logOutDB = (user) => {
   return async function (dispatch, getState, { history }) {
-    apis
-      .logOut(user)
+    await axios({
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      method: 'GET',
+      url: `${BASE_URL}/user/logout`,
+    })
       .then((res) => {
         console.log(res)
         console.log('?????')

@@ -38,7 +38,7 @@ function Main(props) {
       <Header />
       <Container>
         <TutorialBanner />
-        <Grid is_flex>
+        <Grid is_flex width="95%">
           <Banner />
           <Rooms />
         </Grid>

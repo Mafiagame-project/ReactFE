@@ -44,6 +44,7 @@ Grid.defaultProps = {
   bottom: false,
   isDisplay: false,
   justify_item: false,
+  fc: false,
 }
 
 const GridBox = styled.div`
@@ -89,6 +90,7 @@ const GridBox = styled.div`
              props.flexColumn_end
                ? `display: flex; flex-direction: column; justify-content: end; align-items: center;`
                : null};
+    
     ${(props) =>
       props.isFlex_start
         ? `display: flex; align-items: center; justify-content: start;`
@@ -102,6 +104,7 @@ const GridBox = styled.div`
         ? `display: flex; align-items: center; justify-content: end;`
         : null}
     ${(props) => (props._cursor ? `cursor: pointer;` : null)};
+    ${(props) => (props.fc ? `display: flex; flex-direction: column;` : null)};
 `
 
 export default Grid

@@ -23,7 +23,7 @@ function GameRoom(props) {
   const currentTime = useSelector((state) => state.game.night)
   const endGame = useSelector((state) => state.game.endGameNoti)
   const startCard = useSelector((state) => state.game.card)
-  const [darkMode, setDarkMode] = useState(true)
+  const [darkMode, setDarkMode] = useState(false)
 
   window.onbeforeunload = function () {
     return dispatch(userActions.logOutDB())

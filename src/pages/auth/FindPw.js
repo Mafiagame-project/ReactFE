@@ -30,6 +30,17 @@ const FindPw = () => {
   }
 
   const handleChangePw = () => {
+    if (
+      !findPw.changeId ||
+      !findPw.changeEmail ||
+      !findPw.getPw ||
+      !findPw.newPw ||
+      !findPw.newPwCheck
+    ) {
+      deniedSF.play()
+      alert('빈칸을 채워주세요!')
+      return
+    }
     clickSF.play()
     dispatch(userActions.changePwDB(findPw))
   }

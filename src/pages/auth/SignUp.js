@@ -8,7 +8,7 @@ import { FormikConsumer, useFormik } from 'formik'
 import * as yup from 'yup'
 import { idVal, emailVal, nickVal, pwVal } from '../../shared/Validation'
 import { clickSF, deniedSF, accessSF } from '../../element/Sound'
-import edit from '../../assets/icons/black/edit_b.png'
+import edit from '../../assets/icons/black/중복확인.png'
 
 function SignUp() {
   const dispatch = useDispatch()
@@ -86,7 +86,12 @@ function SignUp() {
               _onChange={formik.handleChange}
               placeholder="아이디"
             />
-            <img src={edit} alt="중복확인" onClick={doubleIdCheck} />
+            <img
+              src={edit}
+              alt="중복확인"
+              onClick={doubleIdCheck}
+              style={{ cursor: 'pointer' }}
+            />
           </Grid>
           <Text margin="0px 3px" color="red">
             {formik.touched.id ? formik.errors.id : ''}
@@ -100,7 +105,12 @@ function SignUp() {
               _onChange={formik.handleChange}
               placeholder="이메일"
             />
-            <img src={edit} alt="중복확인" onClick={doubleEmailCheck} />
+            <img
+              src={edit}
+              alt="중복확인"
+              onClick={doubleEmailCheck}
+              style={{ cursor: 'pointer' }}
+            />
           </Grid>
           <Text margin="0px 3px" color="red">
             {formik.touched.email ? formik.errors.email : ''}
@@ -114,7 +124,12 @@ function SignUp() {
               _onChange={formik.handleChange}
               placeholder="닉네임"
             />
-            <img src={edit} alt="중복확인" onClick={doubleNickCheck} />
+            <img
+              src={edit}
+              alt="중복확인"
+              onClick={doubleNickCheck}
+              style={{ cursor: 'pointer' }}
+            />
           </Grid>
           <Text margin="0px 3px" color="red">
             {formik.touched.nick ? formik.errors.nick : ''}

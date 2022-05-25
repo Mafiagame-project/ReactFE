@@ -24,7 +24,5 @@ const SurveyBadge = () => {
   )
 }
 
-const Banner = styled.div`
-  margin: 0 0 0 20px;
-`
+const Banner = styled.div``
 export default SurveyBadge

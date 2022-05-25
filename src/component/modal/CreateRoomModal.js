@@ -142,14 +142,16 @@ const CreateRoomModal = ({ onClose, socket }) => {
               <Text margin="0.3vw 0" size="1.37em">
                 시크릿 설정
               </Text>
-              <Grid is_flex height="4vh">
-                <Grid>
+              <Grid isFlex_start height="4vh">
+                <Grid is_flex>
                   <input
+                    id="cb1"
                     type="checkbox"
                     text="시크릿 모드 ON"
                     name="secret"
                     onChange={toggleSecret}
                   />
+                  <label for="cb1"></label>
                   <span>시크릿 모드 ON</span>
                 </Grid>
                 {getOpen ? (
