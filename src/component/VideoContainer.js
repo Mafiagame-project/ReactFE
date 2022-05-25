@@ -214,7 +214,7 @@ const VideoContainer = () => {
               ref={myVideo}
               className="myvideo"
               autoPlay
-              muted="true"
+              muted={true}
             ></video>
             {display ? (
               <CameraBtn

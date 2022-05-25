@@ -13,6 +13,7 @@ const VoteModal = ({ onClose }) => {
   const is_night = useSelector((state) => state.game.night)
   const playerJob = useSelector((state) => state.game.job)
   let killed = useSelector((state) => state.game.killed)
+  const nowKilled = useSelector((state) => state.game.resultNoti)
   const chance = useSelector((state) => state.game.chance)
   const memberId = useSelector((state) => state.member.memberId)
   const currentNick = localStorage.getItem('userNick')
@@ -20,10 +21,12 @@ const VoteModal = ({ onClose }) => {
   if (killed == null) {
     killed = []
   }
-
+  // if (nowKilled) {
+  //   killed.push(nowKilled)
+  // }
+  console.log(killed)
   let saveArray = memberId.filter((x) => !killed.includes(x))
 
-  console.log(killed)
   console.log(saveArray)
 
   const is_killed = (e) => {

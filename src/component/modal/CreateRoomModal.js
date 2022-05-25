@@ -151,7 +151,7 @@ const CreateRoomModal = ({ onClose, socket }) => {
                     name="secret"
                     onChange={toggleSecret}
                   />
-                  <label for="cb1"></label>
+                  <label htmlFor="cb1"></label>
                   <span>시크릿 모드 ON</span>
                 </Grid>
                 {getOpen ? (
