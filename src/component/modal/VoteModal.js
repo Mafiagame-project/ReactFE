@@ -21,8 +21,10 @@ const VoteModal = ({ onClose }) => {
     killed = []
   }
 
-  console.log(killed)
   let saveArray = memberId.filter((x) => !killed.includes(x))
+
+  console.log(killed)
+  console.log(saveArray)
 
   const is_killed = (e) => {
     setClickedId(e.target.value)

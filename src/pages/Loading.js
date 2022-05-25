@@ -68,6 +68,7 @@ function Loading() {
     })
 
     socket.on('dayVoteResult', (value) => {
+      console.log(value)
       dispatch(gameActions.checkIsMafia(value.isMafia))
       dispatch(gameActions.playerWhoKilled(value.diedPeopleArr)) // 죽은 전체명단
       dispatch(gameActions.noticeResult(value.id)) // 방금 죽은사람
@@ -82,6 +83,7 @@ function Loading() {
     })
 
     socket.on('nightVoteResult', (value) => {
+      console.log(value)
       dispatch(gameActions.playerWhoKilled(value.diedPeopleArr))
       dispatch(gameActions.noticeResultNight(value.died[0]))
       dispatch(gameActions.playerWhoSurvived(value.saved[0]))
