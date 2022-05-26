@@ -163,15 +163,30 @@ function Loading() {
               <Text size="18px">김지수</Text>
             </Grid>
           </Grid>
-          <Text
-            siex="14px"
-            color="#aaa"
-            _onClick={() => {
-              history.push('/information')
-            }}
-          >
-            개인정보보호 약관
-          </Text>
+          <Grid isFlex_center margin="1vw 0">
+            <Text
+              _cursor
+              size="14px"
+              color="#aaa"
+              margin="0 1vw"
+              _onClick={() => {
+                history.push('/information')
+              }}
+            >
+              개인정보보호 약관
+            </Text>
+            <Text
+              _cursor
+              margin="0 1vw"
+              size="14px"
+              color="#aaa"
+              _onClick={() => {
+                window.open('https://www.instagram.com/mafiyang7')
+              }}
+            >
+              Instagram @mafiyang7
+            </Text>
+          </Grid>
         </Grid>
       </Container>
     </div>

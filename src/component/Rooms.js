@@ -13,9 +13,16 @@ const Rooms = (props) => {
   const RoomList = useSelector((state) => state.room.rooms)
   const socket = useSelector((state) => state.game.socket)
   const currentId = localStorage.getItem('userNick')
-  
+
   const entrance = (roomInfo) => {
     let roomId = roomInfo.roomId
+    let peopleArray = roomInfo.currentPeople
+
+    if (peopleArray.includes(currentId)) {
+      deniedSF.play()
+      alert('중복 입장은 불가능합니다!')
+      return
+    }
     // 방에 입장시 생기는 이벤트
     if (roomInfo.start === true) {
       alert('게임이 시작되었습니다')
