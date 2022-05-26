@@ -100,7 +100,7 @@ function NotiModal() {
             <>
               {currentTime ? ( // 밤이면 낮의 결과가 출력
                 <>
-                  {voteResult !== null ? ( // 아무도 안 죽음 (?)을 아무도 죽지않았습니다로 출력하게!
+                  {voteResult !== false ? ( // 아무도 안 죽음 (?)을 아무도 죽지않았습니다로 출력하게!
                     <Modalblack>
                       <VoteNoti>
                         <Text size="3vw">낮 투표결과 </Text>
