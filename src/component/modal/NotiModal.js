@@ -38,7 +38,7 @@ function NotiModal() {
     }, 6000)
     dispatch(gameActions.noticeRep(null))
   }
-  
+
   useEffect(() => {
     if (dayCount < 2) {
       return
@@ -165,7 +165,7 @@ function NotiModal() {
                                   <Frame45 />
                                   <Grid width="60%" isStart>
                                     <Text color="white" size="1.9vw">
-                                      test99 {reportNoti?.clickerId}는..?!
+                                      {reportNoti?.clickerId}는..?!
                                     </Text>
                                     {reportNoti?.clickerJob === 'mafia' ? (
                                       <Text
