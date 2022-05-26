@@ -8,7 +8,6 @@ import { apis } from '../../shared/api'
 
 const BASE_URL = process.env.REACT_APP_BASE_URL
 
-console.log(BASE_URL)
 //Action
 const LOG_IN = 'LOG_IN'
 const LOG_OUT = 'LOG_OUT'
@@ -66,7 +65,6 @@ const loginDB = (dic) => {
       })
       .catch((err) => {
         window.alert('아이디나 비밀번호를 확인해주세요!')
-        console.log('errrrrr', err)
       })
   }
 }
@@ -100,7 +98,6 @@ const signupDB = (dic) => {
       })
       .catch((err) => {
         window.alert('이미 가입된 아이디,닉네임 또는 이메일 입니다.')
-        console.log('errrrrr', err)
       })
   }
 }
@@ -180,7 +177,6 @@ const isLoginDB = () => {
       url: `${BASE_URL}/user/loginCheck`,
     })
       .then((res) => {
-        console.log(res)
         localStorage.setItem('userId', res.data.userId)
         localStorage.setItem('userNick', res.data.userNick)
         dispatch(
@@ -190,9 +186,7 @@ const isLoginDB = () => {
           }),
         )
       })
-      .catch((err) => {
-        console.log('errrr', err)
-      })
+      .catch((err) => {})
   }
 }
 
@@ -214,7 +208,6 @@ const findPwDB = (dic) => {
         alert('메일로 새 비밀번호가 전송되었습니다!')
       })
       .catch((err) => {
-        console.log('err', err)
         alert('등록되지 않은 이메일 또는 아이디입니다!')
       })
   }
@@ -248,7 +241,7 @@ const changePwDB = (dic) => {
         history.push('/login')
       })
       .catch((err) => {
-        console.log('err', err)
+        alert('비밀번호 변경에 실패했습니다')
       })
   }
 }
@@ -266,7 +259,6 @@ const changeNickDB = (changeNick) => {
     })
       .then((response) => {
         alert('변경이 완료되었습니다')
-        console.log(response.data.userNick)
         const userNick = response.data.userNick
         localStorage.getItem('userNick', userNick)
         dispatch(changeNickname(userNick))
@@ -274,19 +266,16 @@ const changeNickDB = (changeNick) => {
       })
       .catch((error) => {
         alert('이미 가입된 닉네임입니다!')
-        console.log(error)
       })
   }
 }
 
 //naver Login
 const naverLogin = (code, state) => {
-  console.log(code, state)
   return async function (dispatch, getState, { history }) {
     await axios
       .get(`${BASE_URL}/naverLogin/main?code=${code}&state=${state}`)
       .then((res) => {
-        console.log(res.data)
         const userId = res.data.naverId
         const userNick = res.data.naverNick
         const accessToken = res.data.token
@@ -297,7 +286,7 @@ const naverLogin = (code, state) => {
         history.push('/')
       })
       .catch((err) => {
-        console.log('errr', err)
+        alert('로그인에 실패하였습니다!')
       })
   }
 }
@@ -308,7 +297,6 @@ const kakaoLogin = (code) => {
     await axios
       .get(`${BASE_URL}/main?code=${code}`)
       .then((res) => {
-        console.log(res.data)
         const accessToken = res.data.token
         const userId = res.data.userId
         const userNick = res.data.userNick
@@ -319,9 +307,7 @@ const kakaoLogin = (code) => {
         dispatch(logIn(accessToken, userId, userNick))
         history.replace('/')
       })
-      .catch((err) => {
-        console.log('카카오에러에러', err)
-      })
+      .catch((err) => {})
   }
 }
 
@@ -336,16 +322,12 @@ const logOutDB = (user) => {
       url: `${BASE_URL}/user/logout`,
     })
       .then((res) => {
-        console.log(res)
-        console.log('?????')
         localStorage.removeItem('token', 'userId')
         dispatch(logOut(user))
         alert('로그아웃 되었습니다')
         history.replace('/login')
       })
-      .catch((err) => {
-        console.log(err)
-      })
+      .catch((err) => {})
   }
 }
 const addFriendDB = (friendUserId) => {
@@ -372,9 +354,7 @@ const addFriendDB = (friendUserId) => {
           return
         }
       })
-      .catch((err) => {
-        console.log('err', err)
-      })
+      .catch((err) => {})
   }
 }
 
@@ -392,9 +372,7 @@ const getFriendDB = () => {
         let list = res.data.friendList
         dispatch(getFriend(list))
       })
-      .catch((err) => {
-        console.log('err', err)
-      })
+      .catch((err) => {})
   }
 }
 
@@ -416,16 +394,13 @@ const deleteFriendDB = (id) => {
       .then((res) => {
         dispatch(deleteFriend(id))
       })
-      .catch((err) => {
-        console.log('err', err)
-      })
+      .catch((err) => {})
   }
 }
 export default handleActions(
   {
     [LOG_IN]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload)
         draft.userId = action.payload.userId
         draft.token = action.payload.token
         draft.userNick = action.payload.userNick

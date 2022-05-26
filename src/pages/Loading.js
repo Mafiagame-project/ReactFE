@@ -1,3 +1,4 @@
+import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { Grid, Text, DotButton } from '../element/index'
 import { useDispatch } from 'react-redux'
@@ -18,15 +19,15 @@ function Loading() {
   startBgm.loop = true
 
   //safari 막기
-  // useEffect(() => {
-  //   const safariSearch = window.navigator.userAgent.toLowerCase()
-  //   const safari = safariSearch.indexOf('safari')
-  //   const chrome = safariSearch.indexOf('chrome')
-  //   if (safari > 1 && chrome == -1) {
-  //     alert('죄송합니다 Safari 브라우저는 지원하지 않습니다')
-  //     window.location = '/'
-  //   }
-  // }, [])
+  React.useEffect(() => {
+    const safariSearch = window.navigator.userAgent.toLowerCase()
+    const safari = safariSearch.indexOf('safari')
+    const chrome = safariSearch.indexOf('chrome')
+    if (safari > 1 && chrome == -1) {
+      alert('죄송합니다 Safari 브라우저는 지원하지 않습니다')
+      window.location = '/'
+    }
+  }, [])
 
   const entrance = () => {
     accessSF.play()
@@ -63,7 +64,7 @@ function Loading() {
       dispatch(gameActions.playerJob({ player, playerJob }))
       dispatch(gameActions.startCard(true))
       dispatch(roomActions.startCheck(true))
-      startBgm.volume = 0.5
+      startBgm.volume = 0.22
       startBgm.play()
     })
 
@@ -128,14 +129,6 @@ function Loading() {
                 clickSF.play()
               }}
             />
-            <DotButton
-              white03
-              text="회원가입"
-              _onClick={() => {
-                history.push('/signup')
-                clickSF.play()
-              }}
-            />
           </>
         )}
 
@@ -170,15 +163,30 @@ function Loading() {
               <Text size="18px">김지수</Text>
             </Grid>
           </Grid>
-          <Text
-            siex="14px"
-            color="#aaa"
-            _onClick={() => {
-              history.push('/information')
-            }}
-          >
-            개인정보보호 약관
-          </Text>
+          <Grid isFlex_center margin="1vw 0">
+            <Text
+              _cursor
+              size="14px"
+              color="#aaa"
+              margin="0 1vw"
+              _onClick={() => {
+                history.push('/information')
+              }}
+            >
+              개인정보보호 약관
+            </Text>
+            <Text
+              _cursor
+              margin="0 1vw"
+              size="14px"
+              color="#aaa"
+              _onClick={() => {
+                window.open('https://www.instagram.com/mafiyang7')
+              }}
+            >
+              Instagram @mafiyang7
+            </Text>
+          </Grid>
         </Grid>
       </Container>
     </div>

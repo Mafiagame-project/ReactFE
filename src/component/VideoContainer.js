@@ -12,11 +12,11 @@ const VideoContainer = () => {
   const userNick = useSelector((state) => state.user.userNick)
   const UserNick = useSelector((state) => state.user.userNick)
   const [cameraOn, setCameraOn] = React.useState(true)
+  const [audioOn, setAudioOn] = React.useState(true)
   const [display, setDisplay] = React.useState(0)
   const videoWrap = React.useRef('')
   const videoGrid = React.useRef('')
   const myVideo = React.useRef()
-  myVideo.muted = true
 
   let peersNick
   let peerNick = ''
@@ -44,16 +44,16 @@ const VideoContainer = () => {
   }
 
   // 오디오 온오프
-  // const AudioHandler = () => {
-  //   myVideo.current.srcObject
-  //     .getAudioTracks()
-  //     .forEach((track) => (track.enabled = !track.enabled));
-  //   if (audioOn) {
-  //     setAudioOn(false);
-  //   } else {
-  //     setAudioOn(true);
-  //   }
-  // };
+  const AudioHandler = () => {
+    myVideo.current.srcObject
+      .getAudioTracks()
+      .forEach((track) => (track.enabled = !track.enabled))
+    if (audioOn) {
+      setAudioOn(false)
+    } else {
+      setAudioOn(true)
+    }
+  }
 
   //죽은 사람 표기
   if (killed === null) {
@@ -80,11 +80,13 @@ const VideoContainer = () => {
       navigator.mediaDevices
         .getUserMedia({
           video: true,
-          audio: false,
+          audio: true,
         })
         .then((stream) => {
           myStream = stream
           let streamId = stream.id
+          // window.localAudio.autoplay = true
+
           addVideoStream(myVideo.current, stream)
           myVideo.current.classList.add('video_box')
           videoGrid.current.prepend(myVideo.current)
@@ -163,7 +165,7 @@ const VideoContainer = () => {
           })
         })
         .catch((err) => {
-          console.log('err', err)
+          alert('비디오 및 오디오 환경을 확인해주세요!')
         })
     } else {
       alert('비디오 및 오디오 환경을 확인해주세요!')
@@ -208,16 +210,19 @@ const VideoContainer = () => {
             }}
           >
             <div className="video_non_src"></div>
-            <video ref={myVideo} className="myvideo"></video>
-
+            <video
+              ref={myVideo}
+              className="myvideo"
+              autoPlay
+              muted={true}
+            ></video>
             {display ? (
               <CameraBtn
+                audioOn={audioOn}
+                AudioHandler={AudioHandler}
                 cameraOn={cameraOn}
                 display={display}
                 VideoHandler={VideoHandler}
-                // onMouseOut={() => {
-                //   setDisplay(display === false)
-                // }}
               />
             ) : null}
             <div className="userview_name fl">
