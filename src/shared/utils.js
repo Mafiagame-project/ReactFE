@@ -3,7 +3,6 @@ export const logger = (msg) => {
   if (process.env.NODE_ENV === 'production') {
     return
   }
-  console.log(msg)
 }
 
 // 토큰 가져오기

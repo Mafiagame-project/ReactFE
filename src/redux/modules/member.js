@@ -49,9 +49,7 @@ const callPlayerRecord = () => {
         const lose = response.data?.userLose
         dispatch(callGameRecord(win, lose))
       })
-      .catch((error) => {
-        console.log(error)
-      })
+      .catch((error) => {})
   }
 }
 

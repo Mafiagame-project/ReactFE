@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import closeIcon from '../../assets/icons/black/닫기.png'
 import { withStyles } from '@mui/styles'
 import sheep from '../../assets/image/character/양_시민.png'
+import { clickSF, accessSF, deniedSF } from '../../element/Sound'
 import pop from '../../assets/sound/effect/pop.wav'
 import pop02 from '../../assets/sound/effect/pop02.mp3'
 
@@ -46,17 +47,23 @@ const CreateRoomModal = ({ onClose, socket }) => {
   const people = React.useRef()
   const pwd = React.useRef()
 
-  const click = new Audio(pop)
-  const click02 = new Audio(pop02)
-
   React.useEffect(() => {}, [socket])
   const createRoom = () => {
     let roomTitle = title.current.value
     let roomPeople = getPeople
     let roomPwd
-    if (roomTitle === '') {
-      alert('방 이름을 적어주세요!')
+
+    if (roomTitle.length > 8) {
+      console.log('왜 안먹지')
+      deniedSF.play()
+      alert('방 이름은 8자 이하로 적어주세요!')
       return
+    }
+
+    if (roomTitle === '') {
+      deniedSF.play()
+      alert('방 이름을 적어주세요!')
+      return null
     }
 
     if (!roomPeople) {
@@ -65,12 +72,13 @@ const CreateRoomModal = ({ onClose, socket }) => {
 
     if (getOpen === true) {
       // 비공개방일때
+      accessSF.play()
       roomPwd = pwd.current.value
       socket.emit('createRoom', { roomTitle, roomPeople, roomPwd })
-      return click.play()
+      return
     } else {
       // 공개방일때
-      click.play()
+      accessSF.play()
       socket.emit('createRoom', { roomTitle, roomPeople })
     }
     socket.emit('roomList')
@@ -101,7 +109,7 @@ const CreateRoomModal = ({ onClose, socket }) => {
             alt="나가기"
             onClick={() => {
               onClose()
-              click02.play()
+              clickSF.play()
             }}
             style={{ float: 'right' }}
           />
@@ -117,7 +125,7 @@ const CreateRoomModal = ({ onClose, socket }) => {
               </Text>
               <TitleInput
                 ref={title}
-                placeholder="방 이름을 입력하세요. (최대 n글자)"
+                placeholder="방 이름을 입력하세요. (최대 8글자)"
               />
             </Grid>
 
@@ -128,7 +136,7 @@ const CreateRoomModal = ({ onClose, socket }) => {
               <ImageSlider
                 aria-label="time-indicator"
                 defaultValue={5}
-                max={10}
+                max={8}
                 min={4}
                 step={1}
                 valueLabelDisplay="on"
@@ -151,7 +159,7 @@ const CreateRoomModal = ({ onClose, socket }) => {
                     name="secret"
                     onChange={toggleSecret}
                   />
-                  <label for="cb1"></label>
+                  <label htmlFor="cb1"></label>
                   <span>시크릿 모드 ON</span>
                 </Grid>
                 {getOpen ? (

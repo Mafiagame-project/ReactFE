@@ -12,6 +12,7 @@ const VideoContainer = () => {
   const userNick = useSelector((state) => state.user.userNick)
   const UserNick = useSelector((state) => state.user.userNick)
   const [cameraOn, setCameraOn] = React.useState(true)
+  const [audioOn, setAudioOn] = React.useState(true)
   const [display, setDisplay] = React.useState(0)
   const videoWrap = React.useRef('')
   const videoGrid = React.useRef('')
@@ -43,16 +44,16 @@ const VideoContainer = () => {
   }
 
   // 오디오 온오프
-  // const AudioHandler = () => {
-  //   myVideo.current.srcObject
-  //     .getAudioTracks()
-  //     .forEach((track) => (track.enabled = !track.enabled));
-  //   if (audioOn) {
-  //     setAudioOn(false);
-  //   } else {
-  //     setAudioOn(true);
-  //   }
-  // };
+  const AudioHandler = () => {
+    myVideo.current.srcObject
+      .getAudioTracks()
+      .forEach((track) => (track.enabled = !track.enabled))
+    if (audioOn) {
+      setAudioOn(false)
+    } else {
+      setAudioOn(true)
+    }
+  }
 
   //죽은 사람 표기
   if (killed === null) {
@@ -164,7 +165,7 @@ const VideoContainer = () => {
           })
         })
         .catch((err) => {
-          console.log('err', err)
+          alert('비디오 및 오디오 환경을 확인해주세요!')
         })
     } else {
       alert('비디오 및 오디오 환경을 확인해주세요!')
@@ -213,17 +214,15 @@ const VideoContainer = () => {
               ref={myVideo}
               className="myvideo"
               autoPlay
-              muted="true"
+              muted={true}
             ></video>
-
             {display ? (
               <CameraBtn
+                audioOn={audioOn}
+                AudioHandler={AudioHandler}
                 cameraOn={cameraOn}
                 display={display}
                 VideoHandler={VideoHandler}
-                // onMouseOut={() => {
-                //   setDisplay(display === false)
-                // }}
               />
             ) : null}
             <div className="userview_name fl">

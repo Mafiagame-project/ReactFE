@@ -30,7 +30,8 @@ const Rooms = (props) => {
         if (roomInfo.password) {
           clickSF.play()
           let pwdInput = prompt('비밀번호를 입력해주세요')
-          if (pwdInput === parseInt(roomInfo.password)) {
+
+          if (pwdInput == parseInt(roomInfo.password)) {
             history.push(`/gameroom/${roomId}`)
             dispatch(gameActions.sendSocket(socket))
             dispatch(roomActions.currentRoom(roomInfo))

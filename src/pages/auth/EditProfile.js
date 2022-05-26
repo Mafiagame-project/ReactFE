@@ -39,9 +39,9 @@ const EditProfile = () => {
 
   const changeNickHandler = () => {
     const changeNick = nickName.current.value
-    if (changeNick.length > 10) {
+    if (changeNick.length > 6) {
       deniedSF.play()
-      alert('닉네임은 10자 이하로 작성해주세요!')
+      alert('닉네임은 6자 이하로 작성해주세요!')
       return
     }
     if (changeNick === '') {

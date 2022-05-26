@@ -1,3 +1,4 @@
+import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { Grid, Text, DotButton } from '../element/index'
 import { useDispatch } from 'react-redux'
@@ -18,15 +19,15 @@ function Loading() {
   startBgm.loop = true
 
   //safari 막기
-  // useEffect(() => {
-  //   const safariSearch = window.navigator.userAgent.toLowerCase()
-  //   const safari = safariSearch.indexOf('safari')
-  //   const chrome = safariSearch.indexOf('chrome')
-  //   if (safari > 1 && chrome == -1) {
-  //     alert('죄송합니다 Safari 브라우저는 지원하지 않습니다')
-  //     window.location = '/'
-  //   }
-  // }, [])
+  React.useEffect(() => {
+    const safariSearch = window.navigator.userAgent.toLowerCase()
+    const safari = safariSearch.indexOf('safari')
+    const chrome = safariSearch.indexOf('chrome')
+    if (safari > 1 && chrome == -1) {
+      alert('죄송합니다 Safari 브라우저는 지원하지 않습니다')
+      window.location = '/'
+    }
+  }, [])
 
   const entrance = () => {
     accessSF.play()
@@ -63,7 +64,7 @@ function Loading() {
       dispatch(gameActions.playerJob({ player, playerJob }))
       dispatch(gameActions.startCard(true))
       dispatch(roomActions.startCheck(true))
-      startBgm.volume = 0.5
+      startBgm.volume = 0.22
       startBgm.play()
     })
 
@@ -125,14 +126,6 @@ function Loading() {
               text="로그인"
               _onClick={() => {
                 history.push('/login')
-                clickSF.play()
-              }}
-            />
-            <DotButton
-              white03
-              text="회원가입"
-              _onClick={() => {
-                history.push('/signup')
                 clickSF.play()
               }}
             />
