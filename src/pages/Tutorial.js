@@ -27,14 +27,33 @@ function Tutorial() {
                   <Grid isFlex_center height="100%" width="100%">
                     <ImgBox6>
                       <Explain2>
-                        <Text size='22px'>게임 인원 수 마다 직업의 수다 다릅니다!</Text>
-                          <Text margin='3px' left size='22px'>4명 : 시민 3 , 마피아 1 <br/></Text>
-                          <Text margin='3px' left size='22px'>5명 : 시민 2 , 의사 1 , 경찰 1 , 마피아 1<br/></Text>
-                          <Text margin='3px' left size='22px'>6명 : 시민 3 , 의사 1 , 경찰 1 , 마피아 1<br/></Text>
-                          <Text margin='3px' left size='22px'>7명 : 시민 3 , 의사 1 , 경찰 1 , 마피아 2<br/></Text>
-                          <Text margin='3px' left size='22px'>8명 : 시민 3 , 의사 1 , 경찰 1 , 기자 1, 마피아 2<br/></Text>
-                          <Text margin='3px' left size='22px'>9명 : 시민 4 , 의사 1 , 경찰 1 , 기자 1, 마피아 2<br/></Text>
-                          <Text margin='3px' left size='22px'>10명 : 시민 5 , 의사 1 , 경찰 1 , 기자 1, 마피아 2<br/></Text>
+                        <Text size="22px">
+                          게임 인원 수 마다 직업의 수다 다릅니다!
+                        </Text>
+                        <Text margin="3px" left>
+                          4명 : 시민 3 , 마피아 1 <br />
+                        </Text>
+                        <Text margin="3px" left>
+                          5명 : 시민 2 , 의사 1 , 경찰 1 , 마피아 1<br />
+                        </Text>
+                        <Text margin="3px" left>
+                          6명 : 시민 3 , 의사 1 , 경찰 1 , 마피아 1<br />
+                        </Text>
+                        <Text margin="3px" left>
+                          7명 : 시민 3 , 의사 1 , 경찰 1 , 마피아 2<br />
+                        </Text>
+                        <Text margin="3px" left>
+                          8명 : 시민 3 , 의사 1 , 경찰 1 , 기자 1, 마피아 2
+                          <br />
+                        </Text>
+                        <Text margin="3px" left>
+                          9명 : 시민 4 , 의사 1 , 경찰 1 , 기자 1, 마피아 2
+                          <br />
+                        </Text>
+                        <Text margin="3px" left>
+                          10명 : 시민 5 , 의사 1 , 경찰 1 , 기자 1, 마피아 2
+                          <br />
+                        </Text>
                       </Explain2>
                     </ImgBox6>
                   </Grid>
@@ -143,7 +162,6 @@ const Explain2 = styled.div`
   bottom: 50px;
   left: 10%;
   width: 80%;
-  height: 210px;
   padding: 20px;
   display: flex;
   flex-direction: column;

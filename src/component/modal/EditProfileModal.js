@@ -53,6 +53,7 @@ const EditProfileModal = ({ onClose }) => {
                     element.info = ''
                     return (
                       <PictureBox
+                        key={idx + 1}
                         style={{
                           width: '100px',
                           height: '100px',
@@ -69,6 +70,7 @@ const EditProfileModal = ({ onClose }) => {
                   } else {
                     return (
                       <PictureBox
+                        key={idx + 1}
                         onClick={() => {
                           setFile(idx)
                           iconCheck(element)

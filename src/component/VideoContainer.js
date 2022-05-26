@@ -165,7 +165,7 @@ const VideoContainer = () => {
           })
         })
         .catch((err) => {
-          console.log('err', err)
+          alert('비디오 및 오디오 환경을 확인해주세요!')
         })
     } else {
       alert('비디오 및 오디오 환경을 확인해주세요!')

@@ -26,7 +26,6 @@ function GameRoom(props) {
   let killed = useSelector((state) => state.game.killed)
   const [darkMode, setDarkMode] = useState(false)
 
-  console.log(killed)
   window.onbeforeunload = function () {
     return dispatch(userActions.logOutDB())
   }

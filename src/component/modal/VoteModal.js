@@ -21,13 +21,8 @@ const VoteModal = ({ onClose }) => {
   if (killed == null) {
     killed = []
   }
-  // if (nowKilled) {
-  //   killed.push(nowKilled)
-  // }
-  console.log(killed)
-  let saveArray = memberId.filter((x) => !killed.includes(x))
 
-  console.log(saveArray)
+  let saveArray = memberId.filter((x) => !killed.includes(x))
 
   const is_killed = (e) => {
     setClickedId(e.target.value)
@@ -82,7 +77,6 @@ const VoteModal = ({ onClose }) => {
   }
 
   const active = (clickedId, clicker, time) => {
-    console.log(killed)
     let clickerJob = clicker.playerJob
     let clickerId = clicker.player
     if (currentNick === clickedId) {
@@ -135,19 +129,12 @@ const VoteModal = ({ onClose }) => {
 
   return (
     <>
-      <button
-        onClick={() => {
-          actionAlert(1)
-        }}
-      >
-        ㅇㅏㄹ라ㄹ랄랄랄라
-      </button>
       {saveArray ? (
         <ModalPortal>
           <Background>
             {!is_night ? (
               <Container onClick={(e) => e.stopPropagation()}>
-                <Text size="40px" color="#fff">
+                <Text size="40px" color="#fff" margin="0 0 2vw 0 ">
                   낮이 되었습니다.
                   <br />
                   우리에 가둘 양을 선택해 주세요
@@ -166,7 +153,7 @@ const VoteModal = ({ onClose }) => {
                     )
                   })}
                 </VoteBox>
-                <Text color="#fff" size="25px">
+                <Text color="#fff" size="25px" margin="1.5vw 0  ">
                   {clickedId}님을 선택하시겠습니까?
                 </Text>
                 <Grid isFlex_center>
@@ -191,26 +178,26 @@ const VoteModal = ({ onClose }) => {
             ) : (
               <Container onClick={(e) => e.stopPropagation()}>
                 {playerJob.playerJob === 'mafia' ? (
-                  <Text size="40px" color="#fff">
+                  <Text size="40px" color="#fff" margin="0 0 2vw 0 ">
                     밤이 되었습니다.
                     <br />
                     잡아먹고 싶은 양을 선택해 주세요
                   </Text>
                 ) : playerJob.playerJob === 'police' ? (
-                  <Text size="40px" color="#fff">
+                  <Text size="40px" color="#fff" margin="0 0 2vw 0 ">
                     밤이 되었습니다.
                     <br />
                     정체를 알고싶은 양을 선택해 주세요
                   </Text>
                 ) : playerJob.playerJob === 'doctor' ? (
-                  <Text size="40px" color="#fff">
+                  <Text size="40px" color="#fff" margin="0 0 2vw 0 ">
                     밤이 되었습니다.
                     <br />
                     살리고 싶은 양을 선택해 주세요
                   </Text>
                 ) : (
                   <>
-                    <Text size="40px" color="#fff">
+                    <Text size="40px" color="#fff" margin="0 0 2vw 0 ">
                       시민은..잠에 듭니다
                     </Text>
                     <DotButton
@@ -238,7 +225,7 @@ const VoteModal = ({ onClose }) => {
                         )
                       })}
                     </VoteBox>
-                    <Grid isFlex_center>
+                    <Grid isFlex_center margin="1vw 0 ">
                       <DotButton
                         white01
                         text="선택 완료"
