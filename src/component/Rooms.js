@@ -13,7 +13,7 @@ const Rooms = (props) => {
   const RoomList = useSelector((state) => state.room.rooms)
   const socket = useSelector((state) => state.game.socket)
   const currentId = localStorage.getItem('userNick')
-
+  
   const entrance = (roomInfo) => {
     let roomId = roomInfo.roomId
     // 방에 입장시 생기는 이벤트

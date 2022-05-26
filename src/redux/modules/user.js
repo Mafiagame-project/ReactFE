@@ -6,7 +6,7 @@ import { produce } from 'immer'
 import axios from 'axios'
 import { apis } from '../../shared/api'
 
-const BASE_URL = process.env.REACT_APP_BASE_URL
+const BASE_URL = 'https://sparta-dongsun.shop'
 
 //Action
 const LOG_IN = 'LOG_IN'
