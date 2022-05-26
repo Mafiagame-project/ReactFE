@@ -38,7 +38,7 @@ function NotiModal() {
     }, 6000)
     dispatch(gameActions.noticeRep(null))
   }
-
+  
   useEffect(() => {
     if (dayCount < 2) {
       return

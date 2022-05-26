@@ -2,7 +2,7 @@ import axios from 'axios'
 import { getToken } from './utils'
 
 //동선님 서버
-const BASE_URL = process.env.REACT_APP_BASE_URL
+const BASE_URL = 'https://sparta-dongsun.shop'
 // https://nhseung.shop
 
 const api = axios.create({

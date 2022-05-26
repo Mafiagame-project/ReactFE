@@ -47,9 +47,6 @@ const StartBtn = ({ socket }) => {
   useEffect(() => {
     if (startCard) {
       startAlarm()
-      setTimeout(() => {
-        dispatch(gameActions.startCard(null))
-      }, 3000)
     }
   }, [startCard])
 
@@ -106,11 +103,14 @@ const StartBtn = ({ socket }) => {
     } else {
       let withOutHost = members.filter((nick) => nick !== roomInfo?.userId)
       let result = ''
-      withOutHost.forEach((e, idx) => {
-        if (e !== currentReady[idx]) {
-          result += e + ' '
+      let array = []
+      for(let i = 0; i < withOutHost.length; i++){
+        if(currentReady.includes(withOutHost[i]) === false){
+          console.log(withOutHost[i])
+          array.push(withOutHost[i])
         }
-      })
+        result = array.join(', ')
+      }
       deniedSF.play()
       toast.info(`참가자들이 준비하지 않았습니다 [${result}] `, {
         position: toast.POSITION.TOP_CENTER,
