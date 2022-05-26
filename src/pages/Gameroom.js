@@ -16,6 +16,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import '../styles/video.css'
 import { winSF, morningSF } from '../element/Sound'
+import NewsBtn from '../component/buttons/NewsBtn'
 
 function GameRoom(props) {
   const dispatch = useDispatch()
@@ -29,7 +30,7 @@ function GameRoom(props) {
   window.onbeforeunload = function () {
     return dispatch(userActions.logOutDB())
   }
-
+  console.log(killed)
   useEffect(() => {
     if (endGame !== null) {
       winSF.play()
@@ -112,6 +113,7 @@ function GameRoom(props) {
       <Header />
       <div className={`${darkMode && endGame == null && 'dark-mode'}`}>
         {darkMode && endGame == null ? <ExitBtn night /> : <ExitBtn />}
+        <NewsBtn />
         <Container>
           <VideoContainer socket={socket} />
           <ChatBox socket={socket} currentTime={currentTime} />

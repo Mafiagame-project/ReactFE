@@ -104,8 +104,8 @@ const StartBtn = ({ socket }) => {
       let withOutHost = members.filter((nick) => nick !== roomInfo?.userId)
       let result = ''
       let array = []
-      for(let i = 0; i < withOutHost.length; i++){
-        if(currentReady.includes(withOutHost[i]) === false){
+      for (let i = 0; i < withOutHost.length; i++) {
+        if (currentReady.includes(withOutHost[i]) === false) {
           console.log(withOutHost[i])
           array.push(withOutHost[i])
         }
