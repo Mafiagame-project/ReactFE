@@ -150,18 +150,6 @@ const Container = styled.div`
   background-color: #000;
   padding: 0 8vw;
   height: 9vh;
-
-  @media ${({ theme }) => theme.device.mobile} {
-    padding: 0 3vw;
-  }
-
-  @media ${({ theme }) => theme.device.tablet} {
-    padding: 0 5.5vw;
-  }
-  @media @media ${({ theme }) => theme.device.pc} { {
-    padding: 0 6vw;
-    height: 9vh;
-  }
 `
 
 const Icons = styled.img`
@@ -173,8 +161,9 @@ const Rightside = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  @media screen and (max-width: 800px) {
-    width: 100%;
+  @media ${({ theme }) => theme.device.pc} { {
+    padding: 0 6vw;
+    height: 9vh;
   }
 `
 export default Header

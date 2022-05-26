@@ -28,7 +28,7 @@ function Tutorial() {
                     <ImgBox6>
                       <Explain2>
                         <Text size="22px">
-                          게임 인원 수 마다 직업의 수다 다릅니다!
+                          게임 인원 수 마다 직업의 수가 다릅니다!
                         </Text>
                         <Text margin="3px" left>
                           4명 : 시민 3 , 마피아 1 <br />
@@ -44,14 +44,6 @@ function Tutorial() {
                         </Text>
                         <Text margin="3px" left>
                           8명 : 시민 3 , 의사 1 , 경찰 1 , 기자 1, 마피아 2
-                          <br />
-                        </Text>
-                        <Text margin="3px" left>
-                          9명 : 시민 4 , 의사 1 , 경찰 1 , 기자 1, 마피아 2
-                          <br />
-                        </Text>
-                        <Text margin="3px" left>
-                          10명 : 시민 5 , 의사 1 , 경찰 1 , 기자 1, 마피아 2
                           <br />
                         </Text>
                       </Explain2>

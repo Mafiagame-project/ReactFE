@@ -99,7 +99,7 @@ function Introduce() {
                 return (
                   <>
                     <Card
-                      key={idx}
+                      key={idx + 1}
                       onClick={() => {
                         seleted(e, idx)
                       }}
@@ -136,7 +136,7 @@ function Introduce() {
                 return (
                   <>
                     <NonCard
-                      key={idx}
+                      key={idx + 1}
                       onClick={() => {
                         seleted(e, idx)
                       }}
