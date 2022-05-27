@@ -17,6 +17,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import '../styles/video.css'
 import { winSF, morningSF } from '../element/Sound'
 import NewsBtn from '../component/buttons/NewsBtn'
+import TutorialBtn from '../component/buttons/TutorialBtn'
 
 function GameRoom(props) {
   const dispatch = useDispatch()
@@ -113,12 +114,12 @@ function GameRoom(props) {
       <Header />
       <div className={`${darkMode && endGame == null && 'dark-mode'}`}>
         {darkMode && endGame == null ? <ExitBtn night /> : <ExitBtn />}
+        <TutorialBtn />
         <NewsBtn />
         <Container>
           <VideoContainer socket={socket} />
           <ChatBox socket={socket} currentTime={currentTime} />
         </Container>
-
         <JobModal />
         <Noti />
         <ToastContainer />
