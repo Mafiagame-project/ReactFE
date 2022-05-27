@@ -23,20 +23,20 @@ const StartBtn = ({ socket }) => {
   console.log(members)
 
   const startGame = () => {
-    // if (memberSocket.length < 4) {
-    //   deniedSF.play()
-    //   startGameNoti(1)
-    // } else {
-    if (memberSocket.length - 1 === currentReady.length) {
-      alertSF.play()
-      socket.emit('startGame')
-      dispatch(gameActions.noticeEndGame(null))
-      setStart(true)
-    } else {
+    if (memberSocket.length < 4) {
       deniedSF.play()
-      startGameNoti(2)
+      startGameNoti(1)
+    } else {
+      if (memberSocket.length - 1 === currentReady.length) {
+        alertSF.play()
+        socket.emit('startGame')
+        dispatch(gameActions.noticeEndGame(null))
+        setStart(true)
+      } else {
+        deniedSF.play()
+        startGameNoti(2)
+      }
     }
-    // }
   }
 
   const startAlarm = () => {
