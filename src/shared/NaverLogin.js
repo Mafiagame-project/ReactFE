@@ -11,8 +11,6 @@ const NaverLogin = () => {
   React.useEffect(() => {
     dispatch(userAction.naverLogin(code, state))
   }, [])
-
-  return null
 }
 
 export default NaverLogin
