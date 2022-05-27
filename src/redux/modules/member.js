@@ -12,6 +12,7 @@ const EXIT_ID = 'EXIT_ID'
 const PROFILE_IDX = 'PROFILE_IDX'
 const RECORD = 'RECORD'
 const CHANGE_NICK = 'CHANGE_NICK'
+const AI_MEMBER = 'AI_MEMBER'
 
 const currentSocketId = createAction(CURR_SOCKET, (memberSocket) => ({
   memberSocket,
@@ -24,10 +25,12 @@ const exitUserId = createAction(EXIT_ID, (memberId) => ({ memberId }))
 const callProfileIdx = createAction(PROFILE_IDX, (num) => ({ num }))
 const callGameRecord = createAction(RECORD, (win, lose) => ({ win, lose }))
 const changeNick = createAction(CHANGE_NICK, (nick) => ({ nick }))
+const aiMember = createAction(AI_MEMBER, (aiId) => ({ aiId }))
 
 const initialState = {
   socketId: [],
   memberId: [],
+  voteList: [],
   idx: null,
   win: null,
   lose: null,
@@ -131,6 +134,12 @@ export default handleActions(
       produce(state, (draft) => {
         draft.nickName = action.payload.nick
       }),
+    [AI_MEMBER]: (state, action) =>
+      produce(state, (draft) => {
+        let members = draft.memberId
+        let list = members.concat(action.payload.aiId)
+        draft.voteList = list
+      }),
   },
   initialState,
 )
@@ -146,6 +155,7 @@ const actionCreators = {
   callPlayerRecord,
   callGameRecord,
   changeNick,
+  aiMember,
 }
 
 export { actionCreators }

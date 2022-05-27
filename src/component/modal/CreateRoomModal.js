@@ -9,8 +9,6 @@ import closeIcon from '../../assets/icons/black/닫기.png'
 import { withStyles } from '@mui/styles'
 import sheep from '../../assets/image/character/양_시민.png'
 import { clickSF, accessSF, deniedSF } from '../../element/Sound'
-import pop from '../../assets/sound/effect/pop.wav'
-import pop02 from '../../assets/sound/effect/pop02.mp3'
 
 const ImageSlider = withStyles({
   thumb: {
