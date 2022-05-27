@@ -6,7 +6,7 @@ export const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id
 
 //naver
 const NAVER_CLIENT_ID = process.env.REACT_APP_NAVER_CLIENT_ID
-const NAVER_CALLBACK_URI = process.env.REACT_APP_NAVER_CALLBACK_URI
+const NAVER_CALLBACK_URI = 'https://mafiyang.com/naverLogin/callback'
 
 const randomString = () => {
   const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'
