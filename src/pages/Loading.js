@@ -135,7 +135,7 @@ function Loading() {
         <Grid margin="2vw 0 0">
           <Text size="20px" bold>
             {' '}
-            Copyright @2022 MAFIYNG.All rights reserved.
+            Copyright @2022 MAFIYANG.All rights reserved.
           </Text>
           <Grid isDisplay="flex" width="370px" margin="1vw auto">
             <Grid flexColumn>
