@@ -18,7 +18,7 @@ jobs:
           echo REACT_APP_REST_API_KEY=${{ secrets.REACT_APP_REST_API_KEY }} >> .env
           echo REACT_APP_REDIRECT_URI="https://www.mafiyang.com/main" >> .env
           echo REACT_APP_NAVER_CLIENT_ID=${{ secrets.REACT_APP_NAVER_CLIENT_ID }} >> .env
-          echo REACT_APP_NAVER_CALLBACK_URI="https://mafiyang.com/naverLogin/main" >> .env
+          echo REACT_APP_NAVER_CALLBACK_URI="https://mafiyang.com/naverLogin/callback" >> .env
           echo REACT_APP_BASE_URL=${{ secrets.REACT_APP_BASE_URL }} >> .env
           cat .env
     - name: Install dependencies
