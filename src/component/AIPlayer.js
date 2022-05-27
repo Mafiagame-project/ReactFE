@@ -11,13 +11,13 @@ const AiPlayer = () => {
   const player = useSelector((state) => state.game.ai)
   console.log(player)
 
-  React.useEffect(() => {
-    socket.on('AI', (value) => {
-      console.log(value)
-      dispatch(gameActions.aiPlayer(value))
-      dispatch(memberActions.aiMember(value))
-    })
-  }, [])
+  // React.useEffect(() => {
+  //   socket.on('AI', (value) => {
+  //     console.log(value)
+  //     dispatch(gameActions.aiPlayer(value))
+  //     dispatch(memberActions.aiMember(value))
+  //   })
+  // }, [])
 
   return (
     <>
