@@ -7,7 +7,7 @@ const NaverLogin = () => {
 
   let code = new URL(window.location.href).searchParams.get('code')
   let state = new URL(window.location.href).searchParams.get('state')
-
+  //plz.....
   React.useEffect(() => {
     dispatch(userAction.naverLogin(code, state))
   }, [])
