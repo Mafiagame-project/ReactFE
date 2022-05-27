@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import StartBtn from './buttons/StartBtn'
 import CameraBtn from './buttons/CameraBtn'
+import AiPlayer from './AIPlayer'
 
 const VideoContainer = () => {
   const socket = useSelector((state) => state.game.socket)
@@ -229,6 +230,7 @@ const VideoContainer = () => {
               <p>{userNick}</p>
             </div>
           </div>
+          <AiPlayer />
         </div>
         <StartBtn socket={socket} />
       </Container>

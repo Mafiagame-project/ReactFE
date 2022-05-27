@@ -6,7 +6,7 @@ const AiPlayer = () => {
       <div classNmae="video_grid">
         <div className="ai_video"></div>
         <div className="fl">
-          <p>{userNick}</p>
+          <p>userNick</p>
         </div>
       </div>
     </>
