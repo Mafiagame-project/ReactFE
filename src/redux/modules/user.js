@@ -274,7 +274,7 @@ const changeNickDB = (changeNick) => {
 const naverLogin = (code, state) => {
   return async function (dispatch, getState, { history }) {
     await axios
-      .get(`${BASE_URL}/naverLogin/main?code=${code}&state=${state}`)
+      .get(`${BASE_URL}/naverLogin/callback?code=${code}&state=${state}`)
       .then((res) => {
         const userId = res.data.naverId
         const userNick = res.data.naverNick
