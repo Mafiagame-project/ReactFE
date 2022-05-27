@@ -16,7 +16,7 @@ const TutorialBanner = () => {
         <Text margin="5px" size="3vw">
           MAFIYANG
         </Text>
-        <P>
+        {/* <P>
           양들이 풀을 뜯어 먹는 평화로운 양양 마을
           <br />
           그러나 밤마다 양이 하나둘씩 사라진다는데...
@@ -24,7 +24,8 @@ const TutorialBanner = () => {
           무슨 일이 일어나는 걸까?
           <br />
           마피양의 역할을 확인해 보세요!
-        </P>
+        </P> */}
+        <P>현재 테스트중....ㅎㅎ~</P>
         <DotButton
           text="보러가기"
           _onClick={() => {

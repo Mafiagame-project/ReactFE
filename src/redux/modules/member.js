@@ -12,6 +12,7 @@ const EXIT_ID = 'EXIT_ID'
 const PROFILE_IDX = 'PROFILE_IDX'
 const RECORD = 'RECORD'
 const CHANGE_NICK = 'CHANGE_NICK'
+const AI_MEMBER = 'AI_MEMBER'
 
 const currentSocketId = createAction(CURR_SOCKET, (memberSocket) => ({
   memberSocket,
@@ -24,10 +25,12 @@ const exitUserId = createAction(EXIT_ID, (memberId) => ({ memberId }))
 const callProfileIdx = createAction(PROFILE_IDX, (num) => ({ num }))
 const callGameRecord = createAction(RECORD, (win, lose) => ({ win, lose }))
 const changeNick = createAction(CHANGE_NICK, (nick) => ({ nick }))
+// const aiMember = createAction(AI_MEMBER, (memberId) => ({ memberId }))
 
 const initialState = {
   socketId: [],
   memberId: [],
+  voteList: [],
   idx: null,
   win: null,
   lose: null,
@@ -111,6 +114,7 @@ export default handleActions(
     [CURR_ID]: (state, action) =>
       produce(state, (draft) => {
         draft.memberId = action.payload.memberId
+        console.log(action.payload)
       }),
     [EXIT_ID]: (state, action) =>
       produce(state, (draft) => {
@@ -131,6 +135,12 @@ export default handleActions(
       produce(state, (draft) => {
         draft.nickName = action.payload.nick
       }),
+    // [AI_MEMBER]: (state, action) =>
+    //   produce(state, (draft) => {
+    //     let memberId = draft.memberId
+    //     let list = memberId.concat(action.payload.memberId)
+    //     draft.voteList = list
+    //   }),
   },
   initialState,
 )
@@ -146,6 +156,7 @@ const actionCreators = {
   callPlayerRecord,
   callGameRecord,
   changeNick,
+  // aiMember,
 }
 
 export { actionCreators }

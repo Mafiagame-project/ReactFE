@@ -20,21 +20,24 @@ const StartBtn = ({ socket }) => {
   const currentId = localStorage.getItem('userNick')
   const [getStart, setStart] = React.useState(false)
 
+  console.log(memberSocket.chat)
+  console.log(currentReady)
+
   const startGame = () => {
-    if (memberSocket.length < 4) {
-      deniedSF.play()
-      startGameNoti(1)
+    // if (memberSocket.length < 4) {
+    //   deniedSF.play()
+    //   startGameNoti(1)
+    // } else {
+    if (memberSocket.length - 1 === currentReady?.length) {
+      alertSF.play()
+      socket.emit('startGame')
+      dispatch(gameActions.noticeEndGame(null))
+      setStart(true)
     } else {
-      if (memberSocket.length - 1 === currentReady.length) {
-        alertSF.play()
-        socket.emit('startGame')
-        dispatch(gameActions.noticeEndGame(null))
-        setStart(true)
-      } else {
-        deniedSF.play()
-        startGameNoti(2)
-      }
+      deniedSF.play()
+      startGameNoti(2)
     }
+    // }
   }
 
   const startAlarm = () => {

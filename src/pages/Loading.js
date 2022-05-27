@@ -53,6 +53,7 @@ function Loading() {
     })
 
     socket.on('joinRoomMsg', (incoming, idValue, currentAll) => {
+      console.log(currentAll)
       // 참가자가 방에 들어올때 호출
       dispatch(memberActions.currentSocketId(idValue))
       dispatch(memberActions.currentUserId(currentAll))

@@ -20,6 +20,7 @@ const START_CARD = 'START_CARD'
 const DAY_CNT = 'DAY_CNT'
 const CHANCE = 'CHANCE'
 const VOTE_RESULT = 'VOTE_RESULT'
+const AI_PLAYER = 'AI_PLAYER'
 
 const sendSocket = createAction(SEND_SOCKET, (socket) => ({ socket }))
 const sendPeerId = createAction(SEND_PEERID, (peer) => ({ peer }))
@@ -27,7 +28,7 @@ const noticeEnterOut = createAction(ROOM_NOTI, (noti) => ({ noti }))
 // 들어오고 나가고의 알림 없다면 삭제
 const noticeJob = createAction(JOB_NOTI, (noti) => ({ noti }))
 const noticeResult = createAction(RESULT_NOTI, (noti) => ({ noti }))
-const noticeResultNight = createAction(RESULT_NOTI2, (noti) => ({noti}))
+const noticeResultNight = createAction(RESULT_NOTI2, (noti) => ({ noti }))
 const noticeCop = createAction(COP_NOTI, (noti) => ({ noti }))
 const noticeRep = createAction(REP_NOTI, (noti) => ({ noti }))
 const noticeEndGame = createAction(ENDGAME_NOTI, (noti) => ({ noti }))
@@ -36,19 +37,21 @@ const playerWhoKilled = createAction(KILLED, (player) => ({ player }))
 const playerWhoSurvived = createAction(SURVIVED, (player) => ({ player }))
 const dayAndNight = createAction(IS_NIGHT, (boolean) => ({ boolean }))
 const copSelected = createAction(COP_SELECTED, (selected) => ({ selected }))
-const readyCheck = createAction(ALL_READY, (ready) => ({ready}))
-const startCard = createAction(START_CARD, (card) => ({card}))
-const dayCount = createAction(DAY_CNT, (num) => ({num}))
-const repChanceOver = createAction(CHANCE, (chance) => ({chance}))
-const checkIsMafia = createAction(VOTE_RESULT, (job) => ({job}))
+const readyCheck = createAction(ALL_READY, (ready) => ({ ready }))
+const startCard = createAction(START_CARD, (card) => ({ card }))
+const dayCount = createAction(DAY_CNT, (num) => ({ num }))
+const repChanceOver = createAction(CHANCE, (chance) => ({ chance }))
+const checkIsMafia = createAction(VOTE_RESULT, (job) => ({ job }))
+const aiPlayer = createAction(AI_PLAYER, (ai) => ({ ai }))
 
 const initialState = {
+  ai: null,
   socket: null,
-  peerId : null,
+  peerId: null,
   enterOutNoti: null,
   jobNoti: null,
   resultNoti: null,
-  resultNight : null,
+  resultNight: null,
   copNoti: null,
   repNoti: null,
   endGameNoti: null,
@@ -58,10 +61,10 @@ const initialState = {
   night: null,
   copSelect: null,
   ready: null,
-  card : null,
-  cnt : 0,
-  chance : null,
-  votedJob : null,
+  card: null,
+  cnt: 0,
+  chance: null,
+  votedJob: null,
 }
 
 export default handleActions(
@@ -124,7 +127,7 @@ export default handleActions(
       }),
     [START_CARD]: (state, action) =>
       produce(state, (draft) => {
-        if(action.payload.card == true){
+        if (action.payload.card == true) {
           draft.card = true
         } else {
           draft.card = false
@@ -136,20 +139,24 @@ export default handleActions(
       }),
     [DAY_CNT]: (state, action) =>
       produce(state, (draft) => {
-        if(action.payload.num === 0){
-          draft.cnt = 0;
+        if (action.payload.num === 0) {
+          draft.cnt = 0
         } else {
-          let count = 1;
-          draft.cnt = draft.cnt + count;
+          let count = 1
+          draft.cnt = draft.cnt + count
         }
       }),
-      [CHANCE]: (state, action) =>
+    [CHANCE]: (state, action) =>
       produce(state, (draft) => {
         draft.chance = action.payload.chance
       }),
-      [VOTE_RESULT]: (state, action) =>
+    [VOTE_RESULT]: (state, action) =>
       produce(state, (draft) => {
         draft.votedJob = action.payload.job
+      }),
+    [AI_PLAYER]: (state, action) =>
+      produce(state, (draft) => {
+        draft.ai = action.payload.ai
       }),
   },
   initialState,
@@ -174,6 +181,7 @@ const actionCreators = {
   dayCount,
   repChanceOver,
   checkIsMafia,
+  aiPlayer,
 }
 
 export { actionCreators }

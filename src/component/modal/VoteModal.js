@@ -15,9 +15,10 @@ const VoteModal = ({ onClose }) => {
   let killed = useSelector((state) => state.game.killed)
   const nowKilled = useSelector((state) => state.game.resultNoti)
   const chance = useSelector((state) => state.game.chance)
-  const memberId = useSelector((state) => state.member.memberId)
+  const memberId = useSelector((state) => state.member.voteList)
   const currentNick = localStorage.getItem('userNick')
 
+  console.log(memberId)
   if (killed == null) {
     killed = []
   }

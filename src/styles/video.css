@@ -32,10 +32,9 @@
   transform: scaleX(-1);
 }
 .ai_video {
-  width: 10.56vw;
-  height: 10.56vw;
-  position: absolute;
-  border-radius: 50%;
+  width: 10.5vw;
+  height: 10.5vw;
+  border-radius: 70%;
   background-image: url('../assets/image/character/video_profile.png');
   background-size: cover;
   position: relative;
