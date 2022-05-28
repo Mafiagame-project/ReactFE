@@ -31,7 +31,6 @@ function GameRoom(props) {
   window.onbeforeunload = function () {
     return dispatch(userActions.logOutDB())
   }
-  console.log(killed)
   useEffect(() => {
     if (endGame !== null) {
       winSF.play()

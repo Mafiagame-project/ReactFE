@@ -19,7 +19,7 @@ const AiPlayer = () => {
     <>
       {player?.map((p, i) => {
         return (
-          <div className="video_grid">
+          <div key={i} className="video_grid">
             <div className="ai_video"></div>
             <div className="fl">
               <p>{p}</p>
