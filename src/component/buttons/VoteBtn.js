@@ -1,9 +1,9 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { DotButton } from '../../element/index'
-import VoteModal from '../modal/VoteModal'
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import VoteModal from '../modal/VoteModal'
+import { DotButton } from '../../element/index'
 import { clickSF, deniedSF } from '../../element/Sound'
 
 const VoteBtn = () => {

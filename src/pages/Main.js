@@ -12,7 +12,7 @@ import styled from 'styled-components'
 import { clickSF } from '../element/Sound'
 import Banner from '../component/SurveyBadge'
 
-function Main(props) {
+function Main() {
   let socket = useSelector((state) => state.game.socket)
   const userNick = useSelector((state) => state.user.userNick)
   const [isOpen, setIsOpen] = React.useState(false)
@@ -37,7 +37,7 @@ function Main(props) {
   window.onbeforeunload = function () {
     return dispatch(userActions.logOutDB())
   }
-
+  
   return (
     <>
       <Header />

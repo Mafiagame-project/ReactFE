@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
-import { DotButton, Grid } from '../../element/index'
 import { useDispatch, useSelector } from 'react-redux'
+import { actionCreators as gameActions } from '../../redux/modules/game'
 import { history } from '../../redux/configureStore'
 import { toast } from 'react-toastify'
+import styled from 'styled-components'
+import { DotButton, Grid } from '../../element/index'
 import ReadyBtn from './ReadyBtn'
 import VoteBtn from './VoteBtn'
-import { actionCreators as gameActions } from '../../redux/modules/game'
 import { alertSF, deniedSF } from '../../element/Sound'
-import styled from 'styled-components'
 
 const StartBtn = ({ socket }) => {
   const dispatch = useDispatch()
@@ -33,7 +33,6 @@ const StartBtn = ({ socket }) => {
       dispatch(gameActions.noticeEndGame(null))
       setStart(true)
     }
-
     if (memberSocket.length < 4) {
       deniedSF.play()
       startGameNoti(1)
@@ -48,7 +47,6 @@ const StartBtn = ({ socket }) => {
         startGameNoti(2)
       }
     }
-    // }
   }
 
   const startAlarm = () => {

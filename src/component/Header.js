@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Grid, Text, Image } from '../element/index'
 import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../redux/configureStore'
 import { actionCreators as userActions } from '../redux/modules/user'
 import { actionCreators as memberActions } from '../redux/modules/member'
 import FriendsListModal from './modal/FriendsListModal'
+import { Grid, Text, Image } from '../element/index'
 import friendIcon from '../assets/icons/white/친구(백).png'
 import LogoutIcon from '../assets/icons/white/로그아웃(백).png'
 import 마피양 from '../assets/image/character/profile/profile01.jpg'
@@ -15,7 +15,7 @@ import 의사 from '../assets/image/character/profile/profile05.png'
 import { clickSF, deniedSF } from '../element/Sound'
 import logo from '../assets/logo/메인페이지.png'
 
-function Header(props) {
+function Header() {
   const socket = useSelector((state) => state.game.socket)
   const profileIdx = useSelector((state) => state.member.idx)
   const recordWin = useSelector((state) => state.member.win)

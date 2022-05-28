@@ -1,9 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import sheep from '../assets/image/character/양_시민.png'
-import 마피아 from '../assets/image/character/profile/profile01.jpg'
 import 기자 from '../assets/image/character/profile/profile04.jpeg'
-import 경찰 from '../assets/image/character/profile/profile03.png'
 
 const Image = (props) => {
   const { shape, src, size, margin, small } = props

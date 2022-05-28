@@ -1,9 +1,8 @@
 import React from 'react'
+import styled from 'styled-components'
 import { history } from '../redux/configureStore'
 import { Text, DotButton } from '../element/index'
 import bannerGif from '../assets/image/game/배너.gif'
-// import banner from '../assets/image/game/메인_배너.png'
-import styled from 'styled-components'
 import pop02 from '../assets/sound/effect/pop02.mp3'
 
 const TutorialBanner = () => {
@@ -16,7 +15,7 @@ const TutorialBanner = () => {
         <Text margin="5px" size="3vw">
           MAFIYANG
         </Text>
-        {/* <P>
+        <P>
           양들이 풀을 뜯어 먹는 평화로운 양양 마을
           <br />
           그러나 밤마다 양이 하나둘씩 사라진다는데...
@@ -24,8 +23,7 @@ const TutorialBanner = () => {
           무슨 일이 일어나는 걸까?
           <br />
           마피양의 역할을 확인해 보세요!
-        </P> */}
-        <P>현재 테스트중....ㅎㅎ~</P>
+        </P>
         <DotButton
           text="보러가기"
           _onClick={() => {

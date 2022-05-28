@@ -1,15 +1,14 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { Grid, Text, DotButton } from '../element/index'
 import { useDispatch } from 'react-redux'
 import io from 'socket.io-client'
 import { actionCreators as gameActions } from '../redux/modules/game'
 import { actionCreators as roomActions } from '../redux/modules/room'
 import { actionCreators as memberActions } from '../redux/modules/member'
-import styled, { keyframes } from 'styled-components'
-import pop from '../assets/sound/effect/pop.wav'
+import styled from 'styled-components'
+import { Grid, Text, DotButton } from '../element/index'
 import logo from '../assets/logo/기본값.png'
-import { clickSF, win02SF, accessSF } from '../element/Sound'
+import { clickSF, accessSF } from '../element/Sound'
 import bgm from '../assets/sound/bgm/big_helmet.mp3'
 function Loading() {
   const dispatch = useDispatch()
@@ -40,7 +39,6 @@ function Loading() {
     })
 
     socket.on('roomData', (info) => {
-      // createModal 이벤트 발생시 실행
       socket.emit('joinRoom', info.roomId)
       dispatch(roomActions.currentRoom(info))
       history.replace(`/gameroom/${info.roomId}`)
@@ -49,14 +47,11 @@ function Loading() {
     socket.on('leaveRoomMsg', (offSocketId, offId) => {
       dispatch(memberActions.exitSocketId(offSocketId))
       dispatch(memberActions.exitUserId(offId))
-      dispatch(gameActions.noticeEnterOut(offId)) // 들어오고 나가고의 알림 없다면 삭제
     })
 
     socket.on('joinRoomMsg', (incoming, idValue, currentAll) => {
-      // 참가자가 방에 들어올때 호출
       dispatch(memberActions.currentSocketId(idValue))
       dispatch(memberActions.currentUserId(currentAll))
-      dispatch(gameActions.noticeEnterOut(incoming)) // 들어오고 나가고의 알림 없다면 삭제
     })
 
     socket.on('getJob', (player, playerJob) => {
@@ -72,10 +67,6 @@ function Loading() {
       dispatch(gameActions.checkIsMafia(value.isMafia))
       dispatch(gameActions.playerWhoKilled(value.diedPeopleArr)) // 죽은 전체명단
       dispatch(gameActions.noticeResult(value.id)) // 방금 죽은사람
-    })
-
-    socket.on('ready', (value) => {
-      dispatch(gameActions.readyCheck(value)) // 게임시작 누르고 오는거라 필요없는듯?
     })
 
     socket.on('readyPeople', (currentReady) => {

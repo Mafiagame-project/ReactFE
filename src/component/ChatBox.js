@@ -1,11 +1,11 @@
 import React from 'react'
+import styled from 'styled-components'
+import { useSelector } from 'react-redux'
 import Chatdiv from './Chatdiv'
 import Timer from './Timer'
 import { Grid } from '../element/index'
 import lock from '../assets/icons/white/자물쇠(백).png'
 
-import styled from 'styled-components'
-import { useSelector } from 'react-redux'
 
 const ChatBox = ({ socket, currentTime }) => {
   const chatting = React.useRef()

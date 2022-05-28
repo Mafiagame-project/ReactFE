@@ -3,7 +3,7 @@ import { produce } from 'immer'
 
 import axios from 'axios'
 
-const BASE_URL = 'https://sparta-dongsun.shop'
+const BASE_URL = process.env.REACT_APP_BASE_URL
 
 const CURR_SOCKET = 'CURR_SOCKET'
 const EXIT_SOCKET = 'EXIT_SOCKET'

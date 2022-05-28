@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import sheep from '../assets/image/character/양_시민.png'
 import reload from '../assets/icons/black/새로고침.png'
 import { clickSF, accessSF, deniedSF } from '../element/Sound'
-const Rooms = (props) => {
+const Rooms = () => {
   const dispatch = useDispatch()
   const RoomList = useSelector((state) => state.room.rooms)
   const socket = useSelector((state) => state.game.socket)
@@ -18,12 +18,11 @@ const Rooms = (props) => {
     let roomId = roomInfo.roomId
     let peopleArray = roomInfo.currentPeople
 
-    // if (peopleArray.includes(currentId)) {
-    //   deniedSF.play()
-    //   alert('중복 입장은 불가능합니다!')
-    //   return
-    // }
-    // 방에 입장시 생기는 이벤트
+    if (peopleArray.includes(currentId)) {
+      deniedSF.play()
+      alert('중복 입장은 불가능합니다!')
+      return
+    }
     if (roomInfo.start === true) {
       alert('게임이 시작되었습니다')
       deniedSF.play()
@@ -64,22 +63,20 @@ const Rooms = (props) => {
     clickSF.play()
     socket.emit('roomList')
   }
+  
   React.useEffect(() => {
+    socket.emit('main', currentId)
     socket.on('roomList', (rooms) => {
       dispatch(roomActions.sendRoomList(rooms))
     })
-  }, [socket])
-
-  React.useEffect(() => {
     return () => {
       socket.off('roomList')
       socket.off('joinRoom')
       socket.removeAllListeners('joinRoom')
     }
   }, [socket])
-  React.useEffect(() => {
-    socket.emit('main', currentId)
-  }, [socket])
+
+ 
 
   return (
     <>

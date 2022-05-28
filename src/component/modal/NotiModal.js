@@ -1,5 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { useEffect, useState } from 'react'
+import { actionCreators as gameActions } from '../../redux/modules/game'
 import { Grid, Text } from '../../element/index'
 import 늑대 from '../../assets/image/character/늑대_.png'
 import 피해자 from '../../assets/image/character/양_시민.png'
@@ -16,8 +18,6 @@ import point from '../../assets/image/noti/source/living_point.png'
 import mafiaWin from '../../assets/image/noti/늑대_승리.gif'
 import CitizenWin from '../../assets/image/noti/시민_승리.gif'
 import happy from '../../assets/image/noti/기사_공백.gif'
-import { useEffect, useState } from 'react'
-import { actionCreators as gameActions } from '../../redux/modules/game'
 
 function NotiModal() {
   const dispatch = useDispatch()
