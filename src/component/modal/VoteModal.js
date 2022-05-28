@@ -32,7 +32,7 @@ const VoteModal = ({ onClose }) => {
   } else {
     saveArray = memberId.filter((x) => !killed.includes(x))
   }
-
+  // 나중에 리듀서 합치기
   // let saveArray = memberId.filter((x) => !killed.includes(x))
 
   const is_killed = (e) => {
