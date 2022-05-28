@@ -37,7 +37,7 @@ function Main(props) {
   window.onbeforeunload = function () {
     return dispatch(userActions.logOutDB())
   }
-
+  
   return (
     <>
       <Header />

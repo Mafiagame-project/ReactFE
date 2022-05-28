@@ -27,7 +27,7 @@ function GameRoom(props) {
   const startCard = useSelector((state) => state.game.card)
   let killed = useSelector((state) => state.game.killed)
   const [darkMode, setDarkMode] = useState(false)
-
+  
   window.onbeforeunload = function () {
     return dispatch(userActions.logOutDB())
   }
