@@ -1,15 +1,14 @@
 import React from 'react'
-import ModalPortal from './ModalPortal'
+import { useDispatch } from 'react-redux'
 import { Grid, Text, DotButton, Image } from '../../element/index'
 import { actionCreators as memberActions } from '../../redux/modules/member'
 import styled from 'styled-components'
+import ModalPortal from './ModalPortal'
 import 마피양 from '../../assets/image/character/profile/profile02.png'
 import 기자 from '../../assets/image/character/profile/profile04.jpeg'
 import 경찰 from '../../assets/image/character/profile/profile03.png'
 import 의사 from '../../assets/image/character/profile/profile05.png'
-// import 시민 from '../../assets/image/character/profile/profile06.jpeg'
 import pop from '../../assets/sound/effect/pop02.mp3'
-import { useDispatch } from 'react-redux'
 
 const EditProfileModal = ({ onClose }) => {
   const dispatch = useDispatch()

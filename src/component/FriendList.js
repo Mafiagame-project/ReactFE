@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { actionCreators as userActions } from '../redux/modules/user'
 import styled from 'styled-components'
 import deleteIcon from '../assets/icons/white/쓰레기통.png'
-import { clickSF, deniedSF } from '../element/Sound'
+import { deniedSF } from '../element/Sound'
 
 const FriendList = (props) => {
   const dispatch = useDispatch()

@@ -1,9 +1,9 @@
 import React from 'react'
-import { Input, Grid, DotButton, Text } from '../../element/index'
+import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { actionCreators as userActions } from '../../redux/modules/user'
+import { Input, Grid, DotButton, Text } from '../../element/index'
 import { clickSF, deniedSF } from '../../element/Sound'
-import styled from 'styled-components'
 
 const FindPw = () => {
   const dispatch = useDispatch()

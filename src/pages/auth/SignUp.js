@@ -1,13 +1,13 @@
 import React from 'react'
+import * as yup from 'yup'
 import { history } from '../../redux/configureStore'
 import { useDispatch } from 'react-redux'
-import { Input, Grid, Text, DotButton, Button } from '../../element/index'
-import styled from 'styled-components'
 import { actionCreators as userActions } from '../../redux/modules/user'
-import { FormikConsumer, useFormik } from 'formik'
-import * as yup from 'yup'
+import { useFormik } from 'formik'
+import styled from 'styled-components'
+import { Input, Grid, Text, DotButton } from '../../element/index'
 import { idVal, emailVal, nickVal, pwVal } from '../../shared/Validation'
-import { clickSF, deniedSF, accessSF } from '../../element/Sound'
+import { clickSF, deniedSF } from '../../element/Sound'
 import edit from '../../assets/icons/black/중복확인.png'
 
 function SignUp() {

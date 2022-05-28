@@ -1,12 +1,10 @@
-import react from 'react'
-import ModalPortal from './ModalPortal'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { Grid, Text } from '../../element/index'
+import ModalPortal from './ModalPortal'
 import 늑대 from '../../assets/image/character/늑대_.png'
 import 피해자 from '../../assets/image/character/양_시민.png'
 import deadSheep from '../../assets/image/noti/기사_피해자양.gif'
-import dayvote from '../../assets/image/character/양_behind.png'
 import angel from '../../assets/image/noti/source/back-under.jpg'
 import ballon from '../../assets/image/noti/source/말풍선(그림자).png'
 import who from '../../assets/image/noti/의문늑대.png'
@@ -15,31 +13,12 @@ import 모자이크 from '../../assets/image/noti/양_피그마판형.png'
 import head from '../../assets/image/noti/속보.png'
 import ad from '../../assets/image/noti/source/ad.jpg'
 import point from '../../assets/image/noti/source/living_point.png'
-import mafiaWin from '../../assets/image/noti/늑대_승리.gif'
-import CitizenWin from '../../assets/image/noti/시민_승리.gif'
 import happy from '../../assets/image/noti/기사_공백.gif'
-import { useEffect, useState } from 'react'
-import { actionCreators as gameActions } from '../../redux/modules/game'
 
 const NewspaperModal = ({ onClose }) => {
-  const dispatch = useDispatch()
-  const voteResult = useSelector((state) => state.game.resultNoti)
   const nightResult = useSelector((state) => state.game.resultNight)
-  const endGameNoti = useSelector((state) => state.game.endGameNoti)
   const survivedNoti = useSelector((state) => state.game.survived)
-  const currentTime = useSelector((state) => state.game.night)
   const reportNoti = useSelector((state) => state.game.repNoti)
-  const dayCount = useSelector((state) => state.game.cnt)
-  const votedJob = useSelector((state) => state.game.votedJob)
-  const [getNotice, setNotice] = useState(false)
-
-  const printNoti = () => {
-    setNotice(true)
-    setTimeout(() => {
-      setNotice(false)
-    }, 6000)
-    dispatch(gameActions.noticeRep(null))
-  }
 
   return (
     <>

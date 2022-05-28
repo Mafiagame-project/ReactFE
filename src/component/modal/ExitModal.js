@@ -1,32 +1,16 @@
 import React from 'react'
 import { history } from '../../redux/configureStore'
-import ModalPortal from './ModalPortal'
-import { actionCreators as gameActions } from '../../redux/modules/game'
-import { actionCreators as roomActions } from '../../redux/modules/room'
-import { useDispatch } from 'react-redux'
-import { Grid, Text, DotButton } from '../../element/index'
 import styled from 'styled-components'
+import { Grid, Text, DotButton } from '../../element/index'
+import ModalPortal from './ModalPortal'
 import question from '../../assets/image/noti/question.png'
-import pop02 from '../../assets/sound/effect/pop02.mp3'
+import {clickSF} from '../../element/Sound'
 
 const ExitModal = ({ onClose }) => {
-  const dispatch = useDispatch()
-  const click = new Audio(pop02)
 
   const exitRoom = () => {
-    // 방에서 나가기 버튼을 누를때 호출
-    // socket.emit('leaveRoom')
-    click.play()
+    clickSF.play()
     history.replace('/gamemain')
-    dispatch(gameActions.noticeResult(null))
-    dispatch(gameActions.playerWhoSurvived(null))
-    dispatch(gameActions.dayAndNight(null))
-    dispatch(gameActions.noticeEndGame(null))
-    dispatch(gameActions.readyCheck(null))
-    dispatch(gameActions.noticeJob(null))
-    dispatch(roomActions.changeHost(null))
-    dispatch(roomActions.roomReady(null))
-    dispatch(gameActions.aiPlayer(null))
   }
   return (
     <>
@@ -49,7 +33,7 @@ const ExitModal = ({ onClose }) => {
                   white01
                   text="아니용"
                   _onClick={() => {
-                    click.play()
+                    clickSF.play()
                     onClose()
                   }}
                 />

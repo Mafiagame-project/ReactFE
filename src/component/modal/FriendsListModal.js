@@ -1,10 +1,10 @@
 import React from 'react'
-import ModalPortal from './ModalPortal'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionCreators as userActions } from '../../redux/modules/user'
+import styled from 'styled-components'
 import { Grid, Text, Input } from '../../element/index'
 import FriendList from '../FriendList'
-import styled from 'styled-components'
+import ModalPortal from './ModalPortal'
 import closeIcon from '../../assets/icons/black/닫기.png'
 import pattern01 from '../../assets/image/pattern/01_opacity.png'
 import noFriend from '../../assets/image/noti/no_friend.png'
@@ -13,13 +13,8 @@ import { clickSF, deniedSF } from '../../element/Sound'
 const FriendlistModal = ({ onClose }) => {
   const dispatch = useDispatch()
   const [addFriend, setAddFriend] = React.useState('')
-  const [clickedId, setClickedId] = React.useState()
   const friendList = useSelector((state) => state?.user?.friendList)
   const userId = localStorage.getItem('userId')
-
-  const clicked = (e) => {
-    setClickedId(e.target.value)
-  }
 
   React.useEffect(() => {
     dispatch(userActions.getFriendDB())

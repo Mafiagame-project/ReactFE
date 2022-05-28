@@ -12,7 +12,6 @@ const BASE_URL = process.env.REACT_APP_BASE_URL
 const LOG_IN = 'LOG_IN'
 const LOG_OUT = 'LOG_OUT'
 const SIGN_UP = 'SIGN_UP'
-const SET_USER = 'SET_USER'
 const GET_FRIEND = 'GET_FRIEND'
 const ADD_FRIEND = 'ADD_FRIEND'
 const DELETE_FRIEND = 'DELETE_FRIEND'
@@ -26,7 +25,6 @@ const logIn = createAction(LOG_IN, (token, userId, userNick) => ({
 }))
 const signUp = createAction(SIGN_UP, (user) => ({ user }))
 const logOut = createAction(LOG_OUT, (user) => ({ user }))
-const setUser = createAction(SET_USER, (user) => ({ user }))
 const getFriend = createAction(GET_FRIEND, (list) => ({ list }))
 const addFriend = createAction(ADD_FRIEND, (list) => ({ list }))
 const deleteFriend = createAction(DELETE_FRIEND, (list) => ({ list }))
@@ -163,30 +161,6 @@ const nickCheck = (nick) => {
       .catch((err) => {
         window.alert('이미 사용중인 닉네임입니다!')
       })
-  }
-}
-
-const isLoginDB = () => {
-  return async function (dispatch, getState, { history }) {
-    await axios({
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-      method: 'get',
-      url: `${BASE_URL}/user/loginCheck`,
-    })
-      .then((res) => {
-        localStorage.setItem('userId', res.data.userId)
-        localStorage.setItem('userNick', res.data.userNick)
-        dispatch(
-          setUser({
-            userId: res.data.userId,
-            userNick: res.data.userNick,
-          }),
-        )
-      })
-      .catch((err) => {})
   }
 }
 
@@ -407,12 +381,6 @@ export default handleActions(
         draft.is_login = true
       }),
     [SIGN_UP]: (state, action) => produce(state, (draft) => {}),
-
-    [SET_USER]: (state, action) =>
-      produce(state, (draft) => {
-        draft.user = action.payload.user
-        draft.is_login = true
-      }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
         localStorage.clear()
@@ -447,7 +415,6 @@ const actionCreators = {
   naverLogin,
   loginDB,
   signupDB,
-  isLoginDB,
   logOutDB,
   findPwDB,
   changePwDB,

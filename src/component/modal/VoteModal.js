@@ -1,10 +1,10 @@
 import React from 'react'
-import { Grid, Text, DotButton, Input } from '../../element/index'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
-import ModalPortal from './ModalPortal'
-import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { toast } from 'react-toastify'
+import ModalPortal from './ModalPortal'
+import { Grid, Text, DotButton, Input } from '../../element/index'
 import '../../styles/video.css'
 
 const VoteModal = ({ onClose }) => {
@@ -13,17 +13,22 @@ const VoteModal = ({ onClose }) => {
   const is_night = useSelector((state) => state.game.night)
   const playerJob = useSelector((state) => state.game.job)
   let killed = useSelector((state) => state.game.killed)
-  const nowKilled = useSelector((state) => state.game.resultNoti)
   const chance = useSelector((state) => state.game.chance)
-  const memberId = useSelector((state) => state.member.voteList)
+  const aiId = useSelector((state) => state.member.voteList)
+  const memberId = useSelector((state) => state.member.memberId)
   const currentNick = localStorage.getItem('userNick')
 
-  console.log(memberId)
   if (killed == null) {
     killed = []
   }
 
-  let saveArray = memberId.filter((x) => !killed.includes(x))
+  let saveArray
+
+  if (aiId.length > 0) {
+    saveArray = aiId.filter((x) => !killed.includes(x))
+  } else {
+    saveArray = memberId.filter((x) => !killed.includes(x))
+  }
 
   const is_killed = (e) => {
     setClickedId(e.target.value)
@@ -123,10 +128,6 @@ const VoteModal = ({ onClose }) => {
       return onClose()
     }
   }
-  //밤에는 마피아 모달, 경찰, 의사 구분 주기
-  //낮에는 통일
-
-  //명단 죽은 사람만 추가
 
   return (
     <>

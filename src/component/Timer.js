@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import io from 'socket.io-client'
 
-function Timer(props) {
+function Timer() {
   const socket = useSelector((state) => state.game.socket)
   const currentTime = useSelector((state) => state.game.night)
   const [minutes, setMinutes] = useState(0)

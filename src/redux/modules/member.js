@@ -3,7 +3,7 @@ import { produce } from 'immer'
 
 import axios from 'axios'
 
-const BASE_URL = 'https://sparta-dongsun.shop'
+const BASE_URL = process.env.REACT_APP_BASE_URL
 
 const CURR_SOCKET = 'CURR_SOCKET'
 const EXIT_SOCKET = 'EXIT_SOCKET'
@@ -138,8 +138,13 @@ export default handleActions(
     [AI_MEMBER]: (state, action) =>
       produce(state, (draft) => {
         let members = draft.memberId
-        let list = members.concat(action.payload.aiId)
-        draft.voteList = list
+        console.log(members)
+        if (action.payload.aiId) {
+          let list = members.concat(action.payload.aiId)
+          draft.voteList = list
+        } else {
+          draft.voteList = members
+        }
       }),
   },
   initialState,

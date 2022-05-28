@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
-import { DotButton, Grid } from '../../element/index'
 import { useDispatch, useSelector } from 'react-redux'
+import { actionCreators as gameActions } from '../../redux/modules/game'
 import { history } from '../../redux/configureStore'
 import { toast } from 'react-toastify'
+import styled from 'styled-components'
+import { DotButton, Grid } from '../../element/index'
 import ReadyBtn from './ReadyBtn'
 import VoteBtn from './VoteBtn'
-import { actionCreators as gameActions } from '../../redux/modules/game'
 import { alertSF, deniedSF } from '../../element/Sound'
-import styled from 'styled-components'
 
 const StartBtn = ({ socket }) => {
   const dispatch = useDispatch()
@@ -23,30 +23,31 @@ const StartBtn = ({ socket }) => {
   const [aiMode, setAiMode] = React.useState(false)
   const [hover, setHover] = React.useState(false)
 
-  console.log(members)
   const toggleAiMode = () => {
     setAiMode(!aiMode)
   }
 
-  console.log(memberSocket.chat)
-  console.log(currentReady)
-
   const startGame = () => {
     if (aiMode) {
       alertSF.play()
-      socket.emit('startGame')
+      socket.emit('startGame', aiMode)
       dispatch(gameActions.noticeEndGame(null))
       setStart(true)
     }
-
     if (memberSocket.length < 4) {
       deniedSF.play()
       startGameNoti(1)
     } else {
-      deniedSF.play()
-      startGameNoti(2)
+      if (memberSocket.length - 1 === currentReady.length) {
+        alertSF.play()
+        socket.emit('startGame', aiMode)
+        dispatch(gameActions.noticeEndGame(null))
+        setStart(true)
+      } else {
+        deniedSF.play()
+        startGameNoti(2)
+      }
     }
-    // }
   }
   
   const startAlarm = () => {
@@ -119,7 +120,6 @@ const StartBtn = ({ socket }) => {
         let array = []
         for (let i = 0; i < withOutHost.length; i++) {
           if (currentReady.includes(withOutHost[i]) === false) {
-            console.log(withOutHost[i])
             array.push(withOutHost[i])
           }
           result = array.join(', ')

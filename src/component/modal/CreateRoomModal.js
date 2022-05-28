@@ -1,12 +1,12 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { actionCreators as roomActions } from '../../redux/modules/room'
+import styled from 'styled-components'
+import { Slider } from '@mui/material'
+import { withStyles } from '@mui/styles'
 import ModalPortal from './ModalPortal'
 import { Grid, Text, DotButton } from '../../element/index'
-import { actionCreators as roomActions } from '../../redux/modules/room'
-import { useDispatch } from 'react-redux'
-import { Slider } from '@mui/material'
-import styled from 'styled-components'
 import closeIcon from '../../assets/icons/black/닫기.png'
-import { withStyles } from '@mui/styles'
 import sheep from '../../assets/image/character/양_시민.png'
 import { clickSF, accessSF, deniedSF } from '../../element/Sound'
 
@@ -42,17 +42,14 @@ const CreateRoomModal = ({ onClose, socket }) => {
   const [getOpen, setOpen] = React.useState(false)
   const [getPeople, setPeople] = React.useState()
   const title = React.useRef()
-  const people = React.useRef()
   const pwd = React.useRef()
 
-  React.useEffect(() => {}, [socket])
   const createRoom = () => {
     let roomTitle = title.current.value
     let roomPeople = getPeople
     let roomPwd
 
     if (roomTitle.length > 8) {
-      console.log('왜 안먹지')
       deniedSF.play()
       alert('방 이름은 8자 이하로 적어주세요!')
       return

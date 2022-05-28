@@ -1,13 +1,13 @@
 import React from 'react'
 import { history } from '../../redux/configureStore'
-import { Text, Grid, DotButton, Image } from '../../element/index'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { Text, Grid, DotButton, Image } from '../../element/index'
 import 마피양 from '../../assets/image/character/profile.jpg'
 import 기자 from '../../assets/image/character/양_기자.png'
 import 경찰 from '../../assets/image/character/경찰.png'
 import 의사 from '../../assets/image/character/의사_양.png'
 import { clickSF } from '../../element/Sound'
-import { useSelector } from 'react-redux'
 
 const EditUser = () => {
   const profileIdx = useSelector((state) => state.member.idx)

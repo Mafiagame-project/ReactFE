@@ -1,15 +1,15 @@
 import React from 'react'
+import { actionCreators as userActions } from '../redux/modules/user'
+import { useDispatch } from 'react-redux'
+import { history } from '../redux/configureStore'
+import styled from 'styled-components'
 import Header from '../component/Header'
 import { Grid, Text } from '../element/index'
-import styled from 'styled-components'
 import data from '../shared/introduce'
 import Tutorial from './Tutorial'
 import 돌아가기 from '../assets/icons/black/돌아가기.png'
-import { history } from '../redux/configureStore'
 import title from '../assets/button/튜토리얼_타이틀선택배경.png'
 import { clickSF } from '../element/Sound'
-import { actionCreators as userActions } from '../redux/modules/user'
-import { useDispatch } from 'react-redux'
 
 function Introduce() {
   const dispatch = useDispatch()
@@ -28,7 +28,7 @@ function Introduce() {
     setIsOpen(!isOpen)
   }
 
-  const seleted = (element, num, bool) => {
+  const seleted = (element) => {
     clickSF.play()
     setDesc(element?.explain)
     setAbility(element?.ability)
@@ -36,15 +36,9 @@ function Introduce() {
     setLose(element?.lose)
     element.info = true
     setShow(true)
-    // setTimeout(() => {
-    //   setShow(false)
-    //   setSelect('')
-    //   element.info = null
-    // }, 5000)
   }
 
   const box2 = {
-    // padding: '19px',
     opacity: `${getPage === 2 ? 1 : 0.4}`,
   }
   const box1 = {
@@ -101,7 +95,7 @@ function Introduce() {
                     <Card
                       key={idx + 1}
                       onClick={() => {
-                        seleted(e, idx)
+                        seleted(e)
                       }}
                     >
                       <Grid isFlex_center height="10%">

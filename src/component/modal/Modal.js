@@ -1,6 +1,6 @@
 import React from 'react'
 import ModalPortal from './ModalPortal'
-import { Grid, Text, Button } from '../../element/index'
+import { Grid, Button } from '../../element/index'
 //모달 데스트
 const Modal = () => {
   const [isOpen, setIsOpen] = React.useState(false)
