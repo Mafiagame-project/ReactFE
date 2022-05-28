@@ -104,7 +104,6 @@ const VideoContainer = () => {
 
           //새로 들어온 피어는 기존의 피어에게 콜을 받습니다.
           myPeer?.on('call', (call) => {
-            console.log(call)
             call.answer(stream)
             const videoBox = document.createElement('div')
             videoBox.classList.add('video_grid')
@@ -145,7 +144,6 @@ const VideoContainer = () => {
               const dataConnection = myPeer.connect(userId, {
                 metadata: UserNick,
               })
-              console.log(call)
 
               const videoBox = document.createElement('div')
               videoBox.classList.add('video_grid')
@@ -247,7 +245,6 @@ function addVideoStream(video, stream) {
   })
   return null
   // videoGrid.current.append(video)
-  // console.log('추가완')
 }
 
 const Container = styled.div`
