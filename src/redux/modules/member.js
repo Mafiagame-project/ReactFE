@@ -138,8 +138,13 @@ export default handleActions(
     [AI_MEMBER]: (state, action) =>
       produce(state, (draft) => {
         let members = draft.memberId
-        let list = members.concat(action.payload.aiId)
-        draft.voteList = list
+        console.log(members)
+        if (action.payload.aiId) {
+          let list = members.concat(action.payload.aiId)
+          draft.voteList = list
+        } else {
+          draft.voteList = members
+        }
       }),
   },
   initialState,

@@ -80,7 +80,6 @@ function Loading() {
     })
 
     socket.on('readyPeople', (currentReady) => {
-      console.log(currentReady)
       dispatch(roomActions.roomReady(currentReady)) // 레디한사람 전체 배열
     })
 

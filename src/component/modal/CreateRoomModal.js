@@ -52,7 +52,6 @@ const CreateRoomModal = ({ onClose, socket }) => {
     let roomPwd
 
     if (roomTitle.length > 8) {
-      console.log('왜 안먹지')
       deniedSF.play()
       alert('방 이름은 8자 이하로 적어주세요!')
       return
