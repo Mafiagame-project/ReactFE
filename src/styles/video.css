@@ -38,6 +38,7 @@
   background-image: url('../assets/image/character/video_profile.png');
   background-size: cover;
   position: relative;
+  margin: 0 auto;
 }
 
 .video_non_src {

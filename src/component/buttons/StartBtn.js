@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { DotButton } from '../../element/index'
+import { DotButton, Grid } from '../../element/index'
 import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../../redux/configureStore'
 import { toast } from 'react-toastify'
@@ -7,6 +7,7 @@ import ReadyBtn from './ReadyBtn'
 import VoteBtn from './VoteBtn'
 import { actionCreators as gameActions } from '../../redux/modules/game'
 import { alertSF, deniedSF } from '../../element/Sound'
+import styled from 'styled-components'
 
 const StartBtn = ({ socket }) => {
   const dispatch = useDispatch()
@@ -19,20 +20,28 @@ const StartBtn = ({ socket }) => {
   const endGame = useSelector((state) => state.game.endGameNoti)
   const currentId = localStorage.getItem('userNick')
   const [getStart, setStart] = React.useState(false)
+  const [aiMode, setAiMode] = React.useState(false)
+  const [hover, setHover] = React.useState(false)
+
+  console.log(members)
+  const toggleAiMode = () => {
+    setAiMode(!aiMode)
+  }
 
   console.log(memberSocket.chat)
   console.log(currentReady)
 
   const startGame = () => {
-    // if (memberSocket.length < 4) {
-    //   deniedSF.play()
-    //   startGameNoti(1)
-    // } else {
-    if (memberSocket.length - 1 === currentReady?.length) {
+    if (aiMode) {
       alertSF.play()
       socket.emit('startGame')
       dispatch(gameActions.noticeEndGame(null))
       setStart(true)
+    }
+
+    if (memberSocket.length < 4) {
+      deniedSF.play()
+      startGameNoti(1)
     } else {
       deniedSF.play()
       startGameNoti(2)
@@ -96,30 +105,32 @@ const StartBtn = ({ socket }) => {
   }
 
   const startGameNoti = (count) => {
-    if (count === 1) {
-      deniedSF.play()
-      toast.info('게임시작을 위해서 최소 4명이상이 필요합니다', {
-        position: toast.POSITION.TOP_CENTER,
-        className: 'toast-startPeople',
-        autoClose: 2000,
-      })
-    } else {
-      let withOutHost = members.filter((nick) => nick !== roomInfo?.userId)
-      let result = ''
-      let array = []
-      for (let i = 0; i < withOutHost.length; i++) {
-        if (currentReady.includes(withOutHost[i]) === false) {
-          console.log(withOutHost[i])
-          array.push(withOutHost[i])
+    if (!aiMode) {
+      if (count === 1) {
+        deniedSF.play()
+        toast.info('게임시작을 위해서 최소 4명이상이 필요합니다', {
+          position: toast.POSITION.TOP_CENTER,
+          className: 'toast-startPeople',
+          autoClose: 2000,
+        })
+      } else {
+        let withOutHost = members.filter((nick) => nick !== roomInfo?.userId)
+        let result = ''
+        let array = []
+        for (let i = 0; i < withOutHost.length; i++) {
+          if (currentReady.includes(withOutHost[i]) === false) {
+            console.log(withOutHost[i])
+            array.push(withOutHost[i])
+          }
+          result = array.join(', ')
         }
-        result = array.join(', ')
+        deniedSF.play()
+        toast.info(`참가자들이 준비하지 않았습니다 [${result}] `, {
+          position: toast.POSITION.TOP_CENTER,
+          className: 'toast-startPeople',
+          autoClose: 2000,
+        })
       }
-      deniedSF.play()
-      toast.info(`참가자들이 준비하지 않았습니다 [${result}] `, {
-        position: toast.POSITION.TOP_CENTER,
-        className: 'toast-startPeople',
-        autoClose: 2000,
-      })
     }
   }
   return (
@@ -129,13 +140,40 @@ const StartBtn = ({ socket }) => {
           {!startCheck ? (
             <>
               {roomInfo?.userId === currentId ? (
-                <DotButton
-                  black01
-                  text="시작하기"
-                  _onClick={() => {
-                    startGame()
-                  }}
-                />
+                <Grid isFlex_center>
+                  <DotButton
+                    black01
+                    text="시작하기"
+                    _onClick={() => {
+                      startGame()
+                    }}
+                  />
+                  <AiBtn
+                    onMouseEnter={() => {
+                      setHover(true)
+                    }}
+                    onMouseLeave={() => {
+                      setHover(false)
+                    }}
+                  >
+                    {hover ? (
+                      <Info className={`${hover ? 'hover' : 'none'}`}>
+                        인원이 없어도 괜찮아요! <br />
+                        ai랑 게임하기
+                      </Info>
+                    ) : null}
+                    <input
+                      id="cb1"
+                      type="checkbox"
+                      name="모드"
+                      onChange={toggleAiMode}
+                    />
+                    <label htmlFor="cb1"></label>
+                    <span style={{ margin: '0 1vw', fontSize: '1.3vw' }}>
+                      AI 모드
+                    </span>
+                  </AiBtn>
+                </Grid>
               ) : (
                 <ReadyBtn />
               )}
@@ -148,5 +186,39 @@ const StartBtn = ({ socket }) => {
     </>
   )
 }
+
+const AiBtn = styled.div`
+  cursor: pointer;
+  width: 12vw;
+  margin: 0 1vw;
+  position: relative;
+  text-align: center;
+`
+
+const Info = styled.div`
+  transition: top 1s ease-in;
+  background-color: #fff;
+  border: 1px solid #000;
+  padding: 5px;
+  text-align: center;
+  margin: 1vw 0;
+  position: absolute;
+  bottom: 80%;
+  left: 15px;
+  &.hover {
+    animation-duration: 2s;
+    animation-name: fadeout;
+  }
+
+  @keyframes fadeout {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+`
 
 export default StartBtn

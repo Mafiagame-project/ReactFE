@@ -9,25 +9,26 @@ const AiPlayer = () => {
   const player = useSelector((state) => state.game.ai)
   console.log(player)
 
-  // React.useEffect(() => {
-  //   socket.on('AI', (value) => {
-  //     console.log(value)
-  //     dispatch(gameActions.aiPlayer(value))
-  //     dispatch(memberActions.aiMember(value))
-  //   })
-  // }, [])
+  React.useEffect(() => {
+    socket.on('AI', (value) => {
+      console.log(value)
+      dispatch(gameActions.aiPlayer(value))
+      dispatch(memberActions.aiMember(value))
+    })
+  }, [])
 
   return (
     <>
-      {/* {player?.map((p, i) => { */}
-      return (
-      <div className="video_grid">
-        <div className="ai_video"></div>
-        <div className="fl">
-          <p>p</p>
-        </div>
-      </div>
-      ){/* })} */}
+      {player?.map((p, i) => {
+        return (
+          <div className="video_grid">
+            <div className="ai_video"></div>
+            <div className="fl">
+              <p>{p}</p>
+            </div>
+          </div>
+        )
+      })}
     </>
   )
 }

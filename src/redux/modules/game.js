@@ -65,6 +65,7 @@ const initialState = {
   cnt: 0,
   chance: null,
   votedJob: null,
+  ai: null,
 }
 
 export default handleActions(

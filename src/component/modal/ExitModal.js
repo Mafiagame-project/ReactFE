@@ -25,7 +25,7 @@ const ExitModal = ({ onClose }) => {
     dispatch(gameActions.readyCheck(null))
     dispatch(gameActions.noticeJob(null))
     dispatch(roomActions.changeHost(null))
-    dispatch(roomActions.roomReady([]))
+    dispatch(roomActions.roomReady(null))
     dispatch(gameActions.aiPlayer(null))
   }
   return (
