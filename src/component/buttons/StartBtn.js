@@ -26,10 +26,6 @@ const StartBtn = ({ socket }) => {
   const toggleAiMode = () => {
     setAiMode(!aiMode)
   }
-
-  console.log(memberSocket.chat)
-  console.log(currentReady)
-
   const startGame = () => {
     if (aiMode) {
       alertSF.play()

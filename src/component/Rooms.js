@@ -15,7 +15,6 @@ const Rooms = (props) => {
   const currentId = localStorage.getItem('userNick')
 
   const entrance = (roomInfo) => {
-    console.log(roomInfo)
     let roomId = roomInfo.roomId
     let peopleArray = roomInfo.currentPeople
 

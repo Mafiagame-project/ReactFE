@@ -19,7 +19,6 @@ const VoteModal = ({ onClose }) => {
   const memberId = useSelector((state) => state.member.memberId)
   const currentNick = localStorage.getItem('userNick')
 
-  console.log(memberId)
   if (killed == null) {
     killed = []
   }
