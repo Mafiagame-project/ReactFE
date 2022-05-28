@@ -23,7 +23,6 @@ const StartBtn = ({ socket }) => {
   const [aiMode, setAiMode] = React.useState(false)
   const [hover, setHover] = React.useState(false)
 
-  console.log(members)
   const toggleAiMode = () => {
     setAiMode(!aiMode)
   }
@@ -31,7 +30,7 @@ const StartBtn = ({ socket }) => {
   const startGame = () => {
     if (aiMode) {
       alertSF.play()
-      socket.emit('startGame')
+      socket.emit('startGame', aiMode)
       dispatch(gameActions.noticeEndGame(null))
       setStart(true)
     }
@@ -42,7 +41,7 @@ const StartBtn = ({ socket }) => {
     } else {
       if (memberSocket.length - 1 === currentReady.length) {
         alertSF.play()
-        socket.emit('startGame')
+        socket.emit('startGame', aiMode)
         dispatch(gameActions.noticeEndGame(null))
         setStart(true)
       } else {
@@ -122,7 +121,6 @@ const StartBtn = ({ socket }) => {
         let array = []
         for (let i = 0; i < withOutHost.length; i++) {
           if (currentReady.includes(withOutHost[i]) === false) {
-            console.log(withOutHost[i])
             array.push(withOutHost[i])
           }
           result = array.join(', ')
