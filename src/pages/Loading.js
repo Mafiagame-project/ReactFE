@@ -80,6 +80,7 @@ function Loading() {
     })
 
     socket.on('readyPeople', (currentReady) => {
+      console.log(currentReady)
       dispatch(roomActions.roomReady(currentReady)) // 레디한사람 전체 배열
     })
 
@@ -136,7 +137,7 @@ function Loading() {
         <Grid margin="2vw 0 0">
           <Text size="20px" bold>
             {' '}
-            Copyright @2022 MAFIYNG.All rights reserved.
+            Copyright @2022 MAFIYANG.All rights reserved.
           </Text>
           <Grid isDisplay="flex" width="370px" margin="1vw auto">
             <Grid flexColumn>

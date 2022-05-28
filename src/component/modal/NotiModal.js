@@ -519,7 +519,7 @@ const Noti = styled.div`
 
 const VoteNoti = styled.div`
   background: white;
-  max-width: 36vw;
+  max-width: 38vw;
   padding: 3vw;
   box-sizing: border-box;
   border-radius: 20px;
