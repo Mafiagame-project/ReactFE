@@ -2,22 +2,34 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { createBrowserHistory } from 'history'
 import { connectRouter } from 'connected-react-router'
+import { persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 
 import User from './modules/user'
 import Game from './modules/game'
 import Room from './modules/room'
 import Member from './modules/member'
+import socket from './modules/socket'
 
 export const history = createBrowserHistory()
 
-// 리듀서 router 안에 history 넣기
 const rootReducer = combineReducers({
   user: User,
   room: Room,
-  game : Game,
-  member : Member,
+  game: Game,
+  member: Member,
+  socket: socket,
   router: connectRouter(history),
 })
+
+const persistConfig = {
+  key: 'root',
+  // localStorage에 저장합니다.
+  storage,
+  // auth, board, studio 3개의 reducer 중에 auth reducer만 localstorage에 저장합니다.
+  whitelist: ['socket'],
+  // blacklist -> 그것만 제외합니다
+}
 
 const middlewares = [thunk.withExtraArgument({ history })]
 
@@ -38,4 +50,7 @@ const composeEnhancers =
 const enhancer = composeEnhancers(applyMiddleware(...middlewares))
 let store = (initialStore) => createStore(rootReducer, enhancer)
 
-export default store()
+// const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(persistConfig, store)
+
+export default persistedReducer()
