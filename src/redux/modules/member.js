@@ -114,7 +114,6 @@ export default handleActions(
     [CURR_ID]: (state, action) =>
       produce(state, (draft) => {
         draft.memberId = action.payload.memberId
-        console.log(action.payload)
       }),
     [EXIT_ID]: (state, action) =>
       produce(state, (draft) => {
@@ -138,7 +137,6 @@ export default handleActions(
     [AI_MEMBER]: (state, action) =>
       produce(state, (draft) => {
         let members = draft.memberId
-        console.log(members)
         if (action.payload.aiId) {
           let list = members.concat(action.payload.aiId)
           draft.voteList = list

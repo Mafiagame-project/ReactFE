@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useMediaQuery } from 'react-responsive'
 import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../redux/configureStore'
 import { actionCreators as userActions } from '../redux/modules/user'
@@ -28,6 +29,8 @@ function Header() {
   let location = window.location.href
   const where = location.includes('gameroom')
 
+  const isTablet = useMediaQuery({ query: '(max-width: 1020px)' })
+
   const handleLogOut = () => {
     clickSF.play()
     dispatch(userActions.logOutDB())
@@ -50,7 +53,7 @@ function Header() {
         >
           <img src={logo} alt="로고" />
         </Grid>
-        <Rightside>
+        <Rightside isTablet={isTablet}>
           <Grid flex_column>
             <Grid isFlex_start>
               <Image size={50} src={pictures[profileIdx]} />
@@ -158,12 +161,9 @@ const Icons = styled.img`
 
 const Rightside = styled.div`
   width: 24vw;
-  height: 100%;
   display: flex;
   align-items: center;
-  @media ${({ theme }) => theme.device.pc} { {
-    padding: 0 6vw;
-    height: 9vh;
-  }
+  height: ${(props) => (props.isTablet ? '9vh' : '100%')};
+  padding: ${(props) => (props.isTablet ? '0 14vw' : null)};
 `
 export default Header

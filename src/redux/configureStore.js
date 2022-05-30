@@ -14,8 +14,8 @@ export const history = createBrowserHistory()
 const rootReducer = combineReducers({
   user: User,
   room: Room,
-  game : Game,
-  member : Member,
+  game: Game,
+  member: Member,
   router: connectRouter(history),
 })
 
