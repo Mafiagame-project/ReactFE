@@ -24,7 +24,7 @@ function GameRoom() {
   const currentTime = useSelector((state) => state.game.night)
   const endGame = useSelector((state) => state.game.endGameNoti)
   const [darkMode, setDarkMode] = useState(false)
-  
+
   window.onbeforeunload = function () {
     return dispatch(userActions.logOutDB())
   }
@@ -71,7 +71,6 @@ function GameRoom() {
       socket.off('ready')
       dispatch(gameActions.playerWhoKilled(null))
       dispatch(gameActions.playerJob(null))
-      dispatch(gameActions.copSelected(null))
       dispatch(gameActions.noticeRep(null))
       dispatch(memberActions.currentUserId([]))
       dispatch(gameActions.dayCount(0))

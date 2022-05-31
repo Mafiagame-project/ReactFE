@@ -92,6 +92,7 @@ function Loading() {
     })
 
     socket.on('reporter', (data) => {
+      console.log(data)
       dispatch(gameActions.noticeRep(data))
     })
   }

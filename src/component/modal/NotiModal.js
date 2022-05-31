@@ -31,6 +31,8 @@ function NotiModal() {
   const votedJob = useSelector((state) => state.game.votedJob)
   const [getNotice, setNotice] = useState(false)
 
+  console.log(reportNoti)
+
   const printNoti = () => {
     setNotice(true)
     setTimeout(() => {
@@ -165,7 +167,7 @@ function NotiModal() {
                                   <Frame45 />
                                   <Grid width="60%" isStart>
                                     <Text color="white" size="1.9vw">
-                                      {reportNoti?.clickerId}는..?!
+                                      {reportNoti?.clickerNick}는..?!
                                     </Text>
                                     {reportNoti?.clickerJob === 'mafia' ? (
                                       <Text

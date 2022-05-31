@@ -2,7 +2,6 @@ import { createAction, handleActions } from 'redux-actions'
 import { produce } from 'immer'
 
 const SEND_SOCKET = 'SEND_SOCKET'
-const SEND_PEERID = 'SEND_PEERID'
 const JOB_NOTI = 'JOB_NOTI'
 const RESULT_NOTI = 'RESULT_NOTI'
 const RESULT_NOTI2 = 'RESULT_NOTI2'
@@ -19,7 +18,6 @@ const VOTE_RESULT = 'VOTE_RESULT'
 const AI_PLAYER = 'AI_PLAYER'
 
 const sendSocket = createAction(SEND_SOCKET, (socket) => ({ socket }))
-const sendPeerId = createAction(SEND_PEERID, (peer) => ({ peer }))
 const noticeJob = createAction(JOB_NOTI, (noti) => ({ noti }))
 const noticeResult = createAction(RESULT_NOTI, (noti) => ({ noti }))
 const noticeResultNight = createAction(RESULT_NOTI2, (noti) => ({ noti }))
@@ -60,10 +58,6 @@ export default handleActions(
     [SEND_SOCKET]: (state, action) =>
       produce(state, (draft) => {
         draft.socket = action.payload.socket
-      }),
-    [SEND_PEERID]: (state, action) =>
-      produce(state, (draft) => {
-        draft.peerId = action.payload.peer
       }),
     [JOB_NOTI]: (state, action) =>
       produce(state, (draft) => {
@@ -109,7 +103,7 @@ export default handleActions(
           draft.card = false
         }
       }),
-    
+
     [DAY_CNT]: (state, action) =>
       produce(state, (draft) => {
         if (action.payload.num === 0) {
@@ -136,7 +130,6 @@ export default handleActions(
 )
 const actionCreators = {
   sendSocket,
-  sendPeerId,
   playerJob,
   playerWhoKilled,
   playerWhoSurvived,
