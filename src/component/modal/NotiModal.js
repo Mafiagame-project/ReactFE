@@ -31,8 +31,6 @@ function NotiModal() {
   const votedJob = useSelector((state) => state.game.votedJob)
   const [getNotice, setNotice] = useState(false)
 
-  console.log(reportNoti)
-
   const printNoti = () => {
     setNotice(true)
     setTimeout(() => {
