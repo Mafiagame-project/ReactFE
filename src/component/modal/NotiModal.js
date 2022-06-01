@@ -165,7 +165,7 @@ function NotiModal() {
                                   <Frame45 />
                                   <Grid width="60%" isStart>
                                     <Text color="white" size="1.9vw">
-                                      {reportNoti?.clickerId}는..?!
+                                      {reportNoti?.clickerNick}는..?!
                                     </Text>
                                     {reportNoti?.clickerJob === 'mafia' ? (
                                       <Text

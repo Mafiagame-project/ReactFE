@@ -23,7 +23,7 @@ import NaverLogin from './NaverLogin'
 import { useMediaQuery } from 'react-responsive'
 
 function App() {
-  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
+  const isMobile = useMediaQuery({ query: '(max-width: 499px)' })
   return isMobile ? (
     <>
       <MobilePage />
