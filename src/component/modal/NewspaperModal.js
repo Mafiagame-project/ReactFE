@@ -51,7 +51,7 @@ const NewspaperModal = ({ onClose }) => {
                           <Frame45 />
                           <Grid width="60%" isStart>
                             <Text color="white" size="1.9vw">
-                              test99 {reportNoti?.clickerId}는..?!
+                              {reportNoti?.clickerNick}는..?!
                             </Text>
                             {reportNoti?.clickerJob === 'mafia' ? (
                               <Text

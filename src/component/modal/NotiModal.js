@@ -63,11 +63,11 @@ function NotiModal() {
                   <>
                     {votedJob === true ? (
                       <Text bold size="2vw">
-                        마피아 {voteResult}가 잡혔습니다
+                        마피아 {voteResult}양이 잡혔습니다
                       </Text>
                     ) : (
                       <Text bold size="2vw">
-                        시민 {voteResult}가 잡혔습니다
+                        시민 {voteResult}양이 잡혔습니다
                       </Text>
                     )}
                   </>
@@ -115,11 +115,11 @@ function NotiModal() {
                         <>
                           {votedJob === true ? (
                             <Text bold size="2vw">
-                              마피아 {voteResult} 가 잡혔습니다
+                              마피아 {voteResult}양이 잡혔습니다
                             </Text>
                           ) : (
                             <Text bold size="2vw">
-                              {voteResult}가 잡혔습니다
+                              {voteResult}양이 잡혔습니다
                             </Text>
                           )}
                         </>
