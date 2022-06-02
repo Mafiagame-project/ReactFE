@@ -5,7 +5,9 @@
 
 ## 🐑  About
 
-> 마피양은 화상채팅을 기반으로 한 온라인 마피아 게임입니다
+> 화상채팅으로 즐기는 온라인 마피아게임 마피양입니다.
+> 실시간 게임 구성 : Socket.io
+> 화상채팅 : WebRTC, peerJs 라이브러리
 
 <br />
 
@@ -21,6 +23,7 @@
 - [서비스 바로가기](https://mafiyang.com)
 - [프론트엔드 GitHub](https://github.com/Mafiagame-project/ReactFE)
 - [백엔드 GitHib](https://github.com/dongsun1/last_project)
+- [Team 노션] (https://www.notion.so/TEAM-MAFIYANG-cb55eb1a08314f25bb1adef0231e9a7a)
 
 <br />
 
