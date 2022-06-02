@@ -115,7 +115,7 @@
 |dotenv|환경 변수 암호화|16.0.1|
 |react-toastify|알림 팝업창|9.0.1|
 |mui/material|rangeBar|5.6.4|
-|Styled-components|CSS|5.3.5|
+|Styled-components|CSS-in-JS 라이브러리|5.3.5|
 
 
 ## 🔥  Trouble Shooting
