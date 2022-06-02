@@ -1,16 +1,22 @@
 
 # <img src="https://user-images.githubusercontent.com/77870077/170902931-e7914ec4-c52f-46fb-881f-0dcab179ebd7.png" align=left width=70> 마피양
-> 온라인 화상 마피아 게임
+> 화상채팅으로 즐기는 온라인 마피아게임 마피양입니다.
 <br/>
 
 ## 🐑  About
-
-> 화상채팅으로 즐기는 온라인 마피아게임 마피양입니다.
-<br/>
-> 실시간 게임 구현 : Socket.io
+> 실시간 게임 구현 : Socket.io  
 > 화상채팅 : WebRTC, peerJs 라이브러리
 
 <br />
+
+## 서비스 아키텍쳐
+![image](https://user-images.githubusercontent.com/90598408/171531255-e4148602-4fa2-419b-a993-fe67835d7fd6.png)
+
+
+## 게임 플레이 사진
+![image](https://user-images.githubusercontent.com/90598408/171531440-0d43a251-fa5d-46f9-86fa-21e7f5d112c4.png)
+
+![image](https://user-images.githubusercontent.com/90598408/171531478-e12f9c45-a9df-45d5-87ba-e8eb30250018.png)
 
 ## 📅 프로젝트 기간
 
