@@ -6,7 +6,8 @@
 ## 🐑  About
 
 > 화상채팅으로 즐기는 온라인 마피아게임 마피양입니다.
-> 실시간 게임 구성 : Socket.io
+<br/>
+> 실시간 게임 구현 : Socket.io
 > 화상채팅 : WebRTC, peerJs 라이브러리
 
 <br />
