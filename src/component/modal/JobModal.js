@@ -5,6 +5,7 @@ import { Grid, Text } from '../../element/index'
 import { actionCreators as gameActions } from '../../redux/modules/game'
 import data from '../../shared/introduce'
 
+// 게임시작 직후 출력되는 직업모달
 const JobModal = () => {
   const dispatch = useDispatch()
   const startCard = useSelector((state) => state.game.card)
@@ -16,8 +17,8 @@ const JobModal = () => {
   const [getRule, setRule] = useState()
 
   useEffect(() => {
-    if (startCard) {
-      data.forEach((element) => {
+    if (startCard) { // startCard : 게임 시작했다는 신호 (boolean)
+      data.forEach((element) => { // 각 직업들의 정보는 로컬파일에서 가져옴
         if (player === element.name) {
           setShadow(element.shadow)
           setJob(element.title)
@@ -26,7 +27,7 @@ const JobModal = () => {
           setRule(element.desc)
         }
       })
-      setTimeout(() => {
+      setTimeout(() => { // 8초동안 보여주고 삭제시키기
         dispatch(gameActions.startCard(null))
       }, 8000)
     }

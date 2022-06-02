@@ -19,6 +19,7 @@ import mafiaWin from '../../assets/image/noti/늑대_승리.gif'
 import CitizenWin from '../../assets/image/noti/시민_승리.gif'
 import happy from '../../assets/image/noti/기사_공백.gif'
 
+// 밤이 끝나고 낮이 되면서 보여지는 신문기사 컴포넌트
 function NotiModal() {
   const dispatch = useDispatch()
   const voteResult = useSelector((state) => state.game.resultNoti)
@@ -31,15 +32,16 @@ function NotiModal() {
   const votedJob = useSelector((state) => state.game.votedJob)
   const [getNotice, setNotice] = useState(false)
 
+  // getNotice를 참 거짓으로 바꾸면서 보이고 안보이게 하는것을 작동함
   const printNoti = () => {
     setNotice(true)
-    setTimeout(() => {
+    setTimeout(() => { // 6초동안 보여지고 false로 변경
       setNotice(false)
     }, 6000)
     dispatch(gameActions.noticeRep(null))
   }
 
-  useEffect(() => {
+  useEffect(() => { // 낮과 밤을 카운트해서 2번 이상 지나야 신문을 출력하도록 함
     if (dayCount < 2) {
       return
     } else {
@@ -48,9 +50,9 @@ function NotiModal() {
   }, [dayCount])
   return (
     <>
-      {getNotice ? (
+      {getNotice ? ( // true or false로 보여지고 안보여지고를 출력
         <>
-          {endGameNoti ? ( // 게임이 끝났냐 안끝났냐
+          {endGameNoti ? ( // 게임이 끝났는지 안끝났는지 분기
             <Modalblack>
               {currentTime ? (
                 <VoteNoti>
@@ -75,7 +77,7 @@ function NotiModal() {
                     {endGameNoti}
                   </Text>
                 </VoteNoti>
-              ) : (
+              ) : ( 
                 <VoteNoti>
                   <Text size="2vw">게임 결과</Text>
                   {endGameNoti === '마피아가 승리하였습니다.' ? (
@@ -100,7 +102,7 @@ function NotiModal() {
             <>
               {currentTime ? ( // 밤이면 낮의 결과가 출력
                 <>
-                  {voteResult !== false ? ( // 아무도 안 죽음 (?)을 아무도 죽지않았습니다로 출력하게!
+                  {voteResult !== false ? ( // 낮에 누가 죽었는지?
                     <Modalblack>
                       <VoteNoti>
                         <Text size="3vw">낮 투표결과 </Text>
@@ -136,7 +138,7 @@ function NotiModal() {
                     </Modalblack>
                   )}
                 </>
-              ) : (
+              ) : ( // 밤에 출력되는 신문기사
                 <Modalblack>
                   <Noti>
                     <Grid is_flex height="10%">
@@ -153,7 +155,7 @@ function NotiModal() {
                     <Grid is_flex height="100%">
                       <Grid width="50%" center height="100%">
                         <Grid height="50%">
-                          {reportNoti ? (
+                          {reportNoti ? ( // 리포터가 누군가를 골랐을 때 출력
                             <>
                               <Frame94>
                                 <Grid
@@ -228,7 +230,7 @@ function NotiModal() {
                                 </Grid>
                               </Frame94>
                             </>
-                          ) : (
+                          ) : ( // 리포터가 안골랐을 때 디폴트 이미지
                             <>
                               <Grid isFlex_center height="100%" width="100%">
                                 <Grid margin="0 1vw 0">
@@ -299,7 +301,7 @@ function NotiModal() {
 
                       <Grid width="50%" height="90%" flexColumn center>
                         <Grid height="50%">
-                          {nightResult ? (
+                          {nightResult ? ( // 밤에 누군가가 마피아에의해 죽었을 때 출력하기
                             <>
                               <Grid
                                 bg="#000"
@@ -372,7 +374,7 @@ function NotiModal() {
                             />
                           )}
                         </Grid>
-                        {survivedNoti ? (
+                        {survivedNoti ? ( // 밤에 누군가가 의사에의해 살았을 때 출력
                           <>
                             <AngelNoti>
                               <Grid

@@ -28,12 +28,14 @@ function GameRoom() {
   window.onbeforeunload = function () {
     return dispatch(userActions.logOutDB())
   }
+  // 게임이 끝나면 엔딩음악 재생!
   useEffect(() => {
     if (endGame !== null) {
       winSF.play()
     }
   }, [endGame])
 
+  // 밤인지 아닌지를 판단하는 소켓. dayCount를 보내면서 라운드를 판단
   useEffect(() => {
     socket.on('isNight', (value) => {
       dispatch(gameActions.dayAndNight(value))
@@ -41,6 +43,7 @@ function GameRoom() {
     })
   }, [])
 
+  // 밤과 낮이 바뀔때마다 출력되는 toast 알람
   const dayOrNight = (time) => {
     if (time == true) {
       setDarkMode(true)
@@ -58,7 +61,7 @@ function GameRoom() {
       })
     }
   }
-
+  // 게임방을 탈출할 때 소켓을 끄고 리덕스도 초기화 시킴
   useEffect(() => {
     return () => {
       socket.off('isNight')
@@ -88,8 +91,8 @@ function GameRoom() {
   }, [socket])
 
   useEffect(() => {
-    if (endGame == null) {
-      if (currentTime === false) {
+    if (endGame == null) { // 게임이 끝났을 때 실행되지 않도록 방지하기
+      if (currentTime === false) { // 현재시간이 false면 낮입니다
         morningSF.play()
         dayOrNight(false)
       } else if (currentTime === true && endGame === null) {

@@ -8,20 +8,12 @@ function Timer() {
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] = useState(0)
 
+  // 서버에서 받아오는 타이머를 스테이트에 담아서 변경해줍니다
   useEffect(() => {
-    // try {
     socket.on('timer', (time) => {
       setMinutes(time.min)
       setSeconds(time.sec)
     })
-    // } catch {
-    //   const socket = io.connect('https://sparta-dongsun.shop')
-    //   socket.io.on('reconnect')
-    //   socket.emit('leaveRoom')
-    //   alert('비정상적 접근으로인해 메인으로 이동합니다')
-    //   window.location = '/'
-    //   socket.disconnect()
-    // }
   }, [])
 
   return (

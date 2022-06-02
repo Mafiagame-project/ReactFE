@@ -6,7 +6,7 @@ import Timer from './Timer'
 import { Grid } from '../element/index'
 import lock from '../assets/icons/white/자물쇠(백).png'
 
-
+// 채팅창 컴포넌트
 const ChatBox = ({ socket, currentTime }) => {
   const chatting = React.useRef()
   const chatRef = React.useRef(null)
@@ -15,16 +15,18 @@ const ChatBox = ({ socket, currentTime }) => {
   const playerJob = useSelector((state) => state.game.job)
   const endGame = useSelector((state) => state.game.endGameNoti)
 
+  // 채팅을 보낼 때 호출되는 함수
   const send = () => {
-    // 채팅을 보낼 때 호출되는 함수
     let chatData = chatting.current.value
-    if (chatData === '') {
+    if (chatData === '') { // 채팅을 못치면 submit이 안됩니다.
       return null
     }
+    // 서버로 메세지 데이터 전송
     socket.emit('msg', chatData)
     chatting.current.value = ''
   }
 
+  // 채팅 엔터
   const onKeyPress = (e) => {
     if (e.key === 'Enter') {
       send()
@@ -33,7 +35,7 @@ const ChatBox = ({ socket, currentTime }) => {
 
   React.useEffect(() => {
     socket.on('msg', (data) => {
-      // 서버에서 오는 메세지 데이터를 받음
+      // 서버에서 오는 메세지 데이터를 스테이트로 관리했음
       setWrite((list) => [...list, { data }])
     })
   }, [socket])

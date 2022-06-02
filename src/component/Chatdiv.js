@@ -5,10 +5,11 @@ function Chatdiv({ getWrite, currentId, e }) {
   const chatRef = React.useRef(null)
   const id = e.data.id
 
+  // useRef를 만들어서 최근에 입력된 (받아온) 메세지 데이터로 화면을 이동시킴
   const scrollToBottom = () => {
     chatRef.current.scrollIntoView({ behavior: 'smooth' })
   }
-
+  // getWrite에 해당 게임룸에 메세지 데이터가 담겨있음
   React.useEffect(scrollToBottom, [getWrite])
 
   return (

@@ -11,6 +11,7 @@ import 돌아가기 from '../assets/icons/black/돌아가기.png'
 import title from '../assets/button/튜토리얼_타이틀선택배경.png'
 import { clickSF } from '../element/Sound'
 
+// 튜토리얼 페이지 중 직업튜토리얼 컴포넌트
 function Introduce() {
   const dispatch = useDispatch()
   const [isOpen, setIsOpen] = React.useState(false)
@@ -28,6 +29,7 @@ function Introduce() {
     setIsOpen(!isOpen)
   }
 
+  // 각 직업카드를 선택했을 때 바뀌는 하단의 설명들 변경
   const seleted = (element) => {
     clickSF.play()
     setDesc(element?.explain)

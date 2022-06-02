@@ -18,6 +18,7 @@ function Main() {
   const [isOpen, setIsOpen] = React.useState(false)
   const dispatch = useDispatch()
 
+  // 리프레시 등으로 소켓을 받아오지 못할때 다시 받아올 수 있도록 메인으로 이동
   React.useEffect(() => {
     try {
       socket.on('roomList', (rooms) => {

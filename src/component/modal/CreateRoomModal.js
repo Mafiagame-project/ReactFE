@@ -10,6 +10,7 @@ import closeIcon from '../../assets/icons/black/닫기.png'
 import sheep from '../../assets/image/character/양_시민.png'
 import { clickSF, accessSF, deniedSF } from '../../element/Sound'
 
+// 게임룸 만들때 생기는 모달창 컴포넌트
 const ImageSlider = withStyles({
   thumb: {
     width: 45,
@@ -44,12 +45,13 @@ const CreateRoomModal = ({ onClose, socket }) => {
   const title = React.useRef()
   const pwd = React.useRef()
 
+  // 방 생성하기 함수
   const createRoom = () => {
     let roomTitle = title.current.value
     let roomPeople = getPeople
     let roomPwd
 
-    if (roomTitle.length > 8) {
+    if (roomTitle.length > 8) { // 방 이름 8자이하로 제한
       deniedSF.play()
       alert('방 이름은 8자 이하로 적어주세요!')
       return
@@ -66,13 +68,13 @@ const CreateRoomModal = ({ onClose, socket }) => {
     }
 
     if (getOpen === true) {
-      // 비공개방일때
+      // 비공개방일때 비밀번호를 서버로 보냄
       accessSF.play()
       roomPwd = pwd.current.value
       socket.emit('createRoom', { roomTitle, roomPeople, roomPwd })
       return
     } else {
-      // 공개방일때
+      // 공개방일때 비밀번호를 제외하고 서버로 보냄
       accessSF.play()
       socket.emit('createRoom', { roomTitle, roomPeople })
     }
@@ -80,7 +82,7 @@ const CreateRoomModal = ({ onClose, socket }) => {
     socket.on('roomList', (rooms) => {
       dispatch(roomActions.sendRoomList(rooms))
     })
-    return () => {
+    return () => { // 필요없는 소켓 삭제하기
       socket.off('createRoom')
       socket.off('roomList')
     }
