@@ -102,9 +102,19 @@ function GameRoom() {
     <>
       <Header />
       <div className={`${darkMode && endGame == null && 'dark-mode'}`}>
-        {darkMode && endGame == null ? <ExitBtn night /> : <ExitBtn />}
-        <TutorialBtn />
-        <NewsBtn />
+        {darkMode && endGame == null ? (
+          <>
+            <ExitBtn night /> <TutorialBtn night />
+            <NewsBtn night />{' '}
+          </>
+        ) : (
+          <>
+            {' '}
+            <ExitBtn /> <TutorialBtn />
+            <NewsBtn />{' '}
+          </>
+        )}
+
         <Container>
           <VideoContainer socket={socket} />
           <ChatBox socket={socket} currentTime={currentTime} />
