@@ -25,7 +25,7 @@ const NewsBtn = (props) => {
           }}
         >
           <img src={docs_w} alt="설명" />
-          <Text color="fff" margin="0" size="12px">
+          <Text color="#fff" margin="0" size="12px">
             게임 설명
           </Text>
         </Grid>
