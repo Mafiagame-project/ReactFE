@@ -1,6 +1,8 @@
 
 <img width="1243" alt="Screen Shot 2022-06-03 at 1 16 41 AM" src="https://user-images.githubusercontent.com/77870077/171676649-86f7ee65-e086-4b74-bfd8-a39a73cb33f0.png">
 
+![슬라이드100](https://user-images.githubusercontent.com/77870077/173059183-a3b0ab50-43e1-41c7-afa6-3fe98c67b876.png)
+> 최고의 프로젝트 상!
 
 # 🐑 마피양
 > 화상채팅으로 즐기는 온라인 마피아게임 마피양입니다.
