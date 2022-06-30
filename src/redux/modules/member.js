@@ -45,7 +45,7 @@ const callPlayerRecord = () => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
-      url: 'https://sparta-dongsun.shop/user/gameRecord',
+      url: 'https://gractor-dongsun.shop/user/gameRecord',
     })
       .then((response) => {
         const win = response.data?.userWin
