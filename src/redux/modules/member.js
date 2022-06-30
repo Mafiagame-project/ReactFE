@@ -3,7 +3,7 @@ import { produce } from 'immer'
 
 import axios from 'axios'
 
-const BASE_URL = process.env.REACT_APP_BASE_URL
+const BASE_URL = 'https://gractor-dongsun.shop'
 
 const CURR_SOCKET = 'CURR_SOCKET'
 const EXIT_SOCKET = 'EXIT_SOCKET'
@@ -45,7 +45,7 @@ const callPlayerRecord = () => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
-      url: 'https://sparta-dongsun.shop/user/gameRecord',
+      url: 'https://gractor-dongsun.shop/user/gameRecord',
     })
       .then((response) => {
         const win = response.data?.userWin
